@@ -13,7 +13,9 @@ public class ANANTA : ModuleRules
 				"CoreUObject",
 				"Engine",
 				"InputCore",
-				"UMG"
+				"UMG",
+				"AIModule",
+				"NavigationSystem"
 			});
 	}
 }

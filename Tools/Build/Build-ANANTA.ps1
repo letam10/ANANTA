@@ -1,6 +1,8 @@
 [CmdletBinding()]
 param(
     [string]$ProjectRoot,
+    [ValidateSet('ANANTAEditor', 'ANANTA')]
+    [string]$Target = 'ANANTAEditor',
     [ValidateSet('Development', 'DebugGame', 'Shipping')]
     [string]$Configuration = 'Development',
     [int]$MaxParallelActions = 2,
@@ -27,7 +29,7 @@ if ($editorProcesses.Count -gt 0) {
 
 $arguments = @(
     $ubtPath,
-    'ANANTAEditor',
+    $Target,
     'Win64',
     $Configuration,
     "-Project=$uprojectPath",
@@ -36,7 +38,7 @@ $arguments = @(
     "-MaxParallelActions=$MaxParallelActions"
 )
 
-Write-Output "Building ANANTAEditor $Configuration..."
+Write-Output "Building $Target $Configuration..."
 & dotnet @arguments
 if ($LASTEXITCODE -ne 0) {
     throw "UnrealBuildTool failed with exit code $LASTEXITCODE."

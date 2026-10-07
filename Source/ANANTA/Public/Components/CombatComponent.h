@@ -31,5 +31,8 @@ public:
     float AttackRadius;
 
 private:
+    UPROPERTY()
+    TObjectPtr<class UAnimSequence> AttackAnimation;
+
     double LastAttackTime;
 };

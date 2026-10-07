@@ -1,2 +1,10 @@
 *.uasset filter=lfs diff=lfs merge=lfs -text
 *.umap filter=lfs diff=lfs merge=lfs -text
+Assets/**/*.fbx filter=lfs diff=lfs merge=lfs -text
+Assets/**/*.blend filter=lfs diff=lfs merge=lfs -text
+Assets/**/*.bin filter=lfs diff=lfs merge=lfs -text
+Assets/**/*.png filter=lfs diff=lfs merge=lfs -text
+Assets/**/*.jpg filter=lfs diff=lfs merge=lfs -text
+Assets/**/*.jpeg filter=lfs diff=lfs merge=lfs -text
+Assets/City/Sources/** -text whitespace=cr-at-eol
+Assets/City/Expansion/Sources/** -text whitespace=cr-at-eol

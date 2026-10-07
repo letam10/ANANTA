@@ -1,0 +1,36 @@
+#include "QA/CityCaptureSubsystem.h"
+
+#include "Components/DirectionalLightComponent.h"
+#include "Components/SkyLightComponent.h"
+#include "Engine/DirectionalLight.h"
+#include "Engine/SkyLight.h"
+#include "EngineUtils.h"
+#include "Misc/CommandLine.h"
+#include "Misc/Parse.h"
+#include "Misc/Paths.h"
+
+FString UCityCaptureSubsystem::GetOutputDirectory() const
+{
+    const bool bBlueHour = FParse::Param(FCommandLine::Get(), TEXT("CityBlueHour"));
+    return FPaths::ProjectSavedDir() / (bBlueHour ? TEXT("QA/CityGPUBlueHour") : TEXT("QA/CityGPU"));
+}
+
+void UCityCaptureSubsystem::ApplyReviewLighting()
+{
+    if (!FParse::Param(FCommandLine::Get(), TEXT("CityBlueHour")))
+    {
+        return;
+    }
+    // Bien the anh sang chi dung trong luot chup QA, khong thay doi map da luu.
+    for (TActorIterator<ADirectionalLight> Light(GetWorld()); Light; ++Light)
+    {
+        Light->SetActorRotation(FRotator(-6, -28, 0));
+        auto* Component = Cast<UDirectionalLightComponent>(Light->GetLightComponent());
+        Component->SetIntensity(800);
+        Component->SetLightColor(FLinearColor(0.55f, 0.67f, 1.f));
+    }
+    for (TActorIterator<ASkyLight> Sky(GetWorld()); Sky; ++Sky)
+    {
+        Sky->GetLightComponent()->SetIntensity(0.7f);
+    }
+}
