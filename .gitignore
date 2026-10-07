@@ -1,0 +1,21 @@
+# Local workflow overrides
+ue-mcp.local.yml
+
+# Generated Unreal Engine data
+Binaries/
+DerivedDataCache/
+Intermediate/
+Saved/
+
+# Generated IDE files
+.vs/
+*.sln
+*.slnx
+*.suo
+*.user
+*.VC.db
+*.VC.opendb
+
+# Python bytecode
+__pycache__/
+*.pyc
