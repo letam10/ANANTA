@@ -1,0 +1,155 @@
+{
+  "schemaVersion": 1,
+  "materials": [
+    {
+      "id": "InteriorTerrazzo",
+      "baseColorFactor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "metallicFactor": 0,
+      "roughnessFactor": 1,
+      "normalConvention": "OpenGL",
+      "worldTileCm": 200.0,
+      "baseColor": "Finishes/Sources/terrazzo_tiles/baseColor.jpg",
+      "normal": "Finishes/Sources/terrazzo_tiles/normal.jpg",
+      "roughness": "Finishes/Sources/terrazzo_tiles/roughness.jpg",
+      "ao": "Finishes/Sources/terrazzo_tiles/ao.jpg"
+    },
+    {
+      "id": "InteriorWorkshopConcrete",
+      "baseColorFactor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "metallicFactor": 0,
+      "roughnessFactor": 1,
+      "normalConvention": "OpenGL",
+      "worldTileCm": 200.0,
+      "baseColor": "Finishes/Sources/concrete_floor_painted/baseColor.jpg",
+      "normal": "Finishes/Sources/concrete_floor_painted/normal.jpg",
+      "roughness": "Finishes/Sources/concrete_floor_painted/roughness.jpg",
+      "ao": "Finishes/Sources/concrete_floor_painted/ao.jpg"
+    }
+  ],
+  "sourceFiles": [
+    {
+      "file": "Finishes/Sources/PolyHavenLicense.html",
+      "source": "https://polyhaven.com/license",
+      "license": "License documentation",
+      "sha256": "9fb8b55b063f46301d876df5a51dc632d0358c3af984d7c60e6aeaf7aee443e0"
+    },
+    {
+      "file": "Finishes/Sources/terrazzo_tiles/ao.jpg",
+      "sha256": "38908abb9a4643ad43b7e1e25eb07d55137763442b63831d1fce3f5dd3584875",
+      "source": "https://polyhaven.com/a/terrazzo_tiles",
+      "authors": {
+        "Amal Kumar": "All"
+      },
+      "license": "CC0-1.0"
+    },
+    {
+      "file": "Finishes/Sources/terrazzo_tiles/baseColor.jpg",
+      "sha256": "26cc390c19e468de03fc9699198398590a7adc1ddd4972e6d6fb65d76403bb66",
+      "source": "https://polyhaven.com/a/terrazzo_tiles",
+      "authors": {
+        "Amal Kumar": "All"
+      },
+      "license": "CC0-1.0"
+    },
+    {
+      "file": "Finishes/Sources/terrazzo_tiles/files.json",
+      "sha256": "e3d74f2f49b2a5985f220d6d9d8906cf0968ae2a88fc87ab603aef6792fcb3ad",
+      "source": "https://polyhaven.com/a/terrazzo_tiles",
+      "authors": {
+        "Amal Kumar": "All"
+      },
+      "license": "CC0-1.0"
+    },
+    {
+      "file": "Finishes/Sources/terrazzo_tiles/info.json",
+      "sha256": "62232ba19dedfa40318cd5ff8d4c0eca6807ea08fb40f6b48190c95186e26fbd",
+      "source": "https://polyhaven.com/a/terrazzo_tiles",
+      "authors": {
+        "Amal Kumar": "All"
+      },
+      "license": "CC0-1.0"
+    },
+    {
+      "file": "Finishes/Sources/terrazzo_tiles/normal.jpg",
+      "sha256": "48f79a943f626c90cfeac4528b765d9f7df862883890a9d05ddf00a2209e0fa4",
+      "source": "https://polyhaven.com/a/terrazzo_tiles",
+      "authors": {
+        "Amal Kumar": "All"
+      },
+      "license": "CC0-1.0"
+    },
+    {
+      "file": "Finishes/Sources/terrazzo_tiles/roughness.jpg",
+      "sha256": "23ee634b3550f8e0130406925671a35cc3ebae6be83ee1e543640a19283f64b5",
+      "source": "https://polyhaven.com/a/terrazzo_tiles",
+      "authors": {
+        "Amal Kumar": "All"
+      },
+      "license": "CC0-1.0"
+    },
+    {
+      "file": "Finishes/Sources/concrete_floor_painted/ao.jpg",
+      "sha256": "76c5395722cd45e56b86f8a595dc0e54f0927c8256b446c33fce249c0bbb9b7c",
+      "source": "https://polyhaven.com/a/concrete_floor_painted",
+      "authors": {
+        "Rob Tuytel": "All"
+      },
+      "license": "CC0-1.0"
+    },
+    {
+      "file": "Finishes/Sources/concrete_floor_painted/baseColor.jpg",
+      "sha256": "0a2a6983d52d20ef21030c4e03b485ce0ce6d6157b94e905fd2c1ec631c8934c",
+      "source": "https://polyhaven.com/a/concrete_floor_painted",
+      "authors": {
+        "Rob Tuytel": "All"
+      },
+      "license": "CC0-1.0"
+    },
+    {
+      "file": "Finishes/Sources/concrete_floor_painted/files.json",
+      "sha256": "21802823e691ca0f8268bf8fd922a4b77805cd0561d47c8f4defb2cab0daf839",
+      "source": "https://polyhaven.com/a/concrete_floor_painted",
+      "authors": {
+        "Rob Tuytel": "All"
+      },
+      "license": "CC0-1.0"
+    },
+    {
+      "file": "Finishes/Sources/concrete_floor_painted/info.json",
+      "sha256": "b5b632c7e250eb296eaaa763bca73d07eae49fc4115172635df67c6141a7f7d7",
+      "source": "https://polyhaven.com/a/concrete_floor_painted",
+      "authors": {
+        "Rob Tuytel": "All"
+      },
+      "license": "CC0-1.0"
+    },
+    {
+      "file": "Finishes/Sources/concrete_floor_painted/normal.jpg",
+      "sha256": "1f57758d80eb90e09738eb94d18518b30c7f9f7453a9c7c45f42e7d751c3731b",
+      "source": "https://polyhaven.com/a/concrete_floor_painted",
+      "authors": {
+        "Rob Tuytel": "All"
+      },
+      "license": "CC0-1.0"
+    },
+    {
+      "file": "Finishes/Sources/concrete_floor_painted/roughness.jpg",
+      "sha256": "0076e9c665473db41a409a9d0f1d6aba12aa89fbacdf027a4aded2d92bc6b895",
+      "source": "https://polyhaven.com/a/concrete_floor_painted",
+      "authors": {
+        "Rob Tuytel": "All"
+      },
+      "license": "CC0-1.0"
+    }
+  ]
+}

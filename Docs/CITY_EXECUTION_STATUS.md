@@ -61,11 +61,17 @@ Mỗi vòng làm việc phải cập nhật file này và commit/push checkpoint
 - PASS: NavMesh lưu đúng 860 m mỗi phía; truy vấn Recast ở khu mới trả đường đầy đủ dài 16 m.
 - Sửa runner GPU: bắt buộc dấu hoàn tất trong log, không nhận mã thoát 0 là đủ.
 - HLOD bản mở rộng đang dựng: 288 cụm, bắt đầu 10:33 ngày 08-10; chưa hoàn tất hoặc đóng gói.
+- Chuẩn bị lượt hoàn thiện: sofa nhung HOUSE có tác giả Wayfair/Eric Chadwick, giấy phép CC BY 4.0.
+- PASS nguồn: hai bộ sàn Poly Haven CC0, tám ảnh PBR 2K, checksum khớp API; đã xem ảnh màu.
+- Terrazzo dành cho phòng khám/chợ/trung tâm giao thông; bê tông sơn mòn dành cho xưởng xe.
+- Script áp dụng và đọc lại bốn sàn đã qua kiểm tra cú pháp; chưa chạy Unreal trong lúc HLOD dựng.
+- HLOD tại 10:59 vẫn ở cụm 6/288, CPU tiếp tục tăng; đang rà soát chi phí tạo proxy bằng mã engine.
 
 ## Còn tồn đọng / chưa đạt
 
 1. Kiểm tra kit trong game, đặc biệt va chạm trạm chờ và lối vào các phòng.
 2. Chỉnh mảng tường/phần giữa phòng còn trống; tiếp tục giảm chi tiết còn mang dáng prototype.
+   Đang dựng sofa/thảm/rèm; nhập và áp dụng sàn mới sau khi HLOD hiện hành kết thúc.
 3. Dựng lại HLOD; kiểm tra streaming và đường đi trong khu mở rộng.
 4. Chơi ngắn kiểm tra cửa mới, dịch vụ, vật phẩm, xe, nhiệm vụ, lưu/tải và save cũ.
 5. Xem ảnh ngày/đêm, sửa bố cục lặp, ánh sáng và nội thất thiếu chi tiết.
@@ -87,6 +93,8 @@ Mỗi vòng làm việc phải cập nhật file này và commit/push checkpoint
 - Save cũ: Tools/QA/Fixtures/CityBeforeServices.sav; báo cáo Saved/QA/CityAutomation/index.json.
 - Hướng mặt tiền: Saved/QA/CityFacadePlacementReadback.json; NavMesh: Saved/Logs/CityGPUNavigationCheck.log.
 - HLOD đang chạy: Saved/Logs/CityHLOD.log và CityHLODConsole.log.
+- Nguồn sàn: Assets/City/interior_finish_catalog.json; kiểm tra Saved/QA/CityInteriorTextures.json.
+- Script sàn chưa chạy: Tools/Editor/ApplyCityFloorFinishes.py và VerifyCityFloorFinishes.py.
 
 Input QA qua PlayerController.InputKey; bàn phím desktop thực chưa được xác nhận.
 Đồ họa cuối và 60 FPS vẫn là mục tiêu đang làm, chưa đủ bằng chứng để xác nhận.
