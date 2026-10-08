@@ -119,8 +119,9 @@ Mỗi vòng làm việc phải cập nhật file này và commit/push checkpoint
 5. Xem ảnh ngày/đêm, sửa bố cục lặp, ánh sáng và nội thất thiếu chi tiết.
 6. Đánh giá frame trong lần chơi bình thường, tối ưu điểm nghẽn thực tế; chưa chứng minh 60 FPS.
 7. Đóng gói và xác nhận lại bản cuối; không dùng build cũ để nhận bản mở rộng đạt.
-8. Checkpoint nội thất/HLOD/nghiên cứu render đã push: 699d055 trên origin/codex/city-expansion.
-   Remote SHA khớp local, 587 đối tượng LFS / 456 MB; git lfs fsck và kiểm tra staged đạt.
+8. Checkpoint quầy/tường, HLOD mẫu và cvar runtime đã push: e202046 trên origin/codex/city-expansion.
+   Remote SHA khớp local, 324 đối tượng LFS / 69 MB; git lfs fsck và kiểm tra staged đạt.
+   Lượt dựng HLOD đầy đủ đã khởi chạy tiếp sau checkpoint; theo dõi Saved/Logs/CityHLOD.log.
    HLOD trong checkpoint còn dang dở, không dùng checkpoint để xác nhận bản mở rộng hoàn tất.
 
 ## Bằng chứng và đường dẫn
