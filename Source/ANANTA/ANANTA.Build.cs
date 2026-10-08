@@ -14,6 +14,10 @@ public class ANANTA : ModuleRules
 				"Engine",
 				"InputCore",
 				"UMG",
+				"Slate",
+				"SlateCore",
+				"RenderCore",
+				"RHI",
 				"AIModule",
 				"NavigationSystem"
 			});

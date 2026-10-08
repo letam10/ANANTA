@@ -111,16 +111,23 @@ Với ảnh model ngoại tuyến, adaptive sampling và denoise có thể giả
 Đây là tối ưu quy trình tạo ảnh; mesh xuất sang Unreal vẫn cần ngân sách hình học/material riêng.
 Nguồn: [Blender Sampling][sampling].
 
-## 5. Phép thử ánh sáng tiếp theo — chưa thực thi
+## 5. Phép thử ánh sáng đã thực thi — ứng viên bị loại
 
-- Ảnh nội thất ngày còn trắng sáng ở cửa sổ/sàn; ảnh chiều xanh giữ nhiều chi tiết bên ngoài hơn.
-- Thử riêng City_Sun từ 60.000 xuống 40.000 lux; không đổi exposure hoặc shader trong cùng phép thử.
-- Chỉ chạy sau khi tiến trình HLOD ghi Content đã thoát. Script: `Tools/Editor/ReviewCityDaylight.py`.
-- Biến môi trường `ANANTA_CITY_DAYLIGHT_LUX=40000` chọn ứng viên; `60000` khôi phục mức gốc.
-- Chụp cùng tám góc ngày/chiều xanh sau khi nội thất xưởng đã được nhập và mở lại đạt.
-- Giữ ảnh baseline riêng trước khi thử; so độ rõ bên ngoài, bóng sàn, độ sáng phòng và bề mặt đồ vật.
-- Chỉ cập nhật CityScene.py và nhận ứng viên sau khi ảnh đối chiếu đạt; nếu không cải thiện thì khôi phục.
-- Đây là phép thử hình ảnh, không có kết luận tăng FPS hoặc chất lượng cuối từ giá trị lux riêng lẻ.
+- Đã thử riêng City_Sun 60.000 xuống 40.000 lux sau khi dừng tiến trình ghi HLOD.
+- Import fixture xong, giữ ảnh baseline, chụp cùng góc; không đổi exposure/shader.
+- Đối chiếu cửa sổ/sàn không cải thiện rõ; ứng viên 40.000 không được nhận.
+- Đã khôi phục 60.000 và mở lại map độc lập: CityDaylightReadback60000.json đạt.
+- Hai bộ ảnh: Saved/QA/CityDaylight60000AfterFixtures và CityDaylight40000AfterFixtures.
+- Đây là phép thử hình ảnh, không có kết luận tăng FPS từ giá trị lux riêng lẻ.
+
+## 6. Yêu cầu mới: menu và mục tiêu 90 FPS
+
+- Tối đa trong menu dùng UE Epic (3), render scale 100%; nhóm High (2) giữ nhãn riêng.
+- Có nhóm chất lượng riêng, TSR render scale, FPS cap/VSync, ngôn ngữ và thanh FPS thực.
+- Mục tiêu mới khoảng 90 FPS thay mục tiêu 60; chưa được xác nhận bằng các số High trước đó.
+- Kiểm tra bằng lượt chơi bình thường với config QA riêng, ghi cvar có hiệu lực và frame chậm.
+- 90 FPS có ngân sách khoảng 11,11 ms/frame; FPS cap không tự tạo ra hiệu năng này.
+- Không benchmark và không tự động hạ chất lượng ẩn khi chọn Tối đa.
 
 ## Nguồn chính thức đã truy cập
 

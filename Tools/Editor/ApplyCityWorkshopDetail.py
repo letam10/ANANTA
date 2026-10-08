@@ -21,6 +21,8 @@ def main():
     if not all(meshes.values()):
         raise RuntimeError("Import workshop detail meshes before applying the layout")
     mesh_editor = unreal.get_editor_subsystem(unreal.StaticMeshEditorSubsystem)
+    if not mesh_editor:
+        mesh_editor = unreal.get_default_object(unreal.StaticMeshEditorSubsystem)
     for label, item in items.items():
         if item["collision"] and mesh_editor.get_simple_collision_count(meshes[label]) == 0:
             raise RuntimeError(f"Required workshop collision is missing: {label}")

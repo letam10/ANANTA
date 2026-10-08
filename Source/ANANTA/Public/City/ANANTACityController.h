@@ -5,6 +5,8 @@
 #include "ANANTACityController.generated.h"
 
 class AANANTACityVehicle;
+class SCitySettingsPanel;
+class SWidget;
 
 UCLASS()
 class ANANTA_API AANANTACityController : public APlayerController
@@ -25,6 +27,13 @@ public:
     void Interact();
     void TogglePause();
     void SaveNow();
+    void ToggleSettings();
+    void CloseSettings(bool bResumeGame = true);
+    void ToggleFPS();
+    bool IsSettingsOpen() const { return SettingsPanel.IsValid(); }
+    TSharedPtr<SCitySettingsPanel> GetSettingsPanel() const { return SettingsPanel; }
+    double GetMeasuredFPS() const { return MeasuredFPS; }
+    double GetMeasuredFrameMs() const { return MeasuredFrameMs; }
 
 private:
     void JumpPressed();
@@ -32,6 +41,18 @@ private:
     void Mantle();
     void Attack();
     void RestorePlayer(float DeltaTime);
+    void InitializeSettingsUI();
+    void UpdateFrameMeter();
+    void ShowMenuCursor();
+    void HideMenuCursor();
+
+    TSharedPtr<SCitySettingsPanel> SettingsPanel;
+    TSharedPtr<SWidget> SettingsOverlay;
+    bool bPausedBeforeSettings = false;
+    double FrameMeterStart = 0;
+    int32 FrameMeterCount = 0;
+    double MeasuredFPS = 0;
+    double MeasuredFrameMs = 0;
 
     UPROPERTY()
     TWeakObjectPtr<AANANTACityVehicle> DrivenVehicle;

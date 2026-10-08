@@ -2,12 +2,13 @@
 param(
     [string]$ExecutablePath,
     [ValidateSet('Capture', 'InputSmoke', 'MissionCheck', 'MissionReload', 'NavigationCheck',
-        'ServiceCheck', 'ServiceReload')]
+        'ServiceCheck', 'ServiceReload', 'StreamingCheck')]
     [string]$Mode = 'InputSmoke',
     [switch]$BlueHour,
     [switch]$ExpansionViews,
     [switch]$DressingViews,
-    [switch]$FinishingViews
+    [switch]$FinishingViews,
+    [switch]$FixtureViews
 )
 
 $ErrorActionPreference = 'Stop'
@@ -53,6 +54,9 @@ if ($DressingViews) {
 if ($FinishingViews) {
     $arguments += '-CityFinishingViews'
 }
+if ($FixtureViews) {
+    $arguments += '-CityFixtureViews'
+}
 $markers = @{
     Capture = 'CITY_CAPTURE_FINISH success=1'
     InputSmoke = 'CITY_INPUT_SMOKE_FINISH success=1'
@@ -61,6 +65,7 @@ $markers = @{
     NavigationCheck = 'CITY_NAVIGATION_CHECK_FINISH success=1'
     ServiceCheck = 'CITY_SERVICE_JOURNEY_FINISH mode=Check success=1'
     ServiceReload = 'CITY_SERVICE_JOURNEY_FINISH mode=Reload success=1'
+    StreamingCheck = 'CITY_STREAMING_JOURNEY_FINISH success=1'
 }
 # Khong truyen ten map: can kiem tra chinh cau hinh khoi dong da cook.
 Push-Location (Split-Path -Parent $ExecutablePath)

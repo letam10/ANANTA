@@ -157,6 +157,15 @@ void UCityCaptureSubsystem::CaptureView(const int32 Index)
         FRotator(-8, -45, 0), FRotator(-12, -160, 0), FRotator(-6, 180, 0),
         FRotator(-10, -140, 0), FRotator(-12, -90, 0), FRotator(-10, -28, 0), FRotator(-10, -150, 0)
     };
+    static const FVector FixtureLocations[] = {
+        FVector(-9340, 2750, 170), FVector(-9510, 2910, 150), FVector(38670, 2860, 175),
+        FVector(38550, 2880, 155), FVector(61830, 2700, 180), FVector(61830, 2900, 190),
+        FVector(38380, 2910, 180)
+    };
+    static const FRotator FixtureRotations[] = {
+        FRotator(-8, 90, 0), FRotator(-7, 60, 0), FRotator(0, 90, 0), FRotator(-18, 67, 0),
+        FRotator(1, 90, 0), FRotator(0, 90, 0), FRotator(-3, 52, 0)
+    };
     const FString Directory = GetOutputDirectory();
     IFileManager::Get().MakeDirectory(*Directory, true);
     if (Index == 0)
@@ -173,11 +182,14 @@ void UCityCaptureSubsystem::CaptureView(const int32 Index)
         const bool bExpansion = FParse::Param(FCommandLine::Get(), TEXT("CityExpansionViews"));
         const bool bDressing = FParse::Param(FCommandLine::Get(), TEXT("CityDressingViews"));
         const bool bFinishing = FParse::Param(FCommandLine::Get(), TEXT("CityFinishingViews"));
+        const bool bFixtures = FParse::Param(FCommandLine::Get(), TEXT("CityFixtureViews"));
         const FVector Location = bFinishing ? FinishingLocations[Index]
             : (bDressing ? DressingLocations[Index] : (bExpansion ? ExpansionLocations[Index] : Locations[Index]));
         const FRotator Rotation = bFinishing ? FinishingRotations[Index]
             : (bDressing ? DressingRotations[Index] : (bExpansion ? ExpansionRotations[Index] : Rotations[Index]));
-        GetWorld()->GetTimerManager().SetTimerForNextTick([this, Location, Rotation]()
+        const FVector FinalLocation = bFixtures ? FixtureLocations[Index] : Location;
+        const FRotator FinalRotation = bFixtures ? FixtureRotations[Index] : Rotation;
+        GetWorld()->GetTimerManager().SetTimerForNextTick([this, FinalLocation, FinalRotation]()
         {
             if (!ReviewCamera)
             {
@@ -186,7 +198,7 @@ void UCityCaptureSubsystem::CaptureView(const int32 Index)
                 auto* Source = NewObject<UWorldPartitionStreamingSourceComponent>(ReviewCamera);
                 Source->RegisterComponent();
             }
-            ReviewCamera->SetActorLocationAndRotation(Location, Rotation);
+            ReviewCamera->SetActorLocationAndRotation(FinalLocation, FinalRotation);
             GetWorld()->GetFirstPlayerController()->SetViewTarget(ReviewCamera);
         });
     }

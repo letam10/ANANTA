@@ -3,6 +3,7 @@
 #include "City/ANANTACityCharacter.h"
 #include "City/ANANTACitySubsystem.h"
 #include "Engine/World.h"
+#include "Settings/CityText.h"
 #include "Kismet/GameplayStatics.h"
 
 bool ACityServiceInteractable::CanUseService(const APawn* Player) const
@@ -76,5 +77,5 @@ FString ACityServiceInteractable::GetPrompt() const
     default:
         return FString();
     }
-    return FString::Printf(TEXT("E: %s - %s"), *Name, *Action);
+    return FString::Printf(TEXT("E: %s - %s"), *CityTranslate(Name), *CityTranslate(Action));
 }

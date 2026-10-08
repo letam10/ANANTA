@@ -6,6 +6,8 @@ param(
 $ErrorActionPreference = 'Stop'
 $projectRoot = (Resolve-Path (Join-Path $PSScriptRoot '..\..')).Path
 $editorPath = Join-Path $EngineRoot 'Engine\Binaries\Win64\UnrealEditor-Cmd.exe'
+$qaConfig = Join-Path $projectRoot 'Saved\QA\CityAutomation\GameUserSettings.ini'
+New-Item -ItemType Directory -Path (Split-Path $qaConfig) -Force | Out-Null
 $arguments = @(
     "$projectRoot\ANANTA.uproject",
     '-unattended',
@@ -13,6 +15,7 @@ $arguments = @(
     '-NullRHI',
     '-nosound',
     '-nosplash',
+    "-GameUserSettingsINI=$qaConfig",
     '-ExecCmds=Automation RunTests ANANTA.City',
     '-TestExit=Automation Test Queue Empty',
     "-ReportExportPath=$projectRoot\Saved\QA\CityAutomation",

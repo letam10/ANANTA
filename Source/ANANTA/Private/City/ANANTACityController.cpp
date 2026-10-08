@@ -18,6 +18,7 @@ void AANANTACityController::BeginPlay()
     Super::BeginPlay();
     SetInputMode(FInputModeGameOnly());
     bShowMouseCursor = false;
+    InitializeSettingsUI();
     if (PlayerCameraManager)
     {
         PlayerCameraManager->ViewPitchMin = -65;
@@ -37,12 +38,20 @@ void AANANTACityController::SetupInputComponent()
     auto& PauseBinding = InputComponent->BindKey(EKeys::Escape, IE_Pressed,
         this, &AANANTACityController::TogglePause);
     PauseBinding.bExecuteWhenPaused = true;
+    InputComponent->BindKey(EKeys::F10, IE_Pressed, this,
+        &AANANTACityController::ToggleSettings).bExecuteWhenPaused = true;
+    InputComponent->BindKey(EKeys::F8, IE_Pressed, this,
+        &AANANTACityController::ToggleFPS).bExecuteWhenPaused = true;
+    InputComponent->BindKey(EKeys::LeftAlt, IE_Pressed, this, &AANANTACityController::ShowMenuCursor);
+    InputComponent->BindKey(EKeys::LeftAlt, IE_Released, this,
+        &AANANTACityController::HideMenuCursor).bExecuteWhenPaused = true;
 }
 
 void AANANTACityController::PlayerTick(const float DeltaTime)
 {
     Super::PlayerTick(DeltaTime);
-    if (IsPaused())
+    UpdateFrameMeter();
+    if (IsPaused() || bShowMouseCursor)
     {
         return;
     }
@@ -166,7 +175,7 @@ FString AANANTACityController::GetInteractionPrompt() const
 void AANANTACityController::Interact()
 {
     auto* Hero = Cast<AANANTACityCharacter>(GetPawn());
-    if (!Hero || !bRestoreComplete || IsPaused())
+    if (!Hero || !bRestoreComplete || IsPaused() || bShowMouseCursor)
     {
         return;
     }
@@ -210,6 +219,10 @@ void AANANTACityController::Interact()
 
 void AANANTACityController::JumpPressed()
 {
+    if (IsPaused() || bShowMouseCursor)
+    {
+        return;
+    }
     if (auto* Hero = Cast<AANANTACityCharacter>(GetPawn()); Hero && !DrivenVehicle.IsValid())
     {
         Hero->Jump();
@@ -226,6 +239,10 @@ void AANANTACityController::JumpReleased()
 
 void AANANTACityController::Mantle()
 {
+    if (IsPaused() || bShowMouseCursor)
+    {
+        return;
+    }
     if (auto* Hero = Cast<AANANTACityCharacter>(GetPawn()); Hero && !DrivenVehicle.IsValid())
     {
         Hero->TraversalComponent->TryMantle();
@@ -234,6 +251,10 @@ void AANANTACityController::Mantle()
 
 void AANANTACityController::Attack()
 {
+    if (IsPaused() || bShowMouseCursor)
+    {
+        return;
+    }
     if (auto* Hero = Cast<AANANTACityCharacter>(GetPawn()); Hero && !DrivenVehicle.IsValid())
     {
         Hero->SetActorRotation(FRotator(0, GetControlRotation().Yaw, 0));
@@ -243,11 +264,7 @@ void AANANTACityController::Attack()
 
 void AANANTACityController::TogglePause()
 {
-    if (!IsPaused())
-    {
-        SaveNow();
-    }
-    SetPause(!IsPaused());
+    ToggleSettings();
 }
 
 void AANANTACityController::SaveNow()
@@ -263,6 +280,7 @@ void AANANTACityController::SaveNow()
 
 void AANANTACityController::EndPlay(const EEndPlayReason::Type Reason)
 {
+    CloseSettings(false);
     SaveNow();
     Super::EndPlay(Reason);
 }

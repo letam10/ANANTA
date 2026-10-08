@@ -1,12 +1,13 @@
 [CmdletBinding()]
 param(
     [ValidateSet('Capture', 'InputSmoke', 'MissionCheck', 'MissionReload', 'NavigationCheck',
-        'ServiceCheck', 'ServiceReload')]
+        'ServiceCheck', 'ServiceReload', 'StreamingCheck')]
     [string]$Mode = 'Capture',
     [switch]$BlueHour,
     [switch]$ExpansionViews,
     [switch]$DressingViews,
     [switch]$FinishingViews,
+    [switch]$FixtureViews,
     [string]$EngineRoot = 'C:\Program Files\Epic Games\UE_5.8'
 )
 
@@ -44,6 +45,9 @@ if ($DressingViews) {
 if ($FinishingViews) {
     $arguments += '-CityFinishingViews'
 }
+if ($FixtureViews) {
+    $arguments += '-CityFixtureViews'
+}
 & $editorPath @arguments *> $consolePath
 $code = $LASTEXITCODE
 Write-Output "CITY_GPU_EXIT=$code MODE=$Mode LOG=$logPath"
@@ -58,6 +62,7 @@ $markers = @{
     NavigationCheck = 'CITY_NAVIGATION_CHECK_FINISH success=1'
     ServiceCheck = 'CITY_SERVICE_JOURNEY_FINISH mode=Check success=1'
     ServiceReload = 'CITY_SERVICE_JOURNEY_FINISH mode=Reload success=1'
+    StreamingCheck = 'CITY_STREAMING_JOURNEY_FINISH success=1'
 }
 $log = Get-Content -LiteralPath $logPath -Raw
 if (-not $log.Contains($markers[$Mode])) {
@@ -67,6 +72,9 @@ if ($Mode -eq 'Capture') {
     $captureName = if ($DressingViews) { 'CityDressing' } else { 'CityGPU' }
     if ($FinishingViews) {
         $captureName = 'CityFinishing'
+    }
+    if ($FixtureViews) {
+        $captureName = 'CityFixtures'
     }
     $env:ANANTA_CITY_CAPTURE_DIR = Join-Path $projectRoot "Saved\QA\$captureName$lightingSuffix"
     python -c @'

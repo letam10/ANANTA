@@ -1,189 +1,104 @@
-# ANANTA — tiến độ thành phố
+# ANANTA — tiến độ hiện hành
 
-Cập nhật: 2026-10-08. Mục tiêu đang thực hiện, chưa hoàn tất.
-File này là bản tóm tắt hiện hành; bằng chứng chi tiết nằm trong Saved/QA và Saved/Logs.
-Mỗi vòng làm việc phải cập nhật file này và commit/push checkpoint lên GitHub.
+Cập nhật: 2026-10-08. Mục tiêu tổng thể đang thực hiện, chưa hoàn tất.
+Mỗi vòng: cập nhật file này, kiểm chứng thay đổi, commit/push GitHub.
+Bằng chứng chi tiết: Saved/QA và Saved/Logs; lịch sử đầy đủ nằm trong Git.
 
-## Mục tiêu hiện hành
+## Yêu cầu hiện hành
 
-- Mở rộng gấp đôi, tăng mật độ, kiến trúc, kích thước, cảnh quan và địa điểm tương tác.
-- Giữ nguyên model nhân vật; nhà nền chỉ có vỏ, tập trung nội thất vào nhà vào được.
-- Một bản đồ liên tục, tối ưu streaming/HLOD, đồ họa đẹp với mục tiêu khoảng 60 FPS.
-- Chỉ thử chơi ngắn vài phút, không benchmark.
-- Mặc định: gấp đôi diện tích, khoảng 1,70 × 1,70 km; chờ lựa chọn khác nếu có.
+- Thành phố liên tục khoảng 1,70 × 1,70 km, gấp đôi diện tích bản trước.
+- Tăng kiến trúc/cảnh quan/địa điểm tương tác; giữ nguyên model nhân vật.
+- Nhà không vào được chỉ có vỏ, ưu tiên đồ chi tiết cho nội thất tương tác.
+- Hướng trải nghiệm thành phố ANANTA/Neverness to Everness, chất lượng hình ảnh kiểu Endfield.
+- Menu đồ họa, tiếng Việt/English, thanh FPS bật/tắt và lưu được lựa chọn.
+- Mục tiêu mới: khoảng 90 FPS ở mức tối đa trên máy hiện tại, thay mục tiêu 60 FPS trước đó.
+- Tối đa là Epic (3), render scale 100%; không đổi nhãn High thành Max để đạt số FPS.
+- Chỉ chơi thử ngắn vài phút, không benchmark; ưu tiên chạy ngầm/offscreen.
 
-## Bản trước đã pass
+## Đã có và đã kiểm chứng
 
-- Thành phố 1,2 × 1,2 km, 397 nhà nền, hai nội thất, 110.549 instance, 152 HLOD.
-- World Partition/OFPA; mở lại kiểm tra mesh/material không lỗi.
-- Build và đóng gói Windows Development thành công.
-- Input controller: đi bộ, vào quán, lái/phanh/rời xe, F5; nhiệm vụ đầy đủ khoảng 205 giây.
-- Ba manh mối, ba địch, mảnh vỡ, thưởng đúng một lần; tiến trình khác tải lại trạng thái/vị trí.
-- Recast có đường hoàn chỉnh; 16 ảnh đóng gói ngày/chiều xanh 1080p đã được xem.
-- Bằng chứng này thuộc bản trước, không tự động chứng minh bản mở rộng.
+### Thành phố và gameplay
 
-## Đã thay đổi trong vòng hiện tại
+- 196 ô phố, 1.472 nhà nền, bảy kiểu kiến trúc, 281.266 instance trong cùng World Partition.
+- Tám dịch vụ: cà phê, căn hộ, hiệu sách, phòng khám, chợ, phòng tranh, xưởng và giao thông.
+- Nhiệm vụ/xe/save giữ nền tảng trước; giới hạn save/nav của bản mở rộng là ±860 m.
+- Mở lại map độc lập, kiểm mesh/material/transform/collision và hướng mặt tiền đạt.
+- 238.666 instance mặt tiền và tám cửa đã sửa lỗi đảo hướng FBX.
+- Nội thất hoàn thiện gồm sofa/thảm/rèm, PBR sàn, quầy, tranh và ốp gỗ; ảnh GPU đã xem.
+- Nguồn sàn Poly Haven CC0; sofa HOUSE có giấy phép/tác giả ghi trong manifest.
 
-- Nguồn bố cục: 196 ô phố, 1.472 nhà nền, bảy kiểu mặt tiền, nhiều kiểu khối/cao độ.
-- Bổ sung sân trong, công viên, cây, quầy hàng, trạm chờ và vật dụng đường phố.
-- Sáu địa điểm mới: hiệu sách, phòng khám, cửa hàng, phòng tranh, xưởng xe, trung tâm giao thông.
-- Mã dịch vụ: nghỉ/hồi phục, nhận tiếp tế một lần, đọc/ghi nhận địa điểm và lưu trạng thái.
-- Mở giới hạn save, tuyến NPC và đèn theo lưới mới; không sửa model nhân vật.
-- Đã dựng và nhập 11 model kiến trúc/cảnh quan, dùng PBR từ bộ tài nguyên hiện có.
-- Có script nhập kit và cập nhật hình học trong map World Partition hiện tại.
-- Đã thêm 177 vật thể cho tám nội thất và 73 vật thể cho ba quảng trường.
-- Thêm cửa sổ có ánh sáng/rèm theo từng ô kính, dùng một tham số shader chung.
-- Giảm độ gắt 16 đèn nội thất và giới hạn khoảng cách xử lý ánh sáng phòng.
+### Model chi tiết mới — đã nhập và áp dụng
 
-## Kiểm chứng mới
+- Bảng dụng cụ 7.456, thùng phụ tùng 3.096, tủ y tế 4.128, bảng giao thông 1.086 tam giác.
+- Bốn mesh, mười material, sáu texture mới đã nhập; thay bốn cụm và bỏ 21 mảnh blockout.
+- Đọc lại map: 190 đồ nội thất + 73 đồ quảng trường = 263; 16 đèn, tám dịch vụ; không lỗi.
+- Kiểm nguồn bố trí 35.720 cặp bounds, giữ hành lang 440 cm.
+- Ảnh ngày/chiều xanh 1080p đã xem các model mới, bảng chỉ dẫn dùng tọa độ thật của tám địa điểm.
+- Góc xưởng còn tối; chất lượng toàn thành phố chưa được nhận là hoàn tất.
+- Backup trước áp dụng: CityBeforeVenueFixtures_20261008_1628, 7.577 file / 569.310.444 byte.
 
-- PASS: kiểm tra nguồn không có nhà chồng nhau, đường hoặc vùng cửa vào.
-- PASS: đủ 1.472 nhà, bảy loại mặt tiền và sáu địa điểm mới trong dữ liệu thiết kế.
-- PASS: cú pháp các script Python mới.
-- PASS: sao lưu map/actor/object, 1.845 file / 413.367.217 byte.
-- PASS: biên dịch Editor; sáu Unreal automation test, không thất bại hay bỏ qua.
-- PASS: 11 FBX roundtrip, UV/material/hash/triangle budget và ảnh model đã kiểm tra.
-- PASS: nhập kit và áp dụng map; các mốc nhiệm vụ/người/xe được giữ nguyên.
-- PASS: mở lại map độc lập, 7.000 actor, 281.266 instance, 92 material graph, không lỗi.
-- PASS: biên dịch lượt thử tám dịch vụ; sửa ghi nhận đủ tám loại địa điểm, sáu test chạy lại đều pass.
-- PASS: lượt chơi 293,524 giây qua tám cửa/dịch vụ, nhận tiếp tế một lần, nhấn E lặp và F5.
-- PASS: tiến trình khác tải lại đủ tám lượt thăm, một tiếp tế và vị trí người chơi.
-- Quan sát lượt chơi: 32.444 frame, trung bình 8,985 ms, p95 10,423 ms; 3 frame >33,3 ms.
-- PASS: tám ảnh ngày và tám ảnh chiều xanh 1080p. Ảnh cho thấy nội thất còn trống, bóng phố quá tối.
-- Một lần khởi tạo chiều xanh gặp GPU page fault khi dựng bóng Nanite; lần sau pass, chưa rõ nguyên nhân.
-- PASS: lưu/mở lại 250 vật thể trang trí, 16 đèn và tám dịch vụ, không lỗi mesh/material.
-- PASS: build gộp mã C++; sửa xung đột tên hàm phụ giữa hai bộ QA.
-- PASS: 7/7 automation, gồm đọc file save cũ thật trước khi có Services; giữ nhiệm vụ/thưởng/vị trí.
-- PASS: ảnh GPU ngày/chiều xanh sau chỉnh đèn và tám ảnh góc trang trí mới.
-- PASS: tuyến dịch vụ sau trang trí 293,487 giây, tám địa điểm, một tiếp tế; tải lại giữ đúng vị trí.
-- Phát hiện/sửa: FBX đảo trục Y làm mặt tiền/ban công quay vào trong; 238.666 instance và tám cửa đã sửa.
-- PASS: mở lại 1.544 nhóm, 4.631 mẫu transform và tám cửa đúng hướng; ảnh GPU hiện rõ chi tiết mặt tiền.
-- PASS: NavMesh lưu đúng 860 m mỗi phía; truy vấn Recast ở khu mới trả đường đầy đủ dài 16 m.
-- Sửa runner GPU: bắt buộc dấu hoàn tất trong log, không nhận mã thoát 0 là đủ.
-- HLOD bản mở rộng: 288 cụm; lượt 10:33 đã dừng có kiểm soát để sửa kênh vật liệu, chưa đóng gói.
-- Chuẩn bị lượt hoàn thiện: sofa nhung HOUSE có tác giả Wayfair/Eric Chadwick, giấy phép CC BY 4.0.
-- PASS nguồn: hai bộ sàn Poly Haven CC0, tám ảnh PBR 2K, checksum khớp API; đã xem ảnh màu.
-- Terrazzo dành cho phòng khám/chợ/trung tâm giao thông; bê tông sơn mòn dành cho xưởng xe.
-- PASS: áp dụng và mở lại bốn sàn, hai material đủ base color/normal/roughness/AO và đúng thiết lập texture.
-- PASS nguồn model: sofa 4.196, thảm 1.668, rèm 6.428 tam giác; ba FBX roundtrip đúng kích thước/UV/material.
-- PASS: không có mặt suy biến, 19 checksum nguồn đúng; ba ảnh 1024 px đã được kiểm tra.
-- PASS: nhập ba model vào Unreal, đúng kích thước và 3/2/3 material slot; sofa có collision và ba LOD.
-- Bộ model lưu trong Assets/City/Finishing; shader nhung dùng xấp xỉ sheen, đã xem ảnh trong game.
-- PASS bố trí nguồn: 183 vật thể nội thất, thêm sáu rèm; đổi hai sofa và hai thảm ở vị trí có sẵn.
-- Kiểm tra 34.390 cặp bounds với đồ cũ, hành lang giữa phòng 440 cm; thảm mỏng cho phép dưới chân đồ.
-- Nguồn dựng phòng giữ sàn mới khi tái tạo; đọc lại map kiểm tra thêm mesh, scale, rotation, collision.
-- PASS: mở lại map có đúng 256 vật thể trang trí, 16 đèn và tám dịch vụ, đúng mesh/scale/yaw/collision.
-- Phát hiện và sửa lỗi lưu xóa external actor: chỉ save_dirty_packages làm 250 vật thể cũ xuất hiện lại.
-  RefreshCityDressing đã thêm save_current_level; đọc lại độc lập xác nhận không còn 506 vật thể trùng.
-- Chẩn đoán 11:19: năm mẫu luồng CPU cao nằm trong ProxyLODMeshReduction; địa chỉ thay đổi.
-  Mẫu hiệu năng không có I/O/page fault; cụm 6 sau đó hoàn thành, không có bằng chứng tiến trình treo.
-- Phát hiện: HLOD lưu trên đĩa tắt emissive/roughness/metallic; dừng lượt cũ khi bắt đầu cụm 7 để sửa.
-- PASS: mở lại HLOD có bốn kênh PBR; template giữ tham số engine/27 thuộc tính, emissive theo NightAmount.
-  Cửa sổ dùng MaterialProxyReplace; shader đã compile. Chưa có proxy bake cuối được kiểm chứng.
-- PASS: Editor build 35,31 giây; tám ảnh hoàn thiện ngày và tám ảnh chiều xanh 1080p.
-  Đã xem sofa/thảm/rèm/sàn; tường còn trống, một số đồ prototype và cửa sổ ban ngày còn quá sáng.
-- PASS: tuyến tám dịch vụ sau hoàn thiện 293,396 giây, 23 save, một tiếp tế; tiến trình khác tải lại đúng.
-  30.713 frame: trung bình 9,487 ms, p95 11,375 ms, 5 frame >33,3 ms; chỉ là quan sát lượt chơi này.
-- Đã tra tài liệu Epic/Blender: culling, Nanite, HLOD, Lumen/VSM và samples/bounces.
-  Kết quả và thứ tự kiểm chứng: Docs/CITY_RENDER_OPTIMIZATION.md; chưa đổi cấu hình trong lượt nghiên cứu.
-- Checkpoint giữ dữ liệu HLOD đang dựng dở để tiếp tục; bắt buộc dựng lại trước khi nhận bản phát hành.
-- PASS rà cấu hình: quality 2; preset VSM directional 8x4/local 4x4 rays và samples/ray.
-  Không có control 12 rays/4096 samples; 4096 trong log thuộc cache/trang bóng.
-- PASS nguồn: bốn model quầy/ốp nan gỗ/tranh, 2.680/3.780/660/660 tam giác, UV/FBX/hash và tám ảnh CPU.
-- PASS: nhập bốn model, bảy material Arch_; bố trí 211 đồ nội thất gồm tám quầy và 36 chi tiết tường.
-  39.710 phép so bounds với 190 đồ cũ, giữ hành lang 440 cm và vùng cửa sổ; không thay điểm dịch vụ.
-- PASS: mở lại map đúng 284 vật thể trang trí, 16 đèn, tám dịch vụ.
-- PASS: Editor build 19,34 giây; tám ảnh ngày và tám ảnh chiều xanh 1080p.
-  Đã xem quầy, tranh và ốp gỗ trong game; góc xưởng còn trống và vùng cửa sổ ngày còn quá sáng.
-- PASS: tuyến tám dịch vụ 294,594 giây, 23 save, một tiếp tế; tiến trình khác tải lại đúng trạng thái/vị trí.
-  30.591 frame: trung bình 9,564 ms, p95 10,967 ms; 29 frame >33,3 ms, 21 frame >50 ms.
-  Đây là quan sát một lượt chơi ngắn, không đủ chứng minh 60 FPS trên toàn bản đồ.
-- PASS: ghi cvar thực tế sau khi game sẵn sàng; occlusion queries bật, Nanite frustum/HZB đều 1.
-  Quality shadow/GI/reflection 2; VSM directional 8x4, local 4x4; hardware RT tắt, texture pool 3000 MB.
-  TSR 1080p với ScreenPercentage 83,3333, nội bộ khoảng 1600 × 900; không thay cấu hình trong lượt này.
-- PASS: dựng một HLOD X5_Y3, đọc lại parent mới và bốn texture; màu/normal/MRS có dữ liệu biến thiên.
-  Cụm này không có cửa sổ nên emissive đen hợp lệ; cần dựng X0_Y0 có cửa sổ để kiểm bake ánh sáng.
-  Proxy có cảnh báo normal/binormal gần không; OBJ không chứa normal để kết luận, còn kiểm hình học.
-- PASS: dựng mẫu có cửa sổ X0_Y0 trong khoảng 219 giây, runner xác nhận đúng một actor.
-  Mở lại proxy 118.590 tam giác, đúng material parent và bốn texture 1024; kiểm pixel emissive có biến thiên.
-  Mẫu X0_Y0 không có cảnh báo normal/binormal gần không; chưa thay cho nghiệm thu toàn bộ 288 cụm.
-  Shader nguồn kiểm lại đạt, translator mới tắt, các gói cấu hình vật liệu giữ nguyên checksum.
-- PASS nguồn xưởng: bảng dụng cụ 7.456 và thùng phụ tùng 3.096 tam giác, giữ nguyên bounds/lối đi.
-  FBX roundtrip/UV/material/hash đạt, không mặt suy biến; bốn ảnh CPU đã được agent kiểm tra.
-  Hợp đồng: Docs/CITY_WORKSHOP_LIGHTING_CONTRACT.md; chưa nhập hoặc áp dụng vào bản đồ.
-- PASS bố trí nguồn xưởng: 205 đồ nội thất, 38.570 phép so bounds với 190 đồ cũ, hành lang 440 cm.
-  Bản đồ đang lưu vẫn có 211 đồ nội thất; cần import rồi chạy ApplyCityWorkshopDetail sau HLOD.
-  Lệnh này chỉ đổi hai actor và xóa sáu thanh prototype, không tái tạo các actor trang trí khác.
-  Thùng phải có collision trước khi áp dụng; sau thay đổi cần cập nhật HLOD của các cụm bị ảnh hưởng.
-- Sửa gate HLOD: số ô SetupHLODs khác số actor HLOD; kiểm đủ chuỗi actor và dấu hoàn tất riêng.
-  PASS 9 ca hồi quy, gồm số ô khác actor, log thiếu/nhảy/trùng actor và sai mẫu; log mẫu thật cũng đạt.
-  Lượt full đã nạp runner cũ: nếu wrapper báo chênh số ô, dùng Test-CityHLODLog đọc log hoàn tất.
-  Không khởi động lại tiến trình dựng chỉ vì lỗi đối chiếu của wrapper cũ.
-- PASS hình học xuất X0_Y0: 355.770 normal, tangent và binormal mỗi loại, hữu hạn và độ dài gần 1.
-  Chỉ xác nhận FBX đã xuất của mẫu này; cảnh báo cũ X5_Y3 và các cụm khác vẫn cần rà sau dựng.
-- PASS nguồn phòng khám/giao thông: tủ 4.128 và bảng hướng dẫn 1.086 tam giác, mỗi model bốn material slot.
-  Agent xác nhận FBX/UV/bounds/13 hash và bốn ảnh CPU; sơ đồ dùng tọa độ thật của tám địa điểm.
-- PASS tích hợp nguồn: 190 đồ nội thất, 35.720 phép so bounds với 190 đồ cũ, hành lang 440 cm.
-  Thay hai cụm bằng model chi tiết và bỏ 15 mảnh prototype; tủ bắt buộc có collision khi nhập/áp dụng.
-  Map đang lưu vẫn là 211 đồ nội thất + 73 đồ quảng trường; chưa áp dụng nguồn xưởng/tủ/bảng vào Unreal.
-- PASS cú pháp/phong cách sáu file root; script ánh sáng chỉ chuẩn bị, chưa đổi 60.000 lux trong map.
-- Đã đọc lại trực tiếp năm trang Epic/Blender qua HTTP 200; bổ sung ưu tiên culling/cache/rays/denoise.
-  Giảm bóng mặt trời 8 xuống 4 rays chỉ là phép thử dự kiến khi xác định đúng điểm nghẽn, chưa áp dụng.
-- HLOD lúc 15:58 đã lưu xong cụm 13 và bắt đầu 14/288; tiến trình vẫn chạy, chưa nhận toàn bộ proxy.
+### Kiểm tra thực tế gần nhất
 
-## Còn tồn đọng / chưa đạt
+- Build game và Editor đạt; 7/7 automation thành phố trước phần settings đạt.
+- Tuyến tám dịch vụ sau model mới: 293,729 giây, 23 lần lưu, một tiếp tế; tải lại tiến trình khác đạt.
+- Quan sát tuyến đó: 29.215 frame, trung bình 9,984 ms, p95 13,590 ms; 8 frame >33,3 ms.
+- Đi bộ/chạy thật theo input qua khu mở rộng: 277,788 giây, 1,708 km, không teleport/tăng tốc.
+- 30.866 kiểm tra tiếp đất đạt; bốn điểm streaming sẵn sàng; bốn ảnh cuối tuyến đã xem.
+- Quan sát tuyến mở rộng: trung bình 8,935 ms, p95 11,446 ms; 10 frame >33,3 ms, 6 >50 ms.
+- Khoảng frame lớn nhất 686,948 ms trùng lần chụp ảnh đầu; báo cáo giữ cả spike này.
+- Các số trên thuộc cấu hình High/TSR khoảng 1600×900 xuất 1080p, không chứng minh Max ổn định 90 FPS.
+- Save thường giữ nguyên checksum sau lượt tuyến mở rộng; kiểm tra settings dùng config/save QA riêng.
 
-1. Kiểm tra kit trong game, đặc biệt va chạm trạm chờ và lối vào các phòng.
-2. Chỉnh mảng tường/phần giữa phòng còn trống; tiếp tục giảm chi tiết còn mang dáng prototype.
-   Sofa/thảm/rèm/sàn đã qua ảnh GPU và tuyến tám dịch vụ; chất lượng hình ảnh tổng thể còn cần hoàn thiện.
-3. Dựng lại HLOD; kiểm tra streaming và đường đi trong khu mở rộng.
-4. Chơi ngắn kiểm tra cửa mới, dịch vụ, vật phẩm, xe, nhiệm vụ, lưu/tải và save cũ.
-5. Xem ảnh ngày/đêm, sửa bố cục lặp, ánh sáng và nội thất thiếu chi tiết.
-6. Đánh giá frame trong lần chơi bình thường, tối ưu điểm nghẽn thực tế; chưa chứng minh 60 FPS.
-7. Đóng gói và xác nhận lại bản cuối; không dùng build cũ để nhận bản mở rộng đạt.
-8. Checkpoint quầy/tường, HLOD mẫu và cvar runtime đã push: e202046 trên origin/codex/city-expansion.
-   Remote SHA khớp local, 324 đối tượng LFS / 69 MB; git lfs fsck và kiểm tra staged đạt.
-   Lượt dựng HLOD đầy đủ đã khởi chạy tiếp sau checkpoint; theo dõi Saved/Logs/CityHLOD.log.
-   HLOD trong checkpoint còn dang dở, không dùng checkpoint để xác nhận bản mở rộng hoàn tất.
-   Nguồn xưởng đã push d40348d, LFS và remote SHA đã xác nhận; chưa có asset Unreal tương ứng.
-   Chẩn đoán ánh sáng đã xong: thử nắng 40.000 thay 60.000 lux là giả thuyết cần so ảnh, chưa được nhận.
-   ReviewCityDaylight.py đã chuẩn bị phép thử/khôi phục; chưa chạy, nguồn dựng map vẫn 60.000 lux.
-9. Sau HLOD: nhập workshop_detail và venue_fixture, chạy hai Apply tương ứng rồi VerifyCityDressingMap.
-   Kỳ vọng mới 190 + 73 = 263 đồ trang trí; kiểm tra collision, ảnh GPU, tuyến dịch vụ và cập nhật HLOD.
+### Render đang có hiệu lực
 
-## Bằng chứng và đường dẫn
+- Frustum/occlusion queries bật; Nanite frustum/HZB bật; World Partition, HISM và texture streaming.
+- Lumen phần mềm, VSM, TSR; High dùng pool texture 3.000 MB.
+- High thực tế: directional 8 rays, local 4 rays, cùng 4 samples/ray; không có control 12/4096 samples.
+- Không dùng SetActorHiddenInGame theo góc nhìn camera làm culling.
+- Thử riêng sun 60.000 → 40.000 lux không cho cải thiện rõ ở góc đối chiếu; đã khôi phục 60.000.
+- Đọc lại map độc lập xác nhận sun 60.000 lux; không nhận phép thử này là tăng FPS.
 
-- Bản chơi đã kiểm chứng trước mở rộng: Saved/Builds/City/Windows/ANANTA.exe.
-- Backup: Saved/Backups/CityBeforeExpansion_20261008_055644.
-- Bố cục mới: Saved/QA/CityExpansionSourceAudit.json.
-- Build mới: Saved/Logs/CityExpansionBuild.log.
-- Hợp đồng: Docs/CITY_EXPANSION_CONTRACT.md.
+## Vòng đang thực hiện: menu và 90 FPS
+
+- Đã viết settings backend, migration cấu hình cũ, kiểm tra giá trị và ba automation mới.
+- Đã thêm menu Slate với preset/10 nhóm chất lượng, TSR scale, FPS cap, VSync, ngôn ngữ và FPS.
+- Đã nối nút góc màn hình, Esc/F10 mở menu, Alt hiện chuột, F8 bật/tắt bộ đo frame thực.
+- Đã dịch HUD/nhiệm vụ/tương tác; Apply/Hủy/bản nháp và pause được kiểm tra bằng QA riêng.
+- PASS: Editor build, 11/11 automation, menu Apply/Hủy/pause/F8, tiếng Việt/English và reload.
+- PASS: ảnh 1080p/720p và cuộn tới ngôn ngữ; input nút qua keyboard Slate, chưa thử chuột desktop.
+- PASS: hai save và cấu hình thường giữ checksum; runner automation đã tách config QA.
+- Tối đa/Epic native 1080p: 52,56 FPS trung bình; frame 19,02 ms, p95 23,46 ms.
+- GPU 18,18 ms, render thread 18,94 ms; 52 frame >33,3 ms và 9 >50 ms trong 294,6 giây quan sát.
+- Mục tiêu 90 FPS chưa đạt. Lỗi GPU PageFault khởi tạo Nanite/VSM được giữ log, đang chẩn đoán.
+- Cvar Max đã xác nhận Epic 3, native 1080p, cap 90, pool 3000 MB, Nanite culling bật, hardware RT tắt.
+- Chi tiết sử dụng và nghiệm thu: Docs/CITY_GRAPHICS_SETTINGS.md.
+
+## Tồn đọng và thứ tự tiếp tục
+
+1. PASS: build game 94,90 giây, Editor và 11 test; menu/ngôn ngữ/FPS/persistence đã kiểm chứng.
+   Tiếp tục tối ưu GPU/render và kiểm tra chuột desktop khi nghiệm thu bản đóng gói.
+2. Tối ưu phần GPU/render của Max/Epic native 1080p trên RTX 4060 Laptop 8 GB / RAM 16 GB.
+   Chưa xác nhận ổn định 90 FPS; không che spike hay âm thầm hạ chất lượng để báo đạt.
+3. Dựng đủ 288 HLOD, kiểm proxy và quay góc/chuyển ô. Hiện chưa có tiến trình HLOD chạy.
+   Lượt cũ đã lưu 13 cụm, dừng có kiểm soát trong cụm 14 để nhập fixture trước lượt cuối.
+   Cache đã lưu được giữ; không dừng/khởi động lại chỉ vì chờ lâu.
+4. Mẫu HLOD X0_Y0 đạt PBR/emissive/normal; cảnh báo normal cũ X5_Y3 và toàn bộ proxy còn cần rà.
+5. Cải thiện sáng xưởng, cửa sổ ngày, cây/cảnh quan còn đơn giản và mức lặp ngoài phố.
+6. Đóng gói bản mở rộng rồi thử lại nhiệm vụ, xe, dịch vụ, save cũ và ảnh ngày/chiều xanh.
+   EXE đóng gói hiện có vẫn thuộc thành phố nhỏ trước mở rộng; không dùng làm bằng chứng bản mới.
+7. Commit/push checkpoint sau vòng này; remote đã xác nhận gần nhất: 528ac60 trên codex/city-expansion.
+
+## Bằng chứng chính
+
+- Model/layout: Assets/City/*_manifest.json; Saved/QA/CityDressingReadback.json.
 - Dịch vụ: Saved/QA/CityServiceJourney/Report.txt và Reload.txt.
-- Log GPU lỗi đã giữ: Saved/Logs/CityGPUCaptureBlueHour.Failure1.log.
-- Trang trí: Saved/QA/CityDressingReadback.json; ảnh Saved/QA/CityDressing và CityGPUBlueHour.
-- Save cũ: Tools/QA/Fixtures/CityBeforeServices.sav; báo cáo Saved/QA/CityAutomation/index.json.
-- Hướng mặt tiền: Saved/QA/CityFacadePlacementReadback.json; NavMesh: Saved/Logs/CityGPUNavigationCheck.log.
-- HLOD đã dừng: Saved/Logs/CityHLOD.BeforePBRRepair.log và CityHLODConsole.BeforePBRRepair.log.
-- Nguồn sàn: Assets/City/interior_finish_catalog.json; kiểm tra Saved/QA/CityInteriorTextures.json.
-- Sàn đã đọc lại: Saved/QA/CityFloorFinishesReadback.json.
-- Model mới: Assets/City/finishing_manifest.json; kiểm tra Saved/QA/CityFinishingAssets/audit.json.
-- Model đã nhập: Saved/QA/CityFinishingImport.json.
-- Bố trí hoàn thiện: Tools/Editor/CityInteriorFinishes.py; audit Saved/QA/CityVenueDressingAudit.json.
-- Chẩn đoán HLOD: Saved/QA/CityHLODThreadSamples.json.
-- HLOD PBR: Saved/QA/CityHLODPBRReadback.json; log CityHLODPBRReadback.log.
-- Hoàn thiện: Saved/QA/CityFinishing và CityFinishingBlueHour; build Saved/Logs/CityFinishingBuild.log.
-- Nghiên cứu render: Docs/CITY_RENDER_OPTIMIZATION.md; đối chiếu Saved/QA/CityRenderConfigAudit.md.
-- Cvar runtime: Saved/QA/CityFinishing/RenderConfig.txt.
-- Quầy/tường: Assets/City/interior_architecture_manifest.json; Saved/QA/CityInteriorArchitectureAssets/audit.json.
-- Bố trí: Saved/QA/CityInteriorArchitectureLayoutSelfCheck.json; import CityInteriorArchitectureImport.json.
-- Build/ảnh: Saved/Logs/CityInteriorArchitectureBuild.log và CityInteriorArchitectureCapture*.log.
-- HLOD mẫu: Saved/Logs/CityHLODSample.log; Saved/QA/CityHLODProxy/ANANTA_City_City_L0_X0_Y0.
-- Mỗi proxy có Readback.json, Pixels.json, bốn PNG xuất từ asset thực và hình học OBJ/FBX.
-- Xưởng: Assets/City/workshop_detail_manifest.json; Saved/QA/CityWorkshopDetailAssets/audit.json.
-- Bố trí xưởng: Saved/QA/CityWorkshopDetailLayout.json; gate HLOD: Saved/QA/CityHLODLogCases/Results.json.
-- Chẩn đoán ánh sáng: Saved/QA/CityDaylightDiagnosis.md; chưa có ảnh với ứng viên 40.000 lux.
-- Tủ/bảng: Assets/City/venue_fixture_manifest.json; Saved/QA/CityVenueFixtureAssets/audit.json.
-- Tích hợp tủ/bảng: Saved/QA/CityVenueFixtureLayout.json; nguồn web: Saved/QA/RenderResearchWeb/sources.json.
+- Mở rộng: Saved/QA/CityStreamingJourney/Report.txt và bốn PNG.
+- Fixtures: Saved/QA/CityFixtures, CityFixturesBlueHour; GPUReview.json.
+- Ánh sáng: Saved/QA/CityDaylightReadback60000.json và hai thư mục ảnh 40000/60000.
+- HLOD: Saved/QA/CityHLODPreFixtureStop.json; CityHLOD.BeforeFixtureImport.log.
+- Proxy mẫu: Saved/QA/CityHLODProxy/ANANTA_City_City_L0_X0_Y0.
+- Nghiên cứu: Docs/CITY_RENDER_OPTIMIZATION.md; Saved/QA/RenderResearchWeb/sources.json.
+- Settings: Docs/CITY_SETTINGS_CONTRACT.md; Saved/QA/CitySettings; CitySettings*Build*.log.
 
-Input QA qua PlayerController.InputKey; bàn phím desktop thực chưa được xác nhận.
-Đồ họa cuối và 60 FPS vẫn là mục tiêu đang làm, chưa đủ bằng chứng để xác nhận.
+Input QA qua PlayerController/Slate; bàn phím/chuột desktop thực chưa được xác nhận.
+Build, test và ảnh có phạm vi riêng; chưa đủ bằng chứng nhận đồ họa cuối hoặc Max ổn định 90 FPS.

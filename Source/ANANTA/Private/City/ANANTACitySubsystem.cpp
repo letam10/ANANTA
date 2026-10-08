@@ -7,6 +7,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "Misc/CommandLine.h"
 #include "Misc/Parse.h"
+#include "Settings/CityText.h"
 
 void UANANTACitySubsystem::Initialize(FSubsystemCollectionBase& Collection)
 {
@@ -18,15 +19,16 @@ void UANANTACitySubsystem::Initialize(FSubsystemCollectionBase& Collection)
     const bool bMissionReload = FParse::Param(FCommandLine::Get(), TEXT("CityMissionReload"));
     const bool bServiceCheck = FParse::Param(FCommandLine::Get(), TEXT("CityServiceCheck"));
     const bool bServiceReload = FParse::Param(FCommandLine::Get(), TEXT("CityServiceReload"));
+    const bool bStreamingCheck = FParse::Param(FCommandLine::Get(), TEXT("CityStreamingCheck"));
     bUseQASlot = bInputSmoke || bMissionCheck || bMissionReload || bServiceCheck || bServiceReload
-        || FParse::Param(FCommandLine::Get(), TEXT("CityQASlot"));
+        || bStreamingCheck || FParse::Param(FCommandLine::Get(), TEXT("CityQASlot"));
     if (bUseQASlot)
     {
         SaveSlot = TEXT("ANANTA_City_QA");
         BackupSlot = TEXT("ANANTA_City_QA_Backup");
     }
     // Smoke luon bat dau moi; moi IO chi dung slot QA, khong nap hoac di chuyen save thuong.
-    if (bInputSmoke || bMissionCheck || bServiceCheck)
+    if (bInputSmoke || bMissionCheck || bServiceCheck || bStreamingCheck)
     {
         SaveStatus = TEXT("New isolated QA journey");
         return;
@@ -43,10 +45,13 @@ FString UANANTACitySubsystem::GetObjectiveText() const
     case ECityMissionStage::NotStarted:
         return TEXT("Meet the cafe contact [E]");
     case ECityMissionStage::Investigating:
-        return FString::Printf(TEXT("Investigate boulevard clues: %d / 3 [E]"), Mission.Clues.Num());
+        return FString::Printf(TEXT("%s %d / 3 [E]"),
+            *CityText(TEXT("Investigate boulevard clues:"), TEXT("Điều tra manh mối:")), Mission.Clues.Num());
     case ECityMissionStage::Combat:
         return Mission.DefeatedEnemies.Num() == 3 ? TEXT("Recover the anomaly fragment [E]")
-            : FString::Printf(TEXT("Defeat anomaly guards: %d / 3 [LMB]"), Mission.DefeatedEnemies.Num());
+            : FString::Printf(TEXT("%s %d / 3 [LMB]"),
+                *CityText(TEXT("Defeat anomaly guards:"), TEXT("Đánh bại lính dị thường:")),
+                Mission.DefeatedEnemies.Num());
     case ECityMissionStage::ReturnToGiver:
         return TEXT("Return the fragment to the cafe contact [E]");
     case ECityMissionStage::Completed:
@@ -141,8 +146,10 @@ bool UANANTACitySubsystem::TryUseService(const FName Id, const ECityServiceKind 
 
 FString UANANTACitySubsystem::GetServiceSummary() const
 {
-    return FString::Printf(TEXT("Supplies %d  |  Locations %d  |  %s"),
-        Progress->Services.SuppliesCount, Progress->Services.VisitedIds.Num(), *ServiceMessage);
+    return FString::Printf(TEXT("%s %d  |  %s %d  |  %s"),
+        *CityText(TEXT("Supplies"), TEXT("Tiếp tế")), Progress->Services.SuppliesCount,
+        *CityText(TEXT("Locations"), TEXT("Địa điểm")), Progress->Services.VisitedIds.Num(),
+        *CityTranslate(ServiceMessage));
 }
 
 bool UANANTACitySubsystem::SaveProgress()
