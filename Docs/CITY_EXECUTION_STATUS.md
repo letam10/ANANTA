@@ -65,7 +65,7 @@ Mỗi vòng làm việc phải cập nhật file này và commit/push checkpoint
 - PASS nguồn: hai bộ sàn Poly Haven CC0, tám ảnh PBR 2K, checksum khớp API; đã xem ảnh màu.
 - Terrazzo dành cho phòng khám/chợ/trung tâm giao thông; bê tông sơn mòn dành cho xưởng xe.
 - Script áp dụng và đọc lại bốn sàn đã qua kiểm tra cú pháp; chưa chạy Unreal trong lúc HLOD dựng.
-- HLOD tại 10:59 vẫn ở cụm 6/288, CPU tiếp tục tăng; đang rà soát chi phí tạo proxy bằng mã engine.
+- HLOD tại 11:07 vẫn ở cụm 6/288, CPU tiếp tục tăng; đang rà soát chi phí tạo proxy bằng mã engine.
 - PASS nguồn model: sofa 4.196, thảm 1.668, rèm 6.428 tam giác; ba FBX roundtrip đúng kích thước/UV/material.
 - PASS: không có mặt suy biến, 19 checksum nguồn đúng; ba ảnh 1024 px đã được kiểm tra.
 - Bộ model lưu trong Assets/City/Finishing; shader nhung dùng xấp xỉ sheen, chưa xác nhận trong Unreal.
@@ -83,6 +83,7 @@ Mỗi vòng làm việc phải cập nhật file này và commit/push checkpoint
 8. Đã push 6513f16 lên origin/codex/city-expansion, gồm trang trí/ánh sáng/hướng mặt tiền/NavMesh.
    Remote SHA khớp local; 1.831 đối tượng LFS / 50 MB. Commit tiếp theo cập nhật trạng thái này.
    Đã push 04dd2ab: hai bộ sàn, script áp dụng/đọc lại và tiến độ; remote SHA khớp, 8 LFS / 19 MB.
+   Đã push 655d5fc: ba model nội thất, nguồn/attribution, script nhập; remote SHA khớp, 8 LFS / 17 MB.
 
 ## Bằng chứng và đường dẫn
 
