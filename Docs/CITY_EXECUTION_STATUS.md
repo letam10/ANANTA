@@ -6,7 +6,7 @@ Bằng chứng chi tiết: Saved/QA và Saved/Logs; lịch sử đầy đủ n�
 
 ## Yêu cầu hiện hành
 
-- Thành phố liên tục khoảng 1,70 × 1,70 km, gấp đôi diện tích bản trước.
+- Bản hiện tại khoảng 1,70 × 1,70 km; yêu cầu mới đã chốt: 3,40 × 3,40 km, gấp bốn diện tích hiện tại.
 - Tăng kiến trúc/cảnh quan/địa điểm tương tác; giữ nguyên model nhân vật.
 - Nhà không vào được chỉ có vỏ, ưu tiên đồ chi tiết cho nội thất tương tác.
 - Hướng trải nghiệm thành phố ANANTA/Neverness to Everness, chất lượng hình ảnh kiểu Endfield.
@@ -14,6 +14,8 @@ Bằng chứng chi tiết: Saved/QA và Saved/Logs; lịch sử đầy đủ n�
 - Mục tiêu mới: khoảng 90 FPS ở mức tối đa trên máy hiện tại, thay mục tiêu 60 FPS trước đó.
 - Tối đa là Epic (3), render scale 100%; không đổi nhãn High thành Max để đạt số FPS.
 - Chỉ chơi thử ngắn vài phút, không benchmark; ưu tiên chạy ngầm/offscreen.
+- Rà toàn bộ kẹt/xuyên trên bản mới nhất; thêm phương tiện, NPC lên/xuống và tuyến chính cố định.
+- Nâng chi tiết phố/nhà/khu công cộng/giải trí/bờ biển/cảng. Checklist: CITY_MOBILITY_ROUND.md.
 
 ## Đã có và đã kiểm chứng
 
@@ -72,6 +74,10 @@ Bằng chứng chi tiết: Saved/QA và Saved/Logs; lịch sử đầy đủ n�
 - Mục tiêu 90 FPS chưa đạt. Lỗi GPU PageFault khởi tạo Nanite/VSM được giữ log, đang chẩn đoán.
 - Cvar Max đã xác nhận Epic 3, native 1080p, cap 90, pool 3000 MB, Nanite culling bật, hardware RT tắt.
 - Chi tiết sử dụng và nghiệm thu: Docs/CITY_GRAPHICS_SETTINGS.md.
+- PASS: package preview 236,81 giây; menu Apply/F8/tiếng Việt/English/reload trong EXE đạt.
+- EXE mới: Saved/Builds/CitySettingsPreview/Windows/ANANTA.exe; ảnh menu/FPS đã xem.
+- Lượt Max của EXE bị GPU PageFault lúc khởi động; chưa có số FPS tuyến đầy đủ cho EXE này.
+- Bản preview chưa hoàn tất HLOD; không nhận là bản phát hành ổn định.
 
 ## Tồn đọng và thứ tự tiếp tục
 
@@ -84,9 +90,9 @@ Bằng chứng chi tiết: Saved/QA và Saved/Logs; lịch sử đầy đủ n�
    Cache đã lưu được giữ; không dừng/khởi động lại chỉ vì chờ lâu.
 4. Mẫu HLOD X0_Y0 đạt PBR/emissive/normal; cảnh báo normal cũ X5_Y3 và toàn bộ proxy còn cần rà.
 5. Cải thiện sáng xưởng, cửa sổ ngày, cây/cảnh quan còn đơn giản và mức lặp ngoài phố.
-6. Đóng gói bản mở rộng rồi thử lại nhiệm vụ, xe, dịch vụ, save cũ và ảnh ngày/chiều xanh.
-   EXE đóng gói hiện có vẫn thuộc thành phố nhỏ trước mở rộng; không dùng làm bằng chứng bản mới.
-7. Commit/push checkpoint sau vòng này; remote đã xác nhận gần nhất: 528ac60 trên codex/city-expansion.
+6. Đã đóng gói preview mở rộng; tiếp tục thử nhiệm vụ, xe, dịch vụ, save cũ và ảnh ngày/chiều xanh.
+   Bản Saved/Builds/City cũ được giữ; bản mới nằm tại CitySettingsPreview.
+7. Remote đã xác nhận gần nhất: ed39ea3 trên codex/city-expansion; tiếp tục checkpoint mỗi vòng.
 
 ## Bằng chứng chính
 

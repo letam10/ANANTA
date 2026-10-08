@@ -1,11 +1,13 @@
 [CmdletBinding()]
 param(
+    [string]$ExecutablePath,
     [string]$EngineRoot = 'C:\Program Files\Epic Games\UE_5.8'
 )
 
 $ErrorActionPreference = 'Stop'
 $projectRoot = (Resolve-Path (Join-Path $PSScriptRoot '..\..')).Path
-$qaPath = Join-Path $projectRoot 'Saved\QA\CityMaxGraphics'
+$variant = if ($ExecutablePath) { 'Packaged' } else { '' }
+$qaPath = Join-Path $projectRoot "Saved\QA\CityMaxGraphics$variant"
 New-Item -ItemType Directory -Path $qaPath -Force | Out-Null
 $configPath = Join-Path $qaPath 'GameUserSettings.ini'
 $settings = @'
@@ -37,23 +39,40 @@ sg.FoliageQuality=3
 sg.ShadingQuality=3
 '@
 [IO.File]::WriteAllText($configPath, $settings, [Text.UTF8Encoding]::new($false))
-$logPath = Join-Path $projectRoot 'Saved\Logs\CityMaxGraphics.log'
-$consolePath = Join-Path $projectRoot 'Saved\Logs\CityMaxGraphicsConsole.log'
+$logPath = Join-Path $projectRoot "Saved\Logs\CityMaxGraphics$variant.log"
+$consolePath = Join-Path $projectRoot "Saved\Logs\CityMaxGraphics${variant}Console.log"
 $editorPath = Join-Path $EngineRoot 'Engine\Binaries\Win64\UnrealEditor-Cmd.exe'
 $arguments = @(
-    "$projectRoot\ANANTA.uproject", '/Game/ANANTA/Maps/ANANTA_City',
-    '-game', '-RenderOffscreen', '-windowed', '-ForceRes', '-ResX=1920', '-ResY=1080',
+    '-RenderOffscreen', '-windowed', '-ForceRes', '-ResX=1920', '-ResY=1080',
     '-CityServiceCheck', '-CityObserveGraphics', '-CityQASlot', "-GameUserSettingsINI=$configPath",
     '-NoSplash', '-nosound', '-unattended', "-abslog=$logPath"
 )
-& $editorPath @arguments *> $consolePath
-if ($LASTEXITCODE -ne 0) {
-    throw "Max graphics gameplay failed: $LASTEXITCODE. See $logPath"
+if ($ExecutablePath) {
+    $ExecutablePath = (Resolve-Path -LiteralPath $ExecutablePath).Path
+    $errorPath = Join-Path $qaPath 'Error.log'
+    $process = Start-Process -FilePath $ExecutablePath -ArgumentList $arguments -WindowStyle Hidden `
+        -WorkingDirectory (Split-Path $ExecutablePath) -RedirectStandardOutput $consolePath `
+        -RedirectStandardError $errorPath -PassThru -Wait
+    $code = $process.ExitCode
+    $savedRoot = [IO.Path]::GetFullPath((Join-Path (Split-Path $ExecutablePath) '..\..\Saved'))
+} else {
+    $arguments = @("$projectRoot\ANANTA.uproject", '/Game/ANANTA/Maps/ANANTA_City', '-game') + $arguments
+    & $editorPath @arguments *> $consolePath
+    $code = $LASTEXITCODE
+    $savedRoot = Join-Path $projectRoot 'Saved'
+}
+if ($code -ne 0) {
+    throw "Max graphics gameplay failed: $code. See $logPath"
 }
 $log = Get-Content -LiteralPath $logPath -Raw
 if (-not $log.Contains('CITY_SERVICE_JOURNEY_FINISH mode=Check success=1') -or
     -not $log.Contains('CITY_GRAPHICS_OBSERVATION_WRITTEN')) {
     throw "Required gameplay or observation evidence missing: $logPath"
 }
-Copy-Item -LiteralPath (Join-Path $projectRoot 'Saved\QA\CityServiceJourney\Report.txt') -Destination $qaPath
+Copy-Item -LiteralPath (Join-Path $savedRoot 'QA\CityServiceJourney\Report.txt') -Destination $qaPath
+if ($ExecutablePath) {
+    foreach ($name in @('FrameTimes.csv', 'RenderConfig.txt')) {
+        Copy-Item -LiteralPath (Join-Path $savedRoot "QA\CityMaxGraphics\$name") -Destination $qaPath
+    }
+}
 Write-Output "CITY_MAX_GRAPHICS_OBSERVED $qaPath"
