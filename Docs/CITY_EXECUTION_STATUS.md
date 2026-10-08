@@ -43,19 +43,25 @@ Mỗi vòng làm việc phải cập nhật file này và commit/push checkpoint
 - PASS: nhập kit và áp dụng map; các mốc nhiệm vụ/người/xe được giữ nguyên.
 - PASS: mở lại map độc lập, 7.000 actor, 281.266 instance, 92 material graph, không lỗi.
 - PASS: biên dịch lượt thử tám dịch vụ; sửa ghi nhận đủ tám loại địa điểm, sáu test chạy lại đều pass.
-- Đang chụp cảnh mở rộng và chạy lượt input thử dịch vụ; chưa xác nhận kết quả runtime.
+- PASS: lượt chơi 293,524 giây qua tám cửa/dịch vụ, nhận tiếp tế một lần, nhấn E lặp và F5.
+- PASS: tiến trình khác tải lại đủ tám lượt thăm, một tiếp tế và vị trí người chơi.
+- Quan sát lượt chơi: 32.444 frame, trung bình 8,985 ms, p95 10,423 ms; 3 frame >33,3 ms.
+- PASS: tám ảnh ngày và tám ảnh chiều xanh 1080p. Ảnh cho thấy nội thất còn trống, bóng phố quá tối.
+- Một lần khởi tạo chiều xanh gặp GPU page fault khi dựng bóng Nanite; lần sau pass, chưa rõ nguyên nhân.
+- Đang bổ sung nội thất và ba không gian công cộng; chưa áp dụng hoặc kiểm chứng vòng trang trí này.
 - Chưa dựng lại HLOD hay đóng gói bản mở rộng.
 
 ## Còn tồn đọng / chưa đạt
 
 1. Kiểm tra kit trong game, đặc biệt va chạm trạm chờ và lối vào các phòng.
-2. Biên dịch lượt thử dịch vụ, kiểm tra ảnh khu mở rộng và nội thất.
+2. Áp dụng trang trí nội thất/quảng trường, chỉnh ánh sáng, kiểm tra ảnh mới.
 3. Dựng lại HLOD; kiểm tra streaming và đường đi trong khu mở rộng.
 4. Chơi ngắn kiểm tra cửa mới, dịch vụ, vật phẩm, xe, nhiệm vụ, lưu/tải và save cũ.
 5. Xem ảnh ngày/đêm, sửa bố cục lặp, ánh sáng và nội thất thiếu chi tiết.
 6. Đánh giá frame trong lần chơi bình thường, tối ưu điểm nghẽn thực tế; chưa chứng minh 60 FPS.
 7. Đóng gói và xác nhận lại bản cuối; không dùng build cũ để nhận bản mở rộng đạt.
-8. Checkpoint trên nhánh codex/city-expansion; cập nhật kết quả push và runtime trong vòng tiếp theo.
+8. Đã push d0e577b lên origin/codex/city-expansion, gồm 7.563 đối tượng LFS / 684 MB.
+   Remote đã xác nhận SHA trùng local. Tiếp tục commit/push kết quả mỗi vòng.
 
 ## Bằng chứng và đường dẫn
 
@@ -64,6 +70,8 @@ Mỗi vòng làm việc phải cập nhật file này và commit/push checkpoint
 - Bố cục mới: Saved/QA/CityExpansionSourceAudit.json.
 - Build mới: Saved/Logs/CityExpansionBuild.log.
 - Hợp đồng: Docs/CITY_EXPANSION_CONTRACT.md.
+- Dịch vụ: Saved/QA/CityServiceJourney/Report.txt và Reload.txt.
+- Log GPU lỗi đã giữ: Saved/Logs/CityGPUCaptureBlueHour.Failure1.log.
 
 Input QA qua PlayerController.InputKey; bàn phím desktop thực chưa được xác nhận.
 Đồ họa cuối và 60 FPS vẫn là mục tiêu đang làm, chưa đủ bằng chứng để xác nhận.
