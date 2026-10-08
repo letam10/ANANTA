@@ -60,21 +60,39 @@ Mỗi vòng làm việc phải cập nhật file này và commit/push checkpoint
 - PASS: mở lại 1.544 nhóm, 4.631 mẫu transform và tám cửa đúng hướng; ảnh GPU hiện rõ chi tiết mặt tiền.
 - PASS: NavMesh lưu đúng 860 m mỗi phía; truy vấn Recast ở khu mới trả đường đầy đủ dài 16 m.
 - Sửa runner GPU: bắt buộc dấu hoàn tất trong log, không nhận mã thoát 0 là đủ.
-- HLOD bản mở rộng đang dựng: 288 cụm, bắt đầu 10:33 ngày 08-10; chưa hoàn tất hoặc đóng gói.
+- HLOD bản mở rộng: 288 cụm; lượt 10:33 đã dừng có kiểm soát để sửa kênh vật liệu, chưa đóng gói.
 - Chuẩn bị lượt hoàn thiện: sofa nhung HOUSE có tác giả Wayfair/Eric Chadwick, giấy phép CC BY 4.0.
 - PASS nguồn: hai bộ sàn Poly Haven CC0, tám ảnh PBR 2K, checksum khớp API; đã xem ảnh màu.
 - Terrazzo dành cho phòng khám/chợ/trung tâm giao thông; bê tông sơn mòn dành cho xưởng xe.
-- Script áp dụng và đọc lại bốn sàn đã qua kiểm tra cú pháp; chưa chạy Unreal trong lúc HLOD dựng.
-- HLOD tại 11:07 vẫn ở cụm 6/288, CPU tiếp tục tăng; đang rà soát chi phí tạo proxy bằng mã engine.
+- PASS: áp dụng và mở lại bốn sàn, hai material đủ base color/normal/roughness/AO và đúng thiết lập texture.
 - PASS nguồn model: sofa 4.196, thảm 1.668, rèm 6.428 tam giác; ba FBX roundtrip đúng kích thước/UV/material.
 - PASS: không có mặt suy biến, 19 checksum nguồn đúng; ba ảnh 1024 px đã được kiểm tra.
-- Bộ model lưu trong Assets/City/Finishing; shader nhung dùng xấp xỉ sheen, chưa xác nhận trong Unreal.
+- PASS: nhập ba model vào Unreal, đúng kích thước và 3/2/3 material slot; sofa có collision và ba LOD.
+- Bộ model lưu trong Assets/City/Finishing; shader nhung dùng xấp xỉ sheen, đã xem ảnh trong game.
+- PASS bố trí nguồn: 183 vật thể nội thất, thêm sáu rèm; đổi hai sofa và hai thảm ở vị trí có sẵn.
+- Kiểm tra 34.390 cặp bounds với đồ cũ, hành lang giữa phòng 440 cm; thảm mỏng cho phép dưới chân đồ.
+- Nguồn dựng phòng giữ sàn mới khi tái tạo; đọc lại map kiểm tra thêm mesh, scale, rotation, collision.
+- PASS: mở lại map có đúng 256 vật thể trang trí, 16 đèn và tám dịch vụ, đúng mesh/scale/yaw/collision.
+- Phát hiện và sửa lỗi lưu xóa external actor: chỉ save_dirty_packages làm 250 vật thể cũ xuất hiện lại.
+  RefreshCityDressing đã thêm save_current_level; đọc lại độc lập xác nhận không còn 506 vật thể trùng.
+- Chẩn đoán 11:19: năm mẫu luồng CPU cao nằm trong ProxyLODMeshReduction; địa chỉ thay đổi.
+  Mẫu hiệu năng không có I/O/page fault; cụm 6 sau đó hoàn thành, không có bằng chứng tiến trình treo.
+- Phát hiện: HLOD lưu trên đĩa tắt emissive/roughness/metallic; dừng lượt cũ khi bắt đầu cụm 7 để sửa.
+- PASS: mở lại HLOD có bốn kênh PBR; template giữ tham số engine/27 thuộc tính, emissive theo NightAmount.
+  Cửa sổ dùng MaterialProxyReplace; shader đã compile. Chưa có proxy bake cuối được kiểm chứng.
+- PASS: Editor build 35,31 giây; tám ảnh hoàn thiện ngày và tám ảnh chiều xanh 1080p.
+  Đã xem sofa/thảm/rèm/sàn; tường còn trống, một số đồ prototype và cửa sổ ban ngày còn quá sáng.
+- PASS: tuyến tám dịch vụ sau hoàn thiện 293,396 giây, 23 save, một tiếp tế; tiến trình khác tải lại đúng.
+  30.713 frame: trung bình 9,487 ms, p95 11,375 ms, 5 frame >33,3 ms; chỉ là quan sát lượt chơi này.
+- Đã tra tài liệu Epic/Blender: culling, Nanite, HLOD, Lumen/VSM và samples/bounces.
+  Kết quả và thứ tự kiểm chứng: Docs/CITY_RENDER_OPTIMIZATION.md; chưa đổi cấu hình trong lượt nghiên cứu.
+- Checkpoint giữ dữ liệu HLOD đang dựng dở để tiếp tục; bắt buộc dựng lại trước khi nhận bản phát hành.
 
 ## Còn tồn đọng / chưa đạt
 
 1. Kiểm tra kit trong game, đặc biệt va chạm trạm chờ và lối vào các phòng.
 2. Chỉnh mảng tường/phần giữa phòng còn trống; tiếp tục giảm chi tiết còn mang dáng prototype.
-   Sofa/thảm/rèm đã xong nguồn; nhập, đặt vào phòng và áp dụng sàn sau khi HLOD hiện hành kết thúc.
+   Sofa/thảm/rèm/sàn đã qua ảnh GPU và tuyến tám dịch vụ; chất lượng hình ảnh tổng thể còn cần hoàn thiện.
 3. Dựng lại HLOD; kiểm tra streaming và đường đi trong khu mở rộng.
 4. Chơi ngắn kiểm tra cửa mới, dịch vụ, vật phẩm, xe, nhiệm vụ, lưu/tải và save cũ.
 5. Xem ảnh ngày/đêm, sửa bố cục lặp, ánh sáng và nội thất thiếu chi tiết.
@@ -97,11 +115,16 @@ Mỗi vòng làm việc phải cập nhật file này và commit/push checkpoint
 - Trang trí: Saved/QA/CityDressingReadback.json; ảnh Saved/QA/CityDressing và CityGPUBlueHour.
 - Save cũ: Tools/QA/Fixtures/CityBeforeServices.sav; báo cáo Saved/QA/CityAutomation/index.json.
 - Hướng mặt tiền: Saved/QA/CityFacadePlacementReadback.json; NavMesh: Saved/Logs/CityGPUNavigationCheck.log.
-- HLOD đang chạy: Saved/Logs/CityHLOD.log và CityHLODConsole.log.
+- HLOD đã dừng: Saved/Logs/CityHLOD.BeforePBRRepair.log và CityHLODConsole.BeforePBRRepair.log.
 - Nguồn sàn: Assets/City/interior_finish_catalog.json; kiểm tra Saved/QA/CityInteriorTextures.json.
-- Script sàn chưa chạy: Tools/Editor/ApplyCityFloorFinishes.py và VerifyCityFloorFinishes.py.
+- Sàn đã đọc lại: Saved/QA/CityFloorFinishesReadback.json.
 - Model mới: Assets/City/finishing_manifest.json; kiểm tra Saved/QA/CityFinishingAssets/audit.json.
-- Script nhập model chưa chạy: Tools/Editor/ImportCityFinishing.py.
+- Model đã nhập: Saved/QA/CityFinishingImport.json.
+- Bố trí hoàn thiện: Tools/Editor/CityInteriorFinishes.py; audit Saved/QA/CityVenueDressingAudit.json.
+- Chẩn đoán HLOD: Saved/QA/CityHLODThreadSamples.json.
+- HLOD PBR: Saved/QA/CityHLODPBRReadback.json; log CityHLODPBRReadback.log.
+- Hoàn thiện: Saved/QA/CityFinishing và CityFinishingBlueHour; build Saved/Logs/CityFinishingBuild.log.
+- Nghiên cứu render: Docs/CITY_RENDER_OPTIMIZATION.md; đối chiếu Saved/QA/CityRenderConfigAudit.md.
 
 Input QA qua PlayerController.InputKey; bàn phím desktop thực chưa được xác nhận.
 Đồ họa cuối và 60 FPS vẫn là mục tiêu đang làm, chưa đủ bằng chứng để xác nhận.

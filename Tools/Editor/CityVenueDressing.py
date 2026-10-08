@@ -2,6 +2,7 @@
 
 from CityExpansionData import VENUES
 from CityLayout import CAFE, APARTMENT
+from CityInteriorFinishes import finish_items
 
 
 ROOMS = ({"id": "Cafe", **CAFE}, {"id": "Apartment", **APARTMENT}) + VENUES
@@ -162,7 +163,7 @@ def describe():
             house("TicketRecords", "book_encyclopedia_set_01", -500, -430, 120,
                   yaw=90, collision=False)
             house("TicketLamp", "hanging_industrial_lamp", -500, -430, 185, collision=False)
-    return result
+    return finish_items(result, ROOMS)
 
 
 def dress():

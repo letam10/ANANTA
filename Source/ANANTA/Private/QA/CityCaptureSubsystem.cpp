@@ -120,6 +120,15 @@ void UCityCaptureSubsystem::CaptureView(const int32 Index)
         FRotator(-4, 0, 0), FRotator(-6, 165, 0), FRotator(-5, 5, 0),
         FRotator(-22, 42, 0), FRotator(-22, 40, 0), FRotator(-22, 45, 0), FRotator(5, 20, 0)
     };
+    static const FVector FinishingLocations[] = {
+        FVector(-37900, 2480, 165), FVector(2320, 2260, 185), FVector(-9720, 2230, 170),
+        FVector(14180, 2440, 175), FVector(-21750, -2400, 185), FVector(37880, 2500, 185),
+        FVector(62200, 2500, 185)
+    };
+    static const FRotator FinishingRotations[] = {
+        FRotator(-8, -45, 0), FRotator(-12, -160, 0), FRotator(-6, 180, 0),
+        FRotator(-10, -140, 0), FRotator(-12, -90, 0), FRotator(-10, -28, 0), FRotator(-10, -150, 0)
+    };
     const FString Directory = GetOutputDirectory();
     IFileManager::Get().MakeDirectory(*Directory, true);
     const FString Filename = Directory / FString::Printf(TEXT("View_%02d.png"), Index);
@@ -131,10 +140,11 @@ void UCityCaptureSubsystem::CaptureView(const int32 Index)
     {
         const bool bExpansion = FParse::Param(FCommandLine::Get(), TEXT("CityExpansionViews"));
         const bool bDressing = FParse::Param(FCommandLine::Get(), TEXT("CityDressingViews"));
-        const FVector Location = bDressing ? DressingLocations[Index]
-            : (bExpansion ? ExpansionLocations[Index] : Locations[Index]);
-        const FRotator Rotation = bDressing ? DressingRotations[Index]
-            : (bExpansion ? ExpansionRotations[Index] : Rotations[Index]);
+        const bool bFinishing = FParse::Param(FCommandLine::Get(), TEXT("CityFinishingViews"));
+        const FVector Location = bFinishing ? FinishingLocations[Index]
+            : (bDressing ? DressingLocations[Index] : (bExpansion ? ExpansionLocations[Index] : Locations[Index]));
+        const FRotator Rotation = bFinishing ? FinishingRotations[Index]
+            : (bDressing ? DressingRotations[Index] : (bExpansion ? ExpansionRotations[Index] : Rotations[Index]));
         GetWorld()->GetTimerManager().SetTimerForNextTick([this, Location, Rotation]()
         {
             if (!ReviewCamera)

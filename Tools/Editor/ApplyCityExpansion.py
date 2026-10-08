@@ -10,7 +10,8 @@ sys.path.insert(0, str(PROJECT / "Tools/Editor"))
 from CityExpansionLayout import generate
 from CityExpansionData import VENUES, GRID_EXTENT
 from CityExpansionVenues import furnish
-from CityVenueDressing import dress as dress_venues
+from CityVenueDressing import describe as venue_items, dress as dress_venues
+from CityInteriorFinishes import FLOORS
 from CityStreetLandmarks import dress as dress_landmarks
 from CityScene import ACTORS, instance_group, mesh_asset, material_asset
 
@@ -23,6 +24,12 @@ def main():
     for name in {g["mesh"] for g in data["groups"]}:
         mesh_asset(name)
     for name in {g["material"] for g in data["groups"] if g["material"]}:
+        material_asset(name)
+    for item in venue_items():
+        mesh_asset(item["mesh"])
+        if item.get("material"):
+            material_asset(item["material"])
+    for name in set(FLOORS.values()):
         material_asset(name)
     levels = unreal.get_editor_subsystem(unreal.LevelEditorSubsystem)
     assert levels.load_level(MAP)

@@ -12,6 +12,10 @@
 FString UCityCaptureSubsystem::GetOutputDirectory() const
 {
     const bool bBlueHour = FParse::Param(FCommandLine::Get(), TEXT("CityBlueHour"));
+    if (FParse::Param(FCommandLine::Get(), TEXT("CityFinishingViews")))
+    {
+        return FPaths::ProjectSavedDir() / (bBlueHour ? TEXT("QA/CityFinishingBlueHour") : TEXT("QA/CityFinishing"));
+    }
     if (FParse::Param(FCommandLine::Get(), TEXT("CityDressingViews")))
     {
         return FPaths::ProjectSavedDir() / (bBlueHour ? TEXT("QA/CityDressingBlueHour") : TEXT("QA/CityDressing"));

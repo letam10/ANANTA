@@ -1,6 +1,7 @@
 """Source-only geometry audit; does not start or import Unreal."""
 
 import ast
+import argparse
 from collections import Counter
 from itertools import combinations, product
 import json
@@ -69,10 +70,15 @@ def overlaps(first, second):
 
 
 def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--source-only", action="store_true")
+    args = parser.parse_args()
     manifest = json.loads((PROJECT / "Assets/City/manifest.json").read_text(encoding="utf-8"))
     meshes = {item["id"]: item for item in manifest["meshes"]}
     expansion = json.loads((PROJECT / "Assets/City/expansion_manifest.json").read_text(encoding="utf-8"))
     meshes.update({item["id"]: item for item in expansion["meshes"]})
+    finishing = json.loads((PROJECT / "Assets/City/finishing_manifest.json").read_text(encoding="utf-8"))
+    meshes.update({item["id"]: item for item in finishing["meshes"]})
     items = describe()
     errors = []
     labels = [item["label"] for item in items]
@@ -87,9 +93,9 @@ def main():
         if item["mesh"] != "Cube":
             if item["mesh"] not in meshes:
                 errors.append("Unknown mesh " + item["mesh"])
-            if not (asset_root / "Meshes" / f"SM_{item['mesh']}.uasset").is_file():
+            if not args.source_only and not (asset_root / "Meshes" / f"SM_{item['mesh']}.uasset").is_file():
                 errors.append("Mesh package missing " + item["mesh"])
-        if item.get("material"):
+        if item.get("material") and not args.source_only:
             if not (asset_root / "Materials" / f"M_{item['material']}.uasset").is_file():
                 errors.append("Material package missing " + item["material"])
         if set(item) - {"label", "mesh", "location", "scale", "yaw", "collision", "material"}:
@@ -115,12 +121,20 @@ def main():
         if item["collision"] and high[1] > room["centre"][1] - 220 and low[1] < room["centre"][1] + 220:
             errors.append("Entry corridor obstruction " + item["label"])
     for first, second in combinations(items, 2):
+        # Tham mem day 1.5 cm duoc phep nam duoi chan ghe va ban, khong co collision.
+        if first["mesh"] == "InteriorWovenRug" or second["mesh"] == "InteriorWovenRug":
+            continue
         if overlaps(bounds[first["label"]], bounds[second["label"]]):
             errors.append("New furniture overlap: " + first["label"] + " / " + second["label"])
     existing = capture_existing(manifest)
     existing_bounds = [(item, transformed_bounds(item, meshes)) for item in existing]
     comparisons = 0
     for item in items:
+        if item["mesh"] == "InteriorWovenRug":
+            low, high = bounds[item["label"]]
+            if item["collision"] or low[2] < 15 or high[2] > 17:
+                errors.append("Rug must be a thin noncolliding floor covering " + item["label"])
+            continue
         for previous, previous_bounds in existing_bounds:
             comparisons += 1
             if overlaps(bounds[item["label"]], previous_bounds):
@@ -140,7 +154,8 @@ def main():
             errors.append("Service object outside support " + room["id"])
         if top["collision"]:
             errors.append("Service support must not collide " + room["id"])
-    source_paths = [PROJECT / "Tools/Editor/CityVenueDressing.py", Path(__file__)]
+    source_paths = [PROJECT / "Tools/Editor/CityVenueDressing.py",
+                    PROJECT / "Tools/Editor/CityInteriorFinishes.py", Path(__file__)]
     for path in source_paths:
         lines = path.read_text(encoding="utf-8").splitlines()
         if len(lines) > 300:
@@ -148,7 +163,8 @@ def main():
         for number, line in enumerate(lines, 1):
             if len(line) > 120:
                 errors.append(f"Line exceeds 120 characters {path.name}:{number}")
-    result = dict(passed=not errors, additions=len(items), rooms=dict(counts), deterministic=items == describe(),
+    result = dict(passed=not errors, sourceOnly=args.source_only,
+                  additions=len(items), rooms=dict(counts), deterministic=items == describe(),
                   uniqueLabels=len(labels) == len(set(labels)), corridorWidthCm=440,
                   existingFurnitureCaptured=len(existing), existingBoundsComparisons=comparisons,
                   meshIds=sorted({item["mesh"] for item in items}), errors=errors,

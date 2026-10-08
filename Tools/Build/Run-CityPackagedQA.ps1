@@ -6,7 +6,8 @@ param(
     [string]$Mode = 'InputSmoke',
     [switch]$BlueHour,
     [switch]$ExpansionViews,
-    [switch]$DressingViews
+    [switch]$DressingViews,
+    [switch]$FinishingViews
 )
 
 $ErrorActionPreference = 'Stop'
@@ -48,6 +49,9 @@ if ($ExpansionViews) {
 }
 if ($DressingViews) {
     $arguments += '-CityDressingViews'
+}
+if ($FinishingViews) {
+    $arguments += '-CityFinishingViews'
 }
 $markers = @{
     Capture = 'CITY_CAPTURE_FINISH success=1'

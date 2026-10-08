@@ -2,6 +2,7 @@
 
 import unreal
 from CityScene import box, prop, spawn
+from CityInteriorFinishes import FLOORS
 
 
 def window(prefix, x, y, width):
@@ -17,7 +18,7 @@ def room(prefix, centre, size, face, entry):
     x, y = centre
     width, depth = size
     wall = "InteriorPlaster"
-    box(prefix + "_Floor", (x, y, 5), (width, depth, 20), "InteriorFloor")
+    box(prefix + "_Floor", (x, y, 5), (width, depth, 20), FLOORS.get(prefix + "_Floor", "InteriorFloor"))
     box(prefix + "_Roof", (x, y, 352), (width + 50, depth + 50, 35), "Roof")
     box(prefix + "_Ceiling", (x, y, 331), (width, depth, 8), wall)
     for side in (-1, 1):

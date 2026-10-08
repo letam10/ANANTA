@@ -9,14 +9,7 @@ PROJECT = Path(unreal.Paths.project_dir()).resolve()
 sys.path.insert(0, str(PROJECT / "Tools/Editor"))
 from CityMaterials import create_material
 from CityScene import ACTORS, material_asset
-
-
-FLOORS = {
-    "Expansion_Clinic_Floor": "InteriorTerrazzo",
-    "Expansion_Market_Floor": "InteriorTerrazzo",
-    "Expansion_Transit_Floor": "InteriorTerrazzo",
-    "Expansion_Workshop_Floor": "InteriorWorkshopConcrete",
-}
+from CityInteriorFinishes import FLOORS
 
 
 def main():

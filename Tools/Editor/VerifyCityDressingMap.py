@@ -9,6 +9,7 @@ PROJECT = Path(unreal.Paths.project_dir()).resolve()
 sys.path.insert(0, str(PROJECT / "Tools/Editor"))
 from CityVenueDressing import describe as venue_items
 from CityStreetLandmarks import describe as landmark_items
+from CityAssetOrientation import imported_yaw
 
 
 def main():
@@ -22,8 +23,8 @@ def main():
     expected = {item["label"]: item for item in venue_items() + landmark_items()}
     errors = []
     labels = [actor.get_actor_label() for actor in dressing]
-    if len(labels) != 250 or len(set(labels)) != 250 or set(labels) != set(expected):
-        errors.append("Saved dressing labels do not match the 250 authored props")
+    if len(labels) != len(expected) or len(set(labels)) != len(expected) or set(labels) != set(expected):
+        errors.append("Saved dressing labels do not match the authored props")
     for actor in dressing:
         item = expected.get(actor.get_actor_label())
         if not item:
@@ -31,10 +32,21 @@ def main():
         location = actor.get_actor_location()
         if any(abs(a - b) > 0.1 for a, b in zip((location.x, location.y, location.z), item["location"])):
             errors.append(f"Incorrect saved position: {actor.get_actor_label()}")
+        scale = actor.get_actor_scale3d()
+        if any(abs(a - b) > 0.001 for a, b in zip((scale.x, scale.y, scale.z), item["scale"])):
+            errors.append(f"Incorrect saved scale: {actor.get_actor_label()}")
+        yaw = imported_yaw(item["mesh"], item["yaw"])
+        if abs((actor.get_actor_rotation().yaw - yaw + 180) % 360 - 180) > 0.1:
+            errors.append(f"Incorrect saved rotation: {actor.get_actor_label()}")
         components = actor.get_components_by_class(unreal.StaticMeshComponent)
         if not components or not components[0].static_mesh:
             errors.append(f"Missing saved mesh: {actor.get_actor_label()}")
+        elif components[0].static_mesh.get_name() != ("Cube" if item["mesh"] == "Cube" else f"SM_{item['mesh']}"):
+            errors.append(f"Incorrect saved mesh: {actor.get_actor_label()}")
         for component in components:
+            profile = "BlockAll" if item["collision"] else "NoCollision"
+            if str(component.get_collision_profile_name()) != profile:
+                errors.append(f"Incorrect saved collision profile: {actor.get_actor_label()}")
             if any(not component.get_material(i) for i in range(component.get_num_materials())):
                 errors.append(f"Missing material: {actor.get_actor_label()}")
     lights = [a for a in actors if isinstance(a, unreal.RectLight) and "_AreaLight" in a.get_actor_label()]

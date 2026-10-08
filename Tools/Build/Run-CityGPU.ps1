@@ -6,6 +6,7 @@ param(
     [switch]$BlueHour,
     [switch]$ExpansionViews,
     [switch]$DressingViews,
+    [switch]$FinishingViews,
     [string]$EngineRoot = 'C:\Program Files\Epic Games\UE_5.8'
 )
 
@@ -40,6 +41,9 @@ if ($ExpansionViews) {
 if ($DressingViews) {
     $arguments += '-CityDressingViews'
 }
+if ($FinishingViews) {
+    $arguments += '-CityFinishingViews'
+}
 & $editorPath @arguments *> $consolePath
 $code = $LASTEXITCODE
 Write-Output "CITY_GPU_EXIT=$code MODE=$Mode LOG=$logPath"
@@ -61,6 +65,9 @@ if (-not $log.Contains($markers[$Mode])) {
 }
 if ($Mode -eq 'Capture') {
     $captureName = if ($DressingViews) { 'CityDressing' } else { 'CityGPU' }
+    if ($FinishingViews) {
+        $captureName = 'CityFinishing'
+    }
     $env:ANANTA_CITY_CAPTURE_DIR = Join-Path $projectRoot "Saved\QA\$captureName$lightingSuffix"
     python -c @'
 import os
