@@ -87,6 +87,8 @@ Mỗi vòng làm việc phải cập nhật file này và commit/push checkpoint
 - Đã tra tài liệu Epic/Blender: culling, Nanite, HLOD, Lumen/VSM và samples/bounces.
   Kết quả và thứ tự kiểm chứng: Docs/CITY_RENDER_OPTIMIZATION.md; chưa đổi cấu hình trong lượt nghiên cứu.
 - Checkpoint giữ dữ liệu HLOD đang dựng dở để tiếp tục; bắt buộc dựng lại trước khi nhận bản phát hành.
+- PASS rà cấu hình: quality 2; preset VSM directional 8x4/local 4x4 rays và samples/ray.
+  Không có control 12 rays/4096 samples; 4096 trong log thuộc cache/trang bóng. Cvar runtime còn cần truy vấn.
 
 ## Còn tồn đọng / chưa đạt
 

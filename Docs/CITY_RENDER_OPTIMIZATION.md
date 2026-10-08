@@ -64,6 +64,12 @@ Nguồn: [Blender — Sampling][sampling], [Epic — Path Tracer][pathtracer].
   `r.RayTracing=False`, DX12/SM6.
 - `Config/DefaultScalability.ini`: GI downsample 32, reflection downsample 2 ở High;
   texture pool 3000 MB, TSR history 100, điều chỉnh LOD bias bóng.
+- User settings chọn quality 2 (High). Preset UE 5.8.3 ở mức này: VSM directional 8 rays x 4 samples/ray;
+  local 4 rays x 4 samples/ray. Đèn local đã dùng mức 4 rays trong preset, không có bước giảm 12 xuống 4.
+- Không tìm thấy control dự án cho 12 rays hoặc 4096 samples. Giá trị 4096 trong log là số trang VSM
+  hoặc kích thước surface cache Lumen; không đổi chúng như số mẫu render.
+- Audit đọc cấu hình, mã engine và log; log capture đóng gói cũ xác nhận áp dụng quality 2/pool 3000.
+  Đây chưa phải truy vấn toàn bộ cvar sau khi bản runtime hiện tại sẵn sàng.
 - Map đã có World Partition, HISM và Nanite cho các mesh phù hợp.
 - HLOD mở rộng có 288 cụm; lượt cũ dừng để sửa vật liệu, chưa có toàn bộ proxy cuối được nghiệm thu.
 - Shader/template HLOD đã mở lại kiểm tra PBR và NightAmount; chưa thay cho kiểm tra proxy được bake.
