@@ -66,12 +66,15 @@ Mỗi vòng làm việc phải cập nhật file này và commit/push checkpoint
 - Terrazzo dành cho phòng khám/chợ/trung tâm giao thông; bê tông sơn mòn dành cho xưởng xe.
 - Script áp dụng và đọc lại bốn sàn đã qua kiểm tra cú pháp; chưa chạy Unreal trong lúc HLOD dựng.
 - HLOD tại 10:59 vẫn ở cụm 6/288, CPU tiếp tục tăng; đang rà soát chi phí tạo proxy bằng mã engine.
+- PASS nguồn model: sofa 4.196, thảm 1.668, rèm 6.428 tam giác; ba FBX roundtrip đúng kích thước/UV/material.
+- PASS: không có mặt suy biến, 19 checksum nguồn đúng; ba ảnh 1024 px đã được kiểm tra.
+- Bộ model lưu trong Assets/City/Finishing; shader nhung dùng xấp xỉ sheen, chưa xác nhận trong Unreal.
 
 ## Còn tồn đọng / chưa đạt
 
 1. Kiểm tra kit trong game, đặc biệt va chạm trạm chờ và lối vào các phòng.
 2. Chỉnh mảng tường/phần giữa phòng còn trống; tiếp tục giảm chi tiết còn mang dáng prototype.
-   Đang dựng sofa/thảm/rèm; nhập và áp dụng sàn mới sau khi HLOD hiện hành kết thúc.
+   Sofa/thảm/rèm đã xong nguồn; nhập, đặt vào phòng và áp dụng sàn sau khi HLOD hiện hành kết thúc.
 3. Dựng lại HLOD; kiểm tra streaming và đường đi trong khu mở rộng.
 4. Chơi ngắn kiểm tra cửa mới, dịch vụ, vật phẩm, xe, nhiệm vụ, lưu/tải và save cũ.
 5. Xem ảnh ngày/đêm, sửa bố cục lặp, ánh sáng và nội thất thiếu chi tiết.
@@ -79,6 +82,7 @@ Mỗi vòng làm việc phải cập nhật file này và commit/push checkpoint
 7. Đóng gói và xác nhận lại bản cuối; không dùng build cũ để nhận bản mở rộng đạt.
 8. Đã push 6513f16 lên origin/codex/city-expansion, gồm trang trí/ánh sáng/hướng mặt tiền/NavMesh.
    Remote SHA khớp local; 1.831 đối tượng LFS / 50 MB. Commit tiếp theo cập nhật trạng thái này.
+   Đã push 04dd2ab: hai bộ sàn, script áp dụng/đọc lại và tiến độ; remote SHA khớp, 8 LFS / 19 MB.
 
 ## Bằng chứng và đường dẫn
 
@@ -95,6 +99,8 @@ Mỗi vòng làm việc phải cập nhật file này và commit/push checkpoint
 - HLOD đang chạy: Saved/Logs/CityHLOD.log và CityHLODConsole.log.
 - Nguồn sàn: Assets/City/interior_finish_catalog.json; kiểm tra Saved/QA/CityInteriorTextures.json.
 - Script sàn chưa chạy: Tools/Editor/ApplyCityFloorFinishes.py và VerifyCityFloorFinishes.py.
+- Model mới: Assets/City/finishing_manifest.json; kiểm tra Saved/QA/CityFinishingAssets/audit.json.
+- Script nhập model chưa chạy: Tools/Editor/ImportCityFinishing.py.
 
 Input QA qua PlayerController.InputKey; bàn phím desktop thực chưa được xác nhận.
 Đồ họa cuối và 60 FPS vẫn là mục tiêu đang làm, chưa đủ bằng chứng để xác nhận.
