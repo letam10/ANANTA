@@ -3,6 +3,8 @@
 Phạm vi: Unreal Engine 5.8.3, thành phố liên tục, giữ model nhân vật.
 Đây là nghiên cứu và thứ tự kiểm chứng; chưa phải kết quả tăng FPS do thay đổi mới.
 Tiến độ thực thi duy nhất: [CITY_EXECUTION_STATUS.md](CITY_EXECUTION_STATUS.md).
+Đối chiếu lại ngày 2026-10-08: truy cập trực tiếp thành công năm trang Epic/Blender bên dưới.
+Log truy cập và trích đoạn: `Saved/QA/RenderResearchWeb/sources.json`.
 
 ## 1. Cơ chế người dùng mô tả
 
@@ -90,6 +92,35 @@ Thứ tự thực hiện và điều kiện nhận:
 7. Cập nhật tiến độ, commit/push; đóng gói lại trước khi nhận chất lượng bản phát hành.
 
 Không dùng benchmark. Lượt chơi hiện có chưa chứng minh lợi ích của các thay đổi chưa thực hiện.
+
+### Ưu tiên giảm chi phí mà giữ thế giới nhất quán
+
+1. Giữ asset quanh người chơi trong vùng streaming; để renderer tự cull theo camera mỗi frame.
+   Khi quay lại, dữ liệu đã nạp giúp tránh phải đợi đọc lại từ đĩa; vẫn phải kiểm tra pop-in khi quay nhanh.
+2. Hoàn thiện HLOD cho cảnh xa; nhà không vào được giữ vỏ, đồ nhỏ dùng khoảng cách hiển thị phù hợp.
+3. Giới hạn đèn đổ bóng chồng lấn và giữ shadow cache hiệu quả. Đồ chuyển động/WPO có thể làm cache mất hiệu lực.
+4. Chỉ thử directional SMRT 8 xuống 4 rays nếu shadow projection là điểm nghẽn; giữ các biến khác cố định.
+   Local hiện đã là 4 rays; samples/ray hiện cũng là 4. Chưa áp dụng thử nghiệm này.
+5. Giữ mip streaming, Nanite/LOD, material đơn giản cho vật xa và TSR ở mức hình ảnh chấp nhận được.
+
+Epic khuyến nghị xem xét Source Radius/Source Angle của đèn trước khi hạ rays/samples bóng mềm.
+Giảm rays chủ yếu tác động phần lấy mẫu bóng; không tự giảm mọi chi phí dựng shadow depth.
+Nguồn: [Virtual Shadow Maps][vsm], [Visibility and Occlusion Culling][culling], [Lumen][lumen].
+
+Với ảnh model ngoại tuyến, adaptive sampling và denoise có thể giảm mẫu cần thiết.
+Đây là tối ưu quy trình tạo ảnh; mesh xuất sang Unreal vẫn cần ngân sách hình học/material riêng.
+Nguồn: [Blender Sampling][sampling].
+
+## 5. Phép thử ánh sáng tiếp theo — chưa thực thi
+
+- Ảnh nội thất ngày còn trắng sáng ở cửa sổ/sàn; ảnh chiều xanh giữ nhiều chi tiết bên ngoài hơn.
+- Thử riêng City_Sun từ 60.000 xuống 40.000 lux; không đổi exposure hoặc shader trong cùng phép thử.
+- Chỉ chạy sau khi tiến trình HLOD ghi Content đã thoát. Script: `Tools/Editor/ReviewCityDaylight.py`.
+- Biến môi trường `ANANTA_CITY_DAYLIGHT_LUX=40000` chọn ứng viên; `60000` khôi phục mức gốc.
+- Chụp cùng tám góc ngày/chiều xanh sau khi nội thất xưởng đã được nhập và mở lại đạt.
+- Giữ ảnh baseline riêng trước khi thử; so độ rõ bên ngoài, bóng sàn, độ sáng phòng và bề mặt đồ vật.
+- Chỉ cập nhật CityScene.py và nhận ứng viên sau khi ảnh đối chiếu đạt; nếu không cải thiện thì khôi phục.
+- Đây là phép thử hình ảnh, không có kết luận tăng FPS hoặc chất lượng cuối từ giá trị lux riêng lẻ.
 
 ## Nguồn chính thức đã truy cập
 

@@ -1,0 +1,274 @@
+{
+  "schemaVersion": 1,
+  "units": "cm",
+  "upAxis": "Z",
+  "forwardAxis": "X",
+  "meshes": [
+    {
+      "id": "ClinicSupplyCabinet",
+      "file": "VenueFixtures/Meshes/ClinicSupplyCabinet.fbx",
+      "boundsCm": {
+        "min": [-115.0, -37.0, 0.0],
+        "max": [115.0, 37.0, 184.0],
+        "size": [230.0, 74.0, 184.0]
+      },
+      "materialSlots": [
+        "VenueFixture_Teal",
+        "VenueFixture_Enamel",
+        "VenueFixture_SupplyLabels",
+        "VenueFixture_Steel"
+      ],
+      "triangles": 4128,
+      "visibleFront": "-Y",
+      "source": "Original ANANTA venue fixture design",
+      "license": "Original project asset",
+      "sha256": "ac5aec968525b5e1f6c1f233930df43df3c818bacbbbd53d0b186b357d6afc79",
+      "lodRecommendation": {
+        "screenSizes": [1, 0.4, 0.15],
+        "triangleRatios": [1, 0.5, 0.2]
+      }
+    },
+    {
+      "id": "TransitRouteDisplay",
+      "file": "VenueFixtures/Meshes/TransitRouteDisplay.fbx",
+      "boundsCm": {
+        "min": [-185.0, -12.0, 0.0],
+        "max": [185.0, 12.0, 150.0],
+        "size": [370.0, 24.0, 150.0]
+      },
+      "materialSlots": [
+        "VenueFixture_Teal",
+        "VenueFixture_Steel",
+        "VenueFixture_Enamel",
+        "VenueFixture_Guide"
+      ],
+      "triangles": 1086,
+      "visibleFront": "-Y",
+      "source": "Original ANANTA venue fixture design",
+      "license": "Original project asset",
+      "sha256": "76ed4f0e047a7fdadf1ffb547557135c0692a18a15073b49a4a7458e1af6832f",
+      "lodRecommendation": {
+        "screenSizes": [1, 0.4, 0.15],
+        "triangleRatios": [1, 0.5, 0.2]
+      }
+    }
+  ],
+  "materials": [
+    {
+      "id": "VenueFixture_Enamel",
+      "baseColor": null,
+      "normal": null,
+      "roughness": null,
+      "ao": null,
+      "metallic": null,
+      "baseColorFactor": [0.64, 0.71, 0.67, 1],
+      "metallicFactor": 0,
+      "roughnessFactor": 0.48,
+      "normalConvention": "OpenGL",
+      "source": "Original ANANTA venue fixture geometry, material design and vector artwork",
+      "license": "Original project asset"
+    },
+    {
+      "id": "VenueFixture_Teal",
+      "baseColor": null,
+      "normal": null,
+      "roughness": null,
+      "ao": null,
+      "metallic": null,
+      "baseColorFactor": [0.025, 0.115, 0.119, 1],
+      "metallicFactor": 0,
+      "roughnessFactor": 0.62,
+      "normalConvention": "OpenGL",
+      "source": "Original ANANTA venue fixture geometry, material design and vector artwork",
+      "license": "Original project asset"
+    },
+    {
+      "id": "VenueFixture_Steel",
+      "baseColor": null,
+      "normal": null,
+      "roughness": null,
+      "ao": null,
+      "metallic": null,
+      "baseColorFactor": [0.59, 0.63, 0.65, 1],
+      "metallicFactor": 1,
+      "roughnessFactor": 0.32,
+      "normalConvention": "OpenGL",
+      "source": "Original ANANTA venue fixture geometry, material design and vector artwork",
+      "license": "Original project asset"
+    },
+    {
+      "id": "VenueFixture_SupplyLabels",
+      "baseColor": "VenueFixtures/Textures/SupplyLabels.png",
+      "normal": null,
+      "roughness": null,
+      "ao": null,
+      "metallic": null,
+      "baseColorFactor": [1, 1, 1, 1],
+      "metallicFactor": 0,
+      "roughnessFactor": 0.8,
+      "normalConvention": "OpenGL",
+      "source": "Original ANANTA venue fixture geometry, material design and vector artwork",
+      "license": "Original project asset"
+    },
+    {
+      "id": "VenueFixture_Guide",
+      "baseColor": "VenueFixtures/Textures/NeighborhoodGuide.png",
+      "normal": null,
+      "roughness": null,
+      "ao": null,
+      "metallic": null,
+      "baseColorFactor": [1, 1, 1, 1],
+      "metallicFactor": 0,
+      "roughnessFactor": 0.83,
+      "normalConvention": "OpenGL",
+      "source": "Original ANANTA venue fixture geometry, material design and vector artwork",
+      "license": "Original project asset"
+    }
+  ],
+  "sourceFiles": [
+    {
+      "file": "VenueFixtures/Sources/Generator/finishing_materials.py",
+      "sha256": "0b0ee12b7f46d0f76d2f553fd675ac750379951ec21b7da08507062f7df73eef",
+      "source": "Original venue fixture source",
+      "license": "Original project asset"
+    },
+    {
+      "file": "VenueFixtures/Sources/Generator/geometry.py",
+      "sha256": "2879b80bc580d0d0a72a47fc5713097664eb3a8b5979e34db9181ebc6e227c54",
+      "source": "Original venue fixture source",
+      "license": "Original project asset"
+    },
+    {
+      "file": "VenueFixtures/Sources/Generator/ImportCityVenueFixtures.py",
+      "sha256": "f84c67a34e51782b63ac83271f1d0857e81d60a1e6478635157fbe985fdd56e4",
+      "source": "Original venue fixture source",
+      "license": "Original project asset"
+    },
+    {
+      "file": "VenueFixtures/Sources/Generator/venue_fixture_art.py",
+      "sha256": "2fe9aad7323b303850de3e13bf9fbe0e8c30526bb0d6fa1ac4dde47fc8da70de",
+      "source": "Original venue fixture source",
+      "license": "Original project asset"
+    },
+    {
+      "file": "VenueFixtures/Sources/Generator/venue_fixture_audit.py",
+      "sha256": "24637f068f0f3a6c201720d577b2f581e786f0ec7107799434c955e57ec9e506",
+      "source": "Original venue fixture source",
+      "license": "Original project asset"
+    },
+    {
+      "file": "VenueFixtures/Sources/Generator/venue_fixture_build.py",
+      "sha256": "0c0d63cc7d6af7585c2a7ff238ece129ef5a9f279d175c01ccab14acb263421c",
+      "source": "Original venue fixture source",
+      "license": "Original project asset"
+    },
+    {
+      "file": "VenueFixtures/Sources/Generator/venue_fixture_geometry.py",
+      "sha256": "a154f49bea22bfaceb42401729e3d573a6c6fa1129f7888ea00eebe597a8681e",
+      "source": "Original venue fixture source",
+      "license": "Original project asset"
+    },
+    {
+      "file": "VenueFixtures/Sources/Generator/workshop_detail_geometry.py",
+      "sha256": "5b41d77a97e50e2011f8fb05f1cccd682804ff20ece0e973383215c54b9c4407",
+      "source": "Original venue fixture source",
+      "license": "Original project asset"
+    },
+    {
+      "file": "VenueFixtures/Sources/GuideCoordinates.json",
+      "sha256": "fe6f2043a291c0dc0153ab22acc0806aab6d9082e2b2e042d6770320d7a754ec",
+      "source": "Original venue fixture source",
+      "license": "Original project asset"
+    },
+    {
+      "file": "VenueFixtures/Sources/Provenance.json",
+      "sha256": "5a4b211d527faab857b4086c7e9dbc21e3b4996361bc2f928e7fcf3acb70bc19",
+      "source": "Original venue fixture source",
+      "license": "Original project asset"
+    },
+    {
+      "file": "VenueFixtures/Textures/NeighborhoodGuide.png",
+      "sha256": "ccb5abfe7d74e8fdb2dc1ab5e7a4adee8af9caac7ddb1a928be567bb9e50d533",
+      "source": "Original venue fixture source",
+      "license": "Original project asset"
+    },
+    {
+      "file": "VenueFixtures/Textures/SupplyLabels.png",
+      "sha256": "a846e25952543c8a099eda8f104a4de7e7f9566a3d50b4155e8ff9f9112cdcb0",
+      "source": "Original venue fixture source",
+      "license": "Original project asset"
+    },
+    {
+      "file": "VenueFixtures/VenueFixtures.blend",
+      "sha256": "fa856fb4a8f88c1f1bc070aa215131af80da473476c0ff020594b9fef771d1cb",
+      "source": "Original venue fixture source",
+      "license": "Original project asset"
+    }
+  ],
+  "guideVenueCoordinates": {
+    "title": "NEIGHBORHOOD GUIDE",
+    "source": "Tools/Editor/CityVenueDressing.py ROOMS",
+    "convention": "X east/right, Y north/up; uniform scale, centimetres",
+    "imageSize": [2048, 768],
+    "pixelsPerCm": 0.017,
+    "originPixel": [790, 349],
+    "venues": [
+      {
+        "number": 1,
+        "id": "Cafe",
+        "centreCm": [-26150, 2400],
+        "markerPixel": [345.45, 308.2],
+        "legend": "CAFE"
+      },
+      {
+        "number": 2,
+        "id": "Apartment",
+        "centreCm": [2350, 2500],
+        "markerPixel": [829.95, 306.5],
+        "legend": "APARTMENT"
+      },
+      {
+        "number": 3,
+        "id": "Bookshop",
+        "centreCm": [-38150, 2700],
+        "markerPixel": [141.45, 303.1],
+        "legend": "BOOKSHOP"
+      },
+      {
+        "number": 4,
+        "id": "Clinic",
+        "centreCm": [-9750, 2550],
+        "markerPixel": [624.25, 305.65],
+        "legend": "CLINIC"
+      },
+      {
+        "number": 5,
+        "id": "Market",
+        "centreCm": [-21750, -2800],
+        "markerPixel": [420.25, 396.6],
+        "legend": "MARKET"
+      },
+      {
+        "number": 6,
+        "id": "Gallery",
+        "centreCm": [14200, 2550],
+        "markerPixel": [1031.4, 305.65],
+        "legend": "GALLERY"
+      },
+      {
+        "number": 7,
+        "id": "Workshop",
+        "centreCm": [38200, 2500],
+        "markerPixel": [1439.4, 306.5],
+        "legend": "WORKSHOP"
+      },
+      {
+        "number": 8,
+        "id": "Transit",
+        "centreCm": [62200, 2500],
+        "markerPixel": [1847.4, 306.5],
+        "legend": "VISITOR CENTRE"
+      }
+    ]
+  }
+}

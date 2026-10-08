@@ -121,6 +121,15 @@ Mỗi vòng làm việc phải cập nhật file này và commit/push checkpoint
   Không khởi động lại tiến trình dựng chỉ vì lỗi đối chiếu của wrapper cũ.
 - PASS hình học xuất X0_Y0: 355.770 normal, tangent và binormal mỗi loại, hữu hạn và độ dài gần 1.
   Chỉ xác nhận FBX đã xuất của mẫu này; cảnh báo cũ X5_Y3 và các cụm khác vẫn cần rà sau dựng.
+- PASS nguồn phòng khám/giao thông: tủ 4.128 và bảng hướng dẫn 1.086 tam giác, mỗi model bốn material slot.
+  Agent xác nhận FBX/UV/bounds/13 hash và bốn ảnh CPU; sơ đồ dùng tọa độ thật của tám địa điểm.
+- PASS tích hợp nguồn: 190 đồ nội thất, 35.720 phép so bounds với 190 đồ cũ, hành lang 440 cm.
+  Thay hai cụm bằng model chi tiết và bỏ 15 mảnh prototype; tủ bắt buộc có collision khi nhập/áp dụng.
+  Map đang lưu vẫn là 211 đồ nội thất + 73 đồ quảng trường; chưa áp dụng nguồn xưởng/tủ/bảng vào Unreal.
+- PASS cú pháp/phong cách sáu file root; script ánh sáng chỉ chuẩn bị, chưa đổi 60.000 lux trong map.
+- Đã đọc lại trực tiếp năm trang Epic/Blender qua HTTP 200; bổ sung ưu tiên culling/cache/rays/denoise.
+  Giảm bóng mặt trời 8 xuống 4 rays chỉ là phép thử dự kiến khi xác định đúng điểm nghẽn, chưa áp dụng.
+- HLOD lúc 15:58 đã lưu xong cụm 13 và bắt đầu 14/288; tiến trình vẫn chạy, chưa nhận toàn bộ proxy.
 
 ## Còn tồn đọng / chưa đạt
 
@@ -137,7 +146,10 @@ Mỗi vòng làm việc phải cập nhật file này và commit/push checkpoint
    Lượt dựng HLOD đầy đủ đã khởi chạy tiếp sau checkpoint; theo dõi Saved/Logs/CityHLOD.log.
    HLOD trong checkpoint còn dang dở, không dùng checkpoint để xác nhận bản mở rộng hoàn tất.
    Nguồn xưởng đã push d40348d, LFS và remote SHA đã xác nhận; chưa có asset Unreal tương ứng.
-   Chẩn đoán cửa sổ/ánh sáng đang thực hiện; chưa thay exposure hoặc cường độ đèn theo giả định.
+   Chẩn đoán ánh sáng đã xong: thử nắng 40.000 thay 60.000 lux là giả thuyết cần so ảnh, chưa được nhận.
+   ReviewCityDaylight.py đã chuẩn bị phép thử/khôi phục; chưa chạy, nguồn dựng map vẫn 60.000 lux.
+9. Sau HLOD: nhập workshop_detail và venue_fixture, chạy hai Apply tương ứng rồi VerifyCityDressingMap.
+   Kỳ vọng mới 190 + 73 = 263 đồ trang trí; kiểm tra collision, ảnh GPU, tuyến dịch vụ và cập nhật HLOD.
 
 ## Bằng chứng và đường dẫn
 
@@ -169,6 +181,9 @@ Mỗi vòng làm việc phải cập nhật file này và commit/push checkpoint
 - Mỗi proxy có Readback.json, Pixels.json, bốn PNG xuất từ asset thực và hình học OBJ/FBX.
 - Xưởng: Assets/City/workshop_detail_manifest.json; Saved/QA/CityWorkshopDetailAssets/audit.json.
 - Bố trí xưởng: Saved/QA/CityWorkshopDetailLayout.json; gate HLOD: Saved/QA/CityHLODLogCases/Results.json.
+- Chẩn đoán ánh sáng: Saved/QA/CityDaylightDiagnosis.md; chưa có ảnh với ứng viên 40.000 lux.
+- Tủ/bảng: Assets/City/venue_fixture_manifest.json; Saved/QA/CityVenueFixtureAssets/audit.json.
+- Tích hợp tủ/bảng: Saved/QA/CityVenueFixtureLayout.json; nguồn web: Saved/QA/RenderResearchWeb/sources.json.
 
 Input QA qua PlayerController.InputKey; bàn phím desktop thực chưa được xác nhận.
 Đồ họa cuối và 60 FPS vẫn là mục tiêu đang làm, chưa đủ bằng chứng để xác nhận.
