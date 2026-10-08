@@ -20,6 +20,10 @@ def main():
               for label, item in items.items()}
     if not all(meshes.values()):
         raise RuntimeError("Import workshop detail meshes before applying the layout")
+    mesh_editor = unreal.get_editor_subsystem(unreal.StaticMeshEditorSubsystem)
+    for label, item in items.items():
+        if item["collision"] and mesh_editor.get_simple_collision_count(meshes[label]) == 0:
+            raise RuntimeError(f"Required workshop collision is missing: {label}")
     level = unreal.get_editor_subsystem(unreal.LevelEditorSubsystem)
     if not level.load_level("/Game/ANANTA/Maps/ANANTA_City"):
         raise RuntimeError("City map did not load")
@@ -52,7 +56,8 @@ def main():
     # Can luu level de giu viec xoa external actor qua lan mo lai.
     if not level.save_current_level() or not unreal.EditorLoadingAndSavingUtils.save_dirty_packages(True, True):
         raise RuntimeError("Workshop changes did not save")
-    report = dict(updated=sorted(items), removedRails=len(rails), mapReadbackVerified=False)
+    report = dict(updated=sorted(items), removedRails=len(rails), mapReadbackVerified=False,
+                  hlodRebuildRequired=True)
     path = PROJECT / "Saved/QA/CityWorkshopDetailApply.json"
     path.write_text(json.dumps(report, indent=2), encoding="utf-8")
     unreal.log(f"CITY_WORKSHOP_DETAIL_APPLIED updated=2 removedRails={len(rails)}")

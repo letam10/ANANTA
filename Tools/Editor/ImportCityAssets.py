@@ -49,7 +49,7 @@ def import_mesh(item, source_root):
     if editor.get_lod_count(mesh) < 1:
         raise RuntimeError(f"Mesh has no LOD: {destination}")
     needs_collision = item["id"].startswith("House_") or item["id"] in (
-        "CafeCounter", "CafeTable", "ApartmentBed", "Bench", "Bollard")
+        "CafeCounter", "CafeTable", "ApartmentBed", "Bench", "Bollard", "WorkshopPartsCrate")
     if needs_collision and editor.get_simple_collision_count(mesh) == 0:
         editor.add_simple_collisions(mesh, unreal.ScriptCollisionShapeType.BOX)
         if editor.get_simple_collision_count(mesh) == 0:

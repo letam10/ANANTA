@@ -114,6 +114,7 @@ Mỗi vòng làm việc phải cập nhật file này và commit/push checkpoint
 - PASS bố trí nguồn xưởng: 205 đồ nội thất, 38.570 phép so bounds với 190 đồ cũ, hành lang 440 cm.
   Bản đồ đang lưu vẫn có 211 đồ nội thất; cần import rồi chạy ApplyCityWorkshopDetail sau HLOD.
   Lệnh này chỉ đổi hai actor và xóa sáu thanh prototype, không tái tạo các actor trang trí khác.
+  Thùng phải có collision trước khi áp dụng; sau thay đổi cần cập nhật HLOD của các cụm bị ảnh hưởng.
 - Sửa gate HLOD: số ô SetupHLODs khác số actor HLOD; kiểm đủ chuỗi actor và dấu hoàn tất riêng.
   PASS 9 ca hồi quy, gồm số ô khác actor, log thiếu/nhảy/trùng actor và sai mẫu; log mẫu thật cũng đạt.
   Lượt full đã nạp runner cũ: nếu wrapper báo chênh số ô, dùng Test-CityHLODLog đọc log hoàn tất.
@@ -135,6 +136,8 @@ Mỗi vòng làm việc phải cập nhật file này và commit/push checkpoint
    Remote SHA khớp local, 324 đối tượng LFS / 69 MB; git lfs fsck và kiểm tra staged đạt.
    Lượt dựng HLOD đầy đủ đã khởi chạy tiếp sau checkpoint; theo dõi Saved/Logs/CityHLOD.log.
    HLOD trong checkpoint còn dang dở, không dùng checkpoint để xác nhận bản mở rộng hoàn tất.
+   Nguồn xưởng đã push d40348d, LFS và remote SHA đã xác nhận; chưa có asset Unreal tương ứng.
+   Chẩn đoán cửa sổ/ánh sáng đang thực hiện; chưa thay exposure hoặc cường độ đèn theo giả định.
 
 ## Bằng chứng và đường dẫn
 
