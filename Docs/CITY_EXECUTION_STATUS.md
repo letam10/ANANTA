@@ -31,6 +31,9 @@ Mỗi vòng làm việc phải cập nhật file này và commit/push checkpoint
 - Mở giới hạn save, tuyến NPC và đèn theo lưới mới; không sửa model nhân vật.
 - Đã dựng và nhập 11 model kiến trúc/cảnh quan, dùng PBR từ bộ tài nguyên hiện có.
 - Có script nhập kit và cập nhật hình học trong map World Partition hiện tại.
+- Đã thêm 177 vật thể cho tám nội thất và 73 vật thể cho ba quảng trường.
+- Thêm cửa sổ có ánh sáng/rèm theo từng ô kính, dùng một tham số shader chung.
+- Giảm độ gắt 16 đèn nội thất và giới hạn khoảng cách xử lý ánh sáng phòng.
 
 ## Kiểm chứng mới
 
@@ -48,20 +51,28 @@ Mỗi vòng làm việc phải cập nhật file này và commit/push checkpoint
 - Quan sát lượt chơi: 32.444 frame, trung bình 8,985 ms, p95 10,423 ms; 3 frame >33,3 ms.
 - PASS: tám ảnh ngày và tám ảnh chiều xanh 1080p. Ảnh cho thấy nội thất còn trống, bóng phố quá tối.
 - Một lần khởi tạo chiều xanh gặp GPU page fault khi dựng bóng Nanite; lần sau pass, chưa rõ nguyên nhân.
-- Đang bổ sung nội thất và ba không gian công cộng; chưa áp dụng hoặc kiểm chứng vòng trang trí này.
+- PASS: lưu/mở lại 250 vật thể trang trí, 16 đèn và tám dịch vụ, không lỗi mesh/material.
+- PASS: build gộp mã C++; sửa xung đột tên hàm phụ giữa hai bộ QA.
+- PASS: 7/7 automation, gồm đọc file save cũ thật trước khi có Services; giữ nhiệm vụ/thưởng/vị trí.
+- PASS: ảnh GPU ngày/chiều xanh sau chỉnh đèn và tám ảnh góc trang trí mới.
+- PASS: tuyến dịch vụ sau trang trí 293,487 giây, tám địa điểm, một tiếp tế; tải lại giữ đúng vị trí.
+- Phát hiện/sửa: FBX đảo trục Y làm mặt tiền/ban công quay vào trong; 238.666 instance và tám cửa đã sửa.
+- PASS: mở lại 1.544 nhóm, 4.631 mẫu transform và tám cửa đúng hướng; ảnh GPU hiện rõ chi tiết mặt tiền.
+- PASS: NavMesh lưu đúng 860 m mỗi phía; truy vấn Recast ở khu mới trả đường đầy đủ dài 16 m.
+- Sửa runner GPU: bắt buộc dấu hoàn tất trong log, không nhận mã thoát 0 là đủ.
 - Chưa dựng lại HLOD hay đóng gói bản mở rộng.
 
 ## Còn tồn đọng / chưa đạt
 
 1. Kiểm tra kit trong game, đặc biệt va chạm trạm chờ và lối vào các phòng.
-2. Áp dụng trang trí nội thất/quảng trường, chỉnh ánh sáng, kiểm tra ảnh mới.
+2. Chỉnh mảng tường/phần giữa phòng còn trống; tiếp tục giảm chi tiết còn mang dáng prototype.
 3. Dựng lại HLOD; kiểm tra streaming và đường đi trong khu mở rộng.
 4. Chơi ngắn kiểm tra cửa mới, dịch vụ, vật phẩm, xe, nhiệm vụ, lưu/tải và save cũ.
 5. Xem ảnh ngày/đêm, sửa bố cục lặp, ánh sáng và nội thất thiếu chi tiết.
 6. Đánh giá frame trong lần chơi bình thường, tối ưu điểm nghẽn thực tế; chưa chứng minh 60 FPS.
 7. Đóng gói và xác nhận lại bản cuối; không dùng build cũ để nhận bản mở rộng đạt.
-8. Đã push d0e577b lên origin/codex/city-expansion, gồm 7.563 đối tượng LFS / 684 MB.
-   Remote đã xác nhận SHA trùng local. Tiếp tục commit/push kết quả mỗi vòng.
+8. Đã push d0e577b và 9a82b8b lên origin/codex/city-expansion; remote đã khớp local.
+   Vòng trang trí/ánh sáng hiện tại chưa commit; sẽ push sau kiểm tra lối đi.
 
 ## Bằng chứng và đường dẫn
 
@@ -72,6 +83,8 @@ Mỗi vòng làm việc phải cập nhật file này và commit/push checkpoint
 - Hợp đồng: Docs/CITY_EXPANSION_CONTRACT.md.
 - Dịch vụ: Saved/QA/CityServiceJourney/Report.txt và Reload.txt.
 - Log GPU lỗi đã giữ: Saved/Logs/CityGPUCaptureBlueHour.Failure1.log.
+- Trang trí: Saved/QA/CityDressingReadback.json; ảnh Saved/QA/CityDressing và CityGPUBlueHour.
+- Save cũ: Tools/QA/Fixtures/CityBeforeServices.sav; báo cáo Saved/QA/CityAutomation/index.json.
 
 Input QA qua PlayerController.InputKey; bàn phím desktop thực chưa được xác nhận.
 Đồ họa cuối và 60 FPS vẫn là mục tiêu đang làm, chưa đủ bằng chứng để xác nhận.

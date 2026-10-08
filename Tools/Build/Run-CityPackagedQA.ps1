@@ -5,7 +5,8 @@ param(
         'ServiceCheck', 'ServiceReload')]
     [string]$Mode = 'InputSmoke',
     [switch]$BlueHour,
-    [switch]$ExpansionViews
+    [switch]$ExpansionViews,
+    [switch]$DressingViews
 )
 
 $ErrorActionPreference = 'Stop'
@@ -44,6 +45,9 @@ if ($BlueHour) {
 }
 if ($ExpansionViews) {
     $arguments += '-CityExpansionViews'
+}
+if ($DressingViews) {
+    $arguments += '-CityDressingViews'
 }
 $markers = @{
     Capture = 'CITY_CAPTURE_FINISH success=1'

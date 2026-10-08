@@ -9,6 +9,8 @@
 #include "Engine/World.h"
 #include "EngineUtils.h"
 #include "GameFramework/PlayerController.h"
+#include "Materials/MaterialParameterCollection.h"
+#include "Materials/MaterialParameterCollectionInstance.h"
 
 ACityStreetLighting::ACityStreetLighting()
 {
@@ -38,6 +40,8 @@ ACityStreetLighting::ACityStreetLighting()
 void ACityStreetLighting::BeginPlay()
 {
     Super::BeginPlay();
+    WindowParameters = LoadObject<UMaterialParameterCollection>(nullptr,
+        TEXT("/Game/ANANTA/City/Materials/MPC_CityLighting.MPC_CityLighting"));
     // Cung toa do voi CityLayout.streets va tam LED cua mesh StreetLamp.
     for (int32 Road = -CityWorldBounds::RoadExtent; Road <= CityWorldBounds::RoadExtent; Road += 12000)
     {
@@ -68,6 +72,14 @@ void ACityStreetLighting::Tick(const float DeltaTime)
         return;
     }
     const bool bDark = Sun && Sun->GetLightComponent()->Intensity < 2000;
+    const float NightAmount = bDark ? 1.f : 0.f;
+    if (WindowParameters && NightAmount != PreviousNightAmount)
+    {
+        // Mot tham so shader chung thay cho den rieng o hang nghin cua so.
+        GetWorld()->GetParameterCollectionInstance(WindowParameters)->SetScalarParameterValue(
+            TEXT("NightAmount"), NightAmount);
+        PreviousNightAmount = NightAmount;
+    }
     const FVector Camera = PC->PlayerCameraManager->GetCameraLocation();
     if (bDark)
     {

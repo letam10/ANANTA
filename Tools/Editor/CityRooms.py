@@ -40,7 +40,7 @@ def room(prefix, centre, size, face, entry):
         light = lamp.light_component
         light.set_mobility(unreal.ComponentMobility.MOVABLE)
         light.set_editor_property("intensity_units", unreal.LightUnits.LUMENS)
-        light.set_intensity(6500)
+        light.set_intensity(3200)
         light.set_editor_property("attenuation_radius", 1600)
         light.set_editor_property("max_draw_distance", 4500)
         light.set_editor_property("max_distance_fade_range", 800)

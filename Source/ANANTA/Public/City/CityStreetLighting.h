@@ -6,6 +6,7 @@
 
 class ADirectionalLight;
 class USpotLightComponent;
+class UMaterialParameterCollection;
 
 UCLASS()
 class ANANTA_API ACityStreetLighting : public AActor
@@ -25,4 +26,9 @@ private:
 
     UPROPERTY()
     TObjectPtr<ADirectionalLight> Sun;
+
+    UPROPERTY()
+    TObjectPtr<UMaterialParameterCollection> WindowParameters;
+
+    float PreviousNightAmount = -1;
 };

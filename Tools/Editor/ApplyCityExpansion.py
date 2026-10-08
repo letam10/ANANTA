@@ -10,6 +10,8 @@ sys.path.insert(0, str(PROJECT / "Tools/Editor"))
 from CityExpansionLayout import generate
 from CityExpansionData import VENUES, GRID_EXTENT
 from CityExpansionVenues import furnish
+from CityVenueDressing import dress as dress_venues
+from CityStreetLandmarks import dress as dress_landmarks
 from CityScene import ACTORS, instance_group, mesh_asset, material_asset
 
 MAP = "/Game/ANANTA/Maps/ANANTA_City"
@@ -34,13 +36,14 @@ def main():
         label = actor.get_actor_label()
         generated = label.startswith("City_") and actor.get_components_by_class(
             unreal.HierarchicalInstancedStaticMeshComponent)
-        if generated or label.startswith("Expansion_"):
+        if generated or label.startswith(("Expansion_", "Dressing_", "Landmark_")):
             assert ACTORS.destroy_actor(actor)
             removed += 1
         elif label in ("City_PlayerStart", "City_PlayerCar", "City_MissionGiver", "City_AnomalyFragment"):
             loc = actor.get_actor_location()
             preserved[label] = [loc.x, loc.y, loc.z]
         elif label == "City_NavigationBounds":
+            actor.modify()
             _, extent = actor.get_actor_bounds(False)
             scale = actor.get_actor_scale3d()
             actor.set_actor_scale3d(unreal.Vector(scale.x * (GRID_EXTENT + 2000) / extent.x,
@@ -53,6 +56,12 @@ def main():
         if index % 250 == 0:
             unreal.log(f"CITY_EXPANSION_GROUP {index}/{len(data['groups'])}")
     furnish()
+    dress_venues()
+    dress_landmarks()
+    for actor in ACTORS.get_all_level_actors():
+        if actor.get_actor_label().startswith(("Dressing_", "Landmark_")):
+            actor.set_editor_property("hlod_layer", hlod)
+            actor.set_editor_property("is_spatially_loaded", True)
     assert levels.save_current_level()
     assert unreal.EditorLoadingAndSavingUtils.save_dirty_packages(True, True)
     report = dict(map=MAP, stage="expanded", layout=data["audit"], removedGeneratedActors=removed,

@@ -9,10 +9,10 @@
 
 namespace
 {
-    const FString CheckpointSchema = TEXT("ANANTA_CITY_SERVICE_CHECKPOINT_V1");
+    const FString ServiceCheckpointSchema = TEXT("ANANTA_CITY_SERVICE_CHECKPOINT_V1");
     const FString CompletedServices = TEXT("NotStarted|8|Market_Supplies|1");
 
-    bool SameTransform(const FTransform& A, const FTransform& B)
+    bool SameServiceTransform(const FTransform& A, const FTransform& B)
     {
         return A.GetLocation().Equals(B.GetLocation(), 10)
             && A.GetRotation().AngularDistance(B.GetRotation()) <= FMath::DegreesToRadians(0.5)
@@ -36,8 +36,8 @@ bool UCityServiceJourney::VerifySavedProgress() const
     {
         const auto* Save = Cast<UANANTACitySave>(UGameplayStatics::LoadGameFromSlot(Slot, 0));
         if (!MatchesProgress(Save, 8) || !Save->bHasPlayerTransform
-            || !SameTransform(Save->PlayerTransform, Hero->GetActorTransform())
-            || !SameTransform(Save->PlayerTransform, State->GetProgress()->PlayerTransform))
+            || !SameServiceTransform(Save->PlayerTransform, Hero->GetActorTransform())
+            || !SameServiceTransform(Save->PlayerTransform, State->GetProgress()->PlayerTransform))
         {
             return false;
         }
@@ -49,7 +49,7 @@ bool UCityServiceJourney::WriteCheckpoint() const
 {
     const auto* Save = GetState()->GetProgress();
     const TArray<FString> Lines = {
-        CheckpointSchema, FString::Printf(TEXT("%u"), FPlatformProcess::GetCurrentProcessId()),
+        ServiceCheckpointSchema, FString::Printf(TEXT("%u"), FPlatformProcess::GetCurrentProcessId()),
         Save->PlayerTransform.ToString(), CompletedServices
     };
     return FFileHelper::SaveStringArrayToFile(Lines, *(EvidenceDirectory() / TEXT("Checkpoint.txt")));
@@ -59,7 +59,7 @@ bool UCityServiceJourney::ReadCheckpoint()
 {
     TArray<FString> Lines;
     if (!FFileHelper::LoadFileToStringArray(Lines, *(EvidenceDirectory() / TEXT("Checkpoint.txt")))
-        || Lines.Num() != 4 || Lines[0] != CheckpointSchema || Lines[3] != CompletedServices
+        || Lines.Num() != 4 || Lines[0] != ServiceCheckpointSchema || Lines[3] != CompletedServices
         || !Lines[1].IsNumeric())
     {
         return false;
@@ -73,8 +73,8 @@ bool UCityServiceJourney::VerifyRestoredProgress() const
 {
     const auto* Save = GetState()->GetProgress();
     return MatchesProgress(Save, 8) && Save->bHasPlayerTransform
-        && SameTransform(ExpectedPlayer, Save->PlayerTransform)
-        && SameTransform(ExpectedPlayer, GetHero()->GetActorTransform()) && VerifySavedProgress();
+        && SameServiceTransform(ExpectedPlayer, Save->PlayerTransform)
+        && SameServiceTransform(ExpectedPlayer, GetHero()->GetActorTransform()) && VerifySavedProgress();
 }
 
 void UCityServiceJourney::RunSave()

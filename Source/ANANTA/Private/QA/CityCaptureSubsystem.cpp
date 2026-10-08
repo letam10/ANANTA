@@ -111,6 +111,15 @@ void UCityCaptureSubsystem::CaptureView(const int32 Index)
         FRotator(-15, 40, 0), FRotator(-4, 175, 0), FRotator(-4, 5, 0),
         FRotator(-4, 0, 0), FRotator(-4, 0, 0), FRotator(-8, 45, 0), FRotator(-4, 0, 0)
     };
+    static const FVector DressingLocations[] = {
+        FVector(37700, 2500, 185), FVector(-25600, 2500, 185), FVector(1550, 2600, 185),
+        FVector(-30800, 4700, 850), FVector(4600, 5000, 850), FVector(25400, 7900, 900),
+        FVector(-38500, 1400, 250)
+    };
+    static const FRotator DressingRotations[] = {
+        FRotator(-4, 0, 0), FRotator(-6, 165, 0), FRotator(-5, 5, 0),
+        FRotator(-22, 42, 0), FRotator(-22, 40, 0), FRotator(-22, 45, 0), FRotator(5, 20, 0)
+    };
     const FString Directory = GetOutputDirectory();
     IFileManager::Get().MakeDirectory(*Directory, true);
     const FString Filename = Directory / FString::Printf(TEXT("View_%02d.png"), Index);
@@ -121,8 +130,11 @@ void UCityCaptureSubsystem::CaptureView(const int32 Index)
     if (Index < CaptureCount - 1)
     {
         const bool bExpansion = FParse::Param(FCommandLine::Get(), TEXT("CityExpansionViews"));
-        const FVector Location = bExpansion ? ExpansionLocations[Index] : Locations[Index];
-        const FRotator Rotation = bExpansion ? ExpansionRotations[Index] : Rotations[Index];
+        const bool bDressing = FParse::Param(FCommandLine::Get(), TEXT("CityDressingViews"));
+        const FVector Location = bDressing ? DressingLocations[Index]
+            : (bExpansion ? ExpansionLocations[Index] : Locations[Index]);
+        const FRotator Rotation = bDressing ? DressingRotations[Index]
+            : (bExpansion ? ExpansionRotations[Index] : Rotations[Index]);
         GetWorld()->GetTimerManager().SetTimerForNextTick([this, Location, Rotation]()
         {
             if (!ReviewCamera)

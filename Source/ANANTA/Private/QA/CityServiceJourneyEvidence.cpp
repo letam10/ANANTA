@@ -12,7 +12,7 @@
 
 namespace
 {
-    FString SortedIds(const TSet<FName>& Ids)
+    FString SortedServiceIds(const TSet<FName>& Ids)
     {
         TArray<FString> Names;
         for (const FName Id : Ids)
@@ -74,7 +74,7 @@ void UCityServiceJourney::Observe(const bool bPass, const FString& Detail)
         const auto& Services = State->GetServices();
         Entry += FString::Printf(TEXT("mission=%s visited_ids=%s claimed_supply_ids=%s supplies=%d\n"),
             State->GetMissionStage() == ECityMissionStage::NotStarted ? TEXT("NotStarted") : TEXT("CHANGED"),
-            *SortedIds(Services.VisitedIds), *SortedIds(Services.ClaimedSupplyIds), Services.SuppliesCount);
+            *SortedServiceIds(Services.VisitedIds), *SortedServiceIds(Services.ClaimedSupplyIds), Services.SuppliesCount);
         Entry += FString::Printf(TEXT("save_attempts=%u successful_saves=%u slot=%s\n"),
             State->GetSaveAttemptCount(), State->GetSuccessfulSaveCount(), *State->GetSaveSlotName());
     }

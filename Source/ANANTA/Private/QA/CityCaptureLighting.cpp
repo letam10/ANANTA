@@ -12,6 +12,10 @@
 FString UCityCaptureSubsystem::GetOutputDirectory() const
 {
     const bool bBlueHour = FParse::Param(FCommandLine::Get(), TEXT("CityBlueHour"));
+    if (FParse::Param(FCommandLine::Get(), TEXT("CityDressingViews")))
+    {
+        return FPaths::ProjectSavedDir() / (bBlueHour ? TEXT("QA/CityDressingBlueHour") : TEXT("QA/CityDressing"));
+    }
     return FPaths::ProjectSavedDir() / (bBlueHour ? TEXT("QA/CityGPUBlueHour") : TEXT("QA/CityGPU"));
 }
 
@@ -31,6 +35,6 @@ void UCityCaptureSubsystem::ApplyReviewLighting()
     }
     for (TActorIterator<ASkyLight> Sky(GetWorld()); Sky; ++Sky)
     {
-        Sky->GetLightComponent()->SetIntensity(0.7f);
+        Sky->GetLightComponent()->SetIntensity(1.4f);
     }
 }

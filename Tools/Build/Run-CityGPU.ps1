@@ -5,6 +5,7 @@ param(
     [string]$Mode = 'Capture',
     [switch]$BlueHour,
     [switch]$ExpansionViews,
+    [switch]$DressingViews,
     [string]$EngineRoot = 'C:\Program Files\Epic Games\UE_5.8'
 )
 
@@ -36,14 +37,31 @@ if ($BlueHour) {
 if ($ExpansionViews) {
     $arguments += '-CityExpansionViews'
 }
+if ($DressingViews) {
+    $arguments += '-CityDressingViews'
+}
 & $editorPath @arguments *> $consolePath
 $code = $LASTEXITCODE
 Write-Output "CITY_GPU_EXIT=$code MODE=$Mode LOG=$logPath"
 if ($code -ne 0) {
     throw "City GPU check failed: $code. See $logPath"
 }
+$markers = @{
+    Capture = 'CITY_CAPTURE_FINISH success=1'
+    InputSmoke = 'CITY_INPUT_SMOKE_FINISH success=1'
+    MissionCheck = 'CITY_MISSION_CHECK_FINISH mode=Check success=1'
+    MissionReload = 'CITY_MISSION_CHECK_FINISH mode=Reload success=1'
+    NavigationCheck = 'CITY_NAVIGATION_CHECK_FINISH success=1'
+    ServiceCheck = 'CITY_SERVICE_JOURNEY_FINISH mode=Check success=1'
+    ServiceReload = 'CITY_SERVICE_JOURNEY_FINISH mode=Reload success=1'
+}
+$log = Get-Content -LiteralPath $logPath -Raw
+if (-not $log.Contains($markers[$Mode])) {
+    throw "City GPU $Mode completion marker is missing. See $logPath"
+}
 if ($Mode -eq 'Capture') {
-    $env:ANANTA_CITY_CAPTURE_DIR = Join-Path $projectRoot "Saved\QA\CityGPU$lightingSuffix"
+    $captureName = if ($DressingViews) { 'CityDressing' } else { 'CityGPU' }
+    $env:ANANTA_CITY_CAPTURE_DIR = Join-Path $projectRoot "Saved\QA\$captureName$lightingSuffix"
     python -c @'
 import os
 from pathlib import Path

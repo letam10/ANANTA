@@ -1,6 +1,7 @@
 """Small Unreal editor helpers for persistent city instance groups and lighting."""
 
 import unreal
+from CityAssetOrientation import imported_yaw
 
 
 ACTORS = unreal.get_editor_subsystem(unreal.EditorActorSubsystem)
@@ -59,7 +60,8 @@ def instance_group(group, index):
     for item in group["instances"]:
         transform = unreal.Transform()
         transform.translation = unreal.Vector(*item["location"])
-        transform.rotation = unreal.Rotator(pitch=0, yaw=item["yaw"], roll=0).quaternion()
+        rotation = unreal.Rotator(pitch=0, yaw=imported_yaw(group["mesh"], item["yaw"]), roll=0)
+        transform.rotation = rotation.quaternion()
         transform.scale3d = unreal.Vector(*item["scale"])
         transforms.append(transform)
     component.add_instances(transforms, False, True, False)
@@ -70,7 +72,7 @@ def instance_group(group, index):
 
 
 def prop(name, label, location, yaw=0, scale=(1, 1, 1), collision=True):
-    actor = spawn(unreal.StaticMeshActor, label, location, yaw)
+    actor = spawn(unreal.StaticMeshActor, label, location, imported_yaw(name, yaw))
     component = actor.static_mesh_component
     component.set_static_mesh(mesh_asset(name))
     component.set_mobility(unreal.ComponentMobility.STATIC)
@@ -104,7 +106,7 @@ def lighting():
     sky = spawn(unreal.SkyLight, "City_Sky")
     sky.light_component.set_mobility(unreal.ComponentMobility.MOVABLE)
     sky.light_component.set_editor_property("real_time_capture", True)
-    sky.light_component.set_intensity(1.0)
+    sky.light_component.set_intensity(1.15)
     spawn(unreal.SkyAtmosphere, "City_Atmosphere")
     fog = spawn(unreal.ExponentialHeightFog, "City_Fog", (0, 0, -250))
     fog.component.set_editor_property("fog_density", 0.002)
@@ -117,6 +119,8 @@ def lighting():
     settings.set_editor_property("override_auto_exposure_max_brightness", True)
     settings.set_editor_property("auto_exposure_min_brightness", 5.0)
     settings.set_editor_property("auto_exposure_max_brightness", 16.0)
+    settings.set_editor_property("override_auto_exposure_bias", True)
+    settings.set_editor_property("auto_exposure_bias", -0.35)
     settings.set_editor_property("override_motion_blur_amount", True)
     settings.set_editor_property("motion_blur_amount", 0.15)
     volume.set_editor_property("settings", settings)
