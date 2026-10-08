@@ -98,10 +98,9 @@ Mỗi vòng làm việc phải cập nhật file này và commit/push checkpoint
 5. Xem ảnh ngày/đêm, sửa bố cục lặp, ánh sáng và nội thất thiếu chi tiết.
 6. Đánh giá frame trong lần chơi bình thường, tối ưu điểm nghẽn thực tế; chưa chứng minh 60 FPS.
 7. Đóng gói và xác nhận lại bản cuối; không dùng build cũ để nhận bản mở rộng đạt.
-8. Đã push 6513f16 lên origin/codex/city-expansion, gồm trang trí/ánh sáng/hướng mặt tiền/NavMesh.
-   Remote SHA khớp local; 1.831 đối tượng LFS / 50 MB. Commit tiếp theo cập nhật trạng thái này.
-   Đã push 04dd2ab: hai bộ sàn, script áp dụng/đọc lại và tiến độ; remote SHA khớp, 8 LFS / 19 MB.
-   Đã push 655d5fc: ba model nội thất, nguồn/attribution, script nhập; remote SHA khớp, 8 LFS / 17 MB.
+8. Checkpoint nội thất/HLOD/nghiên cứu render đã push: 699d055 trên origin/codex/city-expansion.
+   Remote SHA khớp local, 587 đối tượng LFS / 456 MB; git lfs fsck và kiểm tra staged đạt.
+   HLOD trong checkpoint còn dang dở, không dùng checkpoint để xác nhận bản mở rộng hoàn tất.
 
 ## Bằng chứng và đường dẫn
 
