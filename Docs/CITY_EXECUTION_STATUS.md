@@ -88,7 +88,26 @@ Mỗi vòng làm việc phải cập nhật file này và commit/push checkpoint
   Kết quả và thứ tự kiểm chứng: Docs/CITY_RENDER_OPTIMIZATION.md; chưa đổi cấu hình trong lượt nghiên cứu.
 - Checkpoint giữ dữ liệu HLOD đang dựng dở để tiếp tục; bắt buộc dựng lại trước khi nhận bản phát hành.
 - PASS rà cấu hình: quality 2; preset VSM directional 8x4/local 4x4 rays và samples/ray.
-  Không có control 12 rays/4096 samples; 4096 trong log thuộc cache/trang bóng. Cvar runtime còn cần truy vấn.
+  Không có control 12 rays/4096 samples; 4096 trong log thuộc cache/trang bóng.
+- PASS nguồn: bốn model quầy/ốp nan gỗ/tranh, 2.680/3.780/660/660 tam giác, UV/FBX/hash và tám ảnh CPU.
+- PASS: nhập bốn model, bảy material Arch_; bố trí 211 đồ nội thất gồm tám quầy và 36 chi tiết tường.
+  39.710 phép so bounds với 190 đồ cũ, giữ hành lang 440 cm và vùng cửa sổ; không thay điểm dịch vụ.
+- PASS: mở lại map đúng 284 vật thể trang trí, 16 đèn, tám dịch vụ.
+- PASS: Editor build 19,34 giây; tám ảnh ngày và tám ảnh chiều xanh 1080p.
+  Đã xem quầy, tranh và ốp gỗ trong game; góc xưởng còn trống và vùng cửa sổ ngày còn quá sáng.
+- PASS: tuyến tám dịch vụ 294,594 giây, 23 save, một tiếp tế; tiến trình khác tải lại đúng trạng thái/vị trí.
+  30.591 frame: trung bình 9,564 ms, p95 10,967 ms; 29 frame >33,3 ms, 21 frame >50 ms.
+  Đây là quan sát một lượt chơi ngắn, không đủ chứng minh 60 FPS trên toàn bản đồ.
+- PASS: ghi cvar thực tế sau khi game sẵn sàng; occlusion queries bật, Nanite frustum/HZB đều 1.
+  Quality shadow/GI/reflection 2; VSM directional 8x4, local 4x4; hardware RT tắt, texture pool 3000 MB.
+  TSR 1080p với ScreenPercentage 83,3333, nội bộ khoảng 1600 × 900; không thay cấu hình trong lượt này.
+- PASS: dựng một HLOD X5_Y3, đọc lại parent mới và bốn texture; màu/normal/MRS có dữ liệu biến thiên.
+  Cụm này không có cửa sổ nên emissive đen hợp lệ; cần dựng X0_Y0 có cửa sổ để kiểm bake ánh sáng.
+  Proxy có cảnh báo normal/binormal gần không; OBJ không chứa normal để kết luận, còn kiểm hình học.
+- PASS: dựng mẫu có cửa sổ X0_Y0 trong khoảng 219 giây, runner xác nhận đúng một actor.
+  Mở lại proxy 118.590 tam giác, đúng material parent và bốn texture 1024; kiểm pixel emissive có biến thiên.
+  Mẫu X0_Y0 không có cảnh báo normal/binormal gần không; chưa thay cho nghiệm thu toàn bộ 288 cụm.
+  Shader nguồn kiểm lại đạt, translator mới tắt, các gói cấu hình vật liệu giữ nguyên checksum.
 
 ## Còn tồn đọng / chưa đạt
 
@@ -126,6 +145,12 @@ Mỗi vòng làm việc phải cập nhật file này và commit/push checkpoint
 - HLOD PBR: Saved/QA/CityHLODPBRReadback.json; log CityHLODPBRReadback.log.
 - Hoàn thiện: Saved/QA/CityFinishing và CityFinishingBlueHour; build Saved/Logs/CityFinishingBuild.log.
 - Nghiên cứu render: Docs/CITY_RENDER_OPTIMIZATION.md; đối chiếu Saved/QA/CityRenderConfigAudit.md.
+- Cvar runtime: Saved/QA/CityFinishing/RenderConfig.txt.
+- Quầy/tường: Assets/City/interior_architecture_manifest.json; Saved/QA/CityInteriorArchitectureAssets/audit.json.
+- Bố trí: Saved/QA/CityInteriorArchitectureLayoutSelfCheck.json; import CityInteriorArchitectureImport.json.
+- Build/ảnh: Saved/Logs/CityInteriorArchitectureBuild.log và CityInteriorArchitectureCapture*.log.
+- HLOD mẫu: Saved/Logs/CityHLODSample.log; Saved/QA/CityHLODProxy/ANANTA_City_City_L0_X0_Y0.
+- Mỗi proxy có Readback.json, Pixels.json, bốn PNG xuất từ asset thực và hình học OBJ/FBX.
 
 Input QA qua PlayerController.InputKey; bàn phím desktop thực chưa được xác nhận.
 Đồ họa cuối và 60 FPS vẫn là mục tiêu đang làm, chưa đủ bằng chứng để xác nhận.

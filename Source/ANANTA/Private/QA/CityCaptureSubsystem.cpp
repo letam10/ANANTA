@@ -7,6 +7,7 @@
 #include "Engine/World.h"
 #include "GameFramework/Pawn.h"
 #include "HAL/FileManager.h"
+#include "HAL/IConsoleManager.h"
 #include "HAL/PlatformTime.h"
 #include "Misc/CommandLine.h"
 #include "Misc/FileHelper.h"
@@ -18,6 +19,33 @@
 namespace
 {
     constexpr int32 CaptureCount = 8;
+
+    void WriteCityRenderConfiguration(const FString& Directory, const FString& MapName)
+    {
+        static const TCHAR* Names[] = {
+            TEXT("sg.ResolutionQuality"), TEXT("sg.ShadowQuality"), TEXT("sg.GlobalIlluminationQuality"),
+            TEXT("sg.ReflectionQuality"), TEXT("r.ScreenPercentage"), TEXT("r.AntiAliasingMethod"),
+            TEXT("r.AllowOcclusionQueries"), TEXT("r.HZBOcclusion"), TEXT("r.Nanite"),
+            TEXT("r.Nanite.Culling.Frustum"), TEXT("r.Nanite.Culling.HZB"),
+            TEXT("r.DynamicGlobalIlluminationMethod"), TEXT("r.ReflectionMethod"), TEXT("r.RayTracing"),
+            TEXT("r.Lumen.HardwareRayTracing"), TEXT("r.Lumen.ScreenProbeGather.DownsampleFactor"),
+            TEXT("r.Lumen.Reflections.DownsampleFactor"), TEXT("r.Shadow.Virtual.Enable"),
+            TEXT("r.Shadow.Virtual.SMRT.RayCountDirectional"), TEXT("r.Shadow.Virtual.SMRT.RayCountLocal"),
+            TEXT("r.Shadow.Virtual.SMRT.SamplesPerRayDirectional"),
+            TEXT("r.Shadow.Virtual.SMRT.SamplesPerRayLocal"),
+            TEXT("r.TextureStreaming"), TEXT("r.Streaming.PoolSize"), TEXT("r.TSR.History.ScreenPercentage")
+        };
+        FString Report = FString::Printf(TEXT("map=%s\nphase=first_capture_after_ready\n"), *MapName);
+        // Doc gia tri sau khi game da ap dung scalability, khong thay doi chat luong.
+        for (const TCHAR* Name : Names)
+        {
+            const IConsoleVariable* Variable = IConsoleManager::Get().FindConsoleVariable(Name);
+            const FString Value = Variable ? Variable->GetString() : TEXT("not_registered");
+            Report += FString::Printf(TEXT("%s=%s\n"), Name, *Value);
+        }
+        const bool bSaved = FFileHelper::SaveStringToFile(Report, *(Directory / TEXT("RenderConfig.txt")));
+        UE_LOG(LogTemp, Display, TEXT("CITY_RENDER_CONFIG_SAVED success=%d"), bSaved);
+    }
 }
 
 bool UCityCaptureSubsystem::ShouldCreateSubsystem(UObject* Outer) const
@@ -131,6 +159,10 @@ void UCityCaptureSubsystem::CaptureView(const int32 Index)
     };
     const FString Directory = GetOutputDirectory();
     IFileManager::Get().MakeDirectory(*Directory, true);
+    if (Index == 0)
+    {
+        WriteCityRenderConfiguration(Directory, GetWorld()->GetMapName());
+    }
     const FString Filename = Directory / FString::Printf(TEXT("View_%02d.png"), Index);
     OutputFiles.Add(Filename);
     FScreenshotRequest::RequestScreenshot(Filename, Index == 0, false, false);

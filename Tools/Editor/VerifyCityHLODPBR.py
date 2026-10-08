@@ -46,6 +46,8 @@ def parameters(material):
 
 def check_source(material, collection):
     assert not material.get_editor_property("use_material_attributes")
+    new_translator = material.get_editor_property("enable_new_hlsl_generator")
+    assert not new_translator, "UE5.8 MIR ignores MaterialProxyReplace; use the legacy translator for windows"
     proxy = LIB.get_material_property_input_node(material, unreal.MaterialProperty.MP_EMISSIVE_COLOR)
     require_type(proxy, unreal.MaterialExpressionMaterialProxyReplace)
     branches = inputs(material, proxy)
@@ -59,7 +61,8 @@ def check_source(material, collection):
     require_type(lit_inputs["WorldPos"], unreal.MaterialExpressionWorldPosition)
     code = lit.get_editor_property("code")
     assert "Night" not in code and "occupied" in code and "* 3.5" in code
-    return dict(proxy=proxy.get_name(), fullyLitBake=lit.get_name(), runtime=runtime.get_name())
+    return dict(proxy=proxy.get_name(), fullyLitBake=lit.get_name(), runtime=runtime.get_name(),
+                newHLSLGenerator=new_translator, bakedPixelAcceptance=False)
 
 
 def check_template(material, collection, original):

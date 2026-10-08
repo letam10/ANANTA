@@ -68,16 +68,20 @@ Nguồn: [Blender — Sampling][sampling], [Epic — Path Tracer][pathtracer].
   local 4 rays x 4 samples/ray. Đèn local đã dùng mức 4 rays trong preset, không có bước giảm 12 xuống 4.
 - Không tìm thấy control dự án cho 12 rays hoặc 4096 samples. Giá trị 4096 trong log là số trang VSM
   hoặc kích thước surface cache Lumen; không đổi chúng như số mẫu render.
-- Audit đọc cấu hình, mã engine và log; log capture đóng gói cũ xác nhận áp dụng quality 2/pool 3000.
-  Đây chưa phải truy vấn toàn bộ cvar sau khi bản runtime hiện tại sẵn sàng.
+- Đã ghi cvar sau khi bản runtime hiện tại sẵn sàng: `Saved/QA/CityFinishing/RenderConfig.txt`.
+  Occlusion queries bật; Nanite frustum/HZB đều 1. `r.HZBOcclusion=0` của primitive thường
+  không có nghĩa tắt toàn bộ occlusion. Quality shadow/GI/reflection đều 2; texture pool 3000 MB.
+  VSM xác nhận directional 8 rays/local 4 rays, cả hai 4 samples/ray; hardware RT tắt.
+  TSR xuất 1080p, `r.ScreenPercentage=83.3333`, tương ứng nội bộ khoảng 1600 × 900.
 - Map đã có World Partition, HISM và Nanite cho các mesh phù hợp.
 - HLOD mở rộng có 288 cụm; lượt cũ dừng để sửa vật liệu, chưa có toàn bộ proxy cuối được nghiệm thu.
-- Shader/template HLOD đã mở lại kiểm tra PBR và NightAmount; chưa thay cho kiểm tra proxy được bake.
+- Shader/template HLOD đã mở lại kiểm tra PBR và NightAmount; mẫu X0_Y0 đã bake và đọc lại đủ bốn kênh.
+  Texture emissive thực có dữ liệu biến thiên; toàn bộ 288 cụm và chuyển tiếp ngày/đêm còn cần kiểm chứng.
 - Không sửa render config trong vòng nghiên cứu này; cần phân biệt cvar có hiệu lực với giá trị cấu hình.
 
 Thứ tự thực hiện và điều kiện nhận:
 
-1. Ghi giá trị cvar thực tế sau khi game áp dụng scalability; đối chiếu culling của Nanite/mesh thường.
+1. Đã ghi cvar thực tế sau scalability; giữ log này làm mốc đối chiếu cho các lượt tối ưu tiếp theo.
 2. Kiểm tra một proxy HLOD với vật liệu mới, rồi dựng đầy đủ và thử chuyển ô khi đi bộ/lái xe.
 3. Quan sát một lượt chơi ngắn: quay 180°, nhìn qua góc nhà, vào/ra nội thất, chạy nhanh ngày/chiều xanh.
 4. Dùng `stat initviews`, thống kê Nanite, CPU/GPU frame time và streaming để xác định điểm nghẽn.

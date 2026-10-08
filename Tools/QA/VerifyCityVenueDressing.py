@@ -15,6 +15,14 @@ sys.path.insert(0, str(PROJECT / "Tools/Editor"))
 from CityVenueDressing import ROOMS, describe
 
 
+ARCHITECTURE_BOUNDS = {
+    "InteriorServiceDesk": ((-55, -35, 0), (55, 35, 85)),
+    "InteriorSlatPanel": ((-120, -4, 0), (120, 4, 220)),
+    "InteriorGalleryFrame": ((-70, -3, 0), (70, 3, 110)),
+    "InteriorBotanicalFrame": ((-70, -3, 0), (70, 3, 110)),
+}
+
+
 def transformed_bounds(item, meshes):
     bounds = ({"min": [-50] * 3, "max": [50] * 3} if item["mesh"] == "Cube"
               else meshes[item["mesh"]]["boundsCm"])
@@ -72,22 +80,42 @@ def overlaps(first, second):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--source-only", action="store_true")
+    parser.add_argument("--architecture-contract", action="store_true")
+    parser.add_argument("--report", type=Path, default=PROJECT / "Saved/QA/CityVenueDressingAudit.json")
     args = parser.parse_args()
+    if args.architecture_contract and not args.source_only:
+        parser.error("Contract bounds require --source-only; they do not verify imported assets")
     manifest = json.loads((PROJECT / "Assets/City/manifest.json").read_text(encoding="utf-8"))
     meshes = {item["id"]: item for item in manifest["meshes"]}
     expansion = json.loads((PROJECT / "Assets/City/expansion_manifest.json").read_text(encoding="utf-8"))
     meshes.update({item["id"]: item for item in expansion["meshes"]})
     finishing = json.loads((PROJECT / "Assets/City/finishing_manifest.json").read_text(encoding="utf-8"))
     meshes.update({item["id"]: item for item in finishing["meshes"]})
+    architecture_path = PROJECT / "Assets/City/interior_architecture_manifest.json"
+    architecture_source = "manifest"
+    if architecture_path.is_file():
+        architecture = json.loads(architecture_path.read_text(encoding="utf-8"))
+        meshes.update({item["id"]: item for item in architecture["meshes"]})
+    elif args.architecture_contract:
+        architecture_source = "contract-only provisional bounds"
+        meshes.update({key: {"boundsCm": dict(min=low, max=high)}
+                       for key, (low, high) in ARCHITECTURE_BOUNDS.items()})
+    else:
+        parser.error("Missing interior_architecture_manifest.json; use --architecture-contract for provisional QA")
     items = describe()
     errors = []
+    for mesh, (low, high) in ARCHITECTURE_BOUNDS.items():
+        actual = meshes.get(mesh, {}).get("boundsCm", {})
+        if any(len(actual.get(key, ())) != 3 or any(abs(a - b) > 0.1 for a, b in zip(actual[key], expected))
+               for key, expected in (("min", low), ("max", high))):
+            errors.append("Architecture contract bounds mismatch " + mesh)
     labels = [item["label"] for item in items]
     if items != describe():
         errors.append("Non-deterministic describe output")
     if len(labels) != len(set(labels)):
         errors.append("Duplicate labels")
-    if len(items) > 250:
-        errors.append("More than 250 additions")
+    if len(items) >= 240:
+        errors.append("Interior additions must remain below 240")
     asset_root = PROJECT / "Content/ANANTA/City"
     for item in items:
         if item["mesh"] != "Cube":
@@ -102,6 +130,10 @@ def main():
             errors.append("Unknown schema field " + item["label"])
         if any(s <= 0 for s in item["scale"]):
             errors.append("Invalid scale " + item["label"])
+        if not all(math.isfinite(v) for v in (*item["location"], *item["scale"], item["yaw"])):
+            errors.append("Non-finite transform " + item["label"])
+        if item["mesh"] in ARCHITECTURE_BOUNDS and item["collision"]:
+            errors.append("Architecture decoration must not collide " + item["label"])
     bounds = {item["label"]: transformed_bounds(item, meshes) for item in items}
     counts = Counter()
     for item in items:
@@ -120,6 +152,12 @@ def main():
             errors.append("Outside floor or ceiling " + item["label"])
         if item["collision"] and high[1] > room["centre"][1] - 220 and low[1] < room["centre"][1] + 220:
             errors.append("Entry corridor obstruction " + item["label"])
+        if item["mesh"] in ARCHITECTURE_BOUNDS and item["mesh"] != "InteriorServiceDesk":
+            front = room["centre"][0] + room["face"] * room["size"][0] / 2
+            if low[0] < front + 50 and high[0] > front - 50:
+                errors.append("Wall detail in entry or window zone " + item["label"])
+            if high[1] > room["centre"][1] - 220 and low[1] < room["centre"][1] + 220:
+                errors.append("Wall detail in central corridor " + item["label"])
     for first, second in combinations(items, 2):
         # Tham mem day 1.5 cm duoc phep nam duoi chan ghe va ban, khong co collision.
         if first["mesh"] == "InteriorWovenRug" or second["mesh"] == "InteriorWovenRug":
@@ -142,7 +180,7 @@ def main():
     for room in ROOMS:
         if counts[room["id"]] < 10:
             errors.append("Insufficient dressing " + room["id"])
-        top = next(item for item in items if item["label"] == f"Dressing_{room['id']}_ServiceTop")
+        top = next(item for item in items if item["label"] == f"Dressing_{room['id']}_ServiceDesk")
         service_id = room.get("serviceId", room["id"] + "_Rest")
         marker = next(item for item in existing if item["label"] == "Service_" + service_id)
         marker_bounds = transformed_bounds(marker, meshes)
@@ -155,7 +193,8 @@ def main():
         if top["collision"]:
             errors.append("Service support must not collide " + room["id"])
     source_paths = [PROJECT / "Tools/Editor/CityVenueDressing.py",
-                    PROJECT / "Tools/Editor/CityInteriorFinishes.py", Path(__file__)]
+                    PROJECT / "Tools/Editor/CityInteriorFinishes.py",
+                    PROJECT / "Tools/Editor/CityInteriorArchitecture.py", Path(__file__)]
     for path in source_paths:
         lines = path.read_text(encoding="utf-8").splitlines()
         if len(lines) > 300:
@@ -166,11 +205,15 @@ def main():
     result = dict(passed=not errors, sourceOnly=args.source_only,
                   additions=len(items), rooms=dict(counts), deterministic=items == describe(),
                   uniqueLabels=len(labels) == len(set(labels)), corridorWidthCm=440,
+                  architectureBoundsSource=architecture_source,
+                  serviceDesks=sum(item["mesh"] == "InteriorServiceDesk" for item in items),
+                  wallDetails=sum(item["mesh"] in ARCHITECTURE_BOUNDS
+                                  and item["mesh"] != "InteriorServiceDesk" for item in items),
                   existingFurnitureCaptured=len(existing), existingBoundsComparisons=comparisons,
                   meshIds=sorted({item["mesh"] for item in items}), errors=errors,
                   limitations=["Source geometry audit only; root must apply and inspect GPU views.",
                                "Does not certify pre-existing furniture or runtime navigation."])
-    path = PROJECT / "Saved/QA/CityVenueDressingAudit.json"
+    path = args.report
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(result, indent=2), encoding="utf-8")
     print(json.dumps(result, indent=2))
