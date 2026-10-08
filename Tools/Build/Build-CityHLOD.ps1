@@ -31,21 +31,5 @@ if ($SingleHLOD) {
 if ($LASTEXITCODE -ne 0) {
     throw "City HLOD build failed: $LASTEXITCODE. See $logPath"
 }
-$log = Get-Content -LiteralPath $logPath -Raw
-$built = [regex]::Match($log, '#### Built (\d+) HLOD actors? ####')
-if (-not $built.Success -or [int]$built.Groups[1].Value -lt 1) {
-    throw "No completed HLOD build found in $logPath"
-}
-if ($SingleHLOD) {
-    $targetMarker = "Building HLOD actor $SingleHLOD..."
-    if ([int]$built.Groups[1].Value -ne 1 -or -not $log.Contains($targetMarker)) {
-        throw "Requested HLOD sample was not built: $SingleHLOD"
-    }
-}
-else {
-    $cells = [regex]::Matches($log, '\[\d+ / (\d+)\] Processing cell ')
-    if ($cells.Count -eq 0 -or [int]$cells[-1].Groups[1].Value -ne [int]$built.Groups[1].Value) {
-        throw "HLOD setup/build totals do not match. See $logPath"
-    }
-}
+& (Join-Path $PSScriptRoot 'Test-CityHLODLog.ps1') -LogPath $logPath -SingleHLOD $SingleHLOD
 Write-Output "CITY_HLOD_BUILD_OK LOG=$logPath"

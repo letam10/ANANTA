@@ -108,6 +108,14 @@ Mỗi vòng làm việc phải cập nhật file này và commit/push checkpoint
   Mở lại proxy 118.590 tam giác, đúng material parent và bốn texture 1024; kiểm pixel emissive có biến thiên.
   Mẫu X0_Y0 không có cảnh báo normal/binormal gần không; chưa thay cho nghiệm thu toàn bộ 288 cụm.
   Shader nguồn kiểm lại đạt, translator mới tắt, các gói cấu hình vật liệu giữ nguyên checksum.
+- Đang làm: bảng dụng cụ và thùng phụ tùng chi tiết cho xưởng, giữ nguyên bounds/lối đi.
+  Hợp đồng: Docs/CITY_WORKSHOP_LIGHTING_CONTRACT.md; chưa nhập hoặc áp dụng vào bản đồ.
+- Sửa gate HLOD: số ô SetupHLODs khác số actor HLOD; kiểm đủ chuỗi actor và dấu hoàn tất riêng.
+  PASS 9 ca hồi quy, gồm số ô khác actor, log thiếu/nhảy/trùng actor và sai mẫu; log mẫu thật cũng đạt.
+  Lượt full đã nạp runner cũ: nếu wrapper báo chênh số ô, dùng Test-CityHLODLog đọc log hoàn tất.
+  Không khởi động lại tiến trình dựng chỉ vì lỗi đối chiếu của wrapper cũ.
+- PASS hình học xuất X0_Y0: 355.770 normal, tangent và binormal mỗi loại, hữu hạn và độ dài gần 1.
+  Chỉ xác nhận FBX đã xuất của mẫu này; cảnh báo cũ X5_Y3 và các cụm khác vẫn cần rà sau dựng.
 
 ## Còn tồn đọng / chưa đạt
 
