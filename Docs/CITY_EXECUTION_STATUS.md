@@ -60,7 +60,7 @@ Mỗi vòng làm việc phải cập nhật file này và commit/push checkpoint
 - PASS: mở lại 1.544 nhóm, 4.631 mẫu transform và tám cửa đúng hướng; ảnh GPU hiện rõ chi tiết mặt tiền.
 - PASS: NavMesh lưu đúng 860 m mỗi phía; truy vấn Recast ở khu mới trả đường đầy đủ dài 16 m.
 - Sửa runner GPU: bắt buộc dấu hoàn tất trong log, không nhận mã thoát 0 là đủ.
-- Chưa dựng lại HLOD hay đóng gói bản mở rộng.
+- HLOD bản mở rộng đang dựng: 288 cụm, bắt đầu 10:33 ngày 08-10; chưa hoàn tất hoặc đóng gói.
 
 ## Còn tồn đọng / chưa đạt
 
@@ -71,8 +71,8 @@ Mỗi vòng làm việc phải cập nhật file này và commit/push checkpoint
 5. Xem ảnh ngày/đêm, sửa bố cục lặp, ánh sáng và nội thất thiếu chi tiết.
 6. Đánh giá frame trong lần chơi bình thường, tối ưu điểm nghẽn thực tế; chưa chứng minh 60 FPS.
 7. Đóng gói và xác nhận lại bản cuối; không dùng build cũ để nhận bản mở rộng đạt.
-8. Đã push d0e577b và 9a82b8b lên origin/codex/city-expansion; remote đã khớp local.
-   Vòng trang trí/ánh sáng hiện tại chưa commit; sẽ push sau kiểm tra lối đi.
+8. Đã push 6513f16 lên origin/codex/city-expansion, gồm trang trí/ánh sáng/hướng mặt tiền/NavMesh.
+   Remote SHA khớp local; 1.831 đối tượng LFS / 50 MB. Commit tiếp theo cập nhật trạng thái này.
 
 ## Bằng chứng và đường dẫn
 
@@ -85,6 +85,8 @@ Mỗi vòng làm việc phải cập nhật file này và commit/push checkpoint
 - Log GPU lỗi đã giữ: Saved/Logs/CityGPUCaptureBlueHour.Failure1.log.
 - Trang trí: Saved/QA/CityDressingReadback.json; ảnh Saved/QA/CityDressing và CityGPUBlueHour.
 - Save cũ: Tools/QA/Fixtures/CityBeforeServices.sav; báo cáo Saved/QA/CityAutomation/index.json.
+- Hướng mặt tiền: Saved/QA/CityFacadePlacementReadback.json; NavMesh: Saved/Logs/CityGPUNavigationCheck.log.
+- HLOD đang chạy: Saved/Logs/CityHLOD.log và CityHLODConsole.log.
 
 Input QA qua PlayerController.InputKey; bàn phím desktop thực chưa được xác nhận.
 Đồ họa cuối và 60 FPS vẫn là mục tiêu đang làm, chưa đủ bằng chứng để xác nhận.
