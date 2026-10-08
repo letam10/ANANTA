@@ -102,6 +102,8 @@ def main():
                        for key, (low, high) in ARCHITECTURE_BOUNDS.items()})
     else:
         parser.error("Missing interior_architecture_manifest.json; use --architecture-contract for provisional QA")
+    workshop = json.loads((PROJECT / "Assets/City/workshop_detail_manifest.json").read_text(encoding="utf-8"))
+    meshes.update({item["id"]: item for item in workshop["meshes"]})
     items = describe()
     errors = []
     for mesh, (low, high) in ARCHITECTURE_BOUNDS.items():
@@ -194,7 +196,8 @@ def main():
             errors.append("Service support must not collide " + room["id"])
     source_paths = [PROJECT / "Tools/Editor/CityVenueDressing.py",
                     PROJECT / "Tools/Editor/CityInteriorFinishes.py",
-                    PROJECT / "Tools/Editor/CityInteriorArchitecture.py", Path(__file__)]
+                    PROJECT / "Tools/Editor/CityInteriorArchitecture.py",
+                    PROJECT / "Tools/Editor/CityWorkshopDetail.py", Path(__file__)]
     for path in source_paths:
         lines = path.read_text(encoding="utf-8").splitlines()
         if len(lines) > 300:
@@ -207,6 +210,7 @@ def main():
                   uniqueLabels=len(labels) == len(set(labels)), corridorWidthCm=440,
                   architectureBoundsSource=architecture_source,
                   serviceDesks=sum(item["mesh"] == "InteriorServiceDesk" for item in items),
+                  workshopDetails=sum(item["mesh"].startswith("Workshop") for item in items),
                   wallDetails=sum(item["mesh"] in ARCHITECTURE_BOUNDS
                                   and item["mesh"] != "InteriorServiceDesk" for item in items),
                   existingFurnitureCaptured=len(existing), existingBoundsComparisons=comparisons,

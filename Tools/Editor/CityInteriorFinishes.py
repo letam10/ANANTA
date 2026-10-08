@@ -1,6 +1,7 @@
 """Deterministic finishing overrides and window dressing, in centimetres."""
 
 from CityInteriorArchitecture import apply_architecture
+from CityWorkshopDetail import apply_workshop_detail
 
 FLOORS = {
     "Expansion_Clinic_Floor": "InteriorTerrazzo",
@@ -42,4 +43,4 @@ def finish_items(items, rooms):
                                mesh="InteriorLinenCurtain",
                                location=(x + face * (width / 2 - 42), y + side * (200 + bay / 2), 48),
                                yaw=90 * face, scale=(1, 1, 1), collision=False))
-    return apply_architecture(result, rooms)
+    return apply_workshop_detail(apply_architecture(result, rooms))

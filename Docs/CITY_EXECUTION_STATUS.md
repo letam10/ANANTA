@@ -108,8 +108,12 @@ Mỗi vòng làm việc phải cập nhật file này và commit/push checkpoint
   Mở lại proxy 118.590 tam giác, đúng material parent và bốn texture 1024; kiểm pixel emissive có biến thiên.
   Mẫu X0_Y0 không có cảnh báo normal/binormal gần không; chưa thay cho nghiệm thu toàn bộ 288 cụm.
   Shader nguồn kiểm lại đạt, translator mới tắt, các gói cấu hình vật liệu giữ nguyên checksum.
-- Đang làm: bảng dụng cụ và thùng phụ tùng chi tiết cho xưởng, giữ nguyên bounds/lối đi.
+- PASS nguồn xưởng: bảng dụng cụ 7.456 và thùng phụ tùng 3.096 tam giác, giữ nguyên bounds/lối đi.
+  FBX roundtrip/UV/material/hash đạt, không mặt suy biến; bốn ảnh CPU đã được agent kiểm tra.
   Hợp đồng: Docs/CITY_WORKSHOP_LIGHTING_CONTRACT.md; chưa nhập hoặc áp dụng vào bản đồ.
+- PASS bố trí nguồn xưởng: 205 đồ nội thất, 38.570 phép so bounds với 190 đồ cũ, hành lang 440 cm.
+  Bản đồ đang lưu vẫn có 211 đồ nội thất; cần import rồi chạy ApplyCityWorkshopDetail sau HLOD.
+  Lệnh này chỉ đổi hai actor và xóa sáu thanh prototype, không tái tạo các actor trang trí khác.
 - Sửa gate HLOD: số ô SetupHLODs khác số actor HLOD; kiểm đủ chuỗi actor và dấu hoàn tất riêng.
   PASS 9 ca hồi quy, gồm số ô khác actor, log thiếu/nhảy/trùng actor và sai mẫu; log mẫu thật cũng đạt.
   Lượt full đã nạp runner cũ: nếu wrapper báo chênh số ô, dùng Test-CityHLODLog đọc log hoàn tất.
@@ -160,6 +164,8 @@ Mỗi vòng làm việc phải cập nhật file này và commit/push checkpoint
 - Build/ảnh: Saved/Logs/CityInteriorArchitectureBuild.log và CityInteriorArchitectureCapture*.log.
 - HLOD mẫu: Saved/Logs/CityHLODSample.log; Saved/QA/CityHLODProxy/ANANTA_City_City_L0_X0_Y0.
 - Mỗi proxy có Readback.json, Pixels.json, bốn PNG xuất từ asset thực và hình học OBJ/FBX.
+- Xưởng: Assets/City/workshop_detail_manifest.json; Saved/QA/CityWorkshopDetailAssets/audit.json.
+- Bố trí xưởng: Saved/QA/CityWorkshopDetailLayout.json; gate HLOD: Saved/QA/CityHLODLogCases/Results.json.
 
 Input QA qua PlayerController.InputKey; bàn phím desktop thực chưa được xác nhận.
 Đồ họa cuối và 60 FPS vẫn là mục tiêu đang làm, chưa đủ bằng chứng để xác nhận.
