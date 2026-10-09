@@ -82,9 +82,6 @@ def room_details(layout, name, x, y):
                 layout.add("House_dining_chair_02", (x + xx, y + yy, FLOOR_Z))
         layout.add("InteriorSlatPanel", (x + 3500, y + 1760, 180), yaw=180, collision=False)
     elif name == "Arcade":
-        for xx in (2550, 3300, 4050):
-            for side in (-1, 1):
-                arcade_cabinet(layout, x + xx, y + side * 1250, side)
         layout.box("DistrictNeon", (x + 1740, y, 443), (15, 1500, 65), False)
 
 
@@ -101,15 +98,6 @@ def fire_apron(layout, x, y):
     layout.box("DistrictFireBrick", (x + 100, y, 785), (70, 3300, 170))
     layout.box("DistrictFireBrick", (x + 100, y, 400), (100, 100, 770))
     layout.add("TrafficSignal", (x - 1850, y + 2050, FLOOR_Z), yaw=-90)
-
-
-def arcade_cabinet(layout, x, y, side):
-    layout.box("DistrictNavy", (x, y, 110), (125, 85, 190))
-    layout.box("DistrictSteel", (x, y - side * 46, 110), (140, 50, 12))
-    layout.box("DistrictNeon", (x, y - side * 44, 164), (95, 4, 62), False)
-    layout.box("DistrictPink", (x, y - side * 45, 220), (130, 6, 30), False)
-    for dx in (-30, 10, 35):
-        layout.box("DistrictYellow", (x + dx, y - side * 55, 120), (12, 12, 8), False)
 
 
 def park(layout, x, y):
@@ -143,6 +131,11 @@ def generate(layout):
         else:
             shell(layout, x, y, wall)
             room_details(layout, name, x, y)
+    from CityCivicDressing import generate as dress_arcade
+    from CityBarSeating import generate as dress_bar
+
+    dress_arcade(layout)
+    dress_bar(layout)
 
 
 def furnish():

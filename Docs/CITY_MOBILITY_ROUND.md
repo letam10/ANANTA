@@ -1,7 +1,7 @@
 # Vòng mở rộng, va chạm và phương tiện
 
 Cập nhật 2026-10-09; nhánh codex/city-expansion. Vòng đang thực hiện.
-Yêu cầu đã chốt: 3,4 × 3,4 km, gấp đôi hai chiều, bốn lần diện tích bản cũ.
+Checkpoint hiện kiểm: 3,4 × 3,4 km; yêu cầu mới tiếp tục tăng hai chiều lên 6,8 km.
 Giữ model nhân vật/save thường; gameplay ngắn, chạy ngầm, không benchmark.
 
 ## Đã làm
@@ -57,9 +57,12 @@ Giữ model nhân vật/save thường; gameplay ngắn, chạy ngầm, không b
 - Trước chuyển Nanite: Max và NonNanite.Batch=0 đều PageFault.
   VSM tắt hoàn tất gameplay 282,62 giây/55,71 FPS, chỉ là lượt chẩn đoán.
   Hai lượt Max sau chuyển Nanite chưa crash; chưa đủ kết luận sửa triệt để.
-- HLOD cũ lỗi thời; chưa dựng đầy đủ proxy mới cho 3,4 km.
+- HLOD Instancing đầy đủ 962/962 và đọc lại 591.633 instance PASS.
+- Bar/arcade thêm 54 instance trong 5 nhóm: bounds/lối đi, tám lượt qua cửa và tám ảnh GPU đạt.
 - Cube Nanite đã áp dụng, body/3.992 điểm đường và tám ảnh đã kiểm; cần HLOD mới.
-- Chưa có EXE mới cho 3,4 km. CitySettingsPreview vẫn là map 1,7 km/menu cũ đã kiểm.
+- EXE CityExpanded 3,4 km build/cook/package PASS, menu Apply PASS; reload bị GPU PageFault Nanite/VSM.
+- EXE Max native: 47,71 FPS, p95 37,87 ms trong 283,46 giây; giữ mọi frame; 90 FPS chưa đạt.
+- Nguồn 6,8 km PASS, chưa apply/runtime; chuẩn tám hướng/năm góc đặt: CITY_6800_CONTRACT.md.
 
 ## Vòng tiếp theo
 
@@ -79,4 +82,4 @@ Giữ model nhân vật/save thường; gameplay ngắn, chạy ngầm, không b
 - Backup trước mở rộng: Saved/Backups/CityBeforeMobility_20261008_225729,
   7.556 file / 569.205.616 byte. Không xóa backup hoặc save thường.
 - Hợp đồng API/phân việc: CITY_MOBILITY_EXPANSION_CONTRACT.md.
-- Checkpoint mở rộng 4b18a76 đã push/đối chiếu remote; không đưa save/log máy lên Git.
+- Checkpoint b99f3956f đã push/đối chiếu remote, LFS fsck đạt; không đưa save/log máy lên Git.

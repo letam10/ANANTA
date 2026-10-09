@@ -6,7 +6,9 @@ Nguồn: nhánh codex/city-expansion; chi tiết: CITY_MOBILITY_ROUND.md.
 
 ## Yêu cầu đã chốt
 
-- Thành phố liên tục khoảng 3,4 × 3,4 km: gấp đôi hai chiều bản 1,7 km, bốn lần diện tích.
+- Yêu cầu mới: tăng từ 3,4 lên 6,8 × 6,8 km, gấp đôi mỗi chiều lần nữa; map đã kiểm hiện vẫn 3,4 km.
+- Model mới/sửa kiểm tám hướng; mỗi vị trí đặt kiểm năm góc trong scene thực.
+- Biển mở ra chân trời, có ranh giới chặn người chơi; props nhỏ có thể giản lược hình học.
 - Giữ model nhân vật và save cá nhân. Nhà không vào được chỉ có vỏ.
 - Hướng trải nghiệm ANANTA/Neverness to Everness và chất lượng hình ảnh Endfield.
 - Đa dạng nhà, nội thất, phố, công cộng/giải trí/biển/cảng và phương tiện.
@@ -80,7 +82,13 @@ Nguồn: nhánh codex/city-expansion; chi tiết: CITY_MOBILITY_ROUND.md.
 - Trước chuyển cube Nanite, Max lỗi PageFault; tắt NonNanite.Batch vẫn lỗi.
   Tắt VSM đã hoàn tất 282,62 giây/55,71 FPS, chỉ là chẩn đoán, không tính đạt Max.
   Hai lượt Max sau chuyển Nanite chưa crash; chưa chứng minh đã sửa triệt để.
-- HLOD cũ đã lỗi thời; chưa có bằng chứng toàn bộ proxy mới hoàn thành.
+- HLOD Instancing đầy đủ PASS 962/962; đọc lại 591.633 instance, không thiếu mesh/material.
+- Bố trí bar/arcade thêm 54 instance trong 5 nhóm đã kiểm bounds/lối đi/chồng đồ;
+  map, HLOD, tám lượt qua cửa/bốn dịch vụ và đủ tám ảnh GPU đã kiểm.
+- EXE CityExpanded 3,4 km build/cook/package PASS; menu Apply PASS, reload bị GPU PageFault Nanite/VSM.
+- EXE Max 1080p gốc: 47,71 FPS / p95 37,87 ms; 13.523 frame, 283,46 giây, GPU trung bình 20,12 ms.
+  Giữ 1.760 frame trên 33,3 ms và 13 frame trên 50 ms. Chưa đạt 90 FPS; chưa kết luận lỗi GPU đã sửa.
+- Bố cục nguồn 6,8 km PASS: 10.754 nhà / 1.660.699 instance; chưa apply hoặc nghiệm thu trong Unreal.
 - Đã chuyển 12.025 component / 113.907 instance khối đục sang Nanite;
   giữ geometry/material/collision; rà lại body và 3.992 điểm đường đạt.
 
@@ -88,9 +96,9 @@ Nguồn: nhánh codex/city-expansion; chi tiết: CITY_MOBILITY_ROUND.md.
 
 1. Thử người chơi đi tại cảng và kiểm các tương tác trong EXE mới.
 2. Tiếp tục tối ưu render và tăng chi tiết nội thất/biển/cảng theo ảnh và số đo hiện tại.
-3. Commit/push checkpoint Nanite, sửa tuyến NPC và các kiểm tra tuyến/cửa mới.
-4. Dựng HLOD đầy đủ cho 3,4 km; không dừng tiến trình chỉ vì lâu.
-5. Đóng gói EXE mới, kiểm nhiệm vụ/xe/save/settings/hình ảnh; giữ preview cũ.
+3. Commit/push checkpoint HLOD/civic và số đo EXE; giữ rõ lỗi reload và FPS chưa đạt.
+4. Áp dụng mở rộng 6,8 km, model mới, biển mở và ranh giới theo CITY_6800_CONTRACT.md.
+5. Kiểm va chạm, tám hướng model/năm góc đặt, HLOD, EXE và gameplay; giữ các build cũ.
 6. Tiếp tục chất lượng cảnh vật và ổn định 90 FPS; không coi build/test là nghiệm thu toàn game.
 
 ## Bằng chứng
@@ -105,4 +113,5 @@ Nguồn: nhánh codex/city-expansion; chi tiết: CITY_MOBILITY_ROUND.md.
 - Saved/QA/CityMobilityAssets, CityLivingAssets, CityFerrisAssets, CityCivic.
 - Assets/City/*_manifest.json: nguồn, giấy phép, hash, tam giác, texture.
 - Preview cũ: Saved/Builds/CitySettingsPreview/Windows/ANANTA.exe, vẫn là bản 1,7 km.
-- Không đưa save cá nhân/log máy vào Git. Checkpoint mở rộng 4b18a76 đã push, remote SHA khớp.
+- Không đưa save cá nhân/log máy vào Git. Checkpoint b99f3956f đã push, remote SHA khớp;
+  Git LFS fsck đạt, upload đủ 12.027 đối tượng / 108 MB.

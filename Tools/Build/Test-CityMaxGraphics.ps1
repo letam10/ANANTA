@@ -10,6 +10,9 @@ param(
 $ErrorActionPreference = 'Stop'
 $projectRoot = (Resolve-Path (Join-Path $PSScriptRoot '..\..')).Path
 $variant = if ($ExecutablePath) { 'Packaged' } else { '' }
+if ($ProfileRender) {
+    $variant += 'Profile'
+}
 if ($Diagnostic -ne 'None') {
     $variant += $Diagnostic
 }
