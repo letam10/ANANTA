@@ -44,7 +44,12 @@ bool AANANTACityCrowd::MakeRoute(const FVector& Player, const bool bTraffic, FVe
         // Nguoi di bo chi di tren via he giua hai nga tu, khong cat ngang toa nha.
         const float Block = FMath::FloorToFloat((StartAlong + CityEdge) / RoadSpacing) * RoadSpacing - CityEdge;
         StartAlong = FMath::Clamp(StartAlong, Block + 1550, Block + RoadSpacing - 1550);
-        EndAlong = FMath::Clamp(EndAlong, Block + 1550, Block + RoadSpacing - 1550);
+        EndAlong = FMath::Clamp(StartAlong + Side * 1600, Block + 1550, Block + RoadSpacing - 1550);
+        if (FMath::Abs(EndAlong - StartAlong) < 200)
+        {
+            // O cuoi via he, doi huong de NPC khong dung yen chan nguoi choi.
+            EndAlong = FMath::Clamp(StartAlong - Side * 1600, Block + 1550, Block + RoadSpacing - 1550);
+        }
     }
     const float Height = bTraffic ? 70.f : 110.f;
     Start = bHorizontal ? FVector(StartAlong, Lane, Height) : FVector(Lane, StartAlong, Height);

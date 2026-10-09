@@ -180,3 +180,37 @@ Maximum graphics target remains 90 FPS, not accepted. Preserve character models 
   with all three per-kind outcomes, distances/counts, reason, elapsed and explicit fixture scope.
 - Exit nonzero if any missing/failed result. Runner validates fresh report, three kinds and all PASS.
 - Self-check source constraints/PowerShell parsing; root compiles/runs engine. Report once <=15 lines.
+
+## Remaining authored road routes
+
+- Agent owns Public/QA/CityRoadRoutesCheck.h, Private/QA/CityRoadRoutesCheck*.cpp,
+  Tools/Build/Test-CityRoadRoutes.ps1 only; no shared gameplay/Content edits or engine/build/subagents.
+- Reuse public CityRouteVehicle API and CityMobility::MakeRoute for the eight road kinds.
+- Follow working CityHarborCheck lifecycle/runner approach: both QA flags, intended map only,
+  never Shipping; bootstrap world teardown must not request exit; preserve normal saves/config.
+- Actual-map physics fixture, explicitly label observer relocation and pinned streaming.
+- Run actual eight routes with imported meshes, ordinary speed, existing geometry and collisions.
+  No added support floors, route changes, pass-through obstacles or accelerated time.
+- Ensure full route coverage loaded; suppress only transport manager duplicate spawning during QA.
+- For each kind require four stop alightings, boarding, all four sides visited, return near first stop,
+  no unsupported falling, road excursion or persistent blocker; finish <=240s after readiness.
+- Track exact per-kind results, travel distance, counts, blocker, elapsed and coverage.
+  Saved/QA/CityRoadRoutesCheck/Report.json; runner fails missing/duplicate/failed/stale evidence.
+- Self-check syntax/line budgets/PowerShell parsing. Root runs Editor build and runner.
+
+## Civic doorway movement checks
+
+- Agent owns Public/QA/CityCivicCheck.h, Private/QA/CityCivicCheck*.cpp,
+  Tools/Build/Test-CityCivic.ps1 only; no shared gameplay/Content edits or engine/build/subagents.
+- Read Tools/Editor/CityCivicDistrict.py for four room anchors, entry clear width and FLOOR_Z.
+- Use existing character/controller/CharacterMovement and service interaction API, not custom movement.
+- Both -CityCivicCheck and -CityQASlot; intended city map only, never Shipping.
+- Physics/input fixture may relocate hero to each exterior entry start after streaming is ready.
+  Clearly label setup relocation. Each measured inward/outward leg uses real W/Shift input,
+  enabled normal capsule/collision, no teleport, noclip or speed increase while traversing.
+- Police_Read, Fire_Read, Bar_Read, Arcade_Read: enter, reach E prompt/interact, exit, assert ground,
+  no sticking or penetration; cleanly release keys. Preserve normal save/config.
+- Pin required cells and bounded waits; avoid teardown exit during bootstrap.
+- Saved/QA/CityCivicCheck/Report.json with eight legs/four services and explicit fixture scope.
+  Runner rejects nonzero, stale/missing/partial evidence; deadline <=240 seconds after readiness.
+- Self-check source/PowerShell syntax and report exact root build/run commands once <=15 lines.

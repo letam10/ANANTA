@@ -2,12 +2,17 @@
 param(
     [string]$ExecutablePath,
     [switch]$ProfileRender,
+    [ValidateSet('None', 'NonNaniteBatchOff', 'VsmOff')]
+    [string]$Diagnostic = 'None',
     [string]$EngineRoot = 'C:\Program Files\Epic Games\UE_5.8'
 )
 
 $ErrorActionPreference = 'Stop'
 $projectRoot = (Resolve-Path (Join-Path $PSScriptRoot '..\..')).Path
 $variant = if ($ExecutablePath) { 'Packaged' } else { '' }
+if ($Diagnostic -ne 'None') {
+    $variant += $Diagnostic
+}
 $qaPath = Join-Path $projectRoot "Saved\QA\CityMaxGraphics$variant"
 New-Item -ItemType Directory -Path $qaPath -Force | Out-Null
 $configPath = Join-Path $qaPath 'GameUserSettings.ini'
@@ -51,6 +56,17 @@ $arguments = @(
 if ($ProfileRender) {
     $arguments += '-CityProfileRender'
 }
+if ($Diagnostic -ne 'None') {
+    # Chi chan doan duong render gay PageFault; khong tinh la Max mac dinh.
+    $override = if ($Diagnostic -eq 'VsmOff') {
+        'r.Shadow.Virtual.Enable=0'
+    } else {
+        'r.Shadow.Virtual.NonNanite.Batch=0'
+    }
+    $arguments += "-ForceDPCVars=$override"
+    "Diagnostic override: $override; not stock-Max acceptance." |
+        Set-Content -LiteralPath (Join-Path $qaPath 'Diagnostic.txt')
+}
 if ($ExecutablePath) {
     $ExecutablePath = (Resolve-Path -LiteralPath $ExecutablePath).Path
     $errorPath = Join-Path $qaPath 'Error.log'
@@ -74,7 +90,7 @@ if (-not $log.Contains('CITY_SERVICE_JOURNEY_FINISH mode=Check success=1') -or
     throw "Required gameplay or observation evidence missing: $logPath"
 }
 Copy-Item -LiteralPath (Join-Path $savedRoot 'QA\CityServiceJourney\Report.txt') -Destination $qaPath
-if ($ExecutablePath) {
+if ($ExecutablePath -or $Diagnostic -ne 'None') {
     foreach ($name in @('FrameTimes.csv', 'RenderConfig.txt')) {
         Copy-Item -LiteralPath (Join-Path $savedRoot "QA\CityMaxGraphics\$name") -Destination $qaPath
     }

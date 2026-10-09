@@ -29,16 +29,23 @@ Nguồn: nhánh codex/city-expansion; chi tiết: CITY_MOBILITY_ROUND.md.
 - Nước thêm gợn normal nhỏ, giữ nguyên mặt nước/va chạm.
 - Ảnh civic đã xem: nhà cứu hỏa, bar, arcade, vòng quay, biển/cảng; cảnh còn thưa.
 - Sửa nền lát/gỗ trùng mặt phẳng bằng tách cao độ 1 cm; ảnh GPU bar/arcade đã hết mảng loang.
+- Đã xem lại tám ảnh GPU sau chuyển cube Nanite: mặt tiền, nền, cầu tàu và vòng quay vẫn hiện đúng.
+  Nội thất bar/arcade còn thưa, sàn bóng mạnh; biển/cảng còn đơn giản, cần cải thiện tiếp.
 - Các khu mới vẫn cần tinh chỉnh; chưa nghiệm thu là đồ họa cuối cùng.
 
 ### Va chạm và giao thông
 
 - Sửa giới hạn lái xe, phép xoay, khoảng trống đầu khi xuống xe, mantle và capsule khôi phục.
 - Sửa dò cửa xe nhận nhầm nóc vật cản là sàn; sửa xe dài bị khóa hướng lái ở góc rẽ.
-- PASS: 16/16 automation, gồm regression capsule, mantle, góc rẽ, asset và tuyến.
+- PASS: 17/17 automation, gồm regression capsule, mantle, góc rẽ, asset và tuyến.
+- Regression tái hiện 57 tuyến đi bộ quá ngắn ở cuối vỉa hè; sửa điểm đến/đổi hướng trong cùng ô.
+  Kiểm lại không còn tuyến dưới 2 m trong fixture 512 tổ hợp vị trí/seed.
+  Gameplay Max đi qua đoạn từng bị chặn và hoàn tất tám dịch vụ sau bản sửa.
 - PASS rà map sau thay vòng quay: 10.401 component, 47.809 instance chặn Pawn,
   3.992 điểm đường; không thiếu body/mặt đỡ trong phạm vi kiểm tra này.
 - PASS cửa căn hộ/cà phê hai chiều: bốn đoạn CharacterMovement thật.
+- PASS cửa cảnh sát/cứu hỏa/bar/arcade: tám lượt W/Shift vào/ra, bốn tương tác E.
+  Fixture dời người chơi giữa địa điểm lúc chuẩn bị; không dời trong đoạn đo, không đổi va chạm/tốc độ.
 - 11 phương tiện: khách/buýt/taxi/tải/chở hàng/bồn/cảnh sát/cứu thương,
   tàu hàng/cano/thuyền buồm; 197.536 tam giác tổng nguồn, có LOD.
 - PASS 11/11 fixture: cửa bị chặn, lên xe, chờ vật cản, chạy ít nhất 49 m,
@@ -48,27 +55,40 @@ Nguồn: nhánh codex/city-expansion; chi tiết: CITY_MOBILITY_ROUND.md.
   Chưa có animation mở cửa/ngồi ghế mới. Vòng quay là cảnh vật tĩnh.
 - Xe khởi đầu chuyển sát lề; không sửa vị trí xe trong save cá nhân.
 - PASS Coach trên tuyến thật: lên xe, qua góc rẽ, xuống ở bến tiếp; 3.315 lần kiểm tiếp đất.
-  Ba vòng tàu thật và các tuyến xe khác chưa nghiệm thu đầy đủ.
+- PASS tám tuyến đường bộ đầy đủ: 16 xe, khoảng 925 m/vòng, bốn phía và trở lại điểm đầu.
+  Hai xe lệch điểm xuất phát mỗi loại kiểm đủ lên/xuống cả bốn bến; 140,86 giây.
+  Fixture NullRHI nạp vùng đường thật, giữ tốc độ/geometry/collision; chưa thay cho kiểm xe trong EXE.
+- PASS ba tuyến tàu trên hình học map thật: khoảng 219 m khứ hồi, lên/xuống và trở lại bến.
+  Fixture NullRHI dời observer/nạp vùng cảng; không sửa tốc độ, cầu tàu, mặt đỡ hay collision.
+  Người chơi đi tại cảng chưa nghiệm thu đầy đủ.
 
 ### Cài đặt và hiệu năng
 
 - Menu: preset/10 nhóm chất lượng, render scale, cap FPS, VSync, ngôn ngữ, FPS.
 - Esc/F10 mở cài đặt; Alt hiện chuột; F8 bật/tắt bộ đo frame thực.
 - Apply/Hủy/mặc định/pause/Việt/English/reload đã qua QA và EXE preview cũ.
+- PASS tải lại save QA sau hành trình tám dịch vụ trên bản 3,4 km mới.
 - Có frustum/occlusion, Nanite HZB, World Partition, HISM, streaming, LOD, TSR.
+- Hướng dẫn vật thể lặp: CITY_INSTANCING_GUIDE.md; Ctrl+D/Ctrl+V không tự bảo đảm instancing.
 - Mesh kính translucent dùng LOD thường, tránh vật liệu mặc định do Nanite không hỗ trợ.
 - Max là Epic (3), native 100%; không đổi nhãn chất lượng để lấy số FPS.
-- Max gần nhất trên bản 1,7 km: 52,56 FPS trung bình, p95 23,46 ms, GPU 18,18 ms.
-  Chưa đạt 90 FPS; đây không phải số đo bản 3,4 km.
+- Max native 1080p bản 3,4 km sau sửa tuyến NPC: 62,57 FPS trung bình,
+  p95 18,90 ms, GPU 15,26 ms; 17.621 frame trong 281,61 giây quan sát. Chưa đạt 90 FPS.
+  Hoàn tất tám dịch vụ; giữ cả 22 frame trên 33,3 ms và sáu frame trên 50 ms trong số liệu.
+- Số cũ 52,56 FPS thuộc map 1,7 km; không dùng làm so sánh trực tiếp với bản mới.
 - D3D12 PageFault/Nanite/VSM khi khởi động chưa được kết luận đã sửa.
+- Trước chuyển cube Nanite, Max lỗi PageFault; tắt NonNanite.Batch vẫn lỗi.
+  Tắt VSM đã hoàn tất 282,62 giây/55,71 FPS, chỉ là chẩn đoán, không tính đạt Max.
+  Hai lượt Max sau chuyển Nanite chưa crash; chưa chứng minh đã sửa triệt để.
 - HLOD cũ đã lỗi thời; chưa có bằng chứng toàn bộ proxy mới hoàn thành.
-- Script thử cube đục sang Nanite đã chuẩn bị, chưa áp dụng/đo; chưa tính là tối ưu đạt.
+- Đã chuyển 12.025 component / 113.907 instance khối đục sang Nanite;
+  giữ geometry/material/collision; rà lại body và 3.992 điểm đường đạt.
 
 ## Tiếp tục
 
-1. Commit/push checkpoint mở rộng, ghi rõ giới hạn nghiệm thu.
-2. Thử ba tuyến tàu ở bến thật, tuyến xe còn lại và cửa dịch vụ mới.
-3. Quan sát Max qua gameplay ngắn; thử cube Nanite có đối chiếu ảnh/frame.
+1. Thử người chơi đi tại cảng và kiểm các tương tác trong EXE mới.
+2. Tiếp tục tối ưu render và tăng chi tiết nội thất/biển/cảng theo ảnh và số đo hiện tại.
+3. Commit/push checkpoint Nanite, sửa tuyến NPC và các kiểm tra tuyến/cửa mới.
 4. Dựng HLOD đầy đủ cho 3,4 km; không dừng tiến trình chỉ vì lâu.
 5. Đóng gói EXE mới, kiểm nhiệm vụ/xe/save/settings/hình ảnh; giữ preview cũ.
 6. Tiếp tục chất lượng cảnh vật và ổn định 90 FPS; không coi build/test là nghiệm thu toàn game.
@@ -77,7 +97,12 @@ Nguồn: nhánh codex/city-expansion; chi tiết: CITY_MOBILITY_ROUND.md.
 
 - Saved/QA/CityAutomation/index.json; CityWholeMapCollision.txt; CityFleetCheck/Report.txt.
 - Saved/QA/CityMobilityMapReadback.json; CityExpansionApplied.json; CityTransitCheck/Report.txt.
+- Saved/QA/CityHarborCheck/Report.json: ba tuyến nước, 78,28 giây sau sẵn sàng.
+- Saved/QA/CityCivicCheck/Report.json: tám lượt qua cửa, bốn dịch vụ, 51,26 giây.
+- Saved/QA/CityRoadRoutesCheck/Report.json: tám tuyến, 16 xe, 140,86 giây.
+- Saved/QA/CityMaxGraphics/Summary.json, FrameTimes.csv, RenderConfig.txt: lượt Max hoàn tất.
+- Saved/QA/CityPedestrianRegressionBefore.json và After.json: tái hiện lỗi rồi kiểm lại đạt.
 - Saved/QA/CityMobilityAssets, CityLivingAssets, CityFerrisAssets, CityCivic.
 - Assets/City/*_manifest.json: nguồn, giấy phép, hash, tam giác, texture.
 - Preview cũ: Saved/Builds/CitySettingsPreview/Windows/ANANTA.exe, vẫn là bản 1,7 km.
-- Không đưa save cá nhân/log máy vào Git. Checkpoint trước vòng này: a26ca25.
+- Không đưa save cá nhân/log máy vào Git. Checkpoint mở rộng 4b18a76 đã push, remote SHA khớp.

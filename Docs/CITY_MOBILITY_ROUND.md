@@ -21,38 +21,50 @@ Giữ model nhân vật/save thường; gameplay ngắn, chạy ngầm, không b
 - Sửa cửa xe nhận nhầm nóc vật cản là sàn; xe dài kẹt hướng lái tại góc vỉa hè.
 - Xe khởi đầu chuyển sát lề; không di chuyển xe đã lưu trong save thường.
 - Mesh có kính translucent dùng LOD thường để giữ vật liệu đúng.
+- Chuyển 113.907 instance khối đục sang Nanite, giữ nguyên geometry/material/collision.
 
 ## Kết quả kiểm chứng
 
 | Kiểm tra | Kết quả và giới hạn |
 | --- | --- |
-| Editor build + automation | PASS, 16/16; có regression Coach qua góc vỉa hè |
+| Editor build + automation | PASS, 17/17; gồm Coach qua góc và tuyến NPC cuối vỉa hè |
 | Bố cục nguồn | PASS, không chồng nhà/lấn đường/thiếu mesh |
 | Va chạm map sau thay vòng quay | PASS, 10.401 component / 47.809 instance chặn Pawn |
 | Mặt đường | PASS 3.992 điểm; không đại diện mọi quỹ đạo người chơi |
 | Cửa căn hộ/cà phê | PASS bốn đoạn CharacterMovement hai chiều |
+| Bốn cửa civic | PASS tám lượt vào/ra bằng W/Shift, bốn tương tác E, 51,26 giây |
 | Fixture 11 phương tiện | PASS cửa bị chặn, đợi vật cản, lên xe, đi >=49 m, xuống/dọn actor |
 | Tuyến Coach thật | PASS lên/qua góc rẽ/xuống bến tiếp, 3.315 lần kiểm tiếp đất |
+| Tám tuyến đường bộ | PASS 16 xe, vòng khoảng 925 m/xe, đủ bốn bến lên/xuống, 140,86 giây |
+| Ba tuyến tàu ở cảng thật | PASS khoảng 219 m khứ hồi/loại, trở lại bến và NPC xuống |
 | Import/đọc lại map | PASS các mesh mới, 19 đồ sinh hoạt, 16 đèn |
-| Ảnh GPU civic | Đã xem tám ảnh; sửa lớp sàn và kiểm lại bar/arcade hết mảng loang |
+| Ảnh GPU civic | Đã xem tám ảnh mới sau Nanite; không thấy mất mặt tiền/nền/cầu tàu/vòng quay |
 | Save/config thường | Checksum không đổi sau QA |
+| Reload save dịch vụ | PASS tiến trình GPU mới, đủ tám địa điểm trên bản 3,4 km |
 
 ## Giới hạn còn lại
 
-- Cần chạy đủ ba tuyến tàu ở bến thật, các tuyến xe khác và cửa civic mới.
+- Cần thử người chơi đi tại cảng và tương tác trong EXE mới.
   Fixture phương tiện đã đạt không thay cho kiểm chứng trên mọi tuyến thực tế.
+- Kiểm cảng là fixture NullRHI có dời observer và nạp vùng: không thêm sàn giả,
+  không đổi tốc độ/vị trí cầu tàu/collision; chưa phải nghiệm thu hình ảnh hoặc đi bộ tại cảng.
 - Cảnh còn trống, bờ biển/nước và nội thất cần tinh chỉnh; chưa nghiệm thu đồ họa cuối.
-- Mục tiêu Max native 1080p 90 FPS chưa đạt, cần <=11,11 ms/frame ổn định.
-  Số cũ 52,56 FPS trung bình / p95 23,46 ms thuộc bản 1,7 km, không phải bản này.
+- Max native 1080p mới: 62,57 FPS trung bình / p95 18,90 ms trong 281,61 giây.
+  Hoàn tất tám dịch vụ sau sửa tuyến NPC; chưa đạt 90 FPS/11,11 ms.
+  Giữ đủ 17.621 frame, gồm 22 frame trên 33,3 ms và sáu frame trên 50 ms.
+- Đã sửa tuyến NPC quá ngắn ở cuối vỉa hè: regression từ 57 lỗi về 0; gameplay đi qua được.
 - D3D12 PageFault/Nanite/VSM khởi động chưa được kết luận đã sửa.
+- Trước chuyển Nanite: Max và NonNanite.Batch=0 đều PageFault.
+  VSM tắt hoàn tất gameplay 282,62 giây/55,71 FPS, chỉ là lượt chẩn đoán.
+  Hai lượt Max sau chuyển Nanite chưa crash; chưa đủ kết luận sửa triệt để.
 - HLOD cũ lỗi thời; chưa dựng đầy đủ proxy mới cho 3,4 km.
-- Cube đục sang Nanite mới có script thử, chưa áp dụng hoặc xác nhận lợi ích.
+- Cube Nanite đã áp dụng, body/3.992 điểm đường và tám ảnh đã kiểm; cần HLOD mới.
 - Chưa có EXE mới cho 3,4 km. CitySettingsPreview vẫn là map 1,7 km/menu cũ đã kiểm.
 
 ## Vòng tiếp theo
 
-1. Cập nhật tài liệu, commit/push checkpoint; sửa sàn đã kiểm ảnh đạt.
-2. Kiểm tuyến tàu thật, tuyến đường còn lại, cửa/dịch vụ và collision khi streaming.
+1. Commit/push checkpoint Nanite và các kiểm tra đã đạt.
+2. Kiểm người chơi tại cảng, tuyến đường còn lại, cửa/dịch vụ và collision khi streaming.
 3. Quan sát Max bằng gameplay ngắn, xác định phần render tốn thời gian và thử sửa có đối chiếu.
 4. Dựng HLOD đầy đủ; build/cook/package thành EXE mới và chạy QA cô lập.
 5. Tiếp tục chất lượng cảnh vật và 90 FPS; không coi build/test là nghiệm thu toàn game.
@@ -61,9 +73,10 @@ Giữ model nhân vật/save thường; gameplay ngắn, chạy ngầm, không b
 
 - Saved/QA/CityAutomation/index.json, CityWholeMapCollision.txt, CityFleetCheck/Report.txt.
 - Saved/QA/CityTransitCheck/Report.txt, CityMobilityMapReadback.json, CityExpansionApplied.json.
+- Saved/QA/CityHarborCheck/Report.json: ba tàu đạt, tổng 78,28 giây sau world sẵn sàng.
 - Saved/QA/CityMobilityAssets, CityLivingAssets, CityFerrisAssets, CityCivic.
 - Assets/City/*_manifest.json ghi nguồn/giấy phép/hash/tam giác/texture.
 - Backup trước mở rộng: Saved/Backups/CityBeforeMobility_20261008_225729,
   7.556 file / 569.205.616 byte. Không xóa backup hoặc save thường.
 - Hợp đồng API/phân việc: CITY_MOBILITY_EXPANSION_CONTRACT.md.
-- Checkpoint trước vòng này a26ca25; không đưa save/log máy lên Git.
+- Checkpoint mở rộng 4b18a76 đã push/đối chiếu remote; không đưa save/log máy lên Git.

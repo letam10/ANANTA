@@ -26,6 +26,7 @@ public:
     TObjectPtr<UStaticMesh> TrafficMesh;
 
 private:
+    friend class FCityPedestrianRouteTest;
     void MaintainPopulation(const FVector& Player, bool bTraffic);
     bool MakeRoute(const FVector& Player, bool bTraffic, FVector& Start, FVector& End);
 
