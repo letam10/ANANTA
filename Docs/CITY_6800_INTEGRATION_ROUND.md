@@ -44,6 +44,7 @@ Cập nhật 2026-10-10. Đang thực hiện; bản đồ/EXE đã kiểm vẫn 
 - Regression bắt landing che ba bậc 37–39, tạo bước cao 60 cm; đã dời landing sau bậc cuối.
   Kiểm lại cả 41 bậc và đường nối mái PASS trong nguồn, chưa thay cho CharacterMovement thực.
 - Đã đồng bộ vùng cắt đường sân bay giữa Python, audit C++ và đèn phố.
+- Git giữ nguyên byte hai thư mục nguồn model mới để hash provenance không đổi do xuống dòng.
 - Đọc đủ 25.801 actor nền theo lô PASS: 25.026 nhóm, 602.965 instance, 12 dịch vụ.
   Sửa cách đếm bỏ sót năm HISM Living_CivicDressing; đối chiếu nguồn commit cũ cùng số instance.
   Báo cáo nền đã hòa giải thay vòng quay 282 thành một và cabinet bỏ 42/thêm 54; không sửa map.

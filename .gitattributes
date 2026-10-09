@@ -11,3 +11,5 @@ Assets/City/Expansion/Sources/** -text whitespace=cr-at-eol
 Assets/City/Finishes/Sources/** -text whitespace=cr-at-eol
 Assets/City/Finishing/Sources/** -text whitespace=cr-at-eol
 Assets/City/Finishes/Sources/PolyHavenLicense.html -whitespace
+Assets/City/MetroDetails/Sources/** -text whitespace=cr-at-eol
+Assets/City/SmallDetails/Sources/** -text whitespace=cr-at-eol
