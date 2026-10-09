@@ -5,7 +5,11 @@ from CityExpansionData import BLOCK, GRID_EXTENT, WORLD_EXTENT, overlaps_reserve
 
 def prop(layout, mesh, x, y, yaw=0, scale=(1, 1, 1), radius=230):
     if not overlaps_reserved(x, y, radius * 2, radius * 2):
-        layout.add(mesh, (x, y, 15), scale, yaw, collision=False)
+        mesh = "DetailedPlanter" if mesh == "Planter" else mesh
+        solid = mesh in ("DetailedPlanter", "Bench", "TrashBin", "MarketStall")
+        layout.add(mesh, (x, y, 15), scale, yaw, collision=solid)
+        if mesh.startswith("Tree"):
+            layout.collider((x, y, 185 * scale[2]), (32 * scale[0], 32 * scale[1], 340 * scale[2]))
 
 
 def dress_block(layout, x, y, rng, park):

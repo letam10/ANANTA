@@ -166,6 +166,15 @@ void UCityCaptureSubsystem::CaptureView(const int32 Index)
         FRotator(-8, 90, 0), FRotator(-7, 60, 0), FRotator(0, 90, 0), FRotator(-18, 67, 0),
         FRotator(1, 90, 0), FRotator(0, 90, 0), FRotator(-3, 52, 0)
     };
+    static const FVector CivicLocations[] = {
+        FVector(-59600, 3400, 350), FVector(-47600, 3400, 350), FVector(-33900, -7200, 185),
+        FVector(-21900, -7200, 185), FVector(-8300, -7600, 900), FVector(123600, -130800, 1600),
+        FVector(127500, -143500, 1800)
+    };
+    static const FRotator CivicRotations[] = {
+        FRotator(-3, 62, 0), FRotator(-3, 42, 0), FRotator(-2, 30, 0), FRotator(-2, 30, 0),
+        FRotator(-15, 30, 0), FRotator(-15, 20, 0), FRotator(-16, 25, 0)
+    };
     const FString Directory = GetOutputDirectory();
     IFileManager::Get().MakeDirectory(*Directory, true);
     if (Index == 0)
@@ -183,12 +192,13 @@ void UCityCaptureSubsystem::CaptureView(const int32 Index)
         const bool bDressing = FParse::Param(FCommandLine::Get(), TEXT("CityDressingViews"));
         const bool bFinishing = FParse::Param(FCommandLine::Get(), TEXT("CityFinishingViews"));
         const bool bFixtures = FParse::Param(FCommandLine::Get(), TEXT("CityFixtureViews"));
+        const bool bCivic = FParse::Param(FCommandLine::Get(), TEXT("CityCivicViews"));
         const FVector Location = bFinishing ? FinishingLocations[Index]
             : (bDressing ? DressingLocations[Index] : (bExpansion ? ExpansionLocations[Index] : Locations[Index]));
         const FRotator Rotation = bFinishing ? FinishingRotations[Index]
             : (bDressing ? DressingRotations[Index] : (bExpansion ? ExpansionRotations[Index] : Rotations[Index]));
-        const FVector FinalLocation = bFixtures ? FixtureLocations[Index] : Location;
-        const FRotator FinalRotation = bFixtures ? FixtureRotations[Index] : Rotation;
+        const FVector FinalLocation = bCivic ? CivicLocations[Index] : (bFixtures ? FixtureLocations[Index] : Location);
+        const FRotator FinalRotation = bCivic ? CivicRotations[Index] : (bFixtures ? FixtureRotations[Index] : Rotation);
         GetWorld()->GetTimerManager().SetTimerForNextTick([this, FinalLocation, FinalRotation]()
         {
             if (!ReviewCamera)

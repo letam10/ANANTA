@@ -14,4 +14,7 @@ class ANANTA_API UCityEditorTools : public UBlueprintFunctionLibrary
 public:
     UFUNCTION(BlueprintCallable, Category = "City Editor", meta = (DevelopmentOnly))
     static ARecastNavMesh* EnsureNavigation(UWorld* World);
+
+    UFUNCTION(BlueprintCallable, Category = "City Editor", meta = (DevelopmentOnly))
+    static FString AuditLoadedCollision(UWorld* World);
 };

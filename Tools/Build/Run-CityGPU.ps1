@@ -8,6 +8,7 @@ param(
     [switch]$DressingViews,
     [switch]$FinishingViews,
     [switch]$FixtureViews,
+    [switch]$CivicViews,
     [string]$EngineRoot = 'C:\Program Files\Epic Games\UE_5.8'
 )
 
@@ -17,6 +18,10 @@ $editorPath = Join-Path $EngineRoot 'Engine\Binaries\Win64\UnrealEditor-Cmd.exe'
 $lightingSuffix = if ($BlueHour) { 'BlueHour' } else { '' }
 $logPath = Join-Path $projectRoot "Saved\Logs\CityGPU$Mode$lightingSuffix.log"
 $consolePath = Join-Path $projectRoot "Saved\Logs\CityGPU$Mode${lightingSuffix}Console.log"
+$qaConfigDirectory = Join-Path $projectRoot "Saved\QA\CityGPUConfig\$Mode$lightingSuffix"
+New-Item -ItemType Directory -Path $qaConfigDirectory -Force | Out-Null
+$qaConfig = Join-Path $qaConfigDirectory 'GameUserSettings.ini'
+Copy-Item -LiteralPath (Join-Path $projectRoot 'Config\DefaultGameUserSettings.ini') -Destination $qaConfig
 $arguments = @(
     "$projectRoot\ANANTA.uproject",
     '/Game/ANANTA/Maps/ANANTA_City',
@@ -28,6 +33,7 @@ $arguments = @(
     '-ResY=1080',
     "-City$Mode",
     '-CityQASlot',
+    "-GameUserSettingsINI=$qaConfig",
     '-NoSplash',
     '-nosound',
     '-unattended',
@@ -47,6 +53,9 @@ if ($FinishingViews) {
 }
 if ($FixtureViews) {
     $arguments += '-CityFixtureViews'
+}
+if ($CivicViews) {
+    $arguments += '-CityCivicViews'
 }
 & $editorPath @arguments *> $consolePath
 $code = $LASTEXITCODE
@@ -75,6 +84,9 @@ if ($Mode -eq 'Capture') {
     }
     if ($FixtureViews) {
         $captureName = 'CityFixtures'
+    }
+    if ($CivicViews) {
+        $captureName = 'CityCivic'
     }
     $env:ANANTA_CITY_CAPTURE_DIR = Join-Path $projectRoot "Saved\QA\$captureName$lightingSuffix"
     python -c @'

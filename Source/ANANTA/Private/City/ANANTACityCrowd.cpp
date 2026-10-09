@@ -19,7 +19,6 @@ void AANANTACityCrowd::Tick(float DeltaTime)
     if (PC && PC->GetPawn())
     {
         MaintainPopulation(PC->GetPawn()->GetActorLocation(), false);
-        MaintainPopulation(PC->GetPawn()->GetActorLocation(), true);
     }
 }
 

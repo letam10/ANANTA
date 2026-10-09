@@ -45,6 +45,21 @@ def material_asset(name):
     return material
 
 
+def promote_cube_component(component):
+    mesh = component.get_editor_property("static_mesh")
+    path = f"{ASSET_ROOT}/Meshes/SM_CityCubeNanite"
+    if not mesh or mesh.get_path_name() != "/Engine/BasicShapes/Cube.Cube" or not component.is_visible():
+        return False
+    material = component.get_material(0)
+    opaque = (unreal.BlendMode.BLEND_OPAQUE, unreal.BlendMode.BLEND_MASKED)
+    if not material or material.get_editor_property("blend_mode") not in opaque:
+        return False
+    if not unreal.EditorAssetLibrary.does_asset_exist(path):
+        return False
+    component.set_static_mesh(unreal.load_asset(path))
+    return True
+
+
 def instance_group(group, index):
     cx, cy = group["cell"]
     origin = group.get("origin", (-60000 + (cx + 0.5) * 12000, -60000 + (cy + 0.5) * 12000, 0))
@@ -54,8 +69,13 @@ def instance_group(group, index):
     component.set_static_mesh(mesh_asset(group["mesh"]))
     component.set_mobility(unreal.ComponentMobility.STATIC)
     component.set_collision_profile_name("BlockAll" if group["collision"] else "NoCollision")
+    if group.get("hidden"):
+        component.set_visibility(False)
+        component.set_cast_shadow(False)
+        actor.set_editor_property("enable_auto_lod_generation", False)
     if group["material"]:
         component.set_material(0, material_asset(group["material"]))
+    promote_cube_component(component)
     transforms = []
     for item in group["instances"]:
         transform = unreal.Transform()
@@ -84,6 +104,7 @@ def prop(name, label, location, yaw=0, scale=(1, 1, 1), collision=True):
 def box(label, location, size, material="Concrete", collision=True):
     actor = prop("Cube", label, location, scale=tuple(v / 100 for v in size), collision=collision)
     actor.static_mesh_component.set_material(0, material_asset(material))
+    promote_cube_component(actor.static_mesh_component)
     return actor
 
 

@@ -61,7 +61,7 @@ def mission():
     shard.visual_mesh.set_static_mesh(unreal.load_asset("/Engine/BasicShapes/Cone"))
     shard.visual_mesh.set_material(0, material_asset("Anomaly"))
     text("City_Transit_Name", "EASTLINE / TRANSIT", (26000, 7200, 500), -90, 110)
-    car = spawn(unreal.ANANTACityVehicle, "City_PlayerCar", (-22000, 500, 70))
+    car = spawn(unreal.ANANTACityVehicle, "City_PlayerCar", (-22000, 790, 70))
     car.set_editor_property("vehicle_id", "PlayerCar")
     car.set_editor_property("is_spatially_loaded", False)
     car.body_mesh.set_static_mesh(mesh_asset("CarBody"))

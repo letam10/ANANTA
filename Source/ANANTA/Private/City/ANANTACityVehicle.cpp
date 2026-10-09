@@ -1,11 +1,15 @@
 #include "City/ANANTACityVehicle.h"
 
 #include "City/ANANTACitySubsystem.h"
+#include "City/CityWorldBounds.h"
 #include "Camera/CameraComponent.h"
 #include "Components/BoxComponent.h"
+#include "Components/CapsuleComponent.h"
 #include "Components/StaticMeshComponent.h"
 #include "Engine/World.h"
 #include "GameFramework/Pawn.h"
+#include "GameFramework/Character.h"
+#include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/PlayerController.h"
 #include "GameFramework/SpringArmComponent.h"
 
@@ -100,10 +104,6 @@ void AANANTACityVehicle::Drive(float Throttle, float Steering, bool bBrake, cons
     const float Turn = Steering * FMath::Clamp(Speed / 800.f, -1.f, 1.f) * 65 * Step;
     const FQuat Rotation = FRotator(0, GetActorRotation().Yaw + Turn, 0).Quaternion();
     FCollisionQueryParams Params(SCENE_QUERY_STAT(CityCarDrive), false, this);
-    if (APlayerController* PC = GetWorld()->GetFirstPlayerController())
-    {
-        Params.AddIgnoredActor(PC->GetPawn());
-    }
     // Kiem tra goc quay vi sweep Unreal khong quet the tich xoay.
     if (!GetWorld()->OverlapBlockingTestByChannel(GetActorLocation(), Rotation, ECC_WorldDynamic,
         FCollisionShape::MakeBox(CollisionBody->GetScaledBoxExtent()), Params))
@@ -112,7 +112,8 @@ void AANANTACityVehicle::Drive(float Throttle, float Steering, bool bBrake, cons
     }
     const FVector Next = GetActorLocation() + GetActorForwardVector() * Speed * Step;
     FHitResult Floor;
-    if (FMath::Abs(Next.X) > 59000 || FMath::Abs(Next.Y) > 59000
+    if (FMath::Abs(Next.X) > CityWorldBounds::RoadExtent
+        || FMath::Abs(Next.Y) > CityWorldBounds::RoadExtent
         || !GetWorld()->LineTraceSingleByChannel(Floor, Next + FVector(0, 0, 120),
             Next - FVector(0, 0, 220), ECC_WorldStatic, Params) || Floor.ImpactNormal.Z < 0.8f)
     {
@@ -131,6 +132,15 @@ void AANANTACityVehicle::Drive(float Throttle, float Steering, bool bBrake, cons
 
 bool AANANTACityVehicle::FindSafeExit(const APawn* Player, FVector& OutLocation) const
 {
+    const auto* Character = Cast<ACharacter>(Player);
+    if (!Character)
+    {
+        return false;
+    }
+    const auto* PlayerCapsule = Character->GetCapsuleComponent();
+    const float Radius = PlayerCapsule->GetScaledCapsuleRadius();
+    const float HalfHeight = PlayerCapsule->GetScaledCapsuleHalfHeight();
+    const FCollisionShape Capsule = FCollisionShape::MakeCapsule(Radius, HalfHeight);
     FCollisionQueryParams Params(SCENE_QUERY_STAT(CityCarExit), false, this);
     Params.AddIgnoredActor(Player);
     const FVector Offsets[] = {
@@ -145,18 +155,25 @@ bool AANANTACityVehicle::FindSafeExit(const APawn* Player, FVector& OutLocation)
         {
             continue;
         }
-        Candidate.Z = Floor.ImpactPoint.Z + 95;
+        const float DoorFloor = GetActorLocation().Z - CollisionBody->GetScaledBoxExtent().Z;
+        // Khong chon mai nha/dam tren dau lam san roi dich chuyen nguoi len do.
+        if (Floor.ImpactPoint.Z > DoorFloor + Character->GetCharacterMovement()->MaxStepHeight)
+        {
+            continue;
+        }
+        Candidate.Z = Floor.ImpactPoint.Z + HalfHeight + 3;
         FHitResult Wall;
-        const FVector Start = GetActorLocation() + FVector(0, 0, 30);
+        // Quet ca than nguoi: hinh cau cu bo sot dam thap va vat can ngang dau.
+        const FVector Start(GetActorLocation().X, GetActorLocation().Y, Candidate.Z);
         if (GetWorld()->SweepSingleByChannel(Wall, Start, Candidate, FQuat::Identity, ECC_Pawn,
-            FCollisionShape::MakeSphere(38), Params))
+            Capsule, Params))
         {
             continue;
         }
         // Khong bo qua xe khi kiem tra capsule o diem ra cuoi cung.
         FCollisionQueryParams ExitParams(SCENE_QUERY_STAT(CityExitCapsule), false, Player);
         if (!GetWorld()->OverlapBlockingTestByChannel(Candidate, FQuat::Identity, ECC_Pawn,
-            FCollisionShape::MakeCapsule(38, 92), ExitParams))
+            Capsule, ExitParams))
         {
             OutLocation = Candidate;
             return true;

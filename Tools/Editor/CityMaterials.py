@@ -49,8 +49,24 @@ def constant(material, value, output, y):
         raise RuntimeError(f"Cannot connect constant {output}")
 
 
-def world_uv(material, centimetres):
+def world_uv(material, centimetres, box_projection=False):
     pos = expression(material, unreal.MaterialExpressionWorldPosition, -1100, 0)
+    if box_projection:
+        normal = expression(material, unreal.MaterialExpressionVertexNormalWS, -1100, -180)
+        projected = expression(material, unreal.MaterialExpressionCustom, -750, 0)
+        inputs = []
+        for name in ("P", "N"):
+            item = unreal.CustomInput()
+            item.set_editor_property("input_name", name)
+            inputs.append(item)
+        projected.set_editor_property("inputs", inputs)
+        projected.set_editor_property("output_type", unreal.CustomMaterialOutputType.CMOT_FLOAT2)
+        projected.set_editor_property("code", "float3 a=abs(N); float2 uv="
+                                      "a.z>=a.x && a.z>=a.y ? P.xy : (a.x>=a.y ? P.yz : P.xz);"
+                                      f"return uv/{float(centimetres)};")
+        assert LIB.connect_material_expressions(pos, "", projected, "P")
+        assert LIB.connect_material_expressions(normal, "", projected, "N")
+        return projected
     mask = expression(material, unreal.MaterialExpressionComponentMask, -900, 0)
     mask.set_editor_property("r", True)
     mask.set_editor_property("g", True)
@@ -84,7 +100,8 @@ def create_material(item, source_root):
         "metallic": unreal.MaterialProperty.MP_METALLIC,
         "emissive": unreal.MaterialProperty.MP_EMISSIVE_COLOR,
     }
-    uv = world_uv(material, item["worldTileCm"]) if item.get("worldTileCm") else None
+    tile = item.get("worldBoxTileCm", item.get("worldTileCm"))
+    uv = world_uv(material, tile, "worldBoxTileCm" in item) if tile else None
     connected = []
     for index, (role, prop) in enumerate(properties.items()):
         filename = item.get(role)

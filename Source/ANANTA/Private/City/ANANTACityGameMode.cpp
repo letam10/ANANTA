@@ -4,6 +4,7 @@
 #include "City/ANANTACityController.h"
 #include "City/ANANTACityHUD.h"
 #include "City/CityStreetLighting.h"
+#include "City/Mobility/CityTransportManager.h"
 #include "Engine/World.h"
 
 AANANTACityGameMode::AANANTACityGameMode()
@@ -17,4 +18,5 @@ void AANANTACityGameMode::BeginPlay()
 {
     Super::BeginPlay();
     GetWorld()->SpawnActor<ACityStreetLighting>();
+    GetWorld()->SpawnActor<ACityTransportManager>();
 }

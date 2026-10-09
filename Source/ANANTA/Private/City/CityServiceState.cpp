@@ -20,7 +20,9 @@ bool FCityServiceState::IsServiceId(const FName Id, const ECityServiceKind Kind)
     }
     case ECityServiceKind::Read:
         return Id == TEXT("Bookshop_Read") || Id == TEXT("Gallery_Read")
-            || Id == TEXT("Workshop_Read") || Id == TEXT("Transit_Read");
+            || Id == TEXT("Workshop_Read") || Id == TEXT("Transit_Read")
+            || Id == TEXT("Police_Read") || Id == TEXT("Fire_Read")
+            || Id == TEXT("Bar_Read") || Id == TEXT("Arcade_Read");
     default:
         return false;
     }

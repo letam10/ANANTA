@@ -20,6 +20,8 @@ void UANANTACitySubsystem::Initialize(FSubsystemCollectionBase& Collection)
     const bool bServiceCheck = FParse::Param(FCommandLine::Get(), TEXT("CityServiceCheck"));
     const bool bServiceReload = FParse::Param(FCommandLine::Get(), TEXT("CityServiceReload"));
     const bool bStreamingCheck = FParse::Param(FCommandLine::Get(), TEXT("CityStreamingCheck"));
+    const bool bMobilityCheck = FParse::Param(FCommandLine::Get(), TEXT("CityCollisionCheck"))
+        || FParse::Param(FCommandLine::Get(), TEXT("CityTransitCheck"));
     bUseQASlot = bInputSmoke || bMissionCheck || bMissionReload || bServiceCheck || bServiceReload
         || bStreamingCheck || FParse::Param(FCommandLine::Get(), TEXT("CityQASlot"));
     if (bUseQASlot)
@@ -28,7 +30,7 @@ void UANANTACitySubsystem::Initialize(FSubsystemCollectionBase& Collection)
         BackupSlot = TEXT("ANANTA_City_QA_Backup");
     }
     // Smoke luon bat dau moi; moi IO chi dung slot QA, khong nap hoac di chuyen save thuong.
-    if (bInputSmoke || bMissionCheck || bServiceCheck || bStreamingCheck)
+    if (bInputSmoke || bMissionCheck || bServiceCheck || bStreamingCheck || bMobilityCheck)
     {
         SaveStatus = TEXT("New isolated QA journey");
         return;

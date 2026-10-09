@@ -1,110 +1,83 @@
 # ANANTA — tiến độ hiện hành
 
-Cập nhật: 2026-10-08. Mục tiêu tổng thể đang thực hiện, chưa hoàn tất.
-Mỗi vòng: cập nhật file này, kiểm chứng thay đổi, commit/push GitHub.
-Bằng chứng chi tiết: Saved/QA và Saved/Logs; lịch sử đầy đủ nằm trong Git.
+Cập nhật 2026-10-09. Mục tiêu tổng thể đang thực hiện, chưa hoàn tất.
+Mỗi vòng: sửa → kiểm chứng → cập nhật file này → commit/push GitHub.
+Nguồn: nhánh codex/city-expansion; chi tiết: CITY_MOBILITY_ROUND.md.
 
-## Yêu cầu hiện hành
+## Yêu cầu đã chốt
 
-- Bản hiện tại khoảng 1,70 × 1,70 km; yêu cầu mới đã chốt: 3,40 × 3,40 km, gấp bốn diện tích hiện tại.
-- Tăng kiến trúc/cảnh quan/địa điểm tương tác; giữ nguyên model nhân vật.
-- Nhà không vào được chỉ có vỏ, ưu tiên đồ chi tiết cho nội thất tương tác.
-- Hướng trải nghiệm thành phố ANANTA/Neverness to Everness, chất lượng hình ảnh kiểu Endfield.
-- Menu đồ họa, tiếng Việt/English, thanh FPS bật/tắt và lưu được lựa chọn.
-- Mục tiêu mới: khoảng 90 FPS ở mức tối đa trên máy hiện tại, thay mục tiêu 60 FPS trước đó.
-- Tối đa là Epic (3), render scale 100%; không đổi nhãn High thành Max để đạt số FPS.
-- Chỉ chơi thử ngắn vài phút, không benchmark; ưu tiên chạy ngầm/offscreen.
-- Rà toàn bộ kẹt/xuyên trên bản mới nhất; thêm phương tiện, NPC lên/xuống và tuyến chính cố định.
-- Nâng chi tiết phố/nhà/khu công cộng/giải trí/bờ biển/cảng. Checklist: CITY_MOBILITY_ROUND.md.
+- Thành phố liên tục khoảng 3,4 × 3,4 km: gấp đôi hai chiều bản 1,7 km, bốn lần diện tích.
+- Giữ model nhân vật và save cá nhân. Nhà không vào được chỉ có vỏ.
+- Hướng trải nghiệm ANANTA/Neverness to Everness và chất lượng hình ảnh Endfield.
+- Đa dạng nhà, nội thất, phố, công cộng/giải trí/biển/cảng và phương tiện.
+- Rà kẹt/xuyên trên bản mới nhất; NPC lên/xuống và chạy tuyến chính cố định.
+- Menu đồ họa, Việt/English, FPS bật/tắt; mục tiêu mới 90 FPS ở Max native 1080p.
+- Chỉ thử gameplay ngắn, chạy ngầm/offscreen; không benchmark.
 
-## Đã có và đã kiểm chứng
+## Đã làm và kiểm chứng
 
-### Thành phố và gameplay
+### Thành phố
 
-- 196 ô phố, 1.472 nhà nền, bảy kiểu kiến trúc, 281.266 instance trong cùng World Partition.
-- Tám dịch vụ: cà phê, căn hộ, hiệu sách, phòng khám, chợ, phòng tranh, xưởng và giao thông.
-- Nhiệm vụ/xe/save giữ nền tảng trước; giới hạn save/nav của bản mở rộng là ±860 m.
-- Mở lại map độc lập, kiểm mesh/material/transform/collision và hướng mặt tiền đạt.
-- 238.666 instance mặt tiền và tám cửa đã sửa lỗi đảo hướng FBX.
-- Nội thất hoàn thiện gồm sofa/thảm/rèm, PBR sàn, quầy, tranh và ốp gỗ; ảnh GPU đã xem.
-- Nguồn sàn Poly Haven CC0; sofa HOUSE có giấy phép/tác giả ghi trong manifest.
+- 3.534 nhà, 784 ô; bảy bộ mặt tiền, tám dạng khối, màu/chiều cao khác nhau.
+- Map 3,4 km đã ghi/đọc lại: 25.021 nhóm, 602.953 instance; 19 đồ sinh hoạt và 16 đèn mới.
+- 12 dịch vụ: tám địa điểm cũ và điểm đọc thông tin cảnh sát/cứu hỏa/bar/arcade.
+- Khu vui chơi, biển, bến tàu cùng bản đồ; bốn phòng công cộng có cửa rộng 480 cm.
+- Nguồn bố cục không lấn đường, chồng nhà hay thiếu mesh tham chiếu.
+- Nội thất mới: 11 loại, 73.844 tam giác; 19 vị trí đã nhập/ghi map.
+- Vòng quay 40.068 tam giác, tám cabin đã thay 282 khối cũ; đã xem ảnh GPU trong Unreal.
+- Đèn phòng công cộng giới hạn khoảng hiển thị; texture sân lát theo kích thước thế giới.
+- Nước thêm gợn normal nhỏ, giữ nguyên mặt nước/va chạm.
+- Ảnh civic đã xem: nhà cứu hỏa, bar, arcade, vòng quay, biển/cảng; cảnh còn thưa.
+- Sửa nền lát/gỗ trùng mặt phẳng bằng tách cao độ 1 cm; ảnh GPU bar/arcade đã hết mảng loang.
+- Các khu mới vẫn cần tinh chỉnh; chưa nghiệm thu là đồ họa cuối cùng.
 
-### Model chi tiết mới — đã nhập và áp dụng
+### Va chạm và giao thông
 
-- Bảng dụng cụ 7.456, thùng phụ tùng 3.096, tủ y tế 4.128, bảng giao thông 1.086 tam giác.
-- Bốn mesh, mười material, sáu texture mới đã nhập; thay bốn cụm và bỏ 21 mảnh blockout.
-- Đọc lại map: 190 đồ nội thất + 73 đồ quảng trường = 263; 16 đèn, tám dịch vụ; không lỗi.
-- Kiểm nguồn bố trí 35.720 cặp bounds, giữ hành lang 440 cm.
-- Ảnh ngày/chiều xanh 1080p đã xem các model mới, bảng chỉ dẫn dùng tọa độ thật của tám địa điểm.
-- Góc xưởng còn tối; chất lượng toàn thành phố chưa được nhận là hoàn tất.
-- Backup trước áp dụng: CityBeforeVenueFixtures_20261008_1628, 7.577 file / 569.310.444 byte.
+- Sửa giới hạn lái xe, phép xoay, khoảng trống đầu khi xuống xe, mantle và capsule khôi phục.
+- Sửa dò cửa xe nhận nhầm nóc vật cản là sàn; sửa xe dài bị khóa hướng lái ở góc rẽ.
+- PASS: 16/16 automation, gồm regression capsule, mantle, góc rẽ, asset và tuyến.
+- PASS rà map sau thay vòng quay: 10.401 component, 47.809 instance chặn Pawn,
+  3.992 điểm đường; không thiếu body/mặt đỡ trong phạm vi kiểm tra này.
+- PASS cửa căn hộ/cà phê hai chiều: bốn đoạn CharacterMovement thật.
+- 11 phương tiện: khách/buýt/taxi/tải/chở hàng/bồn/cảnh sát/cứu thương,
+  tàu hàng/cano/thuyền buồm; 197.536 tam giác tổng nguồn, có LOD.
+- PASS 11/11 fixture: cửa bị chặn, lên xe, chờ vật cản, chạy ít nhất 49 m,
+  xuống xe, dọn actor. Fixture không thay cho nghiệm thu mọi tuyến thật.
+- Tối đa tám xe gần người chơi; nạp mesh lúc khởi tạo; chờ vật cản/đường chưa tải.
+- NPC đi bộ tới cửa, ẩn trong cabin, hiện tại điểm xuống đã kiểm capsule.
+  Chưa có animation mở cửa/ngồi ghế mới. Vòng quay là cảnh vật tĩnh.
+- Xe khởi đầu chuyển sát lề; không sửa vị trí xe trong save cá nhân.
+- PASS Coach trên tuyến thật: lên xe, qua góc rẽ, xuống ở bến tiếp; 3.315 lần kiểm tiếp đất.
+  Ba vòng tàu thật và các tuyến xe khác chưa nghiệm thu đầy đủ.
 
-### Kiểm tra thực tế gần nhất
+### Cài đặt và hiệu năng
 
-- Build game và Editor đạt; 7/7 automation thành phố trước phần settings đạt.
-- Tuyến tám dịch vụ sau model mới: 293,729 giây, 23 lần lưu, một tiếp tế; tải lại tiến trình khác đạt.
-- Quan sát tuyến đó: 29.215 frame, trung bình 9,984 ms, p95 13,590 ms; 8 frame >33,3 ms.
-- Đi bộ/chạy thật theo input qua khu mở rộng: 277,788 giây, 1,708 km, không teleport/tăng tốc.
-- 30.866 kiểm tra tiếp đất đạt; bốn điểm streaming sẵn sàng; bốn ảnh cuối tuyến đã xem.
-- Quan sát tuyến mở rộng: trung bình 8,935 ms, p95 11,446 ms; 10 frame >33,3 ms, 6 >50 ms.
-- Khoảng frame lớn nhất 686,948 ms trùng lần chụp ảnh đầu; báo cáo giữ cả spike này.
-- Các số trên thuộc cấu hình High/TSR khoảng 1600×900 xuất 1080p, không chứng minh Max ổn định 90 FPS.
-- Save thường giữ nguyên checksum sau lượt tuyến mở rộng; kiểm tra settings dùng config/save QA riêng.
+- Menu: preset/10 nhóm chất lượng, render scale, cap FPS, VSync, ngôn ngữ, FPS.
+- Esc/F10 mở cài đặt; Alt hiện chuột; F8 bật/tắt bộ đo frame thực.
+- Apply/Hủy/mặc định/pause/Việt/English/reload đã qua QA và EXE preview cũ.
+- Có frustum/occlusion, Nanite HZB, World Partition, HISM, streaming, LOD, TSR.
+- Mesh kính translucent dùng LOD thường, tránh vật liệu mặc định do Nanite không hỗ trợ.
+- Max là Epic (3), native 100%; không đổi nhãn chất lượng để lấy số FPS.
+- Max gần nhất trên bản 1,7 km: 52,56 FPS trung bình, p95 23,46 ms, GPU 18,18 ms.
+  Chưa đạt 90 FPS; đây không phải số đo bản 3,4 km.
+- D3D12 PageFault/Nanite/VSM khi khởi động chưa được kết luận đã sửa.
+- HLOD cũ đã lỗi thời; chưa có bằng chứng toàn bộ proxy mới hoàn thành.
+- Script thử cube đục sang Nanite đã chuẩn bị, chưa áp dụng/đo; chưa tính là tối ưu đạt.
 
-### Render đang có hiệu lực
+## Tiếp tục
 
-- Frustum/occlusion queries bật; Nanite frustum/HZB bật; World Partition, HISM và texture streaming.
-- Lumen phần mềm, VSM, TSR; High dùng pool texture 3.000 MB.
-- High thực tế: directional 8 rays, local 4 rays, cùng 4 samples/ray; không có control 12/4096 samples.
-- Không dùng SetActorHiddenInGame theo góc nhìn camera làm culling.
-- Thử riêng sun 60.000 → 40.000 lux không cho cải thiện rõ ở góc đối chiếu; đã khôi phục 60.000.
-- Đọc lại map độc lập xác nhận sun 60.000 lux; không nhận phép thử này là tăng FPS.
+1. Commit/push checkpoint mở rộng, ghi rõ giới hạn nghiệm thu.
+2. Thử ba tuyến tàu ở bến thật, tuyến xe còn lại và cửa dịch vụ mới.
+3. Quan sát Max qua gameplay ngắn; thử cube Nanite có đối chiếu ảnh/frame.
+4. Dựng HLOD đầy đủ cho 3,4 km; không dừng tiến trình chỉ vì lâu.
+5. Đóng gói EXE mới, kiểm nhiệm vụ/xe/save/settings/hình ảnh; giữ preview cũ.
+6. Tiếp tục chất lượng cảnh vật và ổn định 90 FPS; không coi build/test là nghiệm thu toàn game.
 
-## Vòng đang thực hiện: menu và 90 FPS
+## Bằng chứng
 
-- Đã viết settings backend, migration cấu hình cũ, kiểm tra giá trị và ba automation mới.
-- Đã thêm menu Slate với preset/10 nhóm chất lượng, TSR scale, FPS cap, VSync, ngôn ngữ và FPS.
-- Đã nối nút góc màn hình, Esc/F10 mở menu, Alt hiện chuột, F8 bật/tắt bộ đo frame thực.
-- Đã dịch HUD/nhiệm vụ/tương tác; Apply/Hủy/bản nháp và pause được kiểm tra bằng QA riêng.
-- PASS: Editor build, 11/11 automation, menu Apply/Hủy/pause/F8, tiếng Việt/English và reload.
-- PASS: ảnh 1080p/720p và cuộn tới ngôn ngữ; input nút qua keyboard Slate, chưa thử chuột desktop.
-- PASS: hai save và cấu hình thường giữ checksum; runner automation đã tách config QA.
-- Tối đa/Epic native 1080p: 52,56 FPS trung bình; frame 19,02 ms, p95 23,46 ms.
-- GPU 18,18 ms, render thread 18,94 ms; 52 frame >33,3 ms và 9 >50 ms trong 294,6 giây quan sát.
-- Mục tiêu 90 FPS chưa đạt. Lỗi GPU PageFault khởi tạo Nanite/VSM được giữ log, đang chẩn đoán.
-- Cvar Max đã xác nhận Epic 3, native 1080p, cap 90, pool 3000 MB, Nanite culling bật, hardware RT tắt.
-- Chi tiết sử dụng và nghiệm thu: Docs/CITY_GRAPHICS_SETTINGS.md.
-- PASS: package preview 236,81 giây; menu Apply/F8/tiếng Việt/English/reload trong EXE đạt.
-- EXE mới: Saved/Builds/CitySettingsPreview/Windows/ANANTA.exe; ảnh menu/FPS đã xem.
-- Lượt Max của EXE bị GPU PageFault lúc khởi động; chưa có số FPS tuyến đầy đủ cho EXE này.
-- Bản preview chưa hoàn tất HLOD; không nhận là bản phát hành ổn định.
-
-## Tồn đọng và thứ tự tiếp tục
-
-1. PASS: build game 94,90 giây, Editor và 11 test; menu/ngôn ngữ/FPS/persistence đã kiểm chứng.
-   Tiếp tục tối ưu GPU/render và kiểm tra chuột desktop khi nghiệm thu bản đóng gói.
-2. Tối ưu phần GPU/render của Max/Epic native 1080p trên RTX 4060 Laptop 8 GB / RAM 16 GB.
-   Chưa xác nhận ổn định 90 FPS; không che spike hay âm thầm hạ chất lượng để báo đạt.
-3. Dựng đủ 288 HLOD, kiểm proxy và quay góc/chuyển ô. Hiện chưa có tiến trình HLOD chạy.
-   Lượt cũ đã lưu 13 cụm, dừng có kiểm soát trong cụm 14 để nhập fixture trước lượt cuối.
-   Cache đã lưu được giữ; không dừng/khởi động lại chỉ vì chờ lâu.
-4. Mẫu HLOD X0_Y0 đạt PBR/emissive/normal; cảnh báo normal cũ X5_Y3 và toàn bộ proxy còn cần rà.
-5. Cải thiện sáng xưởng, cửa sổ ngày, cây/cảnh quan còn đơn giản và mức lặp ngoài phố.
-6. Đã đóng gói preview mở rộng; tiếp tục thử nhiệm vụ, xe, dịch vụ, save cũ và ảnh ngày/chiều xanh.
-   Bản Saved/Builds/City cũ được giữ; bản mới nằm tại CitySettingsPreview.
-7. Remote đã xác nhận gần nhất: ed39ea3 trên codex/city-expansion; tiếp tục checkpoint mỗi vòng.
-
-## Bằng chứng chính
-
-- Model/layout: Assets/City/*_manifest.json; Saved/QA/CityDressingReadback.json.
-- Dịch vụ: Saved/QA/CityServiceJourney/Report.txt và Reload.txt.
-- Mở rộng: Saved/QA/CityStreamingJourney/Report.txt và bốn PNG.
-- Fixtures: Saved/QA/CityFixtures, CityFixturesBlueHour; GPUReview.json.
-- Ánh sáng: Saved/QA/CityDaylightReadback60000.json và hai thư mục ảnh 40000/60000.
-- HLOD: Saved/QA/CityHLODPreFixtureStop.json; CityHLOD.BeforeFixtureImport.log.
-- Proxy mẫu: Saved/QA/CityHLODProxy/ANANTA_City_City_L0_X0_Y0.
-- Nghiên cứu: Docs/CITY_RENDER_OPTIMIZATION.md; Saved/QA/RenderResearchWeb/sources.json.
-- Settings: Docs/CITY_SETTINGS_CONTRACT.md; Saved/QA/CitySettings; CitySettings*Build*.log.
-
-Input QA qua PlayerController/Slate; bàn phím/chuột desktop thực chưa được xác nhận.
-Build, test và ảnh có phạm vi riêng; chưa đủ bằng chứng nhận đồ họa cuối hoặc Max ổn định 90 FPS.
+- Saved/QA/CityAutomation/index.json; CityWholeMapCollision.txt; CityFleetCheck/Report.txt.
+- Saved/QA/CityMobilityMapReadback.json; CityExpansionApplied.json; CityTransitCheck/Report.txt.
+- Saved/QA/CityMobilityAssets, CityLivingAssets, CityFerrisAssets, CityCivic.
+- Assets/City/*_manifest.json: nguồn, giấy phép, hash, tam giác, texture.
+- Preview cũ: Saved/Builds/CitySettingsPreview/Windows/ANANTA.exe, vẫn là bản 1,7 km.
+- Không đưa save cá nhân/log máy vào Git. Checkpoint trước vòng này: a26ca25.

@@ -3,6 +3,7 @@
 #include "City/ANANTACityController.h"
 #include "DynamicRHI.h"
 #include "Engine/World.h"
+#include "Engine/Engine.h"
 #include "HAL/FileManager.h"
 #include "HAL/IConsoleManager.h"
 #include "Misc/CommandLine.h"
@@ -53,6 +54,14 @@ void UCityGraphicsObservation::Tick(float DeltaTime)
             FPlatformTime::ToMilliseconds(RHIGetGPUFrameCycles()), Location.X, Location.Y));
     }
     LastTime = Now;
+    if (!bProfileRequested && Now - FirstTime > 20
+        && FParse::Param(FCommandLine::Get(), TEXT("CityProfileRender")))
+    {
+        bProfileRequested = true;
+        GEngine->Exec(GetWorld(), TEXT("r.ProfileGPU.ShowUI 0"));
+        GEngine->Exec(GetWorld(), TEXT("r.ProfileGPU.Sort 1"));
+        GEngine->Exec(GetWorld(), TEXT("ProfileGPU"));
+    }
 }
 
 void UCityGraphicsObservation::RecordConfiguration()
@@ -67,7 +76,9 @@ void UCityGraphicsObservation::RecordConfiguration()
         TEXT("sg.TextureQuality"), TEXT("sg.EffectsQuality"), TEXT("sg.FoliageQuality"),
         TEXT("sg.ShadingQuality"), TEXT("r.ScreenPercentage"), TEXT("t.MaxFPS"), TEXT("r.VSync"),
         TEXT("r.Nanite.Culling.Frustum"), TEXT("r.Nanite.Culling.HZB"), TEXT("r.Streaming.PoolSize"),
-        TEXT("r.Lumen.HardwareRayTracing"), TEXT("r.Shadow.Virtual.SMRT.RayCountDirectional")
+        TEXT("r.Lumen.HardwareRayTracing"), TEXT("r.Shadow.Virtual.SMRT.RayCountDirectional"),
+        TEXT("r.Shadow.Virtual.NonNanite.Batch"), TEXT("r.Shadow.Virtual.NonNanite.UseHZB"),
+        TEXT("r.Shadow.Virtual.NonNanite.IncludeInCoarsePages"), TEXT("r.TSR.History.ScreenPercentage")
     };
     for (const TCHAR* Name : Names)
     {

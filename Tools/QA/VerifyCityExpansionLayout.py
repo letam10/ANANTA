@@ -30,7 +30,9 @@ def main():
                     errors.append(f"Building footprints intersect {index}: {item['centre']} / {other['centre']}")
     assert len(buildings) > 1200, len(buildings)
     assert len(data["audit"]["styles"]) == 7
-    assert abs(data["audit"]["areaRatio"] - 2) < 0.00001
+    assert abs(data["audit"]["areaRatio"] - 8) < 0.00001
+    assert abs(data["audit"]["previousAreaRatio"] - 4) < 0.00001
+    assert data["audit"]["roadBlocks"] == 784
     assert len(VENUES) == 6
     # Kiem tra loai tai nguyen can import, khong chap nhan mesh khong co trong nguon.
     base = json.loads((ROOT / "Assets/City/manifest.json").read_text(encoding="utf-8"))
@@ -38,6 +40,12 @@ def main():
     expansion_path = ROOT / "Assets/City/expansion_manifest.json"
     if expansion_path.exists():
         known.update(item["id"] for item in json.loads(expansion_path.read_text(encoding="utf-8"))["meshes"])
+    mobility_path = ROOT / "Assets/City/mobility_manifest.json"
+    if mobility_path.exists():
+        known.update(item["id"] for item in json.loads(mobility_path.read_text(encoding="utf-8"))["meshes"])
+    for path in (ROOT / "Assets/City").glob("*_manifest.json"):
+        entries = json.loads(path.read_text(encoding="utf-8")).get("meshes", [])
+        known.update(item["id"] for item in entries)
     pending_meshes = sorted({g["mesh"] for g in data["groups"]} - known)
     report = {**data["audit"], "errors": errors, "pendingAssetMeshes": pending_meshes,
               "newVenues": [v["id"] for v in VENUES], "inEngineVerified": False}

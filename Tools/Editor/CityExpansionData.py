@@ -3,8 +3,9 @@
 import math
 
 BLOCK = 12000
-GRID_EXTENT = 84000
-WORLD_EXTENT = 60000 * math.sqrt(2)
+GRID_EXTENT = 168000
+WORLD_EXTENT = 120000 * math.sqrt(2)
+GRID_BLOCKS = GRID_EXTENT * 2 // BLOCK
 ROAD_LINES = tuple(range(-GRID_EXTENT, GRID_EXTENT + 1, BLOCK))
 SEED = 81026
 
@@ -39,7 +40,15 @@ def reserved_rectangles():
         w, d = item["size"]
         result.append((x - w / 2 - 350, y - d / 2 - 350,
                        x + w / 2 + 350, y + d / 2 + 350))
+    from CityCivicDistrict import RESERVES as CIVIC
+    from CityCoastalDistrict import RESERVES as COAST
+    result.extend(CIVIC)
+    result.extend(COAST)
     return result
+
+
+def coastal_cutout(x, y):
+    return x >= 120000 and y <= -120000
 
 
 def overlaps_reserved(x, y, width, depth, margin=0):

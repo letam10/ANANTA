@@ -35,7 +35,7 @@ def floor_band(layout, x, y, columns, rows, first, count, style, tint, podium=Fa
 def building(layout, x, y, columns, rows, floors, style, rng):
     width, depth = columns * 400, rows * 400
     tint = rng.choice(TINTS)
-    form = rng.choice(("slab", "stepped", "corner", "terrace"))
+    form = rng.choice(("slab", "stepped", "corner", "terrace", "twin", "crown", "pavilion", "lantern"))
     layout.building_centre = (x, y)
     layout.buildings.append(dict(centre=[x, y], width=width, depth=depth, height=floors * 320,
                                  style=style, tint=tint, form=form, interior=False))
@@ -43,7 +43,13 @@ def building(layout, x, y, columns, rows, floors, style, rng):
     floor_band(layout, x, y, columns, rows, 0, lower, style, tint, podium=True)
     top_x, top_y = x, y
     top_columns, top_rows = columns, rows
-    if floors > lower:
+    if floors > lower and form == "twin" and columns >= 5:
+        tower_columns = max(2, (columns - 1) // 2)
+        for side in (-1, 1):
+            offset = side * (width / 2 - tower_columns * 200)
+            floor_band(layout, x + offset, y, tower_columns, max(2, rows - 1), lower,
+                       floors - lower, style, tint)
+    elif floors > lower:
         top_columns = max(2, columns - (2 if form == "terrace" else 1))
         top_rows = max(2, rows - 1)
         if form == "corner":
@@ -60,6 +66,26 @@ def building(layout, x, y, columns, rows, floors, style, rng):
             layout.add("Balcony", (top_x, top_y - top_rows * 200, floor * 320 + 15), collision=False)
     layout.add("RoofEquipment", (top_x, top_y, floors * 320 + 45),
                yaw=rng.choice((0, 90, 180, 270)), collision=False)
+    trim = rng.choice(tuple(name for name in TINTS if name != tint))
+    if form in ("crown", "lantern"):
+        crown_z = floors * 320 + 160
+        layout.box(trim, (top_x, top_y, crown_z), (width * .55, depth * .55, 250), False)
+        for offset in (-.28, .28):
+            layout.box("City_Brass", (top_x + width * offset, top_y, crown_z + 180),
+                       (28, depth * .6, 120), False)
+    elif form == "pavilion":
+        for step in range(4):
+            layout.box("Roof", (top_x, top_y, floors * 320 + 45 + step * 55),
+                       (width * (1 - step * .18), depth + 80, 65), False)
+    # Nhip cot, bien mai va chan de thay doi theo tung toa; van chi la vo nha.
+    if style in ("FacadeArtDeco", "FacadeCommercial"):
+        for offset in (-.46, .46):
+            layout.box(trim, (x + width * offset, y - depth / 2 - 12, lower * 160 + 15),
+                       (60, 40, lower * 320), False)
+    if rng.random() < .55:
+        for offset in (-.3, .3):
+            layout.box(trim, (x + width * offset, y - depth / 2 - 25, 360),
+                       (width * .26, 30, 70), False)
     # Cot va mai hien tao nhip doc pho ma khong them noi that vao vo nha.
     if floors < 9:
         layout.box(tint, (x, y - depth / 2 - 100, 300), (width + 40, 220, 24), False)

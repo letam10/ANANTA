@@ -1,6 +1,7 @@
 [CmdletBinding()]
 param(
     [string]$ExecutablePath,
+    [switch]$ProfileRender,
     [string]$EngineRoot = 'C:\Program Files\Epic Games\UE_5.8'
 )
 
@@ -47,6 +48,9 @@ $arguments = @(
     '-CityServiceCheck', '-CityObserveGraphics', '-CityQASlot', "-GameUserSettingsINI=$configPath",
     '-NoSplash', '-nosound', '-unattended', "-abslog=$logPath"
 )
+if ($ProfileRender) {
+    $arguments += '-CityProfileRender'
+}
 if ($ExecutablePath) {
     $ExecutablePath = (Resolve-Path -LiteralPath $ExecutablePath).Path
     $errorPath = Join-Path $qaPath 'Error.log'

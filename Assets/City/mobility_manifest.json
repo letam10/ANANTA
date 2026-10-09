@@ -1,0 +1,1032 @@
+{
+  "schemaVersion": 1,
+  "units": "cm",
+  "upAxis": "Z",
+  "forwardAxis": "X",
+  "meshes": [
+    {
+      "id": "Coach",
+      "file": "Mobility/Meshes/Coach.fbx",
+      "boundsCm": {
+        "min": [
+          -585.5,
+          -158.5,
+          5.0
+        ],
+        "max": [
+          589.5,
+          158.5,
+          369.158
+        ],
+        "size": [
+          1175.0,
+          317.0,
+          364.158
+        ]
+      },
+      "triangles": 19464,
+      "materialSlots": [
+        "Mobility_Enamel",
+        "Mobility_Rubber",
+        "Mobility_Glass",
+        "Mobility_Upholstery",
+        "Mobility_Steel"
+      ],
+      "source": "Original ANANTA mobility authored geometry",
+      "license": "Original project asset",
+      "lodRecommendation": {
+        "screenSizes": [
+          1,
+          0.4,
+          0.16
+        ],
+        "triangleRatios": [
+          1,
+          0.5,
+          0.2
+        ]
+      },
+      "triangleBudget": 25000,
+      "forwardAxis": "X",
+      "origin": "ground",
+      "sha256": "d837ae53eb6207a4261c3bbc33595d35451f9416824b789f473c6c3d3a73b3a8"
+    },
+    {
+      "id": "CityBus",
+      "file": "Mobility/Meshes/CityBus.fbx",
+      "boundsCm": {
+        "min": [
+          -525.5,
+          -158.5,
+          5.0
+        ],
+        "max": [
+          529.5,
+          158.5,
+          341.158
+        ],
+        "size": [
+          1055.0,
+          317.0,
+          336.158
+        ]
+      },
+      "triangles": 18984,
+      "materialSlots": [
+        "Mobility_Enamel",
+        "Mobility_Rubber",
+        "Mobility_Glass",
+        "Mobility_Upholstery",
+        "Mobility_Steel"
+      ],
+      "source": "Original ANANTA mobility authored geometry",
+      "license": "Original project asset",
+      "lodRecommendation": {
+        "screenSizes": [
+          1,
+          0.4,
+          0.16
+        ],
+        "triangleRatios": [
+          1,
+          0.5,
+          0.2
+        ]
+      },
+      "triangleBudget": 25000,
+      "forwardAxis": "X",
+      "origin": "ground",
+      "sha256": "2c80a28f26a47d34ef47009af0c50e56de6c4b6d1e75cfd7c36d8913754750b7"
+    },
+    {
+      "id": "Taxi",
+      "file": "Mobility/Meshes/Taxi.fbx",
+      "boundsCm": {
+        "min": [
+          -235.5,
+          -124.5,
+          5.0
+        ],
+        "max": [
+          235.5,
+          124.5,
+          193.97
+        ],
+        "size": [
+          471.0,
+          249.0,
+          188.97
+        ]
+      },
+      "triangles": 14852,
+      "materialSlots": [
+        "Mobility_Enamel",
+        "Mobility_Rubber",
+        "Mobility_Glass",
+        "Mobility_Steel",
+        "Mobility_Upholstery"
+      ],
+      "source": "Original ANANTA mobility authored geometry",
+      "license": "Original project asset",
+      "lodRecommendation": {
+        "screenSizes": [
+          1,
+          0.4,
+          0.16
+        ],
+        "triangleRatios": [
+          1,
+          0.5,
+          0.2
+        ]
+      },
+      "triangleBudget": 25000,
+      "forwardAxis": "X",
+      "origin": "ground",
+      "sha256": "24fdb0f36741bc97ff963921f49a94d4cdf99a3369e78d8d12aea79eebbfe8c3"
+    },
+    {
+      "id": "BoxTruck",
+      "file": "Mobility/Meshes/BoxTruck.fbx",
+      "boundsCm": {
+        "min": [
+          -427.5,
+          -144.5,
+          5.0
+        ],
+        "max": [
+          425.5,
+          144.5,
+          306.866
+        ],
+        "size": [
+          853.0,
+          289.0,
+          301.866
+        ]
+      },
+      "triangles": 21796,
+      "materialSlots": [
+        "Mobility_Enamel",
+        "Mobility_Rubber",
+        "Mobility_Glass",
+        "Mobility_Steel",
+        "Mobility_Upholstery"
+      ],
+      "source": "Original ANANTA mobility authored geometry",
+      "license": "Original project asset",
+      "lodRecommendation": {
+        "screenSizes": [
+          1,
+          0.4,
+          0.16
+        ],
+        "triangleRatios": [
+          1,
+          0.5,
+          0.2
+        ]
+      },
+      "triangleBudget": 25000,
+      "forwardAxis": "X",
+      "origin": "ground",
+      "sha256": "9244c59de1233c4afd49882c73bebd56ecd774a1b7e583e7c718a0cab01aa66c"
+    },
+    {
+      "id": "CargoTruck",
+      "file": "Mobility/Meshes/CargoTruck.fbx",
+      "boundsCm": {
+        "min": [
+          -427.5,
+          -144.5,
+          5.0
+        ],
+        "max": [
+          425.5,
+          144.5,
+          302.866
+        ],
+        "size": [
+          853.0,
+          289.0,
+          297.866
+        ]
+      },
+      "triangles": 18532,
+      "materialSlots": [
+        "Mobility_Enamel",
+        "Mobility_Rubber",
+        "Mobility_Glass",
+        "Mobility_Steel",
+        "Mobility_Upholstery"
+      ],
+      "source": "Original ANANTA mobility authored geometry",
+      "license": "Original project asset",
+      "lodRecommendation": {
+        "screenSizes": [
+          1,
+          0.4,
+          0.16
+        ],
+        "triangleRatios": [
+          1,
+          0.5,
+          0.2
+        ]
+      },
+      "triangleBudget": 25000,
+      "forwardAxis": "X",
+      "origin": "ground",
+      "sha256": "0081beba26c4b332da49f604dd137c6a61d535ac2c4fd014a66cf4520ce45e51"
+    },
+    {
+      "id": "TankerTruck",
+      "file": "Mobility/Meshes/TankerTruck.fbx",
+      "boundsCm": {
+        "min": [
+          -430.2,
+          -144.5,
+          5.0
+        ],
+        "max": [
+          425.5,
+          144.5,
+          330.366
+        ],
+        "size": [
+          855.7,
+          289.0,
+          325.366
+        ]
+      },
+      "triangles": 21076,
+      "materialSlots": [
+        "Mobility_Enamel",
+        "Mobility_Rubber",
+        "Mobility_Glass",
+        "Mobility_Steel",
+        "Mobility_Upholstery"
+      ],
+      "source": "Original ANANTA mobility authored geometry",
+      "license": "Original project asset",
+      "lodRecommendation": {
+        "screenSizes": [
+          1,
+          0.4,
+          0.16
+        ],
+        "triangleRatios": [
+          1,
+          0.5,
+          0.2
+        ]
+      },
+      "triangleBudget": 25000,
+      "forwardAxis": "X",
+      "origin": "ground",
+      "sha256": "2d24600c51ee13ca6a26d312d1656ac91e5cc2eaff07f81cf0d9b2f048fc0561"
+    },
+    {
+      "id": "PoliceCar",
+      "file": "Mobility/Meshes/PoliceCar.fbx",
+      "boundsCm": {
+        "min": [
+          -235.5,
+          -124.5,
+          5.0
+        ],
+        "max": [
+          235.5,
+          124.5,
+          194.97
+        ],
+        "size": [
+          471.0,
+          249.0,
+          189.97
+        ]
+      },
+      "triangles": 14948,
+      "materialSlots": [
+        "Mobility_Enamel",
+        "Mobility_Rubber",
+        "Mobility_Glass",
+        "Mobility_Steel",
+        "Mobility_Upholstery"
+      ],
+      "source": "Original ANANTA mobility authored geometry",
+      "license": "Original project asset",
+      "lodRecommendation": {
+        "screenSizes": [
+          1,
+          0.4,
+          0.16
+        ],
+        "triangleRatios": [
+          1,
+          0.5,
+          0.2
+        ]
+      },
+      "triangleBudget": 25000,
+      "forwardAxis": "X",
+      "origin": "ground",
+      "sha256": "cabc8b9d9a4bdbe3b2b8868fb9030a6b3516977d0ae53eda9af233f555e34223"
+    },
+    {
+      "id": "Ambulance",
+      "file": "Mobility/Meshes/Ambulance.fbx",
+      "boundsCm": {
+        "min": [
+          -302.5,
+          -144.5,
+          5.0
+        ],
+        "max": [
+          300.5,
+          144.5,
+          306.93
+        ],
+        "size": [
+          603.0,
+          289.0,
+          301.93
+        ]
+      },
+      "triangles": 14964,
+      "materialSlots": [
+        "Mobility_Enamel",
+        "Mobility_Rubber",
+        "Mobility_Glass",
+        "Mobility_Steel",
+        "Mobility_Upholstery"
+      ],
+      "source": "Original ANANTA mobility authored geometry",
+      "license": "Original project asset",
+      "lodRecommendation": {
+        "screenSizes": [
+          1,
+          0.4,
+          0.16
+        ],
+        "triangleRatios": [
+          1,
+          0.5,
+          0.2
+        ]
+      },
+      "triangleBudget": 25000,
+      "forwardAxis": "X",
+      "origin": "ground",
+      "sha256": "209bb30274511f917f59e9354241c1f08d9ad905c3ea013c4a72a327ee0e2d57"
+    },
+    {
+      "id": "CargoShip",
+      "file": "Mobility/Meshes/CargoShip.fbx",
+      "boundsCm": {
+        "min": [
+          -1303.5,
+          -308.4906,
+          -179.354
+        ],
+        "max": [
+          1303.4363,
+          308.4906,
+          846.9999
+        ],
+        "size": [
+          2606.9363,
+          616.9812,
+          1026.3539
+        ]
+      },
+      "triangles": 23656,
+      "materialSlots": [
+        "Mobility_Enamel",
+        "Mobility_Rubber",
+        "Mobility_Steel",
+        "Mobility_Glass"
+      ],
+      "source": "Original ANANTA mobility authored geometry",
+      "license": "Original project asset",
+      "lodRecommendation": {
+        "screenSizes": [
+          1,
+          0.4,
+          0.16
+        ],
+        "triangleRatios": [
+          1,
+          0.5,
+          0.2
+        ]
+      },
+      "triangleBudget": 40000,
+      "forwardAxis": "X",
+      "origin": "waterline",
+      "sha256": "516f54f3e4fa5f7a44f0675b0c1982f92838eab19b4f545a2e99abf9005ca6f4"
+    },
+    {
+      "id": "Motorboat",
+      "file": "Mobility/Meshes/Motorboat.fbx",
+      "boundsCm": {
+        "min": [
+          -370.0,
+          -120.9622,
+          -63.6429
+        ],
+        "max": [
+          323.5,
+          120.9622,
+          166.2376
+        ],
+        "size": [
+          693.5,
+          241.9244,
+          229.8805
+        ]
+      },
+      "triangles": 5372,
+      "materialSlots": [
+        "Mobility_Enamel",
+        "Mobility_Rubber",
+        "Mobility_Upholstery",
+        "Mobility_Steel",
+        "Mobility_Glass"
+      ],
+      "source": "Original ANANTA mobility authored geometry",
+      "license": "Original project asset",
+      "lodRecommendation": {
+        "screenSizes": [
+          1,
+          0.4,
+          0.16
+        ],
+        "triangleRatios": [
+          1,
+          0.5,
+          0.2
+        ]
+      },
+      "triangleBudget": 40000,
+      "forwardAxis": "X",
+      "origin": "waterline",
+      "sha256": "d4786df561907286a08aaf83bc570cade8b463a69eec51068d00823975b74ecb"
+    },
+    {
+      "id": "Sailboat",
+      "file": "Mobility/Meshes/Sailboat.fbx",
+      "boundsCm": {
+        "min": [
+          -433.4363,
+          -138.4687,
+          -191.5
+        ],
+        "max": [
+          433.5,
+          138.4687,
+          1030.0
+        ],
+        "size": [
+          866.9363,
+          276.9374,
+          1221.5
+        ]
+      },
+      "triangles": 8180,
+      "materialSlots": [
+        "Mobility_Enamel",
+        "Mobility_Rubber",
+        "Mobility_Glass",
+        "Mobility_Steel"
+      ],
+      "source": "Original ANANTA mobility authored geometry",
+      "license": "Original project asset",
+      "lodRecommendation": {
+        "screenSizes": [
+          1,
+          0.4,
+          0.16
+        ],
+        "triangleRatios": [
+          1,
+          0.5,
+          0.2
+        ]
+      },
+      "triangleBudget": 40000,
+      "forwardAxis": "X",
+      "origin": "waterline",
+      "sha256": "ec4184db4eea498194e0477489f90797d3ac28206c8ff9ed53cffb7df3986b1d"
+    },
+    {
+      "id": "DetailedPlanter",
+      "file": "Mobility/Meshes/DetailedPlanter.fbx",
+      "boundsCm": {
+        "min": [
+          -68.45,
+          -64.0,
+          0.0
+        ],
+        "max": [
+          69.9692,
+          65.4812,
+          138.5
+        ],
+        "size": [
+          138.4192,
+          129.4812,
+          138.5
+        ]
+      },
+      "triangles": 5572,
+      "materialSlots": [
+        "Mobility_Enamel"
+      ],
+      "source": "Original ANANTA mobility authored geometry",
+      "license": "Original project asset",
+      "lodRecommendation": {
+        "screenSizes": [
+          1,
+          0.4,
+          0.16
+        ],
+        "triangleRatios": [
+          1,
+          0.5,
+          0.2
+        ]
+      },
+      "triangleBudget": 12000,
+      "forwardAxis": "X",
+      "origin": "ground",
+      "sha256": "90745513c4cd6fd4a69c0979d081e71359a8ff6b1b9fc18946efce9320d629a3"
+    },
+    {
+      "id": "DetailedStreetLamp",
+      "file": "Mobility/Meshes/DetailedStreetLamp.fbx",
+      "boundsCm": {
+        "min": [
+          -23.0,
+          -23.0,
+          0.0
+        ],
+        "max": [
+          192.5,
+          23.0,
+          691.0
+        ],
+        "size": [
+          215.5,
+          46.0,
+          691.0
+        ]
+      },
+      "triangles": 2348,
+      "materialSlots": [
+        "Mobility_Steel",
+        "Mobility_Enamel"
+      ],
+      "source": "Original ANANTA mobility authored geometry",
+      "license": "Original project asset",
+      "lodRecommendation": {
+        "screenSizes": [
+          1,
+          0.4,
+          0.16
+        ],
+        "triangleRatios": [
+          1,
+          0.5,
+          0.2
+        ]
+      },
+      "triangleBudget": 12000,
+      "forwardAxis": "X",
+      "origin": "ground",
+      "sha256": "04ecedb0b310170a703cb2216b6bdcb619c2ade3d95a7a2d690a443501995764"
+    },
+    {
+      "id": "TrafficSignal",
+      "file": "Mobility/Meshes/TrafficSignal.fbx",
+      "boundsCm": {
+        "min": [
+          -28.0,
+          -59.0,
+          0.0
+        ],
+        "max": [
+          28.0,
+          23.0,
+          410.5
+        ],
+        "size": [
+          56.0,
+          82.0,
+          410.5
+        ]
+      },
+      "triangles": 2564,
+      "materialSlots": [
+        "Mobility_Enamel",
+        "Mobility_Steel",
+        "Mobility_Rubber"
+      ],
+      "source": "Original ANANTA mobility authored geometry",
+      "license": "Original project asset",
+      "lodRecommendation": {
+        "screenSizes": [
+          1,
+          0.4,
+          0.16
+        ],
+        "triangleRatios": [
+          1,
+          0.5,
+          0.2
+        ]
+      },
+      "triangleBudget": 12000,
+      "forwardAxis": "X",
+      "origin": "ground",
+      "sha256": "c2ec518c95d3cad96c163bc94b4901f8dcec4d4c00eda898ce83cdc739031450"
+    },
+    {
+      "id": "RoadBarrier",
+      "file": "Mobility/Meshes/RoadBarrier.fbx",
+      "boundsCm": {
+        "min": [
+          -124.0,
+          -36.5,
+          0.0
+        ],
+        "max": [
+          124.0,
+          36.5,
+          92.0
+        ],
+        "size": [
+          248.0,
+          73.0,
+          92.0
+        ]
+      },
+      "triangles": 780,
+      "materialSlots": [
+        "Mobility_Rubber",
+        "Mobility_Enamel"
+      ],
+      "source": "Original ANANTA mobility authored geometry",
+      "license": "Original project asset",
+      "lodRecommendation": {
+        "screenSizes": [
+          1,
+          0.4,
+          0.16
+        ],
+        "triangleRatios": [
+          1,
+          0.5,
+          0.2
+        ]
+      },
+      "triangleBudget": 12000,
+      "forwardAxis": "X",
+      "origin": "ground",
+      "sha256": "20ba98828d3a64b309cef408dd67528837973b2264c59091e2863fd65690fb01"
+    },
+    {
+      "id": "HarborBollard",
+      "file": "Mobility/Meshes/HarborBollard.fbx",
+      "boundsCm": {
+        "min": [
+          -35.0,
+          -37.0,
+          0.0
+        ],
+        "max": [
+          35.0,
+          37.0,
+          81.5
+        ],
+        "size": [
+          70.0,
+          74.0,
+          81.5
+        ]
+      },
+      "triangles": 2456,
+      "materialSlots": [
+        "Mobility_Steel",
+        "Mobility_Enamel"
+      ],
+      "source": "Original ANANTA mobility authored geometry",
+      "license": "Original project asset",
+      "lodRecommendation": {
+        "screenSizes": [
+          1,
+          0.4,
+          0.16
+        ],
+        "triangleRatios": [
+          1,
+          0.5,
+          0.2
+        ]
+      },
+      "triangleBudget": 12000,
+      "forwardAxis": "X",
+      "origin": "ground",
+      "sha256": "e041f4ea82643a94c5b7e1c7dd8e5ef71d7d3f70fa63aabcda4c5951a22116e0"
+    },
+    {
+      "id": "BusStopSign",
+      "file": "Mobility/Meshes/BusStopSign.fbx",
+      "boundsCm": {
+        "min": [
+          -37.5,
+          -23.0,
+          0.0
+        ],
+        "max": [
+          37.5,
+          23.0,
+          335.0
+        ],
+        "size": [
+          75.0,
+          46.0,
+          335.0
+        ]
+      },
+      "triangles": 1992,
+      "materialSlots": [
+        "Mobility_Enamel",
+        "Mobility_Steel"
+      ],
+      "source": "Original ANANTA mobility authored geometry",
+      "license": "Original project asset",
+      "lodRecommendation": {
+        "screenSizes": [
+          1,
+          0.4,
+          0.16
+        ],
+        "triangleRatios": [
+          1,
+          0.5,
+          0.2
+        ]
+      },
+      "triangleBudget": 12000,
+      "forwardAxis": "X",
+      "origin": "ground",
+      "sha256": "e3fdcab30bf421dd0b20c336b2d09a10b59f99de99350591f56593163e5a84a0"
+    }
+  ],
+  "materials": [
+    {
+      "id": "Mobility_Enamel",
+      "baseColor": "Mobility/Textures/Enamel_baseColor.png",
+      "normal": "Mobility/Textures/Enamel_normal.png",
+      "roughness": "Mobility/Textures/Enamel_roughness.png",
+      "ao": null,
+      "metallic": null,
+      "baseColorFactor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "metallicFactor": 0,
+      "roughnessFactor": 0.5,
+      "normalConvention": "OpenGL",
+      "source": "Original deterministic ANANTA mobility surface authoring",
+      "license": "Original project asset"
+    },
+    {
+      "id": "Mobility_Rubber",
+      "baseColor": "Mobility/Textures/Rubber_baseColor.png",
+      "normal": "Mobility/Textures/Rubber_normal.png",
+      "roughness": "Mobility/Textures/Rubber_roughness.png",
+      "ao": null,
+      "metallic": null,
+      "baseColorFactor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "metallicFactor": 0,
+      "roughnessFactor": 0.5,
+      "normalConvention": "OpenGL",
+      "source": "Original deterministic ANANTA mobility surface authoring",
+      "license": "Original project asset"
+    },
+    {
+      "id": "Mobility_Steel",
+      "baseColor": "Mobility/Textures/Steel_baseColor.png",
+      "normal": "Mobility/Textures/Steel_normal.png",
+      "roughness": "Mobility/Textures/Steel_roughness.png",
+      "ao": null,
+      "metallic": null,
+      "baseColorFactor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "metallicFactor": 1,
+      "roughnessFactor": 0.5,
+      "normalConvention": "OpenGL",
+      "source": "Original deterministic ANANTA mobility surface authoring",
+      "license": "Original project asset"
+    },
+    {
+      "id": "Mobility_Upholstery",
+      "baseColor": "Mobility/Textures/Upholstery_baseColor.png",
+      "normal": "Mobility/Textures/Upholstery_normal.png",
+      "roughness": "Mobility/Textures/Upholstery_roughness.png",
+      "ao": null,
+      "metallic": null,
+      "baseColorFactor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "metallicFactor": 0,
+      "roughnessFactor": 0.5,
+      "normalConvention": "OpenGL",
+      "source": "Original deterministic ANANTA mobility surface authoring",
+      "license": "Original project asset"
+    },
+    {
+      "id": "Mobility_Glass",
+      "baseColor": null,
+      "normal": null,
+      "roughness": null,
+      "ao": null,
+      "metallic": null,
+      "baseColorFactor": [
+        0.13,
+        0.22,
+        0.27,
+        1
+      ],
+      "metallicFactor": 0,
+      "roughnessFactor": 0.12,
+      "normalConvention": "OpenGL",
+      "opacity": 0.23,
+      "twoSided": true,
+      "source": "Original deterministic ANANTA mobility surface authoring",
+      "license": "Original project asset"
+    }
+  ],
+  "sourceFiles": [
+    {
+      "file": "Mobility/Mobility.blend",
+      "sha256": "202d8444c4a8488828e837606e537c72ed303efd806e76d1db4a619a6ebfdf2c",
+      "source": "Original ANANTA mobility source",
+      "license": "Original project asset"
+    },
+    {
+      "file": "Mobility/Sources/Generator/finishing_materials.py",
+      "sha256": "0b0ee12b7f46d0f76d2f553fd675ac750379951ec21b7da08507062f7df73eef",
+      "source": "Original ANANTA mobility source",
+      "license": "Original project asset"
+    },
+    {
+      "file": "Mobility/Sources/Generator/geometry.py",
+      "sha256": "2879b80bc580d0d0a72a47fc5713097664eb3a8b5979e34db9181ebc6e227c54",
+      "source": "Original ANANTA mobility source",
+      "license": "Original project asset"
+    },
+    {
+      "file": "Mobility/Sources/Generator/mobility_audit.py",
+      "sha256": "6aae1c657eb5c447de320759397edb4be9cfe81c9b1f614473b9dd51c2e6283a",
+      "source": "Original ANANTA mobility source",
+      "license": "Original project asset"
+    },
+    {
+      "file": "Mobility/Sources/Generator/mobility_boats.py",
+      "sha256": "7c784582187b8f9093fcb6abbf35d8d6ca1b266b83d65d75b10d2248f6b0e777",
+      "source": "Original ANANTA mobility source",
+      "license": "Original project asset"
+    },
+    {
+      "file": "Mobility/Sources/Generator/mobility_build.py",
+      "sha256": "291447eaa9996742c8b15a946e59a800f268465bbcb4213490048b388a252dcf",
+      "source": "Original ANANTA mobility source",
+      "license": "Original project asset"
+    },
+    {
+      "file": "Mobility/Sources/Generator/mobility_geometry.py",
+      "sha256": "f38151ab5fbedab4e54d8a8f0ed473ea5ba30f3358cac8cc30af049d90f0644a",
+      "source": "Original ANANTA mobility source",
+      "license": "Original project asset"
+    },
+    {
+      "file": "Mobility/Sources/Generator/mobility_materials.py",
+      "sha256": "1f9b613e0c7941dfae165958d1f48047cb98f85726a85f01976776f5012135f5",
+      "source": "Original ANANTA mobility source",
+      "license": "Original project asset"
+    },
+    {
+      "file": "Mobility/Sources/Generator/mobility_props.py",
+      "sha256": "eb8b5982330412fe26849145a0895a6b17e953f7e8ee566794f218440b9dda7e",
+      "source": "Original ANANTA mobility source",
+      "license": "Original project asset"
+    },
+    {
+      "file": "Mobility/Sources/Generator/mobility_roads.py",
+      "sha256": "fdaa20404242b9a8fb77bdff73dba6218a5eed2d1afe1a8b97ef280c139d8625",
+      "source": "Original ANANTA mobility source",
+      "license": "Original project asset"
+    },
+    {
+      "file": "Mobility/Sources/Generator/mobility_sheet.py",
+      "sha256": "72da415cdc882355ef3dd309a305f9ddef3d325a50c10d579db2fa698b18760f",
+      "source": "Original ANANTA mobility source",
+      "license": "Original project asset"
+    },
+    {
+      "file": "Mobility/Sources/Provenance.json",
+      "sha256": "25474936f4f5be6ee9bce8f57f8e811337eb2ba2bd9b60cf9430f928fc390bb9",
+      "source": "Original ANANTA mobility source",
+      "license": "Original project asset"
+    },
+    {
+      "file": "Mobility/Textures/Enamel_baseColor.png",
+      "sha256": "fb1103d956f82ccbdf68d9e6bc80fa66c50b7f05fdb8a29cf5c7cf94bedc9452",
+      "source": "Original ANANTA mobility source",
+      "license": "Original project asset"
+    },
+    {
+      "file": "Mobility/Textures/Enamel_normal.png",
+      "sha256": "607e81cb02a5b2b7a33d95a9f2cb0591d32567dbf338c0827ee3a76e28b84fc6",
+      "source": "Original ANANTA mobility source",
+      "license": "Original project asset"
+    },
+    {
+      "file": "Mobility/Textures/Enamel_roughness.png",
+      "sha256": "d79effbc4066450dae1845acccf3c0631d1a571bb8ee01a67c6a8c7835d55f62",
+      "source": "Original ANANTA mobility source",
+      "license": "Original project asset"
+    },
+    {
+      "file": "Mobility/Textures/Rubber_baseColor.png",
+      "sha256": "ff4b866b9b912566d9bf4470127ebd485eb44583b37ab2c4e38b7b0df6c82b59",
+      "source": "Original ANANTA mobility source",
+      "license": "Original project asset"
+    },
+    {
+      "file": "Mobility/Textures/Rubber_normal.png",
+      "sha256": "4f6861b910a971c602a71776fb3a192ceef31f181b03361f4235b2565464af07",
+      "source": "Original ANANTA mobility source",
+      "license": "Original project asset"
+    },
+    {
+      "file": "Mobility/Textures/Rubber_roughness.png",
+      "sha256": "c09fe9a84f50cac3da22e668313d793a517246aab961538bc118e270c5b9e31f",
+      "source": "Original ANANTA mobility source",
+      "license": "Original project asset"
+    },
+    {
+      "file": "Mobility/Textures/Steel_baseColor.png",
+      "sha256": "c27c1b440b0c866afc3098265f884d3576a6bccf594fd083d97de7c7174a28a1",
+      "source": "Original ANANTA mobility source",
+      "license": "Original project asset"
+    },
+    {
+      "file": "Mobility/Textures/Steel_normal.png",
+      "sha256": "7924376840ec8db2204e93694f32fa56b1e19b1fb17b3d0cf85c6b8181cd9bee",
+      "source": "Original ANANTA mobility source",
+      "license": "Original project asset"
+    },
+    {
+      "file": "Mobility/Textures/Steel_roughness.png",
+      "sha256": "c0db42b940f0b5b8ec946dd6bbdd2abd11e53be7f56fe55522123721a6418fb1",
+      "source": "Original ANANTA mobility source",
+      "license": "Original project asset"
+    },
+    {
+      "file": "Mobility/Textures/Upholstery_baseColor.png",
+      "sha256": "512ebb378147fe593c284ba75dd2d1a3dd7ce2ae3f7003d0d8cb34e99ce4d7d5",
+      "source": "Original ANANTA mobility source",
+      "license": "Original project asset"
+    },
+    {
+      "file": "Mobility/Textures/Upholstery_normal.png",
+      "sha256": "936f5bfc9fe0e1ff832f203c3946f6435486ebf9ef0c3afcbd69b49aeb187b1a",
+      "source": "Original ANANTA mobility source",
+      "license": "Original project asset"
+    },
+    {
+      "file": "Mobility/Textures/Upholstery_roughness.png",
+      "sha256": "1966f2fd56923d9b9c9216effd2405627bcbf7b4b7a28a919b35410f441eacba",
+      "source": "Original ANANTA mobility source",
+      "license": "Original project asset"
+    }
+  ]
+}

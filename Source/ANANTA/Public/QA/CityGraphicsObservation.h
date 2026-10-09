@@ -21,4 +21,5 @@ private:
     double LastTime = 0;
     double FirstTime = 0;
     bool bConfigured = false;
+    bool bProfileRequested = false;
 };

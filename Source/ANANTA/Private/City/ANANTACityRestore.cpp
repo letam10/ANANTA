@@ -56,7 +56,8 @@ void AANANTACityController::RestorePlayer(const float DeltaTime)
     if (bFloor && Floor.ImpactNormal.Z > 0.7f)
     {
         Location.Z = Floor.ImpactPoint.Z + HalfHeight + 3;
-        const FCollisionShape Capsule = FCollisionShape::MakeCapsule(38, HalfHeight);
+        const float Radius = Hero->GetCapsuleComponent()->GetScaledCapsuleRadius();
+        const FCollisionShape Capsule = FCollisionShape::MakeCapsule(Radius, HalfHeight);
         if (!GetWorld()->OverlapBlockingTestByChannel(Location, FQuat::Identity, ECC_Pawn, Capsule, Params))
         {
             Hero->SetActorLocation(Location);

@@ -35,6 +35,11 @@ bool UTraversalComponent::TryMantle()
     {
         return false;
     }
+    UCharacterMovementComponent* Movement = Character->GetCharacterMovement();
+    if (!Movement || Movement->MovementMode == MOVE_None)
+    {
+        return false;
+    }
 
     const FVector Forward = Character->GetActorForwardVector();
     const float HalfHeight = Character->GetCapsuleComponent()->GetScaledCapsuleHalfHeight();
@@ -44,7 +49,7 @@ bool UTraversalComponent::TryMantle()
     const FVector WallEnd = ChestStart + Forward * MantleForwardDistance;
     FCollisionQueryParams QueryParams(SCENE_QUERY_STAT(ANANTA_Mantle), false, Character);
     FHitResult WallHit;
-    if (!World->LineTraceSingleByChannel(WallHit, ChestStart, WallEnd, ECC_Visibility, QueryParams))
+    if (!World->LineTraceSingleByChannel(WallHit, ChestStart, WallEnd, ECC_Pawn, QueryParams))
     {
         return false;
     }
@@ -52,8 +57,8 @@ bool UTraversalComponent::TryMantle()
     const FVector TopStart = Feet + Forward * MantleForwardDistance + FVector(0.0f, 0.0f, MaxMantleHeight);
     const FVector TopEnd = Feet + Forward * MantleForwardDistance - FVector(0.0f, 0.0f, 20.0f);
     FHitResult TopHit;
-    if (!World->LineTraceSingleByChannel(TopHit, TopStart, TopEnd, ECC_Visibility, QueryParams)
-        || TopHit.Normal.Z < 0.65f)
+    if (!World->LineTraceSingleByChannel(TopHit, TopStart, TopEnd, ECC_Pawn, QueryParams)
+        || !Movement->IsWalkable(TopHit))
     {
         return false;
     }
@@ -73,10 +78,8 @@ bool UTraversalComponent::TryMantle()
     }
     Character->SetActorLocation(MantleLocation);
 
-    if (UCharacterMovementComponent* Movement = Character->GetCharacterMovement())
-    {
-        Movement->SetMovementMode(MOVE_Walking);
-    }
+    Movement->StopMovementImmediately();
+    Movement->SetMovementMode(MOVE_Walking);
     return true;
 }
 

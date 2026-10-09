@@ -63,9 +63,13 @@ def import_mesh(item, source_root):
         editor.set_lods(mesh, options)
         if editor.get_lod_count(mesh) != 3:
             raise RuntimeError(f"LOD generation failed: {destination}")
+    # Nanite khong ho tro kinh trong suot; giu LOD thuong cho mesh co slot translucent.
+    opaque_modes = (unreal.BlendMode.BLEND_OPAQUE, unreal.BlendMode.BLEND_MASKED)
+    compatible = all(slot.material_interface.get_editor_property("blend_mode") in opaque_modes
+                     for slot in mesh.static_materials if slot.material_interface)
     if not item["id"].startswith("House_"):
         settings = mesh.get_editor_property("nanite_settings")
-        settings.set_editor_property("enabled", True)
+        settings.set_editor_property("enabled", compatible)
         mesh.set_editor_property("nanite_settings", settings)
     unreal.EditorAssetLibrary.save_loaded_asset(mesh)
     box = mesh.get_bounding_box()

@@ -13,6 +13,9 @@ from CityExpansionVenues import furnish
 from CityVenueDressing import describe as venue_items, dress as dress_venues
 from CityInteriorFinishes import FLOORS
 from CityStreetLandmarks import dress as dress_landmarks
+from CityCivicDistrict import furnish as furnish_civic
+from CityCivicLighting import furnish as light_civic
+from CityLivingDetails import furnish as furnish_living
 from CityScene import ACTORS, instance_group, mesh_asset, material_asset
 
 MAP = "/Game/ANANTA/Maps/ANANTA_City"
@@ -43,7 +46,7 @@ def main():
         label = actor.get_actor_label()
         generated = label.startswith("City_") and actor.get_components_by_class(
             unreal.HierarchicalInstancedStaticMeshComponent)
-        if generated or label.startswith(("Expansion_", "Dressing_", "Landmark_")):
+        if generated or label.startswith(("Expansion_", "Dressing_", "Landmark_", "District_", "Living_")):
             assert ACTORS.destroy_actor(actor)
             removed += 1
         elif label in ("City_PlayerStart", "City_PlayerCar", "City_MissionGiver", "City_AnomalyFragment"):
@@ -65,6 +68,9 @@ def main():
     furnish()
     dress_venues()
     dress_landmarks()
+    furnish_civic()
+    light_civic()
+    furnish_living()
     for actor in ACTORS.get_all_level_actors():
         if actor.get_actor_label().startswith(("Dressing_", "Landmark_")):
             actor.set_editor_property("hlod_layer", hlod)
