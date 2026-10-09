@@ -30,9 +30,9 @@ def main():
                     errors.append(f"Building footprints intersect {index}: {item['centre']} / {other['centre']}")
     assert len(buildings) > 1200, len(buildings)
     assert len(data["audit"]["styles"]) == 7
-    assert abs(data["audit"]["areaRatio"] - 8) < 0.00001
+    assert abs(data["audit"]["areaRatio"] - 32) < 0.00001
     assert abs(data["audit"]["previousAreaRatio"] - 4) < 0.00001
-    assert data["audit"]["roadBlocks"] == 784
+    assert data["audit"]["roadBlocks"] == 3136
     assert len(VENUES) == 6
     # Kiem tra loai tai nguyen can import, khong chap nhan mesh khong co trong nguon.
     base = json.loads((ROOT / "Assets/City/manifest.json").read_text(encoding="utf-8"))

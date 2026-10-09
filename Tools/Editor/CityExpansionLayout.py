@@ -7,7 +7,7 @@ from pathlib import Path
 import random
 
 from CityExpansionData import BLOCK, GRID_EXTENT, GRID_BLOCKS, WORLD_EXTENT, ROAD_LINES, SEED
-from CityExpansionData import overlaps_reserved, coastal_cutout
+from CityExpansionData import overlaps_reserved, coastal_cutout, street_cutout
 from CityExpansionBuildings import building, STYLES
 from CityExpansionLandscape import dress_block, perimeter
 
@@ -56,28 +56,44 @@ def streets(layout):
                 def size(along, across, z):
                     return (across, along, z) if vertical else (along, across, z)
                 sample = xyz(centre, road, 0)
-                if coastal_cutout(sample[0], sample[1]):
+                if street_cutout(sample[0], sample[1]):
                     continue
-                layout.box("Asphalt", xyz(centre, road, 1), size(BLOCK, 1800, 2))
+                highway = road == 252000 and not vertical
+                width = 3000 if highway else 1800
+                sidewalk = 1770 if highway else 1125
+                curb = 1510 if highway else 910
+                lamp = 1900 if highway else 1220
+                layout.box("Asphalt", xyz(centre, road, 1), size(BLOCK, width, 2))
+                walk_centre, walk_length = centre, 10200
+                if vertical and start in (240000, 252000):
+                    walk_centre += -300 if start == 240000 else 300
+                    walk_length = 9600
                 for side in (-1, 1):
-                    layout.box("Sidewalk", xyz(centre, road + side * 1125, 7.5), size(10200, 450, 15))
-                    layout.box("Curb", xyz(centre, road + side * 910, 9), size(10200, 20, 18))
+                    layout.box("Sidewalk", xyz(walk_centre, road + side * sidewalk, 7.5),
+                               size(walk_length, 450, 15))
+                    layout.box("Curb", xyz(walk_centre, road + side * curb, 9), size(walk_length, 20, 18))
                     if not vertical:
                         for step in (-3600, 0, 3600):
-                            layout.add("DetailedStreetLamp", xyz(centre + step, road + side * 1220, 15),
+                            position = xyz(centre + step, road + side * lamp, 15)
+                            if overlaps_reserved(position[0], position[1], 40, 40):
+                                continue
+                            layout.add("DetailedStreetLamp", xyz(centre + step, road + side * lamp, 15),
                                        yaw=180 if side > 0 else 0, collision=False)
-                            layout.collider(xyz(centre + step, road + side * 1220, 205), (32, 32, 380))
+                            layout.collider(xyz(centre + step, road + side * lamp, 205), (32, 32, 380))
                 for step in range(-4200, 4201, 900):
                     layout.box("RoadMark", xyz(centre + step, road, 2.5), size(400, 12, 1), False)
     for x in ROAD_LINES[1:-1]:
         for y in ROAD_LINES[1:-1]:
-            if coastal_cutout(x, y):
+            if street_cutout(x, y):
                 continue
+            crossing_y = 1750 if y == 252000 else 1150
             for side in (-1, 1):
                 for stripe in range(-700, 701, 200):
-                    layout.box("RoadMark", (x + stripe, y + side * 1150, 2.9), (95, 420, 1), False)
+                    crossing_z = 10 if y == 252000 else 2.9
+                    layout.box("RoadMark", (x + stripe, y + side * crossing_y, crossing_z), (95, 420, 1), False)
                     layout.box("RoadMark", (x + side * 1150, y + stripe, 3), (420, 95, 1), False)
-                layout.box("Sidewalk", (x + side * 1250, y + side * 1250, 6), (500, 500, 12))
+                corner_y = 1870 if y == 252000 else 1250
+                layout.box("Sidewalk", (x + side * 1250, y + side * corner_y, 6), (500, 500, 12))
             if x % 24000 == 0 and y % 24000 == 0:
                 for side in (-1, 1):
                     location = (x + side * 1310, y - side * 1310, 15)
@@ -125,13 +141,17 @@ def generate():
     perimeter(layout)
     from CityCivicDistrict import generate as civic
     from CityCoastalDistrict import generate as coast
+    from CityMetroDistrict import generate as metro, FACILITIES, access_lanes
     civic(layout)
     coast(layout)
+    metro(layout)
     data = layout.export()
+    data["facilities"] = FACILITIES
+    data["facilityAccess"] = access_lanes()
     data["audit"] = dict(buildings=len(data["buildings"]), groups=len(data["groups"]),
                          instances=sum(len(g["instances"]) for g in data["groups"]),
                          widthMetres=WORLD_EXTENT * 2 / 100, areaRatio=(WORLD_EXTENT / 60000) ** 2,
-                         previousAreaRatio=(WORLD_EXTENT / (60000 * math.sqrt(2))) ** 2,
+                         previousAreaRatio=(WORLD_EXTENT / (120000 * math.sqrt(2))) ** 2,
                          roadBlocks=GRID_BLOCKS ** 2, shellOnly=True,
                          styles=sorted(set(b["style"] for b in data["buildings"])))
     return data

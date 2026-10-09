@@ -1,6 +1,6 @@
 """Walkable courtyards, pocket gardens and street amenities, grouped as instances."""
 
-from CityExpansionData import BLOCK, GRID_EXTENT, WORLD_EXTENT, overlaps_reserved
+from CityExpansionData import BLOCK, GRID_EXTENT, WORLD_EXTENT, overlaps_reserved, coastal_cutout
 
 
 def prop(layout, mesh, x, y, yaw=0, scale=(1, 1, 1), radius=230):
@@ -50,16 +50,31 @@ def dress_block(layout, x, y, rng, park):
 
 def perimeter(layout):
     edge = GRID_EXTENT + 1450
+    # Cat dai dat o bo dong va nam: bien phai thong ra chan troi.
+    reach = WORLD_EXTENT - GRID_EXTENT
+    end = -120000
+    land_length = GRID_EXTENT - end
+    land_centre = (GRID_EXTENT + end) / 2
+    layout.box("Ground", (0, GRID_EXTENT + reach / 2, -60),
+               (WORLD_EXTENT * 2, reach, 100))
+    layout.box("Ground", (-GRID_EXTENT - reach / 2, 0, -60),
+               (reach, WORLD_EXTENT * 2, 100))
+    layout.box("Ground", (-land_centre, -GRID_EXTENT - reach / 2, -60),
+               (land_length, reach, 100))
+    layout.box("Ground", (GRID_EXTENT + reach / 2, land_centre, -60),
+               (reach, land_length, 100))
     for side in (-1, 1):
-        layout.box("Ground", (0, side * (GRID_EXTENT + 8000), -60),
-                   (2 * GRID_EXTENT + 32000, 16000, 100))
-        layout.box("Ground", (side * (GRID_EXTENT + 8000), 0, -60),
-                   (16000, 2 * GRID_EXTENT, 100))
-        layout.box("Sidewalk", (0, side * (GRID_EXTENT + 1125), 5), (2 * GRID_EXTENT, 450, 10))
-        layout.box("Sidewalk", (side * (GRID_EXTENT + 1125), 0, 5), (450, 2 * GRID_EXTENT, 10))
         for offset in range(-GRID_EXTENT, GRID_EXTENT, 1200):
-            layout.box("Curb", (offset + 600, side * edge, 70), (1200, 35, 140))
-            layout.box("Curb", (side * edge, offset + 600, 70), (35, 1200, 140))
-            if offset % 2400 == 0:
-                layout.add("TreeColumnar", (offset, side * (edge + 300), -10), collision=False)
-                layout.add("TreeColumnar", (side * (edge + 300), offset, -10), collision=False)
+            for vertical in (False, True):
+                x, y = (side * edge, offset + 600) if vertical else (offset + 600, side * edge)
+                if coastal_cutout(x, y):
+                    continue
+                size = (35, 1200, 140) if vertical else (1200, 35, 140)
+                layout.box("Curb", (x, y, 70), size)
+                if offset % 2400 == 0:
+                    layout.add("TreeColumnar", (x, y, -10), collision=False)
+        # Mat trong cua collider trung dung ranh gioi choi, ke ca tren bien.
+        layout.collider((0, side * (WORLD_EXTENT + 50), 15000),
+                        (WORLD_EXTENT * 2 + 200, 100, 40000))
+        layout.collider((side * (WORLD_EXTENT + 50), 0, 15000),
+                        (100, WORLD_EXTENT * 2 + 200, 40000))

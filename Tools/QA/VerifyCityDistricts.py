@@ -100,8 +100,8 @@ def check_civic(layout):
 
 def check_coast(layout, meshes):
     water = [item for item in layout.items if item["material"] == "DistrictWater"]
-    assert len(water) == 1 and not water[0]["collision"]
-    assert water[0]["max"][2] == coast.WATER_LEVEL
+    assert len(water) == 3 and all(not item["collision"] for item in water)
+    assert all(item["max"][2] == coast.WATER_LEVEL for item in water)
     result = []
     for dock in coast.piers():
         name, x, half_width = dock["id"], dock["x"], dock["halfWidth"]

@@ -72,10 +72,26 @@ def instance_group(group, index):
     if group.get("hidden"):
         component.set_visibility(False)
         component.set_cast_shadow(False)
+        component.set_editor_property("affect_distance_field_lighting", False)
         actor.set_editor_property("enable_auto_lod_generation", False)
     if group["material"]:
         component.set_material(0, material_asset(group["material"]))
     promote_cube_component(component)
+    small_lighting = ("StreetSign", "BusStopSign", "TrafficSignal", "BikeRack", "HarborBollard",
+                      "CeilingFan", "TableLamp", "Microwave", "MakeupCompact", "ToyBlocks",
+                      "CoffeeMug", "KitchenBowl", "RoomVase", "BathroomSoap")
+    if group["mesh"] in small_lighting or group["material"] in ("RoadMark", "DistrictNeon"):
+        # Giu hinh anh/va cham, bo cac chi tiet nho khoi scene distance field cua Lumen.
+        component.set_editor_property("affect_distance_field_lighting", False)
+    if group["material"] in ("RoadMark", "DistrictNeon"):
+        component.set_cast_shadow(False)
+    if group["material"] == "DistrictWater":
+        component.set_cast_shadow(False)
+        component.set_editor_property("affect_distance_field_lighting", False)
+        if any(max(item["scale"][:2]) > 1000 for item in group["instances"]):
+            # Ba mat bien lon luon nap; khong ghep vao proxy HLOD hay tao bong.
+            actor.set_editor_property("is_spatially_loaded", False)
+            actor.set_editor_property("enable_auto_lod_generation", False)
     transforms = []
     for item in group["instances"]:
         transform = unreal.Transform()
@@ -87,7 +103,9 @@ def instance_group(group, index):
     component.add_instances(transforms, False, True, False)
     if component.get_instance_count() != len(transforms):
         raise RuntimeError(f"Incomplete instance group {index}")
-    actor.set_editor_property("is_spatially_loaded", True)
+    if group["material"] != "DistrictWater" or not any(
+            max(item["scale"][:2]) > 1000 for item in group["instances"]):
+        actor.set_editor_property("is_spatially_loaded", True)
     return actor
 
 

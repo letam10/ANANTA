@@ -17,4 +17,10 @@ public:
 
     UFUNCTION(BlueprintCallable, Category = "City Editor", meta = (DevelopmentOnly))
     static FString AuditLoadedCollision(UWorld* World);
+
+    UFUNCTION(BlueprintCallable, Category = "City Editor", meta = (DevelopmentOnly))
+    static FString AuditCollisionActors(UWorld* World, const TArray<FGuid>& ActorGuids);
+
+    UFUNCTION(BlueprintCallable, Category = "City Editor", meta = (DevelopmentOnly))
+    static FString AuditRoadRegion(UWorld* World, FVector Minimum, FVector Maximum);
 };

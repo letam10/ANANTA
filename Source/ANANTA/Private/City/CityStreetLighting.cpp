@@ -42,20 +42,6 @@ void ACityStreetLighting::BeginPlay()
     Super::BeginPlay();
     WindowParameters = LoadObject<UMaterialParameterCollection>(nullptr,
         TEXT("/Game/ANANTA/City/Materials/MPC_CityLighting.MPC_CityLighting"));
-    // Cung toa do voi CityLayout.streets va tam LED cua mesh StreetLamp.
-    for (int32 Road = -CityWorldBounds::RoadExtent; Road <= CityWorldBounds::RoadExtent; Road += 12000)
-    {
-        for (int32 Block = -CityWorldBounds::RoadExtent; Block < CityWorldBounds::RoadExtent; Block += 12000)
-        {
-            for (const int32 Side : {-1, 1})
-            {
-                for (const int32 Step : {-3600, 0, 3600})
-                {
-                    LampPositions.Add(FVector(Block + 6000 + Step, Road + Side * 1322, 484));
-                }
-            }
-        }
-    }
     for (TActorIterator<ADirectionalLight> It(GetWorld()); It; ++It)
     {
         Sun = *It;
@@ -83,6 +69,38 @@ void ACityStreetLighting::Tick(const float DeltaTime)
     const FVector Camera = PC->PlayerCameraManager->GetCameraLocation();
     if (bDark)
     {
+        // Chi xet cac o gan camera; khong sort hang van den cua thanh pho.
+        LampPositions.Reset();
+        constexpr float Spacing = CityWorldBounds::RoadSpacing;
+        const float RoadCentre = FMath::RoundToFloat(Camera.Y / Spacing) * Spacing;
+        const float BlockCentre = FMath::FloorToFloat(Camera.X / Spacing) * Spacing;
+        for (int32 Row = -1; Row <= 1; ++Row)
+        {
+            const float Road = RoadCentre + Row * Spacing;
+            if (FMath::Abs(Road) > CityWorldBounds::RoadExtent)
+            {
+                continue;
+            }
+            for (int32 Column = -1; Column <= 1; ++Column)
+            {
+                const float Block = BlockCentre + Column * Spacing;
+                if (Block < -CityWorldBounds::RoadExtent || Block >= CityWorldBounds::RoadExtent)
+                {
+                    continue;
+                }
+                if (CityWorldBounds::IsStreetCutout(Block + 6000, Road))
+                {
+                    continue;
+                }
+                for (const int32 Side : {-1, 1})
+                {
+                    for (const int32 Step : {-3600, 0, 3600})
+                    {
+                        LampPositions.Add(FVector(Block + 6000 + Step, Road + Side * 1322, 484));
+                    }
+                }
+            }
+        }
         LampPositions.Sort([Camera](const FVector& A, const FVector& B)
         {
             return FVector::DistSquared2D(A, Camera) < FVector::DistSquared2D(B, Camera);

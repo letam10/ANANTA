@@ -21,10 +21,14 @@ private:
     void FinishCapture();
     void ApplyReviewLighting();
     FString GetOutputDirectory() const;
+    bool InitializePlacementViews();
+    void MoveReviewCamera(const FVector& Location, const FRotator& Rotation);
 
     float Elapsed = 0;
     double WallStart = 0;
     int32 ViewIndex = 0;
+    int32 CaptureCount = 8;
+    TArray<FTransform> PlacementViews;
     TArray<FString> OutputFiles;
     double FrameSeconds = 0;
     float MaximumFrameSeconds = 0;

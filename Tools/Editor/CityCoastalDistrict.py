@@ -14,6 +14,14 @@ PIER_WIDTH = 420
 QUAY_Y = -146000
 
 
+def ocean_rectangles():
+    from CityExpansionData import WORLD_EXTENT
+
+    horizon = WORLD_EXTENT + 2000000
+    return (WATER_RECT, (168000, -horizon, horizon, -120000),
+            (120000, -horizon, 168000, -168000))
+
+
 def vessel_half_width(name, fallback):
     path = Path(__file__).resolve().parents[2] / "Assets/City/mobility_manifest.json"
     if path.exists():
@@ -122,12 +130,12 @@ def beach(layout):
 
 
 def generate(layout):
-    left, bottom, right, top = WATER_RECT
-    location = ((left + right) / 2, (bottom + top) / 2)
-    size = (right - left, top - bottom)
     # Nuoc chi de hien thi; chi day bien va cau ben co collision vat ly.
-    layout.box("DistrictWater", (*location, WATER_LEVEL - 5), (*size, 10), False)
-    layout.box("DistrictSand", (*location, SEABED_LEVEL - 20), (*size, 40))
+    for left, bottom, right, top in ocean_rectangles():
+        location = ((left + right) / 2, (bottom + top) / 2)
+        size = (right - left, top - bottom)
+        layout.box("DistrictWater", (*location, WATER_LEVEL - 5), (*size, 10), False)
+        layout.box("DistrictSand", (*location, SEABED_LEVEL - 20), (*size, 40))
     layout.box("DistrictPaving", (144000, -157000, -20), (48000, 22000, 70))
     beach(layout)
     cargo_yard(layout)

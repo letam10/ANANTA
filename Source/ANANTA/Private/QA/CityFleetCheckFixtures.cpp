@@ -50,17 +50,20 @@ bool UCityFleetCheck::BuildFixtures()
             return false;
         }
         // Tach fixture khoi thanh pho; khong dich chuyen nhan vat dang choi hay sua tuyen that.
-        const FVector Base(300000 + Index * 20000, 300000, 0);
-        const bool bWater = Kind >= ECityTransportKind::CargoShip;
+        const FVector Base(600000 + Index * 20000, 600000, 0);
+        const auto Authored = CityMobility::MakeRoute(Kind);
+        const bool bWater = Authored.bWater;
+        const bool bRail = Authored.bRail;
+        const float FloorHeight = bRail ? 51.f : 0.f;
         const float Length = FMath::Max(5000.f, static_cast<float>(Size.X * 2));
         const FVector HalfLength(Length * .5f, 0, 0);
         bool bGeometryReady = true;
         if (!bWater)
         {
-            bGeometryReady &= AddBox(Base + HalfLength + FVector(0, 0, -50),
+            bGeometryReady &= AddBox(Base + HalfLength + FVector(0, 0, FloorHeight - 50),
                 FVector(Length * .5f + Fixture.Extent.X + 500, 1300, 50)) != nullptr;
-            bGeometryReady &= AddBox(Base + HalfLength + FVector(0, 700, 9),
-                FVector(Length * .5f + 400, 300, 9)) != nullptr;
+            bGeometryReady &= AddBox(Base + HalfLength + FVector(0, bRail ? 800 : 700, bRail ? 50 : 9),
+                FVector(Length * .5f + 400, 300, bRail ? 50 : 9)) != nullptr;
         }
         else
         {
@@ -68,10 +71,10 @@ bool UCityFleetCheck::BuildFixtures()
             bGeometryReady &= AddBox(Base + HalfLength + FVector(0, Fixture.Extent.Y + 260, -70),
                 FVector(Length * .5f + 400, 220, 50)) != nullptr;
         }
-        const float DoorY = Fixture.Extent.Y + 65;
+        const float DoorY = bRail ? 430.f : Fixture.Extent.Y + 65;
         Fixture.DoorBlocker = AddBox(Base + FVector(0, DoorY, 140), FVector(60, 40, 180));
         const float BodyZ = Mesh->GetBoundingBox().GetCenter().Z + 5
-            + (bWater ? CityMobility::WaterLevel : 0);
+            + (bWater ? CityMobility::WaterLevel : FloorHeight);
         Fixture.LaneBlocker = AddBox(Base + FVector(Fixture.Extent.X + 240, 0, BodyZ),
             FVector(40, Fixture.Extent.Y + 20, Fixture.Extent.Z + 20));
         if (!bGeometryReady || !Fixture.DoorBlocker.IsValid() || !Fixture.LaneBlocker.IsValid())
@@ -82,6 +85,7 @@ bool UCityFleetCheck::BuildFixtures()
         FCityTransportRoute Route;
         Route.Id = FName(*(TEXT("QA_Fixture_") + Fixture.Name));
         Route.bWater = bWater;
+        Route.bRail = bRail;
         Route.Points = {Base, Base + FVector(Length, 0, 0), Base + FVector(Length + 4000, 0, 0)};
         Route.Stops = {0, 1};
         Fixture.Vehicle = GetWorld()->SpawnActor<ACityRouteVehicle>();

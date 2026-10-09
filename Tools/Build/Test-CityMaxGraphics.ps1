@@ -2,7 +2,7 @@
 param(
     [string]$ExecutablePath,
     [switch]$ProfileRender,
-    [ValidateSet('None', 'NonNaniteBatchOff', 'VsmOff')]
+    [ValidateSet('None', 'NonNaniteBatchOff', 'VsmOff', 'NaniteAsyncOff', 'NaniteReservedOff')]
     [string]$Diagnostic = 'None',
     [string]$EngineRoot = 'C:\Program Files\Epic Games\UE_5.8'
 )
@@ -63,6 +63,10 @@ if ($Diagnostic -ne 'None') {
     # Chi chan doan duong render gay PageFault; khong tinh la Max mac dinh.
     $override = if ($Diagnostic -eq 'VsmOff') {
         'r.Shadow.Virtual.Enable=0'
+    } elseif ($Diagnostic -eq 'NaniteAsyncOff') {
+        'r.Nanite.AsyncRasterization=0'
+    } elseif ($Diagnostic -eq 'NaniteReservedOff') {
+        'r.Nanite.Streaming.ReservedResources=0'
     } else {
         'r.Shadow.Virtual.NonNanite.Batch=0'
     }

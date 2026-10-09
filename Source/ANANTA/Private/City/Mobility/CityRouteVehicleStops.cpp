@@ -5,8 +5,8 @@
 
 bool ACityRouteVehicle::DoorAndSidewalk(FVector& Door, FVector& Sidewalk) const
 {
-    Door = GetActorLocation() + GetActorRightVector() * (Extent.Y + 65);
-    Sidewalk = GetActorLocation() + GetActorRightVector() * (Route.bWater ? Extent.Y + 320 : 730);
+    Door = GetActorLocation() + GetActorRightVector() * (Route.bRail ? 430.f : Extent.Y + 65);
+    Sidewalk = GetActorLocation() + GetActorRightVector() * (Route.bRail ? 800.f : (Route.bWater ? Extent.Y + 320 : 730));
     FCollisionQueryParams Params(SCENE_QUERY_STAT(CityRouteStop), false, this);
     Params.AddIgnoredActor(Passenger);
     const FCollisionObjectQueryParams Objects(ECC_WorldStatic);
@@ -20,7 +20,7 @@ bool ACityRouteVehicle::DoorAndSidewalk(FVector& Door, FVector& Sidewalk) const
         }
         // Khong dung noc vat can lam san len xe; mat ben tau co the cao hon mat nuoc.
         const float SurfaceZ = GetActorLocation().Z - OriginHeight;
-        const float AllowedRise = Route.bWater ? 180.f : 40.f;
+        const float AllowedRise = Route.bWater || Route.bRail ? 180.f : 40.f;
         if (Floor.ImpactPoint.Z - SurfaceZ > AllowedRise || Floor.ImpactPoint.Z - SurfaceZ < -40.f)
         {
             return false;

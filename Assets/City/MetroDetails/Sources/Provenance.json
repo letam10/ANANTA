@@ -1,0 +1,8 @@
+{
+  "source": "Original procedural authored geometry with dimensioned functional components",
+  "materials": "Reuses existing Living Enamel, Steel and Dark PBR maps without modifying them",
+  "license": "Original project asset",
+  "thirdPartyAssets": [],
+  "authoring": "Blender 5.2 metres; FBX centimetres, +X front, +Z up, origin bottom centre",
+  "limitations": "Static meshes only. Recommended LOD ratios are not generated LODs."
+}

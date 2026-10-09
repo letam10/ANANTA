@@ -5,7 +5,7 @@ const TCHAR* CityMobility::MeshName(const ECityTransportKind Kind)
     static const TCHAR* Names[] = {
         TEXT("Coach"), TEXT("CityBus"), TEXT("Taxi"), TEXT("BoxTruck"), TEXT("CargoTruck"),
         TEXT("TankerTruck"), TEXT("PoliceCar"), TEXT("Ambulance"), TEXT("CargoShip"),
-        TEXT("Motorboat"), TEXT("Sailboat")
+        TEXT("Motorboat"), TEXT("Sailboat"), TEXT("FireEngine"), TEXT("PassengerTrain")
     };
     const int32 Index = static_cast<int32>(Kind);
     return Index >= 0 && Index < UE_ARRAY_COUNT(Names) ? Names[Index] : TEXT("");
@@ -24,7 +24,19 @@ FCityTransportRoute CityMobility::MakeRoute(const ECityTransportKind Kind)
 {
     FCityTransportRoute Result;
     Result.Id = FName(MeshName(Kind));
-    Result.bWater = Kind >= ECityTransportKind::CargoShip;
+    Result.bWater = Kind == ECityTransportKind::CargoShip || Kind == ECityTransportKind::Motorboat
+        || Kind == ECityTransportKind::Sailboat;
+    Result.bRail = Kind == ECityTransportKind::PassengerTrain;
+    if (Result.bRail)
+    {
+        Result.Points = {
+            FVector(-68000, 198500, 51), FVector(-64000, 198500, 51),
+            FVector(-65333.333, 198500, 51), FVector(-66666.667, 198500, 51)
+        };
+        Result.Stops = {0, 1};
+        Result.ReverseTargets = {2, 3, 0};
+        return Result;
+    }
     if (Result.bWater)
     {
         const float Offset = (static_cast<int32>(Kind) - 8) * 4200.f;

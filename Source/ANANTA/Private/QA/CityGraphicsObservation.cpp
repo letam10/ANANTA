@@ -76,7 +76,11 @@ void UCityGraphicsObservation::RecordConfiguration()
         TEXT("sg.TextureQuality"), TEXT("sg.EffectsQuality"), TEXT("sg.FoliageQuality"),
         TEXT("sg.ShadingQuality"), TEXT("r.ScreenPercentage"), TEXT("t.MaxFPS"), TEXT("r.VSync"),
         TEXT("r.Nanite.Culling.Frustum"), TEXT("r.Nanite.Culling.HZB"), TEXT("r.Streaming.PoolSize"),
+        TEXT("r.Nanite.Streaming.ReservedResources"), TEXT("r.Nanite.AsyncRasterization"),
         TEXT("r.Lumen.HardwareRayTracing"), TEXT("r.Shadow.Virtual.SMRT.RayCountDirectional"),
+        TEXT("r.Shadow.Virtual.SMRT.SamplesPerRayDirectional"), TEXT("r.Shadow.Virtual.SMRT.RayCountLocal"),
+        TEXT("r.Lumen.ScreenProbeGather.DownsampleFactor"), TEXT("r.Lumen.Reflections.DownsampleFactor"),
+        TEXT("r.Lumen.ScreenProbeGather.ShortRangeAO.DownsampleFactor"),
         TEXT("r.Shadow.Virtual.Enable"), TEXT("r.Shadow.Virtual.ResolutionLodBiasDirectional"),
         TEXT("r.Shadow.Virtual.NonNanite.Batch"), TEXT("r.Shadow.Virtual.NonNanite.UseHZB"),
         TEXT("r.Shadow.Virtual.NonNanite.IncludeInCoarsePages"), TEXT("r.TSR.History.ScreenPercentage")

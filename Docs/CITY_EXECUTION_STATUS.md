@@ -1,6 +1,6 @@
 # ANANTA — tiến độ hiện hành
 
-Cập nhật 2026-10-09. Mục tiêu tổng thể đang thực hiện, chưa hoàn tất.
+Cập nhật 2026-10-10. Mục tiêu tổng thể đang thực hiện, chưa hoàn tất.
 Mỗi vòng: sửa → kiểm chứng → cập nhật file này → commit/push GitHub.
 Nguồn: nhánh codex/city-expansion; chi tiết: CITY_MOBILITY_ROUND.md.
 
@@ -21,7 +21,8 @@ Nguồn: nhánh codex/city-expansion; chi tiết: CITY_MOBILITY_ROUND.md.
 ### Thành phố
 
 - 3.534 nhà, 784 ô; bảy bộ mặt tiền, tám dạng khối, màu/chiều cao khác nhau.
-- Map 3,4 km đã ghi/đọc lại: 25.021 nhóm, 602.953 instance; 19 đồ sinh hoạt và 16 đèn mới.
+- Map 3,4 km đọc lại theo lô: 25.026 nhóm, 602.965 instance; 19 đồ sinh hoạt và 16 đèn mới.
+  Gồm năm nhóm civic mới; đã sửa báo cáo nền và cách đếm bỏ sót HISM mang nhãn Living.
 - 12 dịch vụ: tám địa điểm cũ và điểm đọc thông tin cảnh sát/cứu hỏa/bar/arcade.
 - Khu vui chơi, biển, bến tàu cùng bản đồ; bốn phòng công cộng có cửa rộng 480 cm.
 - Nguồn bố cục không lấn đường, chồng nhà hay thiếu mesh tham chiếu.
@@ -73,7 +74,10 @@ Nguồn: nhánh codex/city-expansion; chi tiết: CITY_MOBILITY_ROUND.md.
 - Có frustum/occlusion, Nanite HZB, World Partition, HISM, streaming, LOD, TSR.
 - Hướng dẫn vật thể lặp: CITY_INSTANCING_GUIDE.md; Ctrl+D/Ctrl+V không tự bảo đảm instancing.
 - Mesh kính translucent dùng LOD thường, tránh vật liệu mặc định do Nanite không hỗ trợ.
-- Max là Epic (3), native 100%; không đổi nhãn chất lượng để lấy số FPS.
+- Bản EXE đã đo dùng Epic (3), native 100%. Nguồn mới có Max tùy chỉnh giảm chi phí GI/bóng/TSR;
+  giữ native 100%, ghi rõ đánh đổi chất lượng. Editor 3,4 km sau sửa: 50,34 FPS, p95 24,98 ms;
+  14.206 frame/282,17 giây, giữ đủ 52 frame trên 33,3 ms và 10 trên 50 ms; chưa đạt 90 FPS.
+  Lượt này dùng ReservedResources=0, chưa chứng minh EXE/reload hết PageFault.
 - Max native 1080p bản 3,4 km sau sửa tuyến NPC: 62,57 FPS trung bình,
   p95 18,90 ms, GPU 15,26 ms; 17.621 frame trong 281,61 giây quan sát. Chưa đạt 90 FPS.
   Hoàn tất tám dịch vụ; giữ cả 22 frame trên 33,3 ms và sáu frame trên 50 ms trong số liệu.
@@ -88,7 +92,8 @@ Nguồn: nhánh codex/city-expansion; chi tiết: CITY_MOBILITY_ROUND.md.
 - EXE CityExpanded 3,4 km build/cook/package PASS; menu Apply PASS, reload bị GPU PageFault Nanite/VSM.
 - EXE Max 1080p gốc: 47,71 FPS / p95 37,87 ms; 13.523 frame, 283,46 giây, GPU trung bình 20,12 ms.
   Giữ 1.760 frame trên 33,3 ms và 13 frame trên 50 ms. Chưa đạt 90 FPS; chưa kết luận lỗi GPU đã sửa.
-- Bố cục nguồn 6,8 km PASS: 10.754 nhà / 1.660.699 instance; chưa apply hoặc nghiệm thu trong Unreal.
+- Bố cục nguồn 6,8 km PASS: 10.754 nhà / 1.660.761 instance; chưa apply hoặc nghiệm thu trong Unreal.
+  Chi tiết thuyền/tàu/bể bơi trên mái/props nhỏ: CITY_6800_INTEGRATION_ROUND.md.
 - Đã chuyển 12.025 component / 113.907 instance khối đục sang Nanite;
   giữ geometry/material/collision; rà lại body và 3.992 điểm đường đạt.
 

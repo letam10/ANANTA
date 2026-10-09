@@ -163,13 +163,21 @@ FString AANANTACityController::GetInteractionPrompt() const
     }
     if (DrivenVehicle.IsValid())
     {
+        if (DrivenVehicle->VehicleId == TEXT("PlayerRowboat"))
+        {
+            return DrivenVehicle->GetSpeedKmh() > 2 ? TEXT("Space: stop rowing before exiting") : TEXT("E: leave boat");
+        }
         return DrivenVehicle->GetSpeedKmh() > 2 ? TEXT("Space: brake before exiting") : TEXT("E: leave car");
     }
     if (auto* Target = Cast<AANANTACityInteractable>(FindInteractionTarget()))
     {
         return Target->GetPrompt();
     }
-    return FindInteractionTarget() ? TEXT("E: drive car") : TEXT("");
+    if (const auto* Vehicle = Cast<AANANTACityVehicle>(FindInteractionTarget()))
+    {
+        return Vehicle->VehicleId == TEXT("PlayerRowboat") ? TEXT("E: row boat") : TEXT("E: drive car");
+    }
+    return TEXT("");
 }
 
 void AANANTACityController::Interact()

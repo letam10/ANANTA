@@ -35,6 +35,11 @@ bool FCityTransportRoutesTest::RunTest(const FString& Parameters)
                 TestTrue(TEXT("Vessels stay in coastal water corridor"), Current.X > 120000
                     && Current.Y < -120000 && Current.Z == CityMobility::WaterLevel);
             }
+            else if (Route.bRail)
+            {
+                TestTrue(TEXT("Train follows station rail"), FMath::IsNearlyEqual(Current.Y, 198500.f));
+                TestTrue(TEXT("Train wheels rest above rail bed"), FMath::IsNearlyEqual(Current.Z, 51.f));
+            }
             else
             {
                 const float LaneX = FMath::Abs(FMath::GridSnap(Current.X, 12000.f) - Current.X);
@@ -44,7 +49,7 @@ bool FCityTransportRoutesTest::RunTest(const FString& Parameters)
             }
         }
     }
-    TestEqual(TEXT("All requested transport types"), Names.Num(), 11);
+    TestEqual(TEXT("All authored transport types"), Names.Num(), static_cast<int32>(ECityTransportKind::Count));
     return true;
 }
 #endif

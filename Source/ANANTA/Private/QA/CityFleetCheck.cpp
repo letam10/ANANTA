@@ -53,7 +53,7 @@ void UCityFleetCheck::Tick(const float DeltaTime)
         Finish(false, TEXT("Physical fleet fixtures exceeded 240 seconds wall time"));
         return;
     }
-    bool bAllDone = Fixtures.Num() == 11;
+    bool bAllDone = Fixtures.Num() == static_cast<int32>(ECityTransportKind::Count);
     for (FCityFleetFixture& Fixture : Fixtures)
     {
         if (!UpdateFixture(Fixture, DeltaTime))
@@ -64,7 +64,7 @@ void UCityFleetCheck::Tick(const float DeltaTime)
     }
     if (bAllDone)
     {
-        Finish(true, TEXT("All 11 controlled physical fixtures passed; no FPS or ordinary-route claim"));
+        Finish(true, TEXT("All authored controlled physical fixtures passed; no FPS or ordinary-route claim"));
     }
 }
 

@@ -56,6 +56,11 @@ void ACityTransportManager::Tick(const float DeltaTime)
             continue;
         }
         const FCityTransportRoute Route = CityMobility::MakeRoute(Kind);
+        if (Route.bRail)
+        {
+            // Tau duoc author theo nha ga va nap cung cell; khong tao them tu fleet duong bo.
+            continue;
+        }
         for (const int32 Stop : Route.Stops)
         {
             const float Distance = FVector::Dist2D(Route.Points[Stop], Location);

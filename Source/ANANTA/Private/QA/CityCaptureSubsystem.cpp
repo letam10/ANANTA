@@ -18,8 +18,6 @@
 
 namespace
 {
-    constexpr int32 CaptureCount = 8;
-
     void WriteCityRenderConfiguration(const FString& Directory, const FString& MapName)
     {
         static const TCHAR* Names[] = {
@@ -73,7 +71,7 @@ void UCityCaptureSubsystem::Tick(const float DeltaTime)
     {
         WallStart = FPlatformTime::Seconds();
     }
-    if (ViewIndex <= CaptureCount && FPlatformTime::Seconds() - WallStart > 180)
+    if (ViewIndex <= CaptureCount && FPlatformTime::Seconds() - WallStart > FMath::Max(180, CaptureCount * 10 + 60))
     {
         UE_LOG(LogTemp, Error, TEXT("CITY_CAPTURE_TIMEOUT view=%d"), ViewIndex);
         FinishCapture();
@@ -91,6 +89,12 @@ void UCityCaptureSubsystem::Tick(const float DeltaTime)
         auto* Source = NewObject<UWorldPartitionStreamingSourceComponent>(Controller->GetPawn());
         Source->RegisterComponent();
         ApplyReviewLighting();
+        if (!InitializePlacementViews())
+        {
+            ViewIndex = CaptureCount + 1;
+            FPlatformMisc::RequestExitWithStatus(false, 1);
+            return;
+        }
     }
     Elapsed += DeltaTime;
     if (Elapsed > 8 && ViewIndex < CaptureCount)
@@ -103,7 +107,7 @@ void UCityCaptureSubsystem::Tick(const float DeltaTime)
     {
         CaptureView(ViewIndex++);
     }
-    if (ViewIndex == CaptureCount && Elapsed > 56)
+    if (ViewIndex == CaptureCount && Elapsed > 8 + CaptureCount * 6)
     {
         FinishCapture();
         ++ViewIndex;
@@ -188,6 +192,15 @@ void UCityCaptureSubsystem::CaptureView(const int32 Index)
     // Doi camera sau khi anh hien tai da duoc renderer doc o cuoi frame.
     if (Index < CaptureCount - 1)
     {
+        if (!PlacementViews.IsEmpty())
+        {
+            const FTransform Next = PlacementViews[Index + 1];
+            GetWorld()->GetTimerManager().SetTimerForNextTick([this, Next]()
+            {
+                MoveReviewCamera(Next.GetLocation(), Next.Rotator());
+            });
+            return;
+        }
         const bool bExpansion = FParse::Param(FCommandLine::Get(), TEXT("CityExpansionViews"));
         const bool bDressing = FParse::Param(FCommandLine::Get(), TEXT("CityDressingViews"));
         const bool bFinishing = FParse::Param(FCommandLine::Get(), TEXT("CityFinishingViews"));
@@ -201,15 +214,7 @@ void UCityCaptureSubsystem::CaptureView(const int32 Index)
         const FRotator FinalRotation = bCivic ? CivicRotations[Index] : (bFixtures ? FixtureRotations[Index] : Rotation);
         GetWorld()->GetTimerManager().SetTimerForNextTick([this, FinalLocation, FinalRotation]()
         {
-            if (!ReviewCamera)
-            {
-                ReviewCamera = GetWorld()->SpawnActor<ACameraActor>();
-                ReviewCamera->GetCameraComponent()->SetFieldOfView(75);
-                auto* Source = NewObject<UWorldPartitionStreamingSourceComponent>(ReviewCamera);
-                Source->RegisterComponent();
-            }
-            ReviewCamera->SetActorLocationAndRotation(FinalLocation, FinalRotation);
-            GetWorld()->GetFirstPlayerController()->SetViewTarget(ReviewCamera);
+            MoveReviewCamera(FinalLocation, FinalRotation);
         });
     }
 }

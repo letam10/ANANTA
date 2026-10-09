@@ -1,4 +1,5 @@
 #include "QA/CityEditorTools.h"
+#include "City/CityWorldBounds.h"
 
 #include "Components/InstancedStaticMeshComponent.h"
 #include "Components/StaticMeshComponent.h"
@@ -7,7 +8,7 @@
 #include "EngineUtils.h"
 #include "PhysicsEngine/BodySetup.h"
 
-FString UCityEditorTools::AuditLoadedCollision(UWorld* World)
+FString UCityEditorTools::AuditCollisionActors(UWorld* World, const TArray<FGuid>& ActorGuids)
 {
 #if WITH_EDITOR
     if (!World)
@@ -16,11 +17,16 @@ FString UCityEditorTools::AuditLoadedCollision(UWorld* World)
     }
     int32 Components = 0;
     int32 Instances = 0;
-    int32 RoadSamples = 0;
+    int32 Actors = 0;
     int32 Errors = 0;
     FString Detail;
     for (TActorIterator<AActor> It(World); It; ++It)
     {
+        if (!ActorGuids.IsEmpty() && !ActorGuids.Contains(It->GetActorGuid()))
+        {
+            continue;
+        }
+        ++Actors;
         TInlineComponentArray<UStaticMeshComponent*> Meshes;
         It->GetComponents(Meshes);
         for (UStaticMeshComponent* Component : Meshes)
@@ -47,10 +53,33 @@ FString UCityEditorTools::AuditLoadedCollision(UWorld* World)
             }
         }
     }
-    // Kiem tra mat duong tren toan luoi 3,4 km, doc lap voi so luong instance trong script.
+    if (!ActorGuids.IsEmpty() && Actors != ActorGuids.Num())
+    {
+        ++Errors;
+        Detail += FString::Printf(TEXT("missingLoadedActors=%d/%d\n"), Actors, ActorGuids.Num());
+    }
+    return FString::Printf(TEXT("passed=%d\nblockingComponents=%d\nblockingInstances=%d\nerrors=%d\n"),
+        Errors == 0, Components, Instances, Errors) + Detail;
+#else
+    return TEXT("passed=0\nerror=Editor only\n");
+#endif
+}
+
+FString UCityEditorTools::AuditRoadRegion(UWorld* World, FVector Minimum, FVector Maximum)
+{
+#if WITH_EDITOR
+    if (!World)
+    {
+        return TEXT("passed=0\nerror=Missing editor world\n");
+    }
+    int32 RoadSamples = 0;
+    int32 Errors = 0;
+    FString Detail;
+    // Ra mat duong toan luoi hien hanh, doc lap voi so instance cua script.
     const auto CheckRoad = [&](const FVector& Point)
     {
-        if (Point.X >= 120000 && Point.Y <= -120000)
+        if (Point.X < Minimum.X || Point.X >= Maximum.X || Point.Y < Minimum.Y || Point.Y >= Maximum.Y
+            || CityWorldBounds::IsStreetCutout(Point.X, Point.Y))
         {
             return;
         }
@@ -66,27 +95,34 @@ FString UCityEditorTools::AuditLoadedCollision(UWorld* World)
                 *GetNameSafe(Floor.GetActor()), Floor.ImpactPoint.Z);
         }
     };
-    for (int32 X = -168000; X <= 168000; X += 12000)
+    for (int32 X = -CityWorldBounds::RoadExtent; X <= CityWorldBounds::RoadExtent; X += 12000)
     {
-        for (int32 Y = -168000; Y <= 168000; Y += 12000)
+        for (int32 Y = -CityWorldBounds::RoadExtent; Y <= CityWorldBounds::RoadExtent; Y += 12000)
         {
             CheckRoad(FVector(X, Y, 0));
-            if (X < 168000)
+            if (X < CityWorldBounds::RoadExtent)
             {
                 CheckRoad(FVector(X + 6000, Y + 420, 0));
                 CheckRoad(FVector(X + 6000, Y - 420, 0));
             }
-            if (Y < 168000)
+            if (Y < CityWorldBounds::RoadExtent)
             {
                 CheckRoad(FVector(X + 420, Y + 6000, 0));
                 CheckRoad(FVector(X - 420, Y + 6000, 0));
             }
         }
     }
-    return FString::Printf(TEXT("passed=%d\nblockingComponents=%d\nblockingInstances=%d\n")
-        TEXT("roadSamples=%d\nerrors=%d\nscope=loaded map bodies and road support, not every player trajectory\n"),
-        Errors == 0 && Components > 0 && RoadSamples > 0, Components, Instances, RoadSamples, Errors) + Detail;
+    return FString::Printf(TEXT("passed=%d\nroadSamples=%d\nerrors=%d\n"), Errors == 0, RoadSamples, Errors) + Detail;
 #else
     return TEXT("passed=0\nerror=Editor only\n");
 #endif
+}
+
+FString UCityEditorTools::AuditLoadedCollision(UWorld* World)
+{
+    const FString Bodies = AuditCollisionActors(World, {});
+    const float Edge = CityWorldBounds::RoadExtent;
+    const FString Roads = AuditRoadRegion(World, FVector(-Edge, -Edge, -1000), FVector(Edge + 1, Edge + 1, 1000));
+    const bool bPassed = Bodies.StartsWith(TEXT("passed=1\n")) && Roads.StartsWith(TEXT("passed=1\n"));
+    return FString::Printf(TEXT("passed=%d\n"), bPassed) + Bodies.Mid(9) + Roads.Mid(9);
 }

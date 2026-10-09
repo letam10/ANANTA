@@ -11,6 +11,12 @@
 
 FString UCityCaptureSubsystem::GetOutputDirectory() const
 {
+    if (!PlacementViews.IsEmpty())
+    {
+        FString Manifest;
+        FParse::Value(FCommandLine::Get(), TEXT("CityPlacementViews="), Manifest);
+        return FPaths::GetPath(Manifest);
+    }
     const bool bBlueHour = FParse::Param(FCommandLine::Get(), TEXT("CityBlueHour"));
     if (FParse::Param(FCommandLine::Get(), TEXT("CityCivicViews")))
     {

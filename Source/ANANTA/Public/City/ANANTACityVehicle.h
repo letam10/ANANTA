@@ -18,8 +18,8 @@ public:
     AANANTACityVehicle();
     virtual void BeginPlay() override;
     virtual void Tick(float DeltaTime) override;
-    void Drive(float Throttle, float Steering, bool bBrake, float DeltaTime);
-    bool FindSafeExit(const APawn* Player, FVector& OutLocation) const;
+    virtual void Drive(float Throttle, float Steering, bool bBrake, float DeltaTime);
+    virtual bool FindSafeExit(const APawn* Player, FVector& OutLocation) const;
     bool IsRestoreComplete() const { return bRestoreComplete; }
     float GetSpeedKmh() const { return FMath::Abs(Speed) * 0.036f; }
 
@@ -40,7 +40,7 @@ public:
 
     bool bOccupied = false;
 
-private:
+protected:
     bool bRestoreComplete = false;
     FTransform InitialTransform;
     float RestoreElapsed = 0;

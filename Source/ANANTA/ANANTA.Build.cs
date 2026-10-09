@@ -6,6 +6,8 @@ public class ANANTA : ModuleRules
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 
+		PrivateDependencyModuleNames.Add("Json");
+
 		PublicDependencyModuleNames.AddRange(
 			new string[]
 			{

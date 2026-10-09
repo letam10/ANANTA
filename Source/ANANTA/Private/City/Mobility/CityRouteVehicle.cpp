@@ -72,7 +72,7 @@ bool ACityRouteVehicle::PlaceOnSurface(FVector& Position) const
     {
         return false;
     }
-    Position.Z = Floor.ImpactPoint.Z + OriginHeight;
+    Position.Z = (Route.bRail ? FMath::Max(Floor.ImpactPoint.Z, 51.f) : Floor.ImpactPoint.Z) + OriginHeight;
     return true;
 }
 

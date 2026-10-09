@@ -16,6 +16,9 @@ from CityStreetLandmarks import dress as dress_landmarks
 from CityCivicDistrict import furnish as furnish_civic
 from CityCivicLighting import furnish as light_civic
 from CityLivingDetails import furnish as furnish_living
+from CityInteractiveTransit import furnish as furnish_transit
+from CitySmallDetails import furnish as furnish_small, REQUIRED as SMALL_MESHES
+from CityExpansionCleanup import clear_previous
 from CityScene import ACTORS, instance_group, mesh_asset, material_asset
 
 MAP = "/Game/ANANTA/Maps/ANANTA_City"
@@ -25,6 +28,8 @@ def main():
     data = generate()
     # Kiem tra tai nguyen truoc khi thay geometry trong map da co.
     for name in {g["mesh"] for g in data["groups"]}:
+        mesh_asset(name)
+    for name in ("Rowboat", "PassengerTrain") + SMALL_MESHES:
         mesh_asset(name)
     for name in {g["material"] for g in data["groups"] if g["material"]}:
         material_asset(name)
@@ -36,41 +41,35 @@ def main():
         material_asset(name)
     levels = unreal.get_editor_subsystem(unreal.LevelEditorSubsystem)
     assert levels.load_level(MAP)
-    descriptors = unreal.WorldPartitionBlueprintLibrary.get_actor_descs()
-    unreal.WorldPartitionBlueprintLibrary.load_actors([d.guid for d in descriptors
-                                                      if d.native_class.get_name() != "WorldPartitionHLOD"])
-    actors = list(ACTORS.get_all_level_actors())
-    preserved = {}
-    removed = 0
-    for actor in actors:
-        label = actor.get_actor_label()
-        generated = label.startswith("City_") and actor.get_components_by_class(
-            unreal.HierarchicalInstancedStaticMeshComponent)
-        if generated or label.startswith(("Expansion_", "Dressing_", "Landmark_", "District_", "Living_")):
-            assert ACTORS.destroy_actor(actor)
-            removed += 1
-        elif label in ("City_PlayerStart", "City_PlayerCar", "City_MissionGiver", "City_AnomalyFragment"):
-            loc = actor.get_actor_location()
-            preserved[label] = [loc.x, loc.y, loc.z]
-        elif label == "City_NavigationBounds":
-            actor.modify()
-            _, extent = actor.get_actor_bounds(False)
-            scale = actor.get_actor_scale3d()
-            actor.set_actor_scale3d(unreal.Vector(scale.x * (GRID_EXTENT + 2000) / extent.x,
-                                                scale.y * (GRID_EXTENT + 2000) / extent.y, scale.z))
-    assert len(preserved) == 4, preserved
+    removed, preserved = clear_previous(levels)
     hlod = unreal.load_asset("/Game/ANANTA/City/HLOD/City_HLOD")
+    pending_guids = []
     for index, group in enumerate(data["groups"]):
         actor = instance_group(group, index)
         actor.set_editor_property("hlod_layer", hlod)
+        pending_guids.append(actor.get_editor_property("actor_guid"))
         if index % 250 == 0:
             unreal.log(f"CITY_EXPANSION_GROUP {index}/{len(data['groups'])}")
+        if len(pending_guids) == 1000:
+            # Luu package truoc khi do actor, de map lon khong giu ca thanh pho trong RAM Editor.
+            assert levels.save_current_level()
+            assert unreal.EditorLoadingAndSavingUtils.save_dirty_packages(True, True)
+            unreal.WorldPartitionBlueprintLibrary.unload_actors(pending_guids)
+            pending_guids.clear()
+            unreal.SystemLibrary.collect_garbage()
+    if pending_guids:
+        assert levels.save_current_level()
+        assert unreal.EditorLoadingAndSavingUtils.save_dirty_packages(True, True)
+        unreal.WorldPartitionBlueprintLibrary.unload_actors(pending_guids)
+        unreal.SystemLibrary.collect_garbage()
     furnish()
     dress_venues()
     dress_landmarks()
     furnish_civic()
     light_civic()
     furnish_living()
+    transports = furnish_transit()
+    small_props = furnish_small()
     for actor in ACTORS.get_all_level_actors():
         if actor.get_actor_label().startswith(("Dressing_", "Landmark_")):
             actor.set_editor_property("hlod_layer", hlod)
@@ -79,9 +78,12 @@ def main():
     assert unreal.EditorLoadingAndSavingUtils.save_dirty_packages(True, True)
     report = dict(map=MAP, stage="expanded", layout=data["audit"], removedGeneratedActors=removed,
                   writtenGroups=len(data["groups"]), writtenInstances=data["audit"]["instances"],
-                  actorCount=len(ACTORS.get_all_level_actors()),
+                  actorCount=len(unreal.WorldPartitionBlueprintLibrary.get_actor_descs()),
                   interiors=["Cafe", "Apartment"] + [v["id"] for v in VENUES], preservedAnchors=preserved,
-                  hlodRebuildRequired=True, runtimeVerified=False)
+                  hlodRebuildRequired=True, runtimeVerified=False,
+                  physicalBoundaryCheckRequired=True,
+                  interactiveTransportActors=[actor.get_actor_label() for actor in transports])
+    report["smallPropActors"] = [actor.get_actor_label() for actor in small_props]
     (PROJECT / "Saved/QA/CityMapBuild.json").write_text(json.dumps(report, indent=2), encoding="utf-8")
     (PROJECT / "Saved/QA/CityExpansionApplied.json").write_text(json.dumps(report, indent=2), encoding="utf-8")
     unreal.log(f"CITY_EXPANSION_SAVED {report}")

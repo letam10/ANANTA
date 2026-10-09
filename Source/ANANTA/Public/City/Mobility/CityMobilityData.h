@@ -5,7 +5,7 @@
 enum class ECityTransportKind : uint8
 {
     Coach, CityBus, Taxi, BoxTruck, CargoTruck, TankerTruck,
-    PoliceCar, Ambulance, CargoShip, Motorboat, Sailboat, Count
+    PoliceCar, Ambulance, CargoShip, Motorboat, Sailboat, FireEngine, PassengerTrain, Count
 };
 
 struct FCityTransportRoute
@@ -15,6 +15,7 @@ struct FCityTransportRoute
     TArray<int32> Stops;
     TArray<int32> ReverseTargets;
     bool bWater = false;
+    bool bRail = false;
 };
 
 namespace CityMobility
