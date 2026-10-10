@@ -88,6 +88,18 @@ Cập nhật 2026-10-10. Map 6,8 km đã lưu; EXE đã kiểm vẫn là 3,4 km.
 - Bộ thử EXE Max có ba biến thể GI32/Reflections4/VsmBias0, kiểm actual cvar và hash cùng package.
   Giữ đủ mọi frame, yêu cầu evidence mới và phục hồi hai slot QA trong finally; chín fixture dữ liệu PASS.
   Chưa chạy EXE 6,8 km hoặc nghiệm thu hình ảnh/FPS; không thay đổi preset mặc định từ các trial chưa đo.
+- Checkpoint f3cf22c010deea49d3671a22e26f73a752a6f15e đã push, LFS fsck PASS, remote SHA khớp.
+  Chỉ mã/tài liệu; map mới chưa stage. Không coi checkpoint nguồn là EXE hoặc HLOD mới.
+- Fixture tàu đầu FAIL sau 180 giây vì mốc khứ hồi lấy khi tàu giữa đường; report lỗi/log đã lưu riêng.
+  Mỗi tàu chạy 59.108,75 cm, lên/xuống tám lượt, blocker rỗng; chưa đủ điều kiện fixture khứ hồi.
+  Đã sửa chỉ lấy mốc tại điểm dừng, đếm boarding/alighting mới, ghi returnDistanceCm và startedAtStop.
+  Build PASS 68,40 giây; giữ nguyên tốc độ/tuyến/collider và ngưỡng 180 giây/3.800 cm/1.900 cm.
+  Gate hai tàu PASS: 52,43 giây đo, 109,44 giây cả process; hai lượt lên/hai lượt xuống mới mỗi tàu.
+  Mỗi tàu đi 15.667,19 cm, xa nhất 3.916,81 cm, quay về sai số 0,097 cm, không blocker.
+  Rowboat tiếp theo PASS 29,91 giây cả process, 9,70 giây fixture input thật E/W/Space/E tại bến.
+  Chèo 78 cm, đỉnh 4,32 km/h, phanh về gần 0, xuống bến khô/capsule không overlap, từ chối xuống biển.
+  Test từ chối xuống biển dời thuyền riêng lúc setup; không tính phần dời vào quãng chèo đã đo.
+  Chuỗi chuyển RoofPool; mái/năm tuyến xe, chuyến biển dài, ảnh GPU và EXE vẫn chờ.
 - Rà HLOD thấy report cũ 962 proxy/591.633 instance không thuộc map mở rộng; phải kiểm lại map identity.
   Chi tiết và các gap cần sửa: CITY_6800_HLOD_READINESS.md.
 - Rà GPU độc lập đã ghi ba phương án và đánh đổi trong CITY_GPU_COST_AUDIT.md; chưa áp dụng thử mới.

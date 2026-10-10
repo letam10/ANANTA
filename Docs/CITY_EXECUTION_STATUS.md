@@ -32,6 +32,13 @@ Nguồn: nhánh codex/city-expansion; chi tiết: CITY_MOBILITY_ROUND.md.
   Đây là nghiệm thu editor của map đã lưu; chặn rìa trong EXE vẫn cần kiểm riêng.
 - Công cụ thử Max trong EXE đã thêm provenance package/cvar, giữ mọi frame và phục hồi hai slot QA.
   Chín test fixture dữ liệu PASS; chưa chạy gameplay hoặc xác nhận FPS bằng bộ công cụ này.
+- Checkpoint f3cf22c010deea49d3671a22e26f73a752a6f15e đã push; LFS fsck PASS, remote SHA khớp.
+  Gồm helper chờ mesh/physics, QA ranh giới, chuỗi gameplay và công cụ trial; không gồm map 6,8 km.
+- Fixture tàu đầu FAIL ở mốc khứ hồi lấy giữa đường: mỗi tàu chạy 591 m, lên/xuống tám lượt, không blocker.
+  Sửa lấy mốc tại điểm dừng thật và đếm lượt mới; build PASS 68,40 giây; fixture hai tàu PASS.
+  Mỗi tàu lên hai/xuống hai lượt, đi 156,67 m, trở lại sai số 0,1 cm; tiếp tục mái/tuyến xe.
+- Thuyền tại bến thật PASS E/W/Space/E: chèo 0,78 m, phanh dừng, xuống bến khô, từ chối xuống giữa biển.
+  Capsule 38/92 giữ nguyên; không bypass collision/mặt đỡ/tốc độ trong đoạn đo; chưa kiểm chuyến biển dài.
 - 3.534 nhà, 784 ô; bảy bộ mặt tiền, tám dạng khối, màu/chiều cao khác nhau.
 - Map 3,4 km đọc lại theo lô: 25.026 nhóm, 602.965 instance; 19 đồ sinh hoạt và 16 đèn mới.
   Gồm năm nhóm civic mới; đã sửa báo cáo nền và cách đếm bỏ sót HISM mang nhãn Living.

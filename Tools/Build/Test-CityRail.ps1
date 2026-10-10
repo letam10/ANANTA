@@ -39,7 +39,8 @@ if ($report.passed -ne $true -or $report.results.Count -ne 2) {
     throw 'Rail fixture incomplete'
 }
 foreach ($row in $report.results) {
-    if ($row.passed -ne $true -or $row.boarded -lt 2 -or $row.alighted -lt 1 -or $row.travelCm -lt 3800) {
+    if ($row.passed -ne $true -or $row.startedAtStop -ne $true -or $row.returnDistanceCm -ge 100 `
+        -or $row.boarded -lt 2 -or $row.alighted -lt 1 -or $row.travelCm -lt 3800) {
         throw 'Missing boarding, alighting or return journey'
     }
 }

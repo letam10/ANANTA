@@ -115,6 +115,20 @@ void UCityRailCheck::Tick(const float DeltaTime)
             return;
         }
         const FVector Location = Train->GetActorLocation();
+        if (!Result.bStartedAtStop)
+        {
+            // Streaming xong co the tau da chay; chi lay moc khu hoi tai diem dung that.
+            if (!Train->IsStopped())
+            {
+                bAllPassed = false;
+                continue;
+            }
+            Result.Start = Location;
+            Result.Previous = Location;
+            Result.BoardedAtStart = Train->GetBoardingCount();
+            Result.AlightedAtStart = Train->GetAlightingCount();
+            Result.bStartedAtStop = true;
+        }
         Result.Travel += FVector::Dist(Location, Result.Previous);
         Result.Previous = Location;
         Result.MaximumDistance = FMath::Max(Result.MaximumDistance, FVector::Dist(Location, Result.Start));
@@ -123,8 +137,8 @@ void UCityRailCheck::Tick(const float DeltaTime)
             Finish(false, TEXT("Train left authored straight track"));
             return;
         }
-        Result.bPassed |= Train->IsStopped() && Train->GetBoardingCount() >= 2
-            && Train->GetAlightingCount() >= 1 && Result.MaximumDistance >= 1900
+        Result.bPassed |= Train->IsStopped() && Train->GetBoardingCount() - Result.BoardedAtStart >= 2
+            && Train->GetAlightingCount() - Result.AlightedAtStart >= 1 && Result.MaximumDistance >= 1900
             && Result.Travel >= 3800 && FVector::Dist(Location, Result.Start) < 100;
         bAllPassed &= Result.bPassed;
     }
@@ -151,8 +165,12 @@ void UCityRailCheck::Finish(const bool bPassed, const FString& Reason)
         auto Row = MakeShared<FJsonObject>();
         Row->SetBoolField(TEXT("passed"), Result.bPassed);
         Row->SetStringField(TEXT("actor"), GetNameSafe(Train));
-        Row->SetNumberField(TEXT("boarded"), Train ? Train->GetBoardingCount() : 0);
-        Row->SetNumberField(TEXT("alighted"), Train ? Train->GetAlightingCount() : 0);
+        Row->SetBoolField(TEXT("startedAtStop"), Result.bStartedAtStop);
+        Row->SetStringField(TEXT("startLocation"), Result.Start.ToString());
+        const double ReturnDistance = Train ? FVector::Dist(Train->GetActorLocation(), Result.Start) : -1;
+        Row->SetNumberField(TEXT("returnDistanceCm"), ReturnDistance);
+        Row->SetNumberField(TEXT("boarded"), Train ? Train->GetBoardingCount() - Result.BoardedAtStart : 0);
+        Row->SetNumberField(TEXT("alighted"), Train ? Train->GetAlightingCount() - Result.AlightedAtStart : 0);
         Row->SetNumberField(TEXT("travelCm"), Result.Travel);
         Row->SetNumberField(TEXT("maxDistanceCm"), Result.MaximumDistance);
         Row->SetStringField(TEXT("blocker"), Train ? Train->GetBlockedReason() : TEXT("Missing actor"));
