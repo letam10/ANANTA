@@ -213,3 +213,12 @@ Nguồn: nhánh codex/city-expansion; chi tiết: CITY_MOBILITY_ROUND.md.
   đã có; chi tiết trang trí đặt collision false để giữ chi phí instancing thấp.
 - `py_compile` và layout source check phải đạt trước khi chạy Unreal. Chưa nhận ảnh native, collision,
   nội thất, gameplay NPC hoặc FPS; bước kế tiếp là Apply/readback và capture năm góc.
+
+## Vòng model review và instancing 2026-10-11
+
+- Thêm `Tools/QA/PrepareModelReviewViews.py`: đọc 11 manifest nội bộ, tạo 8 góc kiểm model và 5 góc kiểm placement cho mỗi model.
+- Manifest nguồn hiện có 93 model, 744 góc model và 465 góc placement; output là `Saved/QA/CityModelReviewViews.json`.
+- Thêm `Tools/QA/VerifyCityInstanceReuse.py`: kiểm theo chữ ký mesh/material/collision/hidden để phân biệt ISM/HISM thật với thao tác nhân bản editor.
+- Self test instancing PASS; `CityMapBuild.json` chỉ có số tổng hợp nên report `CityInstanceReuse.json` là `PARTIAL` với 85.387 nhóm và 1.660.776 instance.
+- `py_compile` và generator PASS. Không chạy Unreal, native capture, benchmark, soak test hoặc gameplay dài trong vòng này.
+- Chưa nhận mỹ thuật, collision, HLOD, GPU hay 90 FPS từ manifest; bước tiếp theo là capture có mục tiêu sau khi map persistence/source control sạch.
