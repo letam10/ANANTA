@@ -72,12 +72,19 @@ try {
     Invoke-Stage 'Build' 'Build-ANANTA.ps1' @('-Target', 'ANANTAEditor', '-MaxParallelActions', '2')
     Invoke-Stage 'Automation' 'Test-CityRuntime.ps1'
     $automation = Get-Content -LiteralPath 'Saved\QA\CityAutomation\index.json' -Raw | ConvertFrom-Json
-    $railRegression = @($automation.tests | Where-Object {
-        $_.fullTestPath -eq 'ANANTA.City.Rail.BoardingUnderStationCanopy'
-    })
-    if ($automation.tests.Count -lt 21 -or $railRegression.Count -ne 1 `
-        -or $railRegression[0].state -notin @('Success', 'SuccessWithWarnings')) {
-        throw 'The new rail canopy regression is absent or did not pass'
+    if ($automation.tests.Count -lt 23) {
+        throw 'Expected city regression tests are missing'
+    }
+    $requiredTests = @(
+        'ANANTA.City.Rail.BoardingUnderStationCanopy',
+        'ANANTA.City.Mobility.RegionalRoadCoverage',
+        'ANANTA.City.Settings.CustomFrameRateChoice'
+    )
+    foreach ($testName in $requiredTests) {
+        $rows = @($automation.tests | Where-Object { $_.fullTestPath -eq $testName })
+        if ($rows.Count -ne 1 -or $rows[0].state -notin @('Success', 'SuccessWithWarnings')) {
+            throw "Required regression is absent or did not pass: $testName"
+        }
     }
     Invoke-Stage 'Readback' 'Run-CityEditor.ps1' @(
         '-Script', 'Tools/Editor/VerifyCityMobilityMap.py', '-LogName', 'City6800Readback'

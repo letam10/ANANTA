@@ -55,7 +55,7 @@ void ACityTransportManager::Tick(const float DeltaTime)
         {
             continue;
         }
-        const FCityTransportRoute Route = CityMobility::MakeRoute(Kind);
+        const FCityTransportRoute Route = CityMobility::MakeNearbyRoute(Kind, Location);
         if (Route.bRail)
         {
             // Tau duoc author theo nha ga va nap cung cell; khong tao them tu fleet duong bo.

@@ -13,10 +13,15 @@ Cập nhật 2026-10-10. Đang thực hiện; bản đồ/EXE đã kiểm vẫn 
 - Hai actor tàu con thoi chạy ngược chiều; tính khoảng dừng từ kích thước mesh thực.
 - Tám vật dụng nhỏ dùng texture/vật liệu Living đã có, ba LOD và không chặn người đi.
 - Đèn phố chỉ tìm ứng viên quanh người chơi; tái sử dụng tám đèn, hai đèn có bóng.
+- Rà source bắt tuyến xe chỉ quanh trung tâm; thêm vòng cố định tại tám khu, chọn điểm dừng gần nhất.
+  Giữ cap tám xe, tuyến cảng/ga và tránh vùng cắt biển/sân bay; regression mới chưa compile/chạy.
+- Sửa menu FPS bỏ sót cap hợp lệ đang lưu như 200/200,5; giữ giá trị chính xác, thêm regression lựa chọn.
+  Không suy ra FPS thực từ cap; bài test mới đang chờ build/automation sau apply.
 - Max thử nghiệm giảm mẫu bóng còn 4, giảm độ phân giải tính GI/reflection/history.
   Vẫn native 1080p/100%; đây là Max tùy chỉnh có đánh đổi chất lượng.
 - Công cụ chụp năm góc chia thành metro/small/facilities; tàu đứng yên riêng khi chụp QA.
 - Ảnh đặt cảnh dùng Max tùy chỉnh, native 1080p/100% trong file cài đặt QA riêng.
+- Mỗi vị trí có bảng đủ năm ảnh thật và giữ bản gốc; index vẫn visualAccepted=false trước khi xem.
 
 ## Kiểm chứng hiện tại
 

@@ -64,3 +64,7 @@ print('CITY_PLACEMENT_CAPTURE_OK', len(data['views']))
 if ($LASTEXITCODE -ne 0) {
     throw 'Placement images missing or wrong resolution'
 }
+& python (Join-Path $projectRoot 'Tools\QA\BuildCityPlacementContacts.py') --scope $Scope
+if ($LASTEXITCODE -ne 0) {
+    throw 'Placement contact generation failed'
+}

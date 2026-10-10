@@ -26,5 +26,6 @@ namespace CityMobility
     constexpr float WaterLevel = -120.f;
     const TCHAR* MeshName(ECityTransportKind Kind);
     FCityTransportRoute MakeRoute(ECityTransportKind Kind);
+    FCityTransportRoute MakeNearbyRoute(ECityTransportKind Kind, const FVector& PlayerLocation);
     float CruiseSpeed(ECityTransportKind Kind);
 }

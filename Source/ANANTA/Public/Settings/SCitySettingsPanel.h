@@ -16,6 +16,7 @@ public:
     SLATE_END_ARGS()
 
     void Construct(const FArguments& InArgs);
+    static TArray<float> FrameRateChoices(float CurrentCap);
     const FCityGraphicsOptions& GetDraftOptions() const;
     void SetDraftOptions(const FCityGraphicsOptions& Options);
     void ApplyDraft();

@@ -119,30 +119,42 @@ void SCitySettingsPanel::AddGraphicsControls(const TSharedRef<SVerticalBox>& Row
         }));
 }
 
+TArray<float> SCitySettingsPanel::FrameRateChoices(const float CurrentCap)
+{
+    TArray<float> Limits = { 0, 30, 60, 90, 120, 144, 165, 180, 240 };
+    if (FMath::IsFinite(CurrentCap) && CurrentCap >= 30 && CurrentCap <= 240 && !Limits.Contains(CurrentCap))
+    {
+        // Hien muc FPS tuy chinh da luu, ke ca khi khong nam trong cac preset.
+        Limits.Add(CurrentCap);
+        Limits.Sort();
+    }
+    return Limits;
+}
+
 void SCitySettingsPanel::AddDisplayControls(const TSharedRef<SVerticalBox>& Rows)
 {
     AddSection(Rows, TEXT("HIỂN THỊ & NGÔN NGỮ"), TEXT("DISPLAY & LANGUAGE"));
-    const TArray<int32> FrameLimits = { 0, 30, 60, 90, 120, 144, 165, 180, 240 };
+    const TArray<float> FrameLimits = FrameRateChoices(Draft.FrameRateLimit);
     AddRow(Rows, TEXT("Giới hạn khung hình"), TEXT("Frame rate limit"), MakeChoice(
         [this]()
         {
             return Draft.FrameRateLimit <= 0.f ? L(TEXT("Không giới hạn"), TEXT("Unlimited"))
-                : FText::FromString(FString::Printf(TEXT("%.0f FPS"), Draft.FrameRateLimit));
+                : FText::FromString(FString::Printf(TEXT("%g FPS"), Draft.FrameRateLimit));
         },
         [this, FrameLimits]()
         {
             TArray<FText> Labels;
-            for (int32 Limit : FrameLimits)
+            for (const float Limit : FrameLimits)
             {
                 Labels.Add(Limit == 0 ? L(TEXT("Không giới hạn"), TEXT("Unlimited"))
-                    : FText::FromString(FString::Printf(TEXT("%d FPS"), Limit)));
+                    : FText::FromString(FString::Printf(TEXT("%g FPS"), Limit)));
             }
             return Labels;
         },
-        [this, FrameLimits]() { return FrameLimits.IndexOfByKey(FMath::RoundToInt(Draft.FrameRateLimit)); },
+        [this, FrameLimits]() { return FrameLimits.IndexOfByKey(Draft.FrameRateLimit); },
         [this, FrameLimits](int32 Index)
         {
-            Draft.FrameRateLimit = static_cast<float>(FrameLimits[Index]);
+            Draft.FrameRateLimit = FrameLimits[Index];
             bHasEdits = true;
         }));
     AddRow(Rows, TEXT("Đồng bộ dọc (VSync)"), TEXT("Vertical sync (VSync)"),
