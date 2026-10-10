@@ -62,6 +62,8 @@ Cập nhật 2026-10-10. Đang thực hiện; bản đồ/EXE đã kiểm vẫn 
 - Checkpoint QA tiếp theo chỉ gồm mã/tài liệu; map apply dở không được stage cùng.
   Bộ QA mới đạt kiểm tĩnh, chưa compile/runtime; chuỗi đang chờ apply thành công.
 - Checkpoint QA 086104425cb8a59eb27f17d8b93d3a68d919107e đã push; LFS fsck PASS, remote SHA khớp.
+- Checkpoint tuyến khu vực/menu FPS/ảnh 98b9688241579567e1023b54faf5fdb2f6e90680 đã push, remote SHA khớp.
+  Kiểm tĩnh PASS; vẫn chờ build và automation đủ 23 bài, gồm mái ga/tuyến khu vực/cap tùy chỉnh.
 - Rà GPU độc lập đã ghi ba phương án và đánh đổi trong CITY_GPU_COST_AUDIT.md; chưa áp dụng thử mới.
 - Đọc đủ 25.801 actor nền theo lô PASS: 25.026 nhóm, 602.965 instance, 12 dịch vụ.
   Sửa cách đếm bỏ sót năm HISM Living_CivicDressing; đối chiếu nguồn commit cũ cùng số instance.
