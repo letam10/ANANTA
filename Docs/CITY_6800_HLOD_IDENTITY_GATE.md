@@ -60,6 +60,13 @@ Eight additional boundary-source fixtures passed, including invalid/zero GUID re
 The real editor check pinned one existing proxy and read 31 source mappings, exit 0.
 This accepts the metadata API binding only; full 6.8 km coverage still needs rebuild/readback.
 
+Full rebuild subsequently passed with 3,557 proxies, run 9a4ba05837584d998162a3092dd72dba.
+The receipt initially failed because PowerShell culture ordering differs from Python ordinal ordering.
+Sorting both actor lists ordinally preserves exact membership and duplicate rejection; six regressions passed.
+Live receipt validation and full readback passed: 3,557 descriptor/actor GUID pairs and 1,619,348 instances.
+All 83,212 source mappings were checked; four hidden edge colliders were excluded with no limitations.
+Reports remain structural only: renderedArtAccepted and fpsAccepted are false.
+
 After the active editor work finishes, run `Tools/Build/Build-CityHLOD.ps1`, then run
 `Tools/Editor/VerifyCityHLODInstances.py` through `Tools/Build/Run-CityEditor.ps1`.
 This is structural acceptance tied to applied/readback evidence, not a hash of every

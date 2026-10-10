@@ -81,7 +81,8 @@ def validate_receipt(project):
     assert MAP in log and "-RebuildHLODs" in log, "Build log is missing map/rebuild command"
     assert "-BuildSingleHLOD=" not in log, "Partial build log cannot accept the city"
     labels = built_labels(log)
-    assert receipt["builtActors"] == labels, "Receipt actor set differs from log"
+    # PowerShell sap xep theo culture; doi chieu danh sach ordinal van bat thieu/trung actor.
+    assert sorted(receipt["builtActors"]) == labels, "Receipt actor set differs from log"
     assert receipt["builtActorCount"] == len(labels), "Receipt actor count differs from log"
     return identity, receipt
 

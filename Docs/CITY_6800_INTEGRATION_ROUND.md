@@ -113,7 +113,13 @@ Cập nhật 2026-10-10. Map 6,8 km đã lưu; EXE đã kiểm vẫn là 3,4 km.
   API thực đọc 31 nguồn proxy cũ PASS exit 0; chỉ xác nhận binding, không nhận HLOD cũ làm map mới.
   Chi tiết: CITY_6800_HLOD_IDENTITY_GATE.md; full rebuild/readback vẫn chờ.
   Checkpoint 7e539694f64afc305e1aa5b2a7851f18d270b172 đã push, remote SHA khớp.
-  Full rebuild đang chạy với receipt mới/run 9a4ba05837584d998162a3092dd72dba, kế hoạch 3.557 proxy.
+  Full rebuild PASS 3.557 proxy, exit 0; run 9a4ba05837584d998162a3092dd72dba, xong 03:44:18 UTC.
+  Readback PASS exit 0: đủ 3.557/3.557 actor/GUID, 1.619.348 instance, mesh/material không thiếu.
+  83.212 source mapping được kiểm; bốn collider ẩn loại khỏi HLOD, không violation/limitation.
+  Receipt đầu bị từ chối vì Sort-Object theo culture khác Python ordinal; hai tập thực đều đủ 3.557.
+  Đã sửa so danh sách ordinal, vẫn bắt thiếu/trùng/sai actor; sáu regression và receipt thật PASS.
+  Giữ report lỗi riêng; readback lại mất 21,16 giây, peak RAM 4.222 MB, không cần rebuild HLOD lần nữa.
+  30 ảnh phương tiện đang chụp; fullMapAccepted là cấu trúc, renderedArtAccepted/fpsAccepted vẫn false.
 - Rà HLOD thấy report cũ 962 proxy/591.633 instance không thuộc map mở rộng; phải kiểm lại map identity.
   Chi tiết và các gap cần sửa: CITY_6800_HLOD_READINESS.md.
 - Rà GPU độc lập đã ghi ba phương án và đánh đổi trong CITY_GPU_COST_AUDIT.md; chưa áp dụng thử mới.

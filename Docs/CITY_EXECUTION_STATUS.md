@@ -49,7 +49,11 @@ Nguồn: nhánh codex/city-expansion; chi tiết: CITY_MOBILITY_ROUND.md.
   Cầu nối metadata C++ build PASS 60,38 giây, tám regression boundary-source PASS.
   API thực đọc 31 nguồn của một proxy PASS exit 0; chưa chứng minh độ phủ map mới.
   Checkpoint 7e539694f64afc305e1aa5b2a7851f18d270b172 đã push, remote SHA khớp.
-  Full rebuild HLOD đang chạy, run 9a4ba05837584d998162a3092dd72dba; kế hoạch 3.557 proxy.
+  Full rebuild PASS 3.557 proxy, exit 0; run 9a4ba05837584d998162a3092dd72dba, hoàn tất 03:44:18 UTC.
+  Readback PASS 3.557/3.557 actor/GUID, 1.619.348 instance; mesh/material đầy đủ, không lỗi.
+  Kiểm 83.212 source mapping PASS, loại đủ bốn collider ẩn; chưa nghiệm thu ảnh hoặc FPS.
+  Lỗi sắp thứ tự receipt PowerShell/Python đã sửa; sáu regression và receipt thật PASS, không rebuild lại.
+  30 ảnh năm góc phương tiện đang chụp; đồ nhỏ/công trình/package/gameplay vẫn chờ.
 - 3.534 nhà, 784 ô; bảy bộ mặt tiền, tám dạng khối, màu/chiều cao khác nhau.
 - Map 3,4 km đọc lại theo lô: 25.026 nhóm, 602.965 instance; 19 đồ sinh hoạt và 16 đèn mới.
   Gồm năm nhóm civic mới; đã sửa báo cáo nền và cách đếm bỏ sót HISM mang nhãn Living.
@@ -117,7 +121,7 @@ Nguồn: nhánh codex/city-expansion; chi tiết: CITY_MOBILITY_ROUND.md.
 - Trước chuyển cube Nanite, Max lỗi PageFault; tắt NonNanite.Batch vẫn lỗi.
   Tắt VSM đã hoàn tất 282,62 giây/55,71 FPS, chỉ là chẩn đoán, không tính đạt Max.
   Hai lượt Max sau chuyển Nanite chưa crash; chưa chứng minh đã sửa triệt để.
-- HLOD Instancing đầy đủ PASS 962/962; đọc lại 591.633 instance, không thiếu mesh/material.
+- HLOD Instancing bản 3,4 km PASS 962/962; đọc lại 591.633 instance, không thiếu mesh/material.
 - Bố trí bar/arcade thêm 54 instance trong 5 nhóm đã kiểm bounds/lối đi/chồng đồ;
   map, HLOD, tám lượt qua cửa/bốn dịch vụ và đủ tám ảnh GPU đã kiểm.
 - EXE CityExpanded 3,4 km build/cook/package PASS; menu Apply PASS, reload bị GPU PageFault Nanite/VSM.
