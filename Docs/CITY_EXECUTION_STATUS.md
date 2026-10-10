@@ -48,6 +48,8 @@ Nguồn: nhánh codex/city-expansion; chi tiết: CITY_MOBILITY_ROUND.md.
 - HLOD mới có gate identity/hash/log đầy đủ và đối chiếu actor/GUID; 27 fixture dữ liệu PASS.
   Cầu nối metadata C++ build PASS 60,38 giây, tám regression boundary-source PASS.
   API thực đọc 31 nguồn của một proxy PASS exit 0; chưa chứng minh độ phủ map mới.
+  Checkpoint 7e539694f64afc305e1aa5b2a7851f18d270b172 đã push, remote SHA khớp.
+  Full rebuild HLOD đang chạy, run 9a4ba05837584d998162a3092dd72dba; kế hoạch 3.557 proxy.
 - 3.534 nhà, 784 ô; bảy bộ mặt tiền, tám dạng khối, màu/chiều cao khác nhau.
 - Map 3,4 km đọc lại theo lô: 25.026 nhóm, 602.965 instance; 19 đồ sinh hoạt và 16 đèn mới.
   Gồm năm nhóm civic mới; đã sửa báo cáo nền và cách đếm bỏ sót HISM mang nhãn Living.
@@ -111,6 +113,7 @@ Nguồn: nhánh codex/city-expansion; chi tiết: CITY_MOBILITY_ROUND.md.
   Hoàn tất tám dịch vụ; giữ cả 22 frame trên 33,3 ms và sáu frame trên 50 ms trong số liệu.
 - Số cũ 52,56 FPS thuộc map 1,7 km; không dùng làm so sánh trực tiếp với bản mới.
 - D3D12 PageFault/Nanite/VSM khi khởi động chưa được kết luận đã sửa.
+  Rà log và gate EXE/reload: CITY_6800_GPU_RELOAD_DIAGNOSIS.md; chưa có runtime 6,8 km.
 - Trước chuyển cube Nanite, Max lỗi PageFault; tắt NonNanite.Batch vẫn lỗi.
   Tắt VSM đã hoàn tất 282,62 giây/55,71 FPS, chỉ là chẩn đoán, không tính đạt Max.
   Hai lượt Max sau chuyển Nanite chưa crash; chưa chứng minh đã sửa triệt để.

@@ -112,9 +112,12 @@ Cập nhật 2026-10-10. Map 6,8 km đã lưu; EXE đã kiểm vẫn là 3,4 km.
   27 fixture dữ liệu PASS; tám regression cầu nối boundary-source PASS; build C++ PASS 60,38 giây.
   API thực đọc 31 nguồn proxy cũ PASS exit 0; chỉ xác nhận binding, không nhận HLOD cũ làm map mới.
   Chi tiết: CITY_6800_HLOD_IDENTITY_GATE.md; full rebuild/readback vẫn chờ.
+  Checkpoint 7e539694f64afc305e1aa5b2a7851f18d270b172 đã push, remote SHA khớp.
+  Full rebuild đang chạy với receipt mới/run 9a4ba05837584d998162a3092dd72dba, kế hoạch 3.557 proxy.
 - Rà HLOD thấy report cũ 962 proxy/591.633 instance không thuộc map mở rộng; phải kiểm lại map identity.
   Chi tiết và các gap cần sửa: CITY_6800_HLOD_READINESS.md.
 - Rà GPU độc lập đã ghi ba phương án và đánh đổi trong CITY_GPU_COST_AUDIT.md; chưa áp dụng thử mới.
+  Rà crash/reload tiếp theo: CITY_6800_GPU_RELOAD_DIAGNOSIS.md; nguyên nhân/ổn định còn chưa xác nhận.
 - Đọc đủ 25.801 actor nền theo lô PASS: 25.026 nhóm, 602.965 instance, 12 dịch vụ.
   Sửa cách đếm bỏ sót năm HISM Living_CivicDressing; đối chiếu nguồn commit cũ cùng số instance.
   Báo cáo nền đã hòa giải thay vòng quay 282 thành một và cabinet bỏ 42/thêm 54; không sửa map.

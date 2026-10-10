@@ -55,6 +55,11 @@ receipt/actor parity and rejection of stale identity, modified logs, incomplete/
 actor sets and partial logs. Mocked metadata checks cover excluded sources, included
 boundary sources and unavailable reflection. No editor/build commandlet was invoked.
 
+Root integration then built the native getter bridge successfully in 60.38 seconds.
+Eight additional boundary-source fixtures passed, including invalid/zero GUID rejection.
+The real editor check pinned one existing proxy and read 31 source mappings, exit 0.
+This accepts the metadata API binding only; full 6.8 km coverage still needs rebuild/readback.
+
 After the active editor work finishes, run `Tools/Build/Build-CityHLOD.ps1`, then run
 `Tools/Editor/VerifyCityHLODInstances.py` through `Tools/Build/Run-CityEditor.ps1`.
 This is structural acceptance tied to applied/readback evidence, not a hash of every
