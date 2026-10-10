@@ -61,14 +61,14 @@ Cập nhật 2026-10-10. Map 6,8 km đã lưu; EXE đã kiểm vẫn là 3,4 km.
   Git LFS fsck PASS, upload 31/31 object mới. Map lưu tại checkpoint vẫn 3,4 km.
 - Apply 6,8 km PASS exit 0: 85.386 nhóm, 1.660.761 instance, 10.754 nhà, 87.142 actor.
   Commandlet mất 3.541,71 giây, peak RAM 4.290 MB; lưu xong lúc 00:47:52 UTC ngày 10/10.
-  Đây là bước dựng/lưu; readback, body collision, ranh giới, gameplay và ảnh GPU chưa PASS.
+  Readback đã PASS; body collision, ranh giới, gameplay và ảnh GPU chưa PASS.
 - Đã sửa ray lên/xuống tàu bắt sàn bên dưới mái ga, kèm regression hai sân ga và vật cản cửa.
   Build/regression PASS; hai tàu tại ga trong map mới vẫn chờ gate thực địa.
 - Bổ sung 14 sweep capsule 38/92 qua rìa/góc/biển, kiểm collider ẩn đã lưu; chưa chạy trong engine.
 - Test-City6800Round.ps1 nối 13 gate tuần tự sau exit 0 của apply; lỗi bất kỳ sẽ dừng và lưu stage.
   Chuỗi này chưa gồm ảnh GPU, HLOD, EXE, reload hoặc FPS; các gate đó vẫn phải chạy riêng.
 - Checkpoint QA tiếp theo chỉ gồm mã/tài liệu; map apply dở không được stage cùng.
-  Bộ QA mới đã build; driver hiện đã PASS Build/Automation và đang Readback.
+  Bộ QA mới đã build; driver hiện đã PASS Build/Automation/Readback và đang Collision.
 - Fixture vật lý Core/East/West/South/NorthEast đã viết/build: 16 xe mỗi vùng, đủ vòng và bốn trạm.
   Giữ đường, tốc độ, collider và giới hạn streaming; chưa chạy thực địa. Tàu authored giữ nguyên tick.
 - Checkpoint QA 086104425cb8a59eb27f17d8b93d3a68d919107e đã push; LFS fsck PASS, remote SHA khớp.
@@ -77,6 +77,8 @@ Cập nhật 2026-10-10. Map 6,8 km đã lưu; EXE đã kiểm vẫn là 3,4 km.
 - Checkpoint QA khu vực 5ebc30bf499bdbab9ad4eabc4f094ad736a0f7bd đã push; LFS fsck PASS, remote SHA khớp.
   Gồm 11 tệp nguồn/tài liệu; map 6,8 km chưa commit vì gate thực địa còn chạy.
   Driver 13 gate đang Readback sau Build/Automation PASS; mốc ghi chú đã đọc 71.000/86.180 actor.
+- Readback 6,8 km PASS sau 588,51 giây: đủ 86.180 actor, 85.386 nhóm, 1.660.761 instance, 12 dịch vụ.
+  Driver tiếp tục Collision; chưa coi body/đường/ranh giới hoặc gameplay thực địa là PASS.
 - Rà GPU độc lập đã ghi ba phương án và đánh đổi trong CITY_GPU_COST_AUDIT.md; chưa áp dụng thử mới.
 - Đọc đủ 25.801 actor nền theo lô PASS: 25.026 nhóm, 602.965 instance, 12 dịch vụ.
   Sửa cách đếm bỏ sót năm HISM Living_CivicDressing; đối chiếu nguồn commit cũ cùng số instance.
