@@ -6,21 +6,24 @@
 bool ACityRouteVehicle::DoorAndSidewalk(FVector& Door, FVector& Sidewalk) const
 {
     Door = GetActorLocation() + GetActorRightVector() * (Route.bRail ? 430.f : Extent.Y + 65);
-    Sidewalk = GetActorLocation() + GetActorRightVector() * (Route.bRail ? 800.f : (Route.bWater ? Extent.Y + 320 : 730));
+    Sidewalk = GetActorLocation()
+        + GetActorRightVector() * (Route.bRail ? 800.f : (Route.bWater ? Extent.Y + 320 : 730));
     FCollisionQueryParams Params(SCENE_QUERY_STAT(CityRouteStop), false, this);
     Params.AddIgnoredActor(Passenger);
     const FCollisionObjectQueryParams Objects(ECC_WorldStatic);
+    const float SurfaceZ = GetActorLocation().Z - OriginHeight;
+    const float AllowedRise = Route.bWater || Route.bRail ? 180.f : 40.f;
     for (FVector* Position : {&Door, &Sidewalk})
     {
+        // Do tu cao do mat chay de tim san duoi mai, khong bat nham noc mai san ga.
+        const FVector TraceStart(Position->X, Position->Y, SurfaceZ + AllowedRise + 1.f);
         FHitResult Floor;
-        if (!GetWorld()->LineTraceSingleByObjectType(Floor, *Position + FVector(0, 0, 600),
+        if (!GetWorld()->LineTraceSingleByObjectType(Floor, TraceStart,
             *Position - FVector(0, 0, 1500), Objects, Params) || Floor.ImpactNormal.Z < 0.8f)
         {
             return false;
         }
         // Khong dung noc vat can lam san len xe; mat ben tau co the cao hon mat nuoc.
-        const float SurfaceZ = GetActorLocation().Z - OriginHeight;
-        const float AllowedRise = Route.bWater || Route.bRail ? 180.f : 40.f;
         if (Floor.ImpactPoint.Z - SurfaceZ > AllowedRise || Floor.ImpactPoint.Z - SurfaceZ < -40.f)
         {
             return false;

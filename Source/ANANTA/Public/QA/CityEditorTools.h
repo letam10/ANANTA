@@ -23,4 +23,7 @@ public:
 
     UFUNCTION(BlueprintCallable, Category = "City Editor", meta = (DevelopmentOnly))
     static FString AuditRoadRegion(UWorld* World, FVector Minimum, FVector Maximum);
+
+    UFUNCTION(BlueprintCallable, Category = "City Editor", meta = (DevelopmentOnly))
+    static FString AuditWorldBoundaries(UWorld* World, double ExtentCm);
 };

@@ -20,6 +20,7 @@ $arguments = @(
     '-unattended',
     '-nop4',
     '-nosound',
+    '-ini:EditorPerProjectUserSettings:[/Script/UnrealEd.LevelEditorMiscSettings]:bNavigationAutoUpdate=False',
     '-UTF8Output',
     "-abslog=$logPath"
 )

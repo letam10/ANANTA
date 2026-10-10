@@ -15,6 +15,11 @@ $qaDirectory = Join-Path $projectRoot "Saved\QA\CityPlacement_$Scope"
 $manifest = Join-Path $qaDirectory 'Manifest.json'
 $qaConfig = Join-Path $qaDirectory 'GameUserSettings.ini'
 Copy-Item -LiteralPath (Join-Path $projectRoot 'Config\DefaultGameUserSettings.ini') -Destination $qaConfig
+$settings = Get-Content -LiteralPath $qaConfig -Raw
+$settings = $settings.Replace('[/Script/Engine.GameUserSettings]', '[/Script/ANANTA.ANANTAGraphicsSettings]')
+$settings = $settings -replace 'sg\.ResolutionQuality=[0-9.]+', 'sg.ResolutionQuality=100'
+$settings = $settings -replace '(sg\.[A-Za-z]+Quality)=\d+', '${1}=3'
+Set-Content -LiteralPath $qaConfig -Value $settings -Encoding ASCII
 $editorPath = Join-Path $EngineRoot 'Engine\Binaries\Win64\UnrealEditor-Cmd.exe'
 $logPath = Join-Path $projectRoot "Saved\Logs\CityPlacement_$Scope.log"
 $arguments = @(

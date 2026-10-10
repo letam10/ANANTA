@@ -30,6 +30,8 @@ public:
     const FString& GetBlockedReason() const { return BlockedReason; }
 
 private:
+    friend class FCityRailCanopyTest;
+
     bool PlaceOnSurface(FVector& Position) const;
     bool DoorAndSidewalk(FVector& Door, FVector& Sidewalk) const;
     void ServiceStop(float DeltaTime);
