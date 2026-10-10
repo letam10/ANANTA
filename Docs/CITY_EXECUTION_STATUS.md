@@ -204,3 +204,12 @@ Nguồn: nhánh codex/city-expansion; chi tiết: CITY_MOBILITY_ROUND.md.
   `c0539755de45ed9ffa2a3c3ca5ab50092a01cf39e26749674abcd9d995dffe59`.
 - Đây mới là kế hoạch camera, chưa tạo PNG, chưa di chuyển actor, chưa nhận mỹ thuật, collision,
   gameplay hoặc FPS. Capture Unreal gần mặt đất là bước kế tiếp sau khi source nhà máy hoàn tất.
+
+## Vòng factory dressing 2026-10-10
+
+- Sửa đúng hàm `factory()` trong `Tools/Editor/CityMetroDistrict.py`; giữ nguyên shell, `SITES`, `AIRPORT`
+  và reserve footprint. Loading dock mới bám mặt phố `-Y`, không thay actor map đang lưu.
+- Thêm apron 3.600 x 1.200 cm, bốn cọc bảo vệ, hai cửa cuốn, canopy và dải cảnh báo dùng Cube/material
+  đã có; chi tiết trang trí đặt collision false để giữ chi phí instancing thấp.
+- `py_compile` và layout source check phải đạt trước khi chạy Unreal. Chưa nhận ảnh native, collision,
+  nội thất, gameplay NPC hoặc FPS; bước kế tiếp là Apply/readback và capture năm góc.

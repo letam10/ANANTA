@@ -5,14 +5,14 @@ The existing ANANTA map, Content/ExternalActors, character assets, saves, and ge
 map actors are out of scope and must not be edited or staged by these subtasks.
 
 Factory subtask owns only:
-- Tools/CityAssets/expansion_architecture.py
+- Tools/Editor/CityMetroDistrict.py
 - Docs/CITY_FACTORY_DRESSING_ROUND.md
 
 Airport camera subtask owns only:
 - Tools/QA/PrepareFacilityCloseViews.py
 - Docs/CITY_AIRPORT_CLOSE_CAMERA_ROUND.md
 
-Factory API contract: factory(layout, x, y, height, material) remains callable by
+Factory API contract: factory(layout, x, y, height, material) in CityMetroDistrict.py remains callable by
 CityMetroDistrict.generate. It must preserve the same shell footprint and reserve bounds.
 New dressing must use existing Layout.box/Layout.add calls, shared mesh names where possible,
 collision false for visual-only pieces, and keep all new source files under 300 lines and 120
