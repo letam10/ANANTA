@@ -26,6 +26,7 @@ namespace
             TEXT("r.AllowOcclusionQueries"), TEXT("r.HZBOcclusion"), TEXT("r.Nanite"),
             TEXT("r.Nanite.Culling.Frustum"), TEXT("r.Nanite.Culling.HZB"),
             TEXT("r.Nanite.AsyncRasterization"), TEXT("r.Nanite.AsyncRasterization.ShadowDepths"),
+            TEXT("D3D12.TrackAllAllocations"),
             TEXT("r.DynamicGlobalIlluminationMethod"), TEXT("r.ReflectionMethod"), TEXT("r.RayTracing"),
             TEXT("r.Lumen.HardwareRayTracing"), TEXT("r.Lumen.ScreenProbeGather.DownsampleFactor"),
             TEXT("r.Lumen.Reflections.DownsampleFactor"), TEXT("r.Shadow.Virtual.Enable"),

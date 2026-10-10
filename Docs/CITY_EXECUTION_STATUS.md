@@ -26,7 +26,7 @@ Nguồn: nhánh codex/city-expansion; chi tiết: CITY_MOBILITY_ROUND.md.
 - Build mới PASS 78,62 giây; automation 23/23 state Success, hai bài có cảnh báo dọn fixture.
   Regression mái ga/tuyến khu vực/cap FPS tùy chỉnh đều Success; đọc đủ 86.180 actor PASS.
 - Nguồn QA vòng này đã push 5ebc30bf499bdbab9ad4eabc4f094ad736a0f7bd, LFS fsck PASS và remote SHA khớp.
-  Map 6,8 km chờ gameplay/ảnh/HLOD/EXE, chưa stage vào checkpoint nguồn.
+  Map 6,8 km đã qua fixture vật lý/HLOD/package; ảnh/Player Max còn chờ, chưa stage vào checkpoint nguồn.
 - Rà body/đường 6,8 km PASS: 34.617 component, 154.964 instance chặn, 13.987 điểm đường, 49 vùng.
   Gate ranh giới PASS 14/14, exit 0; đủ bốn collider, capsule 38/92, không đổi hình học hoặc clamp tọa độ.
   FAIL trước do commandlet query lúc mesh còn compiling và physics state chưa tạo; đã chờ mesh/tree/body.
@@ -73,14 +73,23 @@ Nguồn: nhánh codex/city-expansion; chi tiết: CITY_MOBILITY_ROUND.md.
   Wrapper lỗi đọc UTC PowerShell 7 đã sửa/bảy regression PASS; chạy lại PASS, chèo 79,08 cm.
   Native phát hiện ba slot material bị reimport giữ thứ tự cũ; sửa gán theo tên, sáu regression PASS.
   Unreal readback và năm ảnh thuyền mới PASS: sàn khô, vân gỗ đúng, bến/người chơi không che model.
-  Hai tàu còn cột che một phần; props nhỏ đã chụp/xem và còn lỗi, công trình/package thuyền mới còn chờ.
+  Hai tàu còn cột che một phần; props/công trình đã chụp và review, package thuyền mới còn chờ.
   Settings cùng package: Check PASS, Reload FAIL GPU exit 3; hai slot QA phục hồi đúng.
   DRED/TrackAllAllocations=1 hoàn tất 281,93 giây, 60,94 FPS; có overhead, không tính đạt Max.
   DRED không tái hiện fault nên chưa xác định resource gây lỗi; chưa đổi preset sản phẩm.
   Check-On/Reload-Off cùng package PASS một cặp, INI giữ nguyên hash, slot QA phục hồi.
   Đối chứng On/On mới FAIL ngay Check exit 3 ở frame 45; slot QA phục hồi, không coi shadow On là fix.
-  Props nhỏ capture PASS 45 ảnh/chín contact, đã xem đủ: nồi chồng vùng ấm, compact có góc bị đèn che.
-  Các props còn lại chưa thấy nổi/xuyên rõ; toàn bộ scope chưa được nhận năm góc/đồ họa cuối.
+  Props nhỏ cũ capture PASS 45 ảnh/chín contact; một số góc bị lò/ấm/bình che.
+  Native readback 85 nguồn/43 bounds PASS: tám props kê đúng, không chồng AABB, khớp nguồn.
+  Nồi–ấm cách 2,9555 cm; không di chuyển actor hoặc làm HLOD mất hiệu lực.
+  Camera mới qua bảy test, tái hiện ba góc cũ bị che; lượt DRED mới PASS 45 PNG/chín contact.
+  Đã xem đủ năm góc/chín vị trí: nhận camera visibility; mỹ thuật cuối và toàn scope physics còn mở.
+  Capture công trình shadow On FAIL GPU frame 811 trước ảnh đầu; không coi On là fix.
+  Đã thêm DRED capture/gate CVar runtime, 11 regression PASS; build QA PASS 42,47 giây.
+  RenderConfig xác nhận tracking=true, native 100%/1080p; DRED không dùng nhận performance Max.
+  Lượt props DRED đầu có 45 ảnh nhưng bị gate từ chối do thiếu quan sát tracking; đã lưu riêng.
+  Công trình DRED PASS 50 PNG/mười contact; đã review đủ, còn prototype, chưa nhận mỹ thuật cuối.
+  Factory cần rà chi tiết bốc hàng lệch; Airport cần góc gần mặt đất, terminal hiện quá nhỏ trong ảnh.
   Checkpoint 27d3ec9db5ea1419dd00ba66127d01f0c4c56e1e đã push, remote SHA khớp và LFS fsck PASS.
   Chi tiết: CITY_6800_NATIVE_TRIAL_ROUND.md và CITY_6800_METRO_VISUAL_REVIEW.md.
 - 3.534 nhà, 784 ô; bảy bộ mặt tiền, tám dạng khối, màu/chiều cao khác nhau.
@@ -158,14 +167,14 @@ Nguồn: nhánh codex/city-expansion; chi tiết: CITY_MOBILITY_ROUND.md.
   Giữ 1.760 frame trên 33,3 ms và 13 frame trên 50 ms. Chưa đạt 90 FPS; chưa kết luận lỗi GPU đã sửa.
 - Map 6,8 km đã apply/readback/body/đường/ranh giới, tám fixture vật lý/HLOD/package PASS.
   EXE Base/Reload FAIL GPU; ảnh metro diagnostic đã xem nhưng phát hiện lỗi sàn/camera cần sửa.
-  Mục tiêu 90 FPS và rìa EXE chưa đạt; các scope props nhỏ/công trình vẫn chờ ảnh native.
+  Mục tiêu 90 FPS và rìa EXE chưa đạt; ảnh props/công trình đã review, mỹ thuật cuối còn mở.
   Chi tiết thuyền/tàu/bể bơi trên mái/props nhỏ: CITY_6800_INTEGRATION_ROUND.md.
 - Đã chuyển 12.025 component / 113.907 instance khối đục sang Nanite;
   giữ geometry/material/collision; rà lại body và 3.992 điểm đường đạt.
 
 ## Tiếp tục
 
-1. Xem ảnh props nhỏ; sửa placement/camera còn lỗi và chụp công trình, hoàn tất các góc tàu.
+1. Rà Factory, chụp gần Airport, bổ sung facade/dressing; hoàn tất góc tàu còn bị cột che.
 2. Khoanh vùng fault khởi động/reload từ cặp On/Off PASS và On/On Check FAIL; chưa đổi preset.
 3. Dùng EXE City6800 đã package; thử gameplay ngắn, cài đặt/save/reload và rìa map.
 4. Đo native Max giữ mọi frame; so trial cùng package, kiểm hình ảnh và lỗi GPU trước đổi preset.

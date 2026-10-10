@@ -14,6 +14,7 @@ from CityInteractiveTransit import ROWBOAT
 from CitySmallDetails import describe as small_placements
 from CityMetroDistrict import FACILITIES
 from CityLayout import APARTMENT
+from CitySmallPlacementCameras import cameras as small_cameras
 
 
 def cameras(name, location, size, yaw, minimum=400):
@@ -46,7 +47,7 @@ def cameras(name, location, size, yaw, minimum=400):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--scope", choices=("metro", "small", "facilities"), default="metro")
-    parser.add_argument("--diagnostic", choices=("None", "NaniteShadowAsyncOn"), default="None")
+    parser.add_argument("--diagnostic", choices=("None", "NaniteShadowAsyncOn", "Dred"), default="None")
     parser.add_argument("--asset", choices=("All", "Rowboat"), default="All")
     args = parser.parse_args()
     scope = args.scope
@@ -79,7 +80,7 @@ def main():
         placements.append(dict(mesh="KitchenSink", location=(ax + 720, ay - 585, 73.25), yaw=0))
         for item in placements:
             name = item["mesh"]
-            views.extend(cameras(name, item["location"], meshes[name]["boundsCm"]["size"], item["yaw"], 100))
+            views.extend(small_cameras(name, item["location"], meshes[name]["boundsCm"]["size"], item["yaw"]))
     else:
         placements = FACILITIES
         for item in placements:

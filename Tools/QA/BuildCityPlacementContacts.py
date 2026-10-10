@@ -12,7 +12,7 @@ DIRECTIONS = ["front", "rear", "left", "right", "upper"]
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--scope", choices=("metro", "small", "facilities"), required=True)
-    parser.add_argument("--diagnostic", choices=("None", "NaniteShadowAsyncOn"), default="None")
+    parser.add_argument("--diagnostic", choices=("None", "NaniteShadowAsyncOn", "Dred"), default="None")
     parser.add_argument("--asset", choices=("All", "Rowboat"), default="All")
     args = parser.parse_args()
     scope = args.scope

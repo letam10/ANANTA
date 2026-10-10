@@ -4,7 +4,7 @@ param(
     [string]$Scope = 'metro',
     [ValidateSet('All', 'Rowboat')]
     [string]$Asset = 'All',
-    [ValidateSet('None', 'NaniteShadowAsyncOn')]
+    [ValidateSet('None', 'NaniteShadowAsyncOn', 'Dred')]
     [string]$Diagnostic = 'None',
     [string]$EngineRoot = 'C:\Program Files\Epic Games\UE_5.8'
 )
@@ -54,6 +54,11 @@ if ($Diagnostic -eq 'NaniteShadowAsyncOn') {
     $arguments += '-ForceDPCVars=r.Nanite.AsyncRasterization.ShadowDepths=1'
     'Shadow async diagnostic only; production graphics acceptance remains pending.' |
         Set-Content -LiteralPath (Join-Path $qaDirectory 'Diagnostic.txt')
+} elseif ($Diagnostic -eq 'Dred') {
+    $arguments += '-dred'
+    $arguments += '-ini:Engine:[SystemSettings]:D3D12.TrackAllAllocations=1'
+    'DRED and allocation tracking only; not Max performance or GPU stability acceptance.' |
+        Set-Content -LiteralPath (Join-Path $qaDirectory 'Diagnostic.txt')
 }
 & $editorPath @arguments *> (Join-Path $projectRoot "Saved\Logs\CityPlacement_${Scope}${suffix}Console.log")
 if ($LASTEXITCODE -ne 0) {
@@ -62,8 +67,12 @@ if ($LASTEXITCODE -ne 0) {
 if (-not (Get-Content -LiteralPath $logPath -Raw).Contains('CITY_CAPTURE_FINISH success=1')) {
     throw 'Placement capture completion marker missing'
 }
+. (Join-Path $PSScriptRoot 'CityPlacementDiagnostics.ps1')
 # Anh 1080p van co the render scale thap; gate doc gia tri thuc sau scalability.
 $renderConfig = Get-Content -LiteralPath (Join-Path $qaDirectory 'RenderConfig.txt')
+if ($Diagnostic -eq 'Dred') {
+    Assert-CityPlacementDred -Log (Get-Content -LiteralPath $logPath -Raw) -RenderConfig $renderConfig
+}
 if ($Diagnostic -eq 'NaniteShadowAsyncOn' -and
     -not $renderConfig.Contains('r.Nanite.AsyncRasterization.ShadowDepths=1')) {
     throw 'Shadow async diagnostic did not reach the observed render configuration'
