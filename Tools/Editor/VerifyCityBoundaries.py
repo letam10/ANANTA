@@ -26,12 +26,28 @@ def main():
                 loaded[key] = item.guid
     assert loaded, "No boundary-region actors loaded"
     library.load_actors(list(loaded.values()))
+    preparations = []
+    boundaries = 0
+    for actor in unreal.GameplayStatics.get_all_actors_of_class(world, unreal.Actor):
+        for component in actor.get_components_by_class(unreal.HierarchicalInstancedStaticMeshComponent):
+            if component.is_visible() or str(component.get_collision_profile_name()) != "BlockAll":
+                continue
+            count = sum(abs(component.get_instance_transform(index, world_space=True).scale3d.z - 400) < .01
+                        for index in range(component.get_instance_count()))
+            if not count:
+                continue
+            preparation = unreal.CityEditorTools.finalize_instance_collision(component)
+            assert preparation.startswith("passed=1\n"), preparation
+            preparations.append(dict(actor=actor.get_actor_label(), details=preparation))
+            boundaries += count
+    assert boundaries == 4, f"Expected four loaded persisted boundaries, got {boundaries}"
     report = unreal.CityEditorTools.audit_world_boundaries(world, edge)
     counts = {key: int(value) for line in report.splitlines() if "=" in line
               for key, value in [line.split("=", 1)] if value.isdigit()}
     result = dict(**counts, extentCm=edge, capsuleRadiusCm=38, capsuleHalfHeightCm=92,
-                  loadedDescriptors=len(loaded), details=report,
-                  scope="Persisted edge and corner capsule sweeps; no gameplay coordinate clamp")
+                  loadedDescriptors=len(loaded), loadedBoundaryInstances=boundaries, preparations=preparations,
+                  details=report, runtimeAccepted=False,
+                  scope="Persisted edge/corner sweeps after mesh compilation; no gameplay coordinate clamp")
     path = root / "Saved/QA/CityWorldBoundaries.json"
     path.write_text(json.dumps(result, indent=2), encoding="utf-8")
     library.unload_actors(list(loaded.values()))

@@ -5,6 +5,7 @@
 #include "CityEditorTools.generated.h"
 
 class ARecastNavMesh;
+class UHierarchicalInstancedStaticMeshComponent;
 
 UCLASS()
 class ANANTA_API UCityEditorTools : public UBlueprintFunctionLibrary
@@ -26,4 +27,7 @@ public:
 
     UFUNCTION(BlueprintCallable, Category = "City Editor", meta = (DevelopmentOnly))
     static FString AuditWorldBoundaries(UWorld* World, double ExtentCm);
+
+    UFUNCTION(BlueprintCallable, Category = "City Editor", meta = (DevelopmentOnly))
+    static FString FinalizeInstanceCollision(UHierarchicalInstancedStaticMeshComponent* Component);
 };

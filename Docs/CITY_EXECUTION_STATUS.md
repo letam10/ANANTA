@@ -20,12 +20,18 @@ Nguồn: nhánh codex/city-expansion; chi tiết: CITY_MOBILITY_ROUND.md.
 
 ### Thành phố
 
-- Apply/readback map 6,8 km PASS: 10.754 nhà, 85.386 nhóm, 1.660.761 instance; đang rà va chạm.
+- Apply/readback map 6,8 km PASS: 10.754 nhà, 85.386 nhóm, 1.660.761 instance.
   EXE đã kiểm vẫn 3,4 km; chưa có EXE 6,8 km hoặc số FPS của map mới.
 - Build mới PASS 78,62 giây; automation 23/23 state Success, hai bài có cảnh báo dọn fixture.
   Regression mái ga/tuyến khu vực/cap FPS tùy chỉnh đều Success; đọc đủ 86.180 actor PASS.
 - Nguồn QA vòng này đã push 5ebc30bf499bdbab9ad4eabc4f094ad736a0f7bd, LFS fsck PASS và remote SHA khớp.
-  Map 6,8 km đã readback PASS; chờ va chạm/gameplay/ảnh/HLOD/EXE, chưa stage vào checkpoint nguồn.
+  Map 6,8 km chờ gameplay/ảnh/HLOD/EXE, chưa stage vào checkpoint nguồn.
+- Rà body/đường 6,8 km PASS: 34.617 component, 154.964 instance chặn, 13.987 điểm đường, 49 vùng.
+  Gate ranh giới PASS 14/14, exit 0; đủ bốn collider, capsule 38/92, không đổi hình học hoặc clamp tọa độ.
+  FAIL trước do commandlet query lúc mesh còn compiling và physics state chưa tạo; đã chờ mesh/tree/body.
+  Đây là nghiệm thu editor của map đã lưu; chặn rìa trong EXE vẫn cần kiểm riêng.
+- Công cụ thử Max trong EXE đã thêm provenance package/cvar, giữ mọi frame và phục hồi hai slot QA.
+  Chín test fixture dữ liệu PASS; chưa chạy gameplay hoặc xác nhận FPS bằng bộ công cụ này.
 - 3.534 nhà, 784 ô; bảy bộ mặt tiền, tám dạng khối, màu/chiều cao khác nhau.
 - Map 3,4 km đọc lại theo lô: 25.026 nhóm, 602.965 instance; 19 đồ sinh hoạt và 16 đèn mới.
   Gồm năm nhóm civic mới; đã sửa báo cáo nền và cách đếm bỏ sót HISM mang nhãn Living.
@@ -98,7 +104,7 @@ Nguồn: nhánh codex/city-expansion; chi tiết: CITY_MOBILITY_ROUND.md.
 - EXE CityExpanded 3,4 km build/cook/package PASS; menu Apply PASS, reload bị GPU PageFault Nanite/VSM.
 - EXE Max 1080p gốc: 47,71 FPS / p95 37,87 ms; 13.523 frame, 283,46 giây, GPU trung bình 20,12 ms.
   Giữ 1.760 frame trên 33,3 ms và 13 frame trên 50 ms. Chưa đạt 90 FPS; chưa kết luận lỗi GPU đã sửa.
-- Bố cục nguồn 6,8 km PASS: 10.754 nhà / 1.660.761 instance; chưa apply hoặc nghiệm thu trong Unreal.
+- Map 6,8 km đã apply/readback/body/đường/ranh giới PASS; chưa nghiệm thu gameplay/ảnh.
   Chi tiết thuyền/tàu/bể bơi trên mái/props nhỏ: CITY_6800_INTEGRATION_ROUND.md.
 - Đã chuyển 12.025 component / 113.907 instance khối đục sang Nanite;
   giữ geometry/material/collision; rà lại body và 3.992 điểm đường đạt.
