@@ -24,6 +24,8 @@ Nguồn: nhánh codex/city-expansion; chi tiết: CITY_MOBILITY_ROUND.md.
   EXE đã kiểm vẫn 3,4 km; chưa có EXE 6,8 km hoặc số FPS của map mới.
 - Build mới PASS 78,62 giây; automation 23/23 state Success, hai bài có cảnh báo dọn fixture.
   Regression mái ga/tuyến khu vực/cap FPS tùy chỉnh đều Success; driver đang đọc lại 86.180 actor.
+- Nguồn QA vòng này đã push 5ebc30bf499bdbab9ad4eabc4f094ad736a0f7bd, LFS fsck PASS và remote SHA khớp.
+  Map 6,8 km vẫn chờ readback/va chạm/gameplay/ảnh/HLOD/EXE; chưa stage vào checkpoint nguồn.
 - 3.534 nhà, 784 ô; bảy bộ mặt tiền, tám dạng khối, màu/chiều cao khác nhau.
 - Map 3,4 km đọc lại theo lô: 25.026 nhóm, 602.965 instance; 19 đồ sinh hoạt và 16 đèn mới.
   Gồm năm nhóm civic mới; đã sửa báo cáo nền và cách đếm bỏ sót HISM mang nhãn Living.

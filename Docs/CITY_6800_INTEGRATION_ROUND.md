@@ -74,6 +74,9 @@ Cập nhật 2026-10-10. Map 6,8 km đã lưu; EXE đã kiểm vẫn là 3,4 km.
 - Checkpoint QA 086104425cb8a59eb27f17d8b93d3a68d919107e đã push; LFS fsck PASS, remote SHA khớp.
 - Checkpoint tuyến khu vực/menu FPS/ảnh 98b9688241579567e1023b54faf5fdb2f6e90680 đã push, remote SHA khớp.
   Đã build/automation 23 bài PASS; map/EXE tại checkpoint nguồn vẫn 3,4 km.
+- Checkpoint QA khu vực 5ebc30bf499bdbab9ad4eabc4f094ad736a0f7bd đã push; LFS fsck PASS, remote SHA khớp.
+  Gồm 11 tệp nguồn/tài liệu; map 6,8 km chưa commit vì gate thực địa còn chạy.
+  Driver 13 gate đang Readback sau Build/Automation PASS; mốc ghi chú đã đọc 71.000/86.180 actor.
 - Rà GPU độc lập đã ghi ba phương án và đánh đổi trong CITY_GPU_COST_AUDIT.md; chưa áp dụng thử mới.
 - Đọc đủ 25.801 actor nền theo lô PASS: 25.026 nhóm, 602.965 instance, 12 dịch vụ.
   Sửa cách đếm bỏ sót năm HISM Living_CivicDressing; đối chiếu nguồn commit cũ cùng số instance.
