@@ -119,7 +119,16 @@ Cập nhật 2026-10-10. Map 6,8 km đã lưu; EXE đã kiểm vẫn là 3,4 km.
   Receipt đầu bị từ chối vì Sort-Object theo culture khác Python ordinal; hai tập thực đều đủ 3.557.
   Đã sửa so danh sách ordinal, vẫn bắt thiếu/trùng/sai actor; sáu regression và receipt thật PASS.
   Giữ report lỗi riêng; readback lại mất 21,16 giây, peak RAM 4.222 MB, không cần rebuild HLOD lần nữa.
-  30 ảnh phương tiện đang chụp; fullMapAccepted là cấu trúc, renderedArtAccepted/fpsAccepted vẫn false.
+  FullMapAccepted là cấu trúc, renderedArtAccepted/fpsAccepted vẫn false.
+- Lượt 30 ảnh phương tiện đầu đủ file nhưng render scale thực 3%; xem ảnh và RenderConfig phát hiện lỗi.
+  Regex sg.*Quality bắt cả ResolutionQuality; sửa đặt native 100% sau quality và thêm gate cvar thực.
+  Bốn regression chạy các assignment AST của runner PASS, gồm input 100/85/3/72,5.
+  Giữ toàn bộ ảnh/log lỗi trong CityPlacement_metro_Scale3Rejected; không nhận chất lượng hoặc FPS.
+  Đang chụp lại native 100%; sửa script QA không đổi model, map hoặc preset game.
+  Lượt native lại FAIL exit 3 trước capture: DXGI_ERROR_DEVICE_HUNG/PageFault ở Nanite culling/VSM.
+  Log CityPlacement_metro.log 03:53:48 UTC ghi ReservedResources=0 đã áp dụng; chưa kết luận root cause.
+  File native không có RenderConfig/ảnh đầu; không nhận hình ảnh, Max hoặc FPS từ lượt 3% trước.
+  Chuẩn bị package City6800 để so Player/Editor; vật lý/HLOD cấu trúc vẫn PASS, ảnh chưa đạt.
 - Rà HLOD thấy report cũ 962 proxy/591.633 instance không thuộc map mở rộng; phải kiểm lại map identity.
   Chi tiết và các gap cần sửa: CITY_6800_HLOD_READINESS.md.
 - Rà GPU độc lập đã ghi ba phương án và đánh đổi trong CITY_GPU_COST_AUDIT.md; chưa áp dụng thử mới.

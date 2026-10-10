@@ -53,7 +53,11 @@ Nguồn: nhánh codex/city-expansion; chi tiết: CITY_MOBILITY_ROUND.md.
   Readback PASS 3.557/3.557 actor/GUID, 1.619.348 instance; mesh/material đầy đủ, không lỗi.
   Kiểm 83.212 source mapping PASS, loại đủ bốn collider ẩn; chưa nghiệm thu ảnh hoặc FPS.
   Lỗi sắp thứ tự receipt PowerShell/Python đã sửa; sáu regression và receipt thật PASS, không rebuild lại.
-  30 ảnh năm góc phương tiện đang chụp; đồ nhỏ/công trình/package/gameplay vẫn chờ.
+  Lượt 30 ảnh đầu bị loại: regex QA ghi render scale 3%, dù PNG là 1080p; không nhận hình ảnh/FPS.
+  Đã sửa thứ tự replacement và gate cvar thực 100%; bốn regression trên runner PASS.
+  Evidence lỗi lưu CityPlacement_metro_Scale3Rejected; đang chụp lại native, các scope khác vẫn chờ.
+  Chụp native lại FAIL exit 3 trước ảnh đầu: D3D12 PageFault/Nanite-VSM culling, ReservedResources=0 đã áp dụng.
+  Chưa nhận ảnh hoặc 90 FPS; tiếp tục khoanh vùng và chuẩn bị EXE 6,8 km để đối chiếu Editor/Player.
 - 3.534 nhà, 784 ô; bảy bộ mặt tiền, tám dạng khối, màu/chiều cao khác nhau.
 - Map 3,4 km đọc lại theo lô: 25.026 nhóm, 602.965 instance; 19 đồ sinh hoạt và 16 đèn mới.
   Gồm năm nhóm civic mới; đã sửa báo cáo nền và cách đếm bỏ sót HISM mang nhãn Living.

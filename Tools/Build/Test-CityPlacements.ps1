@@ -17,8 +17,8 @@ $qaConfig = Join-Path $qaDirectory 'GameUserSettings.ini'
 Copy-Item -LiteralPath (Join-Path $projectRoot 'Config\DefaultGameUserSettings.ini') -Destination $qaConfig
 $settings = Get-Content -LiteralPath $qaConfig -Raw
 $settings = $settings.Replace('[/Script/Engine.GameUserSettings]', '[/Script/ANANTA.ANANTAGraphicsSettings]')
-$settings = $settings -replace 'sg\.ResolutionQuality=[0-9.]+', 'sg.ResolutionQuality=100'
 $settings = $settings -replace '(sg\.[A-Za-z]+Quality)=\d+', '${1}=3'
+$settings = $settings -replace 'sg\.ResolutionQuality=[0-9.]+', 'sg.ResolutionQuality=100'
 Set-Content -LiteralPath $qaConfig -Value $settings -Encoding ASCII
 $editorPath = Join-Path $EngineRoot 'Engine\Binaries\Win64\UnrealEditor-Cmd.exe'
 $logPath = Join-Path $projectRoot "Saved\Logs\CityPlacement_$Scope.log"
@@ -46,6 +46,18 @@ if ($LASTEXITCODE -ne 0) {
 }
 if (-not (Get-Content -LiteralPath $logPath -Raw).Contains('CITY_CAPTURE_FINISH success=1')) {
     throw 'Placement capture completion marker missing'
+}
+# Anh 1080p van co the render scale thap; gate doc gia tri thuc sau scalability.
+$renderConfig = Get-Content -LiteralPath (Join-Path $qaDirectory 'RenderConfig.txt')
+foreach ($name in @('sg.ResolutionQuality', 'r.ScreenPercentage')) {
+    $entry = @($renderConfig | Where-Object { $_.StartsWith("$name=") })
+    if ($entry.Count -ne 1) {
+        throw "Placement render config is missing $name"
+    }
+    $actual = [double]::Parse($entry[0].Substring($name.Length + 1), [Globalization.CultureInfo]::InvariantCulture)
+    if ([Math]::Abs($actual - 100) -gt 0.001) {
+        throw "Placement capture is not native 100%: $name=$actual"
+    }
 }
 $env:ANANTA_PLACEMENT_MANIFEST = $manifest
 & python -c @'
