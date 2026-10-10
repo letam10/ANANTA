@@ -12,7 +12,10 @@ $round = [ordered]@{
     status = 'RUNNING'
     completedStages = @()
     activeStage = 'WaitForMapApply'
-    scope = 'Editor build, automation, persisted map, collision and authored gameplay; no GPU acceptance'
+    scope = (
+        'Editor build, automation, persisted map, collision, regional roads and authored gameplay; ' +
+        'no GPU acceptance'
+    )
 }
 
 function Save-Round {
@@ -98,6 +101,9 @@ try {
     Invoke-Stage 'Rail' 'Test-CityRail.ps1'
     Invoke-Stage 'Rowboat' 'Test-CityRowboat.ps1'
     Invoke-Stage 'RoofPool' 'Test-CityRoofPool.ps1'
+    foreach ($region in @('Core', 'East', 'West', 'South', 'NorthEast')) {
+        Invoke-Stage "RoadRoutes_$region" 'Test-CityRoadRoutes.ps1' @('-Region', $region)
+    }
     $round.status = 'PASS'
     $round.activeStage = ''
     $round.completedUtc = [DateTime]::UtcNow.ToString('o')

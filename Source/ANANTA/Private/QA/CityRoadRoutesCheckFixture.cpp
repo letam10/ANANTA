@@ -16,9 +16,9 @@ bool UCityRoadRoutesCheck::PrepareStreaming()
         Finish(TEXT("Requires authored ANANTA_City World Partition map"));
         return false;
     }
-    for (TActorIterator<ACityRouteVehicle> It(GetWorld()); It; ++It)
+    if (HasUnexpectedFleet())
     {
-        Finish(TEXT("Existing fleet detected before fixture setup"));
+        Finish(TEXT("Existing non-fixture road fleet detected before fixture setup"));
         return false;
     }
     auto* Camera = GetWorld()->SpawnActor<ACameraActor>();
@@ -29,7 +29,20 @@ bool UCityRoadRoutesCheck::PrepareStreaming()
     }
     Observer = Camera;
     Camera->Tags.Add(TEXT("QA_AuthoredRoadPhysicsFixture"));
-    Camera->SetActorLocationAndRotation(FVector(12000, 0, 2000), FRotator(-60, 0, 0));
+    if (Region != TEXT("Core"))
+    {
+        FBox RouteBounds(ForceInit);
+        for (const auto& Result : Results)
+        {
+            for (const FVector& Point : Result.Route.Points)
+            {
+                RouteBounds += Point;
+            }
+        }
+        ObserverLocation = RouteBounds.GetCenter();
+        ObserverLocation.Z = 2000;
+    }
+    Camera->SetActorLocationAndRotation(ObserverLocation, FRotator(-60, 0, 0));
     // Ban kinh gom ca tam tuyen, le duong va bien cell; kiem tra diem xa nhat truoc khi spawn.
     for (const auto& Result : Results)
     {
@@ -78,7 +91,7 @@ void UCityRoadRoutesCheck::SpawnVehicles()
             }
             Probe.OriginHeight = Mesh->GetBoundingBox().GetCenter().Z + 5;
             Probe.Vehicle = GetWorld()->SpawnActor<ACityRouteVehicle>();
-            if (!Probe.Vehicle.IsValid() || !Probe.Vehicle->Configure(static_cast<ECityTransportKind>(Index),
+            if (!Probe.Vehicle.IsValid() || !Probe.Vehicle->Configure(Result.TransportKind,
                 Result.Route, Mesh, Probe.InitialPoint))
             {
                 Probe.Status = TEXT("FAIL");

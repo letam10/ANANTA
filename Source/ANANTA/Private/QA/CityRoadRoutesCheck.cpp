@@ -26,12 +26,16 @@ bool UCityRoadRoutesCheck::ShouldCreateSubsystem(UObject* Outer) const
 void UCityRoadRoutesCheck::Initialize(FSubsystemCollectionBase& Collection)
 {
     Super::Initialize(Collection);
+    SelectRegion();
     for (int32 Index = 0; Index < 8; ++Index)
     {
         auto& Result = Results.AddDefaulted_GetRef();
-        const auto Kind = static_cast<ECityTransportKind>(Index);
+        const auto Kind = Region != TEXT("Core") && Index == 7
+            ? ECityTransportKind::FireEngine : static_cast<ECityTransportKind>(Index);
+        Result.TransportKind = Kind;
         Result.Kind = CityMobility::MeshName(Kind);
-        Result.Route = CityMobility::MakeRoute(Kind);
+        Result.Route = Region == TEXT("Core") ? CityMobility::MakeRoute(Kind)
+            : CityMobility::MakeNearbyRoute(Kind, SourcePlayerLocation);
         // Hai xe lech mot tram: runtime luan phien don/tra khach, can ca hai de phu bon tram.
         Result.Probes.SetNum(2);
         Result.Probes[1].InitialPoint = 2;
@@ -75,6 +79,11 @@ void UCityRoadRoutesCheck::Tick(const float DeltaTime)
     {
         StartedAt = Now;
     }
+    if (!bValidRegion)
+    {
+        Finish(TEXT("Unknown CityRoadRoutesRegion; expected Core, East, West, South or NorthEast"));
+        return;
+    }
     if (ReadyAt == 0)
     {
         if (Now - StartedAt > 60)
@@ -111,11 +120,21 @@ void UCityRoadRoutesCheck::Tick(const float DeltaTime)
             return;
         }
         ReadyAt = Now;
+        if (HasUnexpectedFleet())
+        {
+            Finish(TEXT("Non-fixture road fleet detected after streaming readiness"));
+            return;
+        }
         SpawnVehicles();
     }
     if (!StreamingSource.IsValid() || !StreamingSource->IsStreamingCompleted())
     {
         Finish(TEXT("Authored road route streaming coverage was lost"));
+        return;
+    }
+    if (HasUnexpectedFleet())
+    {
+        Finish(TEXT("Non-fixture road fleet appeared during route verification"));
         return;
     }
     bool bAllDone = true;

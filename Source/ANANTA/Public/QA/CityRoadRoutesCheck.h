@@ -36,6 +36,7 @@ struct FCityRoadProbe
 struct FCityRoadResult
 {
     FString Kind;
+    ECityTransportKind TransportKind = ECityTransportKind::Coach;
     FCityTransportRoute Route;
     TArray<FCityRoadProbe> Probes;
 };
@@ -53,6 +54,8 @@ public:
     virtual TStatId GetStatId() const override;
 
 private:
+    void SelectRegion();
+    bool HasUnexpectedFleet() const;
     void SuppressManager(AActor* Actor);
     bool PrepareStreaming();
     void SpawnVehicles();
@@ -65,6 +68,10 @@ private:
     TWeakObjectPtr<AActor> PreviousView;
     TWeakObjectPtr<UWorldPartitionStreamingSourceComponent> StreamingSource;
     FDelegateHandle SpawnHandle;
+    FString Region = TEXT("Core");
+    FVector SourcePlayerLocation = FVector::ZeroVector;
+    FVector ObserverLocation = FVector(12000, 0, 2000);
+    bool bValidRegion = true;
     double StartedAt = 0;
     double ReadyAt = 0;
     double StableAt = 0;

@@ -6,7 +6,7 @@ Nguồn: nhánh codex/city-expansion; chi tiết: CITY_MOBILITY_ROUND.md.
 
 ## Yêu cầu đã chốt
 
-- Yêu cầu mới: tăng từ 3,4 lên 6,8 × 6,8 km, gấp đôi mỗi chiều lần nữa; map đã kiểm hiện vẫn 3,4 km.
+- Yêu cầu mới: tăng từ 3,4 lên 6,8 × 6,8 km, gấp đôi mỗi chiều lần nữa; map mới đã lưu, chưa nghiệm thu.
 - Model mới/sửa kiểm tám hướng; mỗi vị trí đặt kiểm năm góc trong scene thực.
 - Biển mở ra chân trời, có ranh giới chặn người chơi; props nhỏ có thể giản lược hình học.
 - Giữ model nhân vật và save cá nhân. Nhà không vào được chỉ có vỏ.
@@ -20,6 +20,10 @@ Nguồn: nhánh codex/city-expansion; chi tiết: CITY_MOBILITY_ROUND.md.
 
 ### Thành phố
 
+- Apply map 6,8 km exit 0: 10.754 nhà, 85.386 nhóm, 1.660.761 instance; đang chờ đọc lại/va chạm.
+  EXE đã kiểm vẫn 3,4 km; chưa có EXE 6,8 km hoặc số FPS của map mới.
+- Build mới PASS 78,62 giây; automation 23/23 state Success, hai bài có cảnh báo dọn fixture.
+  Regression mái ga/tuyến khu vực/cap FPS tùy chỉnh đều Success; driver đang đọc lại 86.180 actor.
 - 3.534 nhà, 784 ô; bảy bộ mặt tiền, tám dạng khối, màu/chiều cao khác nhau.
 - Map 3,4 km đọc lại theo lô: 25.026 nhóm, 602.965 instance; 19 đồ sinh hoạt và 16 đèn mới.
   Gồm năm nhóm civic mới; đã sửa báo cáo nền và cách đếm bỏ sót HISM mang nhãn Living.

@@ -1,6 +1,6 @@
 # Vòng tích hợp thành phố 6,8 km
 
-Cập nhật 2026-10-10. Đang thực hiện; bản đồ/EXE đã kiểm vẫn là 3,4 km.
+Cập nhật 2026-10-10. Map 6,8 km đã lưu; EXE đã kiểm vẫn là 3,4 km.
 
 ## Nguồn đã làm
 
@@ -14,9 +14,9 @@ Cập nhật 2026-10-10. Đang thực hiện; bản đồ/EXE đã kiểm vẫn 
 - Tám vật dụng nhỏ dùng texture/vật liệu Living đã có, ba LOD và không chặn người đi.
 - Đèn phố chỉ tìm ứng viên quanh người chơi; tái sử dụng tám đèn, hai đèn có bóng.
 - Rà source bắt tuyến xe chỉ quanh trung tâm; thêm vòng cố định tại tám khu, chọn điểm dừng gần nhất.
-  Giữ cap tám xe, tuyến cảng/ga và tránh vùng cắt biển/sân bay; regression mới chưa compile/chạy.
+  Giữ cap tám xe, tuyến cảng/ga và tránh vùng cắt biển/sân bay; regression mới PASS, thực địa còn chờ.
 - Sửa menu FPS bỏ sót cap hợp lệ đang lưu như 200/200,5; giữ giá trị chính xác, thêm regression lựa chọn.
-  Không suy ra FPS thực từ cap; bài test mới đang chờ build/automation sau apply.
+  Không suy ra FPS thực từ cap; regression giữ cap tùy chỉnh đã PASS trong automation.
 - Max thử nghiệm giảm mẫu bóng còn 4, giảm độ phân giải tính GI/reflection/history.
   Vẫn native 1080p/100%; đây là Max tùy chỉnh có đánh đổi chất lượng.
 - Công cụ chụp năm góc chia thành metro/small/facilities; tàu đứng yên riêng khi chụp QA.
@@ -31,6 +31,12 @@ Cập nhật 2026-10-10. Đang thực hiện; bản đồ/EXE đã kiểm vẫn 
   xuống tại bến khô/từ chối giữa biển; không vượt biên nước.
 - Automation sau nhập model PASS 20/20 (19 thành công, một thành công có cảnh báo), không thất bại.
   Fleet.ImportedBounds đọc đủ mobility/metro manifest và bounds thực của 13 loại.
+- Build mới toàn bộ QA khu vực/mái ga/cap FPS PASS 78,62 giây; build lại không đổi C++ PASS 2,64 giây.
+- Automation mới PASS 23/23: 21 thành công, hai thành công có cảnh báo, không thất bại/bỏ qua.
+  Ba bài BoardingUnderStationCanopy, RegionalRoadCoverage và CustomFrameRateChoice đều Success.
+  Cả 23 state là Success; hai bài có tổng ba cảnh báo World has no context khi dọn fixture riêng.
+  Unit runner dùng map Entry, tắt auto-navigation riêng process và yêu cầu report mới theo timestamp.
+  Lượt khởi tạo map đầy đủ trước đó được dừng riêng, ghi StartupCancelled; không tính test case FAIL.
 - Bản 3,4 km đã publish: 4a68808146aab8a11d44d561a35e8241dea6b5d5, LFS fsck đạt, remote SHA khớp.
 - EXE 3,4 km: Max gốc 47,71 FPS trung bình, p95 37,87 ms; chưa đạt 90 FPS.
 - Reload cài đặt EXE gặp D3D12 PageFault ở Nanite/VSM; chưa kết luận đã sửa.
@@ -53,17 +59,21 @@ Cập nhật 2026-10-10. Đang thực hiện; bản đồ/EXE đã kiểm vẫn 
 - Git giữ nguyên byte hai thư mục nguồn model mới để hash provenance không đổi do xuống dòng.
 - Checkpoint nguồn/model d7281b30ba04755e475348e0bac14e16b957e9fc đã push, remote SHA khớp;
   Git LFS fsck PASS, upload 31/31 object mới. Map lưu tại checkpoint vẫn 3,4 km.
-- Apply 6,8 km đang chạy theo lô; commandlet Editor tắt auto-navigation riêng trong process.
+- Apply 6,8 km PASS exit 0: 85.386 nhóm, 1.660.761 instance, 10.754 nhà, 87.142 actor.
+  Commandlet mất 3.541,71 giây, peak RAM 4.290 MB; lưu xong lúc 00:47:52 UTC ngày 10/10.
+  Đây là bước dựng/lưu; readback, body collision, ranh giới, gameplay và ảnh GPU chưa PASS.
 - Đã sửa ray lên/xuống tàu bắt sàn bên dưới mái ga, kèm regression hai sân ga và vật cản cửa.
-  Kiểm tĩnh PASS; đang chờ apply kết thúc để build/chạy test mới.
+  Build/regression PASS; hai tàu tại ga trong map mới vẫn chờ gate thực địa.
 - Bổ sung 14 sweep capsule 38/92 qua rìa/góc/biển, kiểm collider ẩn đã lưu; chưa chạy trong engine.
-- Test-City6800Round.ps1 nối tám gate tuần tự sau exit 0 của apply; lỗi bất kỳ sẽ dừng và lưu stage.
+- Test-City6800Round.ps1 nối 13 gate tuần tự sau exit 0 của apply; lỗi bất kỳ sẽ dừng và lưu stage.
   Chuỗi này chưa gồm ảnh GPU, HLOD, EXE, reload hoặc FPS; các gate đó vẫn phải chạy riêng.
 - Checkpoint QA tiếp theo chỉ gồm mã/tài liệu; map apply dở không được stage cùng.
-  Bộ QA mới đạt kiểm tĩnh, chưa compile/runtime; chuỗi đang chờ apply thành công.
+  Bộ QA mới đã build; driver hiện đã PASS Build/Automation và đang Readback.
+- Fixture vật lý Core/East/West/South/NorthEast đã viết/build: 16 xe mỗi vùng, đủ vòng và bốn trạm.
+  Giữ đường, tốc độ, collider và giới hạn streaming; chưa chạy thực địa. Tàu authored giữ nguyên tick.
 - Checkpoint QA 086104425cb8a59eb27f17d8b93d3a68d919107e đã push; LFS fsck PASS, remote SHA khớp.
 - Checkpoint tuyến khu vực/menu FPS/ảnh 98b9688241579567e1023b54faf5fdb2f6e90680 đã push, remote SHA khớp.
-  Kiểm tĩnh PASS; vẫn chờ build và automation đủ 23 bài, gồm mái ga/tuyến khu vực/cap tùy chỉnh.
+  Đã build/automation 23 bài PASS; map/EXE tại checkpoint nguồn vẫn 3,4 km.
 - Rà GPU độc lập đã ghi ba phương án và đánh đổi trong CITY_GPU_COST_AUDIT.md; chưa áp dụng thử mới.
 - Đọc đủ 25.801 actor nền theo lô PASS: 25.026 nhóm, 602.965 instance, 12 dịch vụ.
   Sửa cách đếm bỏ sót năm HISM Living_CivicDressing; đối chiếu nguồn commit cũ cùng số instance.
@@ -72,7 +82,7 @@ Cập nhật 2026-10-10. Đang thực hiện; bản đồ/EXE đã kiểm vẫn 
 ## Các bước cần làm tiếp
 
 1. Đã xong nguồn model/tám hướng/FBX/bounds/material/LOD; ảnh Unreal vẫn ở bước 4.
-2. Apply map 6,8 km, đọc lại nội dung, rà toàn bộ body/đường/capsule và ranh giới.
+2. Map 6,8 km đã apply; build mới, đọc lại nội dung, rà body/đường/capsule và ranh giới.
 3. Thử thuyền tại bến thật, hai tàu lên/xuống/khứ hồi, cầu thang lên mái.
 4. Chụp/xem năm góc từng vị trí mới; sửa nổi/chìm/xuyên/lệch hoặc silhouette chưa hợp lý.
 5. Rebuild toàn bộ HLOD, kiểm proxy, package EXE riêng City6800.

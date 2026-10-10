@@ -1,11 +1,32 @@
 [CmdletBinding()]
 param(
-    [string]$EngineRoot = 'C:\Program Files\Epic Games\UE_5.8'
+    [string]$EngineRoot = 'C:\Program Files\Epic Games\UE_5.8',
+    [ValidateSet('Core', 'East', 'West', 'South', 'NorthEast')]
+    [string]$Region = 'Core'
 )
 
 $ErrorActionPreference = 'Stop'
 $projectRoot = (Resolve-Path (Join-Path $PSScriptRoot '..\..')).Path
-$qaPath = Join-Path $projectRoot 'Saved\QA\CityRoadRoutesCheck'
+$Region = @('Core', 'East', 'West', 'South', 'NorthEast') | Where-Object { $_ -eq $Region }
+$qaName = if ($Region -eq 'Core') { 'CityRoadRoutesCheck' } else { "CityRoadRoutesCheck_$Region" }
+$qaPath = Join-Path $projectRoot "Saved\QA\$qaName"
+$scope = if ($Region -eq 'Core') {
+    'authored-map physics fixture'
+} else {
+    'authored-map regional road physics fixture'
+}
+$regionLocations = @{
+    East = @(200000, 0, 100)
+    West = @(-244000, 420, 100)
+    South = @(-28000, -215580, 100)
+    NorthEast = @(188000, 288420, 100)
+}
+$regionAnchors = @{
+    East = @(216000, 0)
+    West = @(-216000, 0)
+    South = @(0, -216000)
+    NorthEast = @(216000, 288000)
+}
 $editorPath = Join-Path $EngineRoot 'Engine\Binaries\Win64\UnrealEditor-Cmd.exe'
 if (-not (Test-Path -LiteralPath $editorPath)) {
     throw "Missing Unreal executable: $editorPath"
@@ -23,6 +44,7 @@ foreach ($stalePath in @($logPath, $reportPath)) {
 $arguments = @(
     "$projectRoot\ANANTA.uproject", '/Game/ANANTA/Maps/ANANTA_City', '-game',
     '-NullRHI', '-CityRoadRoutesCheck', '-CityQASlot', "-GameUserSettingsINI=$configPath",
+    "-CityRoadRoutesRegion=$Region",
     '-NoSaveConfig', '-NoSplash', '-nosound', '-unattended', "-abslog=$logPath"
 )
 $quotedArguments = ($arguments | ForEach-Object { '"' + $_ + '"' }) -join ' '
@@ -64,13 +86,18 @@ if ((Get-Item -LiteralPath $reportPath).LastWriteTimeUtc -lt $startedUtc) {
 }
 $report = Get-Content -LiteralPath $reportPath -Raw | ConvertFrom-Json
 $log = Get-Content -LiteralPath $logPath -Raw
+$marker = if ($Region -eq 'Core') {
+    'CITY_ROAD_ROUTES_CHECK_FINISH success=1 reason='
+} else {
+    "CITY_ROAD_ROUTES_CHECK_FINISH success=1 region=$Region reason="
+}
 if ($report.passed -ne $true -or $report.schemaVersion -ne 1 `
-    -or $report.scope -ne 'authored-map physics fixture' -or $report.map -ne 'ANANTA_City' `
+    -or $report.scope -cne $scope -or $report.map -ne 'ANANTA_City' `
     -or $null -eq $report.elapsedSeconds -or $report.elapsedSeconds -le 0 `
     -or $report.elapsedSeconds -gt 240 -or $report.results.Count -ne 8 `
     -or $report.fixtureVehiclesPerKind -ne 2 -or $report.observerRelocated -ne $true `
     -or $report.streamingRadiusCm -ne 62000 -or $report.isolatedQASlot -ne $true `
-    -or -not $log.Contains('CITY_ROAD_ROUTES_CHECK_FINISH success=1')) {
+    -or -not $log.Contains($marker)) {
     throw "Road route fixture failed or completion evidence is incomplete: $reportPath"
 }
 foreach ($field in @('artificialSupportFloors', 'vehicleSpeedModified', 'routesModified',
@@ -84,12 +111,43 @@ if ($completedUtc -lt $startedUtc -or $completedUtc -gt [DateTime]::UtcNow.AddSe
     throw 'Road route report completion timestamp is outside this run'
 }
 $kinds = @('Coach', 'CityBus', 'Taxi', 'BoxTruck', 'CargoTruck', 'TankerTruck', 'PoliceCar', 'Ambulance')
+if ($Region -ne 'Core') {
+    $kinds[7] = 'FireEngine'
+    $expectedSource = $regionLocations[$Region]
+    $anchor = $regionAnchors[$Region]
+    $expectedObserver = @((12000 + $anchor[0]), $anchor[1], 2000)
+    if ($report.region -cne $Region -or $report.sourcePlayerLocation.Count -ne 3 `
+        -or $report.observerLocation.Count -ne 3) {
+        throw "Regional route provenance missing or incorrect: $reportPath"
+    }
+    for ($axis = 0; $axis -lt 3; $axis++) {
+        if ($null -eq $report.sourcePlayerLocation[$axis] `
+            -or $report.sourcePlayerLocation[$axis] -ne $expectedSource[$axis] `
+            -or $null -eq $report.observerLocation[$axis] `
+            -or $report.observerLocation[$axis] -ne $expectedObserver[$axis]) {
+            throw "Regional source or observer coordinates disagree: $reportPath"
+        }
+    }
+    if (($report.initialRoutePoints -join ',') -ne '0,2' `
+        -or ($report.stopPointIndices -join ',') -ne '0,2,4,6' `
+        -or ($report.sideOrder -join ',') -ne 'east,north,west,south') {
+        throw "Unexpected route probe layout: $reportPath"
+    }
+}
 foreach ($kind in $kinds) {
     $rows = @($report.results | Where-Object { $_.kind -eq $kind })
     if ($rows.Count -ne 1) {
         throw "Missing or duplicate road route result: $kind"
     }
     $row = $rows[0]
+    if ($Region -ne 'Core') {
+        $expectedKind = if ($kind -eq 'FireEngine') { 11 } else { [Array]::IndexOf($kinds, $kind) }
+        $expectedRoute = "${kind}_Road_$($anchor[0])_$($anchor[1])"
+        if ($null -eq $row.transportKind -or $row.transportKind -ne $expectedKind `
+            -or $row.routeId -cne $expectedRoute) {
+            throw "Incorrect regional enum or fixed route selection for $kind"
+        }
+    }
     if ($row.status -ne 'PASS' -or $row.boarded -lt 4 -or $row.alighted -lt 4 `
         -or $row.boardedMask -ne 15 -or $row.alightedMask -ne 15 -or $row.probes.Count -ne 2 `
         -or $row.travelCm -lt 180000 -or $null -eq $row.elapsedSeconds `
@@ -126,4 +184,6 @@ foreach ($kind in $kinds) {
         throw "Aggregate passenger coverage disagrees with vehicle probes for $kind"
     }
 }
-Write-Output "CITY_ROAD_ROUTES_CHECK_OK routes=8 vehicles=16 scope=authored_map_physics_fixture report=$reportPath"
+$scopeToken = $scope.Replace('-', '_').Replace(' ', '_')
+$regionToken = if ($Region -eq 'Core') { '' } else { "region=$Region " }
+Write-Output "CITY_ROAD_ROUTES_CHECK_OK routes=8 vehicles=16 ${regionToken}scope=$scopeToken report=$reportPath"

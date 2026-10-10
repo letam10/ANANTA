@@ -94,6 +94,11 @@ void UCityRoadRoutesCheck::Finish(const FString& Reason)
             *RoadJsonString(Result.Kind), bRoutePassed ? TEXT("\"PASS\"") : TEXT("\"FAIL\""),
             *RoadJsonString(bRoutePassed ? TEXT("All four stops boarded and alighted; both full loops verified")
                 : TEXT("Failed probe or incomplete four-stop passenger coverage; see probes")));
+        if (Region != TEXT("Core"))
+        {
+            Rows += FString::Printf(TEXT("\"transportKind\":%d,\"routeId\":%s,"),
+                static_cast<int32>(Result.TransportKind), *RoadJsonString(Result.Route.Id.ToString()));
+        }
         Rows += FString::Printf(TEXT("\"boarded\":%d,\"alighted\":%d,\"boardedMask\":%d,\"alightedMask\":%d,"),
             Boarded, Alighted, BoardedMask, AlightedMask);
         Rows += FString::Printf(TEXT("\"travelCm\":%.3f,\"elapsedSeconds\":%.3f,\"probes\":[%s]}"),
@@ -101,7 +106,17 @@ void UCityRoadRoutesCheck::Finish(const FString& Reason)
     }
     FString Report = FString::Printf(TEXT("{\n  \"schemaVersion\":1,\n  \"passed\":%s,\n"),
         bPassed ? TEXT("true") : TEXT("false"));
-    Report += TEXT("  \"scope\":\"authored-map physics fixture\",\n");
+    const FString Scope = Region == TEXT("Core") ? TEXT("authored-map physics fixture")
+        : TEXT("authored-map regional road physics fixture");
+    Report += FString::Printf(TEXT("  \"scope\":%s,\n"), *RoadJsonString(Scope));
+    if (Region != TEXT("Core"))
+    {
+        Report += FString::Printf(TEXT("  \"region\":%s,\n"), *RoadJsonString(Region));
+        Report += FString::Printf(TEXT("  \"sourcePlayerLocation\":[%.3f,%.3f,%.3f],\n"),
+            SourcePlayerLocation.X, SourcePlayerLocation.Y, SourcePlayerLocation.Z);
+        Report += FString::Printf(TEXT("  \"observerLocation\":[%.3f,%.3f,%.3f],\n"),
+            ObserverLocation.X, ObserverLocation.Y, ObserverLocation.Z);
+    }
     Report += TEXT("  \"fixtureVehiclesPerKind\":2,\n  \"initialRoutePoints\":[0,2],\n");
     Report += TEXT("  \"fixtureReason\":\"Two offset vehicles cover alternating passenger service at all stops\",\n");
     Report += TEXT("  \"stopPointIndices\":[0,2,4,6],\n  \"sideOrder\":[\"east\",\"north\",\"west\",\"south\"],\n");
@@ -114,11 +129,21 @@ void UCityRoadRoutesCheck::Finish(const FString& Reason)
         *RoadJsonString(GetWorld()->GetMapName()), *RoadJsonString(FDateTime::UtcNow().ToIso8601()),
         *RoadJsonString(Reason));
     Report += FString::Printf(TEXT("  \"elapsedSeconds\":%.3f,\n  \"results\":[\n%s\n  ]\n}\n"), Elapsed, *Rows);
-    const FString Directory = FPaths::ProjectSavedDir() / TEXT("QA/CityRoadRoutesCheck");
+    const FString Name = Region == TEXT("Core") ? TEXT("CityRoadRoutesCheck")
+        : TEXT("CityRoadRoutesCheck_") + (bValidRegion ? Region : TEXT("Invalid"));
+    const FString Directory = FPaths::ProjectSavedDir() / TEXT("QA") / Name;
     IFileManager::Get().MakeDirectory(*Directory, true);
     if (!FFileHelper::SaveStringToFile(Report, *(Directory / TEXT("Report.json"))))
     {
         bPassed = false;
     }
-    UE_LOG(LogTemp, Display, TEXT("CITY_ROAD_ROUTES_CHECK_FINISH success=%d reason=%s"), bPassed, *Reason);
+    if (Region == TEXT("Core"))
+    {
+        UE_LOG(LogTemp, Display, TEXT("CITY_ROAD_ROUTES_CHECK_FINISH success=%d reason=%s"), bPassed, *Reason);
+    }
+    else
+    {
+        UE_LOG(LogTemp, Display, TEXT("CITY_ROAD_ROUTES_CHECK_FINISH success=%d region=%s reason=%s"),
+            bPassed, *Region, *Reason);
+    }
 }
