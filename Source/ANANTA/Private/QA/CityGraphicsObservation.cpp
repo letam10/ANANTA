@@ -77,6 +77,7 @@ void UCityGraphicsObservation::RecordConfiguration()
         TEXT("sg.ShadingQuality"), TEXT("r.ScreenPercentage"), TEXT("t.MaxFPS"), TEXT("r.VSync"),
         TEXT("r.Nanite.Culling.Frustum"), TEXT("r.Nanite.Culling.HZB"), TEXT("r.Streaming.PoolSize"),
         TEXT("r.Nanite.Streaming.ReservedResources"), TEXT("r.Nanite.AsyncRasterization"),
+        TEXT("r.Nanite.AsyncRasterization.ShadowDepths"),
         TEXT("r.Lumen.HardwareRayTracing"), TEXT("r.Shadow.Virtual.SMRT.RayCountDirectional"),
         TEXT("r.Shadow.Virtual.SMRT.SamplesPerRayDirectional"), TEXT("r.Shadow.Virtual.SMRT.RayCountLocal"),
         TEXT("r.Lumen.ScreenProbeGather.DownsampleFactor"), TEXT("r.Lumen.Reflections.DownsampleFactor"),

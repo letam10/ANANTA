@@ -12,8 +12,13 @@ DIRECTIONS = ["front", "rear", "left", "right", "upper"]
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--scope", choices=("metro", "small", "facilities"), required=True)
-    scope = parser.parse_args().scope
-    directory = ROOT / f"Saved/QA/CityPlacement_{scope}"
+    parser.add_argument("--diagnostic", choices=("None", "NaniteShadowAsyncOn"), default="None")
+    parser.add_argument("--asset", choices=("All", "Rowboat"), default="All")
+    args = parser.parse_args()
+    scope = args.scope
+    suffix = "" if args.asset == "All" else f"_{args.asset}"
+    suffix += "" if args.diagnostic == "None" else f"_{args.diagnostic}"
+    directory = ROOT / f"Saved/QA/CityPlacement_{scope}{suffix}"
     data = json.loads((directory / "Manifest.json").read_text(encoding="utf-8"))
     views = data["views"]
     assert len(views) == data["placements"] * 5
@@ -50,7 +55,8 @@ def main():
             assert written.size == (2880, 1176)
         rows.append(dict(index=index, id=group[0]["id"], contact=str(path),
                          images=[view["image"] for view in group], visualAccepted=False))
-    report = dict(scope=scope, nativeCaptureCount=len(views), contacts=rows, visualAccepted=False)
+    report = dict(scope=scope, diagnostic=args.diagnostic,
+                  nativeCaptureCount=len(views), contacts=rows, visualAccepted=False)
     (output / "index.json").write_text(json.dumps(report, indent=2), encoding="utf-8")
     print(f"CITY_PLACEMENT_CONTACTS_OK scope={scope} captures={len(views)} contacts={len(rows)}")
 

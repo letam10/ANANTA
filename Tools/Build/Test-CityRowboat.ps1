@@ -70,7 +70,8 @@ if ($report.passed -ne $true -or $report.scope -ne 'authored-map player rowboat 
     -or -not $log.Contains('CITY_ROWBOAT_CHECK_FINISH success=1')) {
     throw "Rowboat input QA failed or completion evidence is incomplete: $reportPath"
 }
-$completedUtc = [DateTime]::Parse($report.completedUtc).ToUniversalTime()
+# PowerShell 7 da doc ISO JSON thanh DateTime UTC; Parse lai se lam mat timezone.
+$completedUtc = ([DateTimeOffset]$report.completedUtc).UtcDateTime
 if ($completedUtc -lt $startedUtc -or $completedUtc -gt [DateTime]::UtcNow.AddSeconds(1)) {
     throw 'Rowboat report completion timestamp is outside this run'
 }

@@ -2,7 +2,8 @@
 param(
     [string]$ExecutablePath,
     [switch]$ProfileRender,
-    [ValidateSet('None', 'NonNaniteBatchOff', 'VsmOff', 'NaniteAsyncOff', 'NaniteReservedOff')]
+    [ValidateSet('None', 'NonNaniteBatchOff', 'VsmOff', 'NaniteAsyncOff',
+        'NaniteReservedOff', 'NaniteShadowAsyncOn', 'Dred')]
     [string]$Diagnostic = 'None',
     [string]$EngineRoot = 'C:\Program Files\Epic Games\UE_5.8',
     [ValidateSet('Base', 'GI32', 'Reflections4', 'VsmBias0')]
@@ -69,12 +70,19 @@ $arguments = @(
 if ($ProfileRender) {
     $arguments += '-CityProfileRender'
 }
-if ($Diagnostic -ne 'None') {
+if ($Diagnostic -eq 'Dred') {
+    $arguments += '-dred'
+    $arguments += '-ini:Engine:[SystemSettings]:D3D12.TrackAllAllocations=1'
+    'DRED and allocation tracking only; not Max performance acceptance.' |
+        Set-Content -LiteralPath (Join-Path $qaPath 'Diagnostic.txt')
+} elseif ($Diagnostic -ne 'None') {
     # Chi chan doan duong render gay PageFault; khong tinh la Max mac dinh.
     $override = if ($Diagnostic -eq 'VsmOff') {
         'r.Shadow.Virtual.Enable=0'
     } elseif ($Diagnostic -eq 'NaniteAsyncOff') {
         'r.Nanite.AsyncRasterization=0'
+    } elseif ($Diagnostic -eq 'NaniteShadowAsyncOn') {
+        'r.Nanite.AsyncRasterization.ShadowDepths=1'
     } elseif ($Diagnostic -eq 'NaniteReservedOff') {
         'r.Nanite.Streaming.ReservedResources=0'
     } else {

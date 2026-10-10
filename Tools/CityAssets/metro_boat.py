@@ -1,6 +1,56 @@
 """Open clinker-style rowboat with seats, ribs and stowed oars."""
 import math
+import bmesh
 from metro_geometry import g, panel, slender_beam, finish
+
+
+def raised_floor(stations):
+    # San lien khoi cao 33cm, mep an vao thanh 8mm de khong lo nuoc qua khe.
+    sections = []
+    for a, b in zip(stations, stations[1:]):
+        for step in range(8):
+            t = step / 8
+            sections.append(tuple(u + (v - u) * t for u, v in zip(a, b)))
+    sections.append(stations[-1])
+    points = []
+    for x, width, keel in sections:
+        top = max(.33, keel + .055)
+        half_width = width * (.32 + .68 * (top - keel) / (.72 - keel)) + .008
+        points.extend([(x, -half_width, top - .03), (x, half_width, top - .03),
+                       (x, half_width, top), (x, -half_width, top)])
+    faces = [(3, 2, 1, 0)]
+    for i in range(len(sections) - 1):
+        for j in range(4):
+            faces.append((4 * i + j, 4 * i + (j + 1) % 4,
+                          4 * (i + 1) + (j + 1) % 4, 4 * (i + 1) + j))
+    faces.append(tuple(4 * (len(sections) - 1) + j for j in range(4)))
+    obj = g.mesh("Sealed raised sole", points, faces, mat="City_wood_floor")
+    bm = bmesh.new()
+    bm.from_mesh(obj.data)
+    assert all(edge.is_manifold for edge in bm.edges)
+    bm.free()
+    group = obj.vertex_groups.new(name="DryFloor")
+    group.add(list(range(len(obj.data.vertices))), 1, "REPLACE")
+    return obj
+
+
+def wood_materials():
+    # UV theo met, van go doc theo thanh; khong nhan them mau nau tu palette.
+    for obj in g.g.PARTS:
+        if obj.name.startswith(("Inner rib", "Oarlock", "Bow painter ring")):
+            continue
+        obj.data.materials.clear()
+        obj.data.materials.append(g.g.MATERIALS["City_wood_floor"])
+        g.uv(obj)
+        uv = obj.data.uv_layers.active
+        for face in obj.data.polygons:
+            axis = max(range(3), key=lambda i: abs(face.normal[i]))
+            for index in face.loop_indices:
+                co = obj.data.vertices[obj.data.loops[index].vertex_index].co
+                pair = (co.z, co.y) if axis == 0 else (co.z, co.x) if axis == 1 else (co.y, co.x)
+                if obj.name.startswith("Bench seat"):
+                    pair = (pair[1], pair[0])
+                uv.data[index].uv = (pair[0] / 1.8, pair[1] / 1.8)
 
 
 def rowboat():
@@ -24,6 +74,7 @@ def rowboat():
           + [(x, w * .34, z) for x, w, z in reversed(stations)], .055, color="wood")
     panel("Stern transom", [(-2.055, -.44, .73), (-2.055, .44, .73),
                             (-2.055, .16, .43), (-2.055, -.16, .43)], .045, axis=0, color="wood")
+    raised_floor(stations)
     for x, width in [(-1.3, 1.37), (0, 1.63), (1.13, 1.0)]:
         g.box("Bench seat", (x, 0, .56), (.34, width, .065), color="wood", bevel=.018)
         a, b = next((a, b) for a, b in zip(stations, stations[1:]) if a[0] <= x <= b[0])
@@ -45,4 +96,8 @@ def rowboat():
               .035, color="wood")
     g.torus("Bow painter ring", (2.10, 0, .63), .05, .012,
             rotation=(0, math.pi / 2, 0), segments=16, sides=6)
-    return finish("Rowboat")
+    wood_materials()
+    obj = finish("Rowboat")
+    obj["floor_top_cm"] = 33.0
+    obj["local_waterline_cm"] = 25.0
+    return obj

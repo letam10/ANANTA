@@ -1,6 +1,26 @@
 # Vòng tích hợp thành phố 6,8 km
 
-Cập nhật 2026-10-10. Map 6,8 km đã lưu; EXE đã kiểm vẫn là 3,4 km.
+Cập nhật 2026-10-10. Map/HLOD và EXE 6,8 km đã lưu; runtime native đang lỗi GPU.
+
+## Vòng hiện tại: ảnh native và sàn thuyền
+
+- Build Editor capture PASS 49,99 giây; shadow async diagnostic native chụp 30 ảnh/sáu contact, exit 0.
+- Xem đủ sáu contact: sàn thuyền bị nước phủ; bến che một góc, mái ga che nhiều góc tàu.
+  Xe cứu hỏa/máy bay/trực thăng không thấy nổi/xuyên rõ, nhưng texture/scene còn đơn giản.
+- Camera đã sửa, giữ nguyên model pose/map: tàu dưới mái, góc phải thuyền cao hơn bến.
+  Test source tái hiện hai góc cũ bị che và xác nhận 15 ray mới thông thoáng PASS.
+- Model thuyền thêm sàn kín local Z=33 cm, cao hơn waterline 25 cm là 8 cm, giữ pivot/bounds.
+  4.120 tris/budget 5.000, gỗ PBR hiện có, UV/manifold/7.421 ray sàn/FBX/hash/tám ảnh nguồn PASS.
+  Bốn FBX phương tiện khác giữ byte/hash; reimport/ba LOD/collision/readback PASS.
+- Native lộ lỗi reimport giữ slot cũ; sửa gán material theo tên, sáu regression PASS.
+  Wrapper thuyền sau sửa UTC PASS exit 0, chèo 79,08 cm; bảy regression timestamp PASS.
+  Chụp/xem đủ năm ảnh thuyền mới native: sàn khô, gỗ đúng, góc phải/trên thông thoáng.
+  Hai tàu còn cột che một phần; props nhỏ đang chụp, công trình và package thuyền mới vẫn chờ.
+- EXE cùng package: shadow diagnostic Check PASS, Reload FAIL exit 3; slot QA phục hồi.
+- DRED/TrackAllAllocations=1 hoàn tất một hành trình, 60,94 FPS; không tính đạt Max vì overhead.
+  Chưa kết luận nguyên nhân GPU hoặc đổi preset. Mục tiêu native 90 FPS vẫn chưa đạt.
+- Chi tiết: CITY_6800_METRO_VISUAL_REVIEW.md, CITY_ROWBOAT_DRY_FLOOR_ROUND.md,
+  CITY_6800_NATIVE_TRIAL_ROUND.md; ảnh props nhỏ/công trình và rìa EXE còn chờ.
 
 ## Nguồn đã làm
 
@@ -43,7 +63,7 @@ Cập nhật 2026-10-10. Map 6,8 km đã lưu; EXE đã kiểm vẫn là 3,4 km.
 - Editor 3,4 km, Max tùy chỉnh + Nanite ReservedResources=0: gameplay PASS 282,17 giây,
   14.206 frame, 50,34 FPS trung bình, p95 24,98 ms, 52 frame trên 33,3 ms và 10 trên 50 ms.
   Giữ tất cả frame; chưa đạt 90 FPS. Hai thử nghiệm trước vẫn PageFault.
-- ReservedResources=0 được ghi vào nguồn sau lượt PASS; chưa có EXE mới hoặc reload xác nhận.
+- ReservedResources=0 đã vào EXE 6,8 km; Base native vẫn PageFault, reload chưa xác nhận.
 - Tám vật nhỏ đã xem 64 ảnh/tám hướng và kiểm geometry/hash; nhập engine PASS, bounds khớp, ba LOD.
 - Kiểm mặt đỡ sửa bát/cốc/lọ hoa và khoảng cách nồi với lò vi sóng; ảnh đặt cảnh chưa chạy.
 - Kiểm mặt đỡ nguồn PASS tám props và bắt ba vị trí nhô mép cũ; chuẩn bị 45 ảnh đặt gồm bồn rửa.
@@ -61,7 +81,7 @@ Cập nhật 2026-10-10. Map 6,8 km đã lưu; EXE đã kiểm vẫn là 3,4 km.
   Git LFS fsck PASS, upload 31/31 object mới. Map lưu tại checkpoint vẫn 3,4 km.
 - Apply 6,8 km PASS exit 0: 85.386 nhóm, 1.660.761 instance, 10.754 nhà, 87.142 actor.
   Commandlet mất 3.541,71 giây, peak RAM 4.290 MB; lưu xong lúc 00:47:52 UTC ngày 10/10.
-  Readback/body/đường/ranh giới và chuỗi tám fixture vật lý đã PASS; ảnh GPU/EXE vẫn chờ.
+  Readback/body/đường/ranh giới, chuỗi tám fixture vật lý/HLOD/package PASS; ảnh/runtime còn chờ.
 - Đã sửa ray lên/xuống tàu bắt sàn bên dưới mái ga, kèm regression hai sân ga và vật cản cửa.
   Build/regression và gate hai tàu tại ga trong map mới đã PASS.
 - Đã chạy 14 sweep capsule 38/92 qua rìa/góc/biển; lượt đầu FAIL 14/14 do mesh còn compiling.
@@ -87,7 +107,7 @@ Cập nhật 2026-10-10. Map 6,8 km đã lưu; EXE đã kiểm vẫn là 3,4 km.
   Ranh giới sau chờ compilation PASS 14/14; chưa coi gameplay hoặc chặn rìa trong EXE là PASS.
 - Bộ thử EXE Max có ba biến thể GI32/Reflections4/VsmBias0, kiểm actual cvar và hash cùng package.
   Giữ đủ mọi frame, yêu cầu evidence mới và phục hồi hai slot QA trong finally; chín fixture dữ liệu PASS.
-  Chưa chạy EXE 6,8 km hoặc nghiệm thu hình ảnh/FPS; không thay đổi preset mặc định từ các trial chưa đo.
+  Base EXE 6,8 km đã chạy và FAIL GPU trước đo; chưa nghiệm thu ảnh/FPS hoặc đổi preset từ trial.
 - Checkpoint f3cf22c010deea49d3671a22e26f73a752a6f15e đã push, LFS fsck PASS, remote SHA khớp.
   Chỉ mã/tài liệu; map mới chưa stage. Không coi checkpoint nguồn là EXE hoặc HLOD mới.
 - Fixture tàu đầu FAIL sau 180 giây vì mốc khứ hồi lấy khi tàu giữa đường; report lỗi/log đã lưu riêng.
@@ -111,7 +131,7 @@ Cập nhật 2026-10-10. Map 6,8 km đã lưu; EXE đã kiểm vẫn là 3,4 km.
 - Gate HLOD identity mới bắt đúng map 6,8 km, hash evidence, log rebuild mới và actor/GUID đầy đủ.
   27 fixture dữ liệu PASS; tám regression cầu nối boundary-source PASS; build C++ PASS 60,38 giây.
   API thực đọc 31 nguồn proxy cũ PASS exit 0; chỉ xác nhận binding, không nhận HLOD cũ làm map mới.
-  Chi tiết: CITY_6800_HLOD_IDENTITY_GATE.md; full rebuild/readback vẫn chờ.
+  Chi tiết: CITY_6800_HLOD_IDENTITY_GATE.md; full rebuild/readback đã PASS như ghi bên dưới.
   Checkpoint 7e539694f64afc305e1aa5b2a7851f18d270b172 đã push, remote SHA khớp.
   Full rebuild PASS 3.557 proxy, exit 0; run 9a4ba05837584d998162a3092dd72dba, xong 03:44:18 UTC.
   Readback PASS exit 0: đủ 3.557/3.557 actor/GUID, 1.619.348 instance, mesh/material không thiếu.
@@ -124,11 +144,20 @@ Cập nhật 2026-10-10. Map 6,8 km đã lưu; EXE đã kiểm vẫn là 3,4 km.
   Regex sg.*Quality bắt cả ResolutionQuality; sửa đặt native 100% sau quality và thêm gate cvar thực.
   Bốn regression chạy các assignment AST của runner PASS, gồm input 100/85/3/72,5.
   Giữ toàn bộ ảnh/log lỗi trong CityPlacement_metro_Scale3Rejected; không nhận chất lượng hoặc FPS.
-  Đang chụp lại native 100%; sửa script QA không đổi model, map hoặc preset game.
+  Chụp lại native 100% đã FAIL; sửa script QA không đổi model, map hoặc preset game.
   Lượt native lại FAIL exit 3 trước capture: DXGI_ERROR_DEVICE_HUNG/PageFault ở Nanite culling/VSM.
   Log CityPlacement_metro.log 03:53:48 UTC ghi ReservedResources=0 đã áp dụng; chưa kết luận root cause.
   File native không có RenderConfig/ảnh đầu; không nhận hình ảnh, Max hoặc FPS từ lượt 3% trước.
-  Chuẩn bị package City6800 để so Player/Editor; vật lý/HLOD cấu trúc vẫn PASS, ảnh chưa đạt.
+  Package City6800 PASS build/cook/stage/archive, 698,86 giây; cook 5.382 package.
+  EXE: Saved/Builds/City6800/Windows/ANANTA/Binaries/Win64/ANANTA.exe, 338.096.640 byte.
+  Base native Player FAIL exit 3, PageFault lúc 04:13:03 UTC; chưa có FrameTimes/RenderConfig hợp lệ.
+  Log: Saved/Logs/CityMaxGraphicsPackaged.log; Trial.json ghi finally phục hồi hai slot QA.
+  Rà source/log: CITY_6800_NANITE_NATIVE_DIAGNOSIS.md; hai test lịch async đề xuất chưa nhận là fix.
+  Global async=0 FAIL PageFault frame 36; shadow async=1 PASS hành trình tám dịch vụ 281,76 giây.
+  20.167 frame / 71,575727 FPS, p95 16 ms, max 387,152 ms; giữ đủ ba frame trên 33,3/50 ms.
+  GPU 13,38 ms/render thread 13,95 ms; native 1080p/100%/SG3, VSM bật; chưa đạt 90 FPS.
+  Fingerprint ba trial khớp cùng package và phục hồi slot QA; chưa suy ra root cause/reload ổn định.
+  CITY_6800_NATIVE_TRIAL_ROUND.md ghi evidence và bước chụp diagnostic riêng, chưa đổi preset.
 - Rà HLOD thấy report cũ 962 proxy/591.633 instance không thuộc map mở rộng; phải kiểm lại map identity.
   Chi tiết và các gap cần sửa: CITY_6800_HLOD_READINESS.md.
 - Rà GPU độc lập đã ghi ba phương án và đánh đổi trong CITY_GPU_COST_AUDIT.md; chưa áp dụng thử mới.
@@ -143,7 +172,7 @@ Cập nhật 2026-10-10. Map 6,8 km đã lưu; EXE đã kiểm vẫn là 3,4 km.
 2. Map 6,8 km đã apply/readback, automation/body/đường/ranh giới PASS.
 3. Tám fixture vật lý thuyền/tàu/mái/năm vùng xe PASS; còn gameplay người chơi trong EXE.
 4. Chụp/xem năm góc từng vị trí mới; sửa nổi/chìm/xuyên/lệch hoặc silhouette chưa hợp lý.
-5. Rebuild toàn bộ HLOD, kiểm proxy, package EXE riêng City6800.
+5. HLOD/package đã PASS; khoanh vùng GPU bằng từng thay đổi QA riêng trên cùng EXE City6800.
 6. Gameplay ngắn native Max, giữ mọi frame; kiểm cài đặt/save/reload và lỗi GPU.
 7. Ghi kết quả, commit/push, LFS fsck và đối chiếu remote SHA.
 

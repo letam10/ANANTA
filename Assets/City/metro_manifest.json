@@ -207,8 +207,9 @@
           88.7
         ]
       },
-      "triangles": 3732,
+      "triangles": 4120,
       "materialSlots": [
+        "City_wood_floor",
         "Living_Enamel",
         "Living_Steel"
       ],
@@ -230,7 +231,7 @@
         ]
       },
       "usage": "Static scenery only; no rail, flight, rotor or rowing gameplay",
-      "sha256": "8c4e985f8bd94ac50d9dc36eef890deb24b480c1f1b9a23e6634405f91a06c96"
+      "sha256": "688a02db6b5a3aa677b95c8c092ec06c9cbd22a2208fcb772159e0b02fd48b12"
     }
   ],
   "materials": [
@@ -290,12 +291,31 @@
       "normalConvention": "OpenGL",
       "source": "Original deterministic ANANTA living surface authoring",
       "license": "Original project asset"
+    },
+    {
+      "id": "City_wood_floor",
+      "baseColor": "Textures/wood_floor/color.jpg",
+      "normal": "Textures/wood_floor/normal.jpg",
+      "roughness": "Textures/wood_floor/roughness.jpg",
+      "ao": null,
+      "metallic": null,
+      "normalConvention": "OpenGL",
+      "baseColorFactor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "metallicFactor": 0,
+      "roughnessFactor": 0.65,
+      "source": "https://polyhaven.com/a/wood_floor",
+      "license": "CC0-1.0"
     }
   ],
   "sourceFiles": [
     {
       "file": "MetroDetails/MetroDetails.blend",
-      "sha256": "9876eeec12ca64e652c3933f8e8f2640170651b8a19cfa168a28dafdd145cfa7",
+      "sha256": "2eb3cc8b0c39754fff5e1cbe8f55850c36eb21cb4ccbab4174a2ca9d38905645",
       "source": "Original ANANTA transit source",
       "license": "Original project asset"
     },
@@ -331,13 +351,13 @@
     },
     {
       "file": "MetroDetails/Sources/Generator/metro_boat.py",
-      "sha256": "1e67c9748fd392f852c682b69ccf1f7ed8ab6395342779d4807b871538f5aef5",
+      "sha256": "2888c60ce55a25de2340f5587923b31353510e312ee80cf3186d3abafc027eb0",
       "source": "Original ANANTA transit source",
       "license": "Original project asset"
     },
     {
       "file": "MetroDetails/Sources/Generator/metro_build.py",
-      "sha256": "0cc7ee0d1fdf47f7ec83192945582b9fcae3a2f0caef40a902856a90d34cb90a",
+      "sha256": "10b88b60b9d69d525d9aec61e093e49c01319004471325bc9a448b900b87a976",
       "source": "Original ANANTA transit source",
       "license": "Original project asset"
     },
@@ -355,7 +375,7 @@
     },
     {
       "file": "MetroDetails/Sources/Generator/metro_render.py",
-      "sha256": "7bb8c5535741ed1a3e2bd560af0b17b6f272db2a1784df5b82f04c5cb521f115",
+      "sha256": "9037c7be366b58b40200413798924c97039ac405a8bd5e808df11e47f5cdeaac",
       "source": "Original ANANTA transit source",
       "license": "Original project asset"
     },
@@ -374,56 +394,74 @@
     {
       "file": "LivingDetails/Textures/Enamel_baseColor.png",
       "sha256": "1a2d955e8076839dcede2d82db93972a90da39dbf0511dc101c35933ac3dd9ef",
-      "source": "Existing shared ANANTA PBR texture",
+      "source": "Original deterministic ANANTA living surface authoring",
       "license": "Original project asset"
     },
     {
       "file": "LivingDetails/Textures/Enamel_normal.png",
       "sha256": "f235bd90302dcee34d1617fef82eb6046c8a4a9e88f95717fbc2083fab4f479d",
-      "source": "Existing shared ANANTA PBR texture",
+      "source": "Original deterministic ANANTA living surface authoring",
       "license": "Original project asset"
     },
     {
       "file": "LivingDetails/Textures/Enamel_roughness.png",
       "sha256": "6150ec3b86834026cddc107ab280cf0a11cfd9066e3f2f19db695ed745680e05",
-      "source": "Existing shared ANANTA PBR texture",
+      "source": "Original deterministic ANANTA living surface authoring",
       "license": "Original project asset"
     },
     {
       "file": "LivingDetails/Textures/Steel_baseColor.png",
       "sha256": "0092f50d855a583eb70d1699616974af1f2f6d6a507ba9d5d551885637382b84",
-      "source": "Existing shared ANANTA PBR texture",
+      "source": "Original deterministic ANANTA living surface authoring",
       "license": "Original project asset"
     },
     {
       "file": "LivingDetails/Textures/Steel_normal.png",
       "sha256": "7924376840ec8db2204e93694f32fa56b1e19b1fb17b3d0cf85c6b8181cd9bee",
-      "source": "Existing shared ANANTA PBR texture",
+      "source": "Original deterministic ANANTA living surface authoring",
       "license": "Original project asset"
     },
     {
       "file": "LivingDetails/Textures/Steel_roughness.png",
       "sha256": "dcc1ff90924f0671d94b49337c0f64c472aa0b19818baf5cdebdc823fb55fcac",
-      "source": "Existing shared ANANTA PBR texture",
+      "source": "Original deterministic ANANTA living surface authoring",
       "license": "Original project asset"
     },
     {
       "file": "LivingDetails/Textures/Dark_baseColor.png",
       "sha256": "7ebd2b78b6e88e80984d0feabbe7465a36059ecb2e9814b25db08b899832bdda",
-      "source": "Existing shared ANANTA PBR texture",
+      "source": "Original deterministic ANANTA living surface authoring",
       "license": "Original project asset"
     },
     {
       "file": "LivingDetails/Textures/Dark_normal.png",
       "sha256": "fe3e25bd1ce7078ab193a6282d47e8027fa4c3a58cb025dd4838551cd4b2446b",
-      "source": "Existing shared ANANTA PBR texture",
+      "source": "Original deterministic ANANTA living surface authoring",
       "license": "Original project asset"
     },
     {
       "file": "LivingDetails/Textures/Dark_roughness.png",
       "sha256": "07c6e095040f2e8fac40e4e4835e2550e8fcc5268d6937ba67f10d6ca1115820",
-      "source": "Existing shared ANANTA PBR texture",
+      "source": "Original deterministic ANANTA living surface authoring",
       "license": "Original project asset"
+    },
+    {
+      "file": "Textures/wood_floor/color.jpg",
+      "sha256": "2a1c07687b6dbb214c4b9213739c6d92d425f1f0fc8ab3ac157f105d78240789",
+      "source": "https://polyhaven.com/a/wood_floor",
+      "license": "CC0-1.0"
+    },
+    {
+      "file": "Textures/wood_floor/normal.jpg",
+      "sha256": "452247f0d0d1b7fc7f8324ff3b6ed60bcc6de1405f4284eeb8d9bce90d4939c2",
+      "source": "https://polyhaven.com/a/wood_floor",
+      "license": "CC0-1.0"
+    },
+    {
+      "file": "Textures/wood_floor/roughness.jpg",
+      "sha256": "061f1e1293251b2d28c76e3fac1ea9452b0e8648bb8f9b3728e09db386166e5c",
+      "source": "https://polyhaven.com/a/wood_floor",
+      "license": "CC0-1.0"
     }
   ]
 }

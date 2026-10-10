@@ -1,5 +1,6 @@
 """Forty independent orbit renders of the saved asset scene, CPU only."""
 import json
+import argparse
 import math
 import sys
 from pathlib import Path
@@ -20,9 +21,13 @@ def point_at(obj, target):
 
 
 def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--asset", choices=["Rowboat"])
+    args = parser.parse_args(sys.argv[sys.argv.index("--") + 1:] if "--" in sys.argv else [])
     bpy.ops.wm.open_mainfile(filepath=str(ROOT / "Assets/City/MetroDetails/MetroDetails.blend"))
     scene = bpy.context.scene
     assets = [o for o in scene.objects if o.type == "MESH"]
+    selected = [o for o in assets if o.name == args.asset] if args.asset else assets
     scene.render.engine = "CYCLES"
     scene.cycles.device = "CPU"
     scene.cycles.samples = 20
@@ -55,7 +60,7 @@ def main():
         point_at(obj, (0, 0, 1))
         lights.append(obj)
     records = []
-    for obj in assets:
+    for obj in selected:
         for other in assets:
             other.hide_render = other != obj
         size = max(obj.dimensions.x, obj.dimensions.y, obj.dimensions.z)
@@ -70,21 +75,25 @@ def main():
             angle = math.radians(yaw)
             camera.location = target + Vector((math.cos(angle) * size, math.sin(angle) * size, size * .56))
             point_at(camera, target)
-            path = OUT / f"{obj.name}_{yaw:03}.png"
+            prefix = "Rowboat_DryFloor" if args.asset else obj.name
+            path = OUT / f"{prefix}_{yaw:03}.png"
             scene.render.filepath = str(path)
             bpy.ops.render.render(write_still=True)
             records.append(dict(id=obj.name, yaw=yaw, elevationDegrees=29.25, file=path.name,
                                 sha256=digest(path), cameraLocation=list(camera.location),
+                                threads=scene.render.threads, device=scene.cycles.device,
                                 source="Actual Cycles CPU render of saved mesh"))
         for light in lights:
             light.data.energy /= (size / 8) ** 2
             light.location /= size / 8
             light.data.size /= size / 8
-    assert len(records) == 40 and len({r["sha256"] for r in records}) == 40
-    (OUT / "render_audit.json").write_text(json.dumps(dict(status="PASS", count=40,
+    expected = 8 if args.asset else 40
+    assert len(records) == expected and len({r["sha256"] for r in records}) == expected
+    audit_name = "rowboat_dry_floor_render_audit.json" if args.asset else "render_audit.json"
+    (OUT / audit_name).write_text(json.dumps(dict(status="PASS", count=expected,
         engine="Cycles CPU", samples=20, resolution=[800, 600], views=records,
         acceptance="Rendered evidence; visual acceptance must be recorded after inspecting images"), indent=2))
-    print("METRO_RENDER_PASS 40")
+    print("METRO_RENDER_PASS", expected)
 
 
 if __name__ == "__main__":

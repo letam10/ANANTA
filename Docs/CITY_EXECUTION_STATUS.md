@@ -21,7 +21,8 @@ Nguồn: nhánh codex/city-expansion; chi tiết: CITY_MOBILITY_ROUND.md.
 ### Thành phố
 
 - Apply/readback map 6,8 km PASS: 10.754 nhà, 85.386 nhóm, 1.660.761 instance.
-  EXE đã kiểm vẫn 3,4 km; chưa có EXE 6,8 km hoặc số FPS của map mới.
+  EXE 6,8 km đã build/cook/stage/archive PASS; Base native FAIL GPU.
+  Diagnostic shadow async=1 hoàn tất một hành trình, 71,58 FPS; reload vẫn FAIL, chưa đạt 90 FPS.
 - Build mới PASS 78,62 giây; automation 23/23 state Success, hai bài có cảnh báo dọn fixture.
   Regression mái ga/tuyến khu vực/cap FPS tùy chỉnh đều Success; đọc đủ 86.180 actor PASS.
 - Nguồn QA vòng này đã push 5ebc30bf499bdbab9ad4eabc4f094ad736a0f7bd, LFS fsck PASS và remote SHA khớp.
@@ -31,7 +32,7 @@ Nguồn: nhánh codex/city-expansion; chi tiết: CITY_MOBILITY_ROUND.md.
   FAIL trước do commandlet query lúc mesh còn compiling và physics state chưa tạo; đã chờ mesh/tree/body.
   Đây là nghiệm thu editor của map đã lưu; chặn rìa trong EXE vẫn cần kiểm riêng.
 - Công cụ thử Max trong EXE đã thêm provenance package/cvar, giữ mọi frame và phục hồi hai slot QA.
-  Chín test fixture dữ liệu PASS; chưa chạy gameplay hoặc xác nhận FPS bằng bộ công cụ này.
+  Chín test fixture dữ liệu PASS; Base 6,8 km đã chạy nhưng lỗi GPU trước đo FPS.
 - Checkpoint f3cf22c010deea49d3671a22e26f73a752a6f15e đã push; LFS fsck PASS, remote SHA khớp.
   Gồm helper chờ mesh/physics, QA ranh giới, chuỗi gameplay và công cụ trial; không gồm map 6,8 km.
 - Fixture tàu đầu FAIL ở mốc khứ hồi lấy giữa đường: mỗi tàu chạy 591 m, lên/xuống tám lượt, không blocker.
@@ -55,9 +56,28 @@ Nguồn: nhánh codex/city-expansion; chi tiết: CITY_MOBILITY_ROUND.md.
   Lỗi sắp thứ tự receipt PowerShell/Python đã sửa; sáu regression và receipt thật PASS, không rebuild lại.
   Lượt 30 ảnh đầu bị loại: regex QA ghi render scale 3%, dù PNG là 1080p; không nhận hình ảnh/FPS.
   Đã sửa thứ tự replacement và gate cvar thực 100%; bốn regression trên runner PASS.
-  Evidence lỗi lưu CityPlacement_metro_Scale3Rejected; đang chụp lại native, các scope khác vẫn chờ.
+  Evidence lỗi lưu CityPlacement_metro_Scale3Rejected; chụp lại native FAIL, các scope khác vẫn chờ.
   Chụp native lại FAIL exit 3 trước ảnh đầu: D3D12 PageFault/Nanite-VSM culling, ReservedResources=0 đã áp dụng.
-  Chưa nhận ảnh hoặc 90 FPS; tiếp tục khoanh vùng và chuẩn bị EXE 6,8 km để đối chiếu Editor/Player.
+  City6800 package PASS 698,86 giây, cook 5.382 package; EXE riêng ở Saved/Builds/City6800.
+  Base packaged native FAIL exit 3, D3D12 PageFault lúc 04:13:03 UTC; chưa có frame/FPS hợp lệ.
+  Cả Editor/Player đều lỗi native; đang thử riêng lịch async Nanite, chưa kết luận nguyên nhân.
+  Global async=0 vẫn PageFault; riêng shadow async=1 hoàn tất EXE 281,76 giây, exit 0.
+  20.167 frame, 71,58 FPS, p95 16 ms; giữ cả ba frame trên 33,3/50 ms; chưa đạt 90 FPS.
+  Ba trial fingerprint cùng package, hai slot QA đều phục hồi; chỉ diagnostic, chưa đổi preset.
+  Build QA capture PASS 49,99 giây; native shadow diagnostic chụp đủ 30 ảnh/6 contact, không crash.
+  Đã xem đủ sáu contact: thuyền lộ nước ở sàn, một góc bị bến che; camera tàu bị mái ga che.
+  Chưa nhận chất lượng cuối: xe/sân bay/biển vẫn đơn giản. Không coi đủ PNG là nghiệm thu đẹp.
+  Sửa camera dưới mái ga và cao hơn bến; 15 ray mới không bị che, tái hiện hai góc cũ bị che.
+  Model thuyền có sàn kín local Z=33 cm, cao hơn waterline 8 cm; 4.120 tris, ba material slots.
+  Tám ảnh nguồn, UV/manifold/7.421 ray sàn/FBX/hash PASS; Unreal reimport PASS 4.120 tris/ba LOD.
+  Wrapper lỗi đọc UTC PowerShell 7 đã sửa/bảy regression PASS; chạy lại PASS, chèo 79,08 cm.
+  Native phát hiện ba slot material bị reimport giữ thứ tự cũ; sửa gán theo tên, sáu regression PASS.
+  Unreal readback và năm ảnh thuyền mới PASS: sàn khô, vân gỗ đúng, bến/người chơi không che model.
+  Hai tàu còn cột che một phần; props nhỏ đang chụp native, công trình và package thuyền mới còn chờ.
+  Settings cùng package: Check PASS, Reload FAIL GPU exit 3; hai slot QA phục hồi đúng.
+  DRED/TrackAllAllocations=1 hoàn tất 281,93 giây, 60,94 FPS; có overhead, không tính đạt Max.
+  DRED không tái hiện fault nên chưa xác định resource gây lỗi; chưa đổi preset sản phẩm.
+  Chi tiết: CITY_6800_NATIVE_TRIAL_ROUND.md và CITY_6800_METRO_VISUAL_REVIEW.md.
 - 3.534 nhà, 784 ô; bảy bộ mặt tiền, tám dạng khối, màu/chiều cao khác nhau.
 - Map 3,4 km đọc lại theo lô: 25.026 nhóm, 602.965 instance; 19 đồ sinh hoạt và 16 đèn mới.
   Gồm năm nhóm civic mới; đã sửa báo cáo nền và cách đếm bỏ sót HISM mang nhãn Living.
@@ -121,7 +141,7 @@ Nguồn: nhánh codex/city-expansion; chi tiết: CITY_MOBILITY_ROUND.md.
   Hoàn tất tám dịch vụ; giữ cả 22 frame trên 33,3 ms và sáu frame trên 50 ms trong số liệu.
 - Số cũ 52,56 FPS thuộc map 1,7 km; không dùng làm so sánh trực tiếp với bản mới.
 - D3D12 PageFault/Nanite/VSM khi khởi động chưa được kết luận đã sửa.
-  Rà log và gate EXE/reload: CITY_6800_GPU_RELOAD_DIAGNOSIS.md; chưa có runtime 6,8 km.
+  Rà log và gate EXE/reload: CITY_6800_GPU_RELOAD_DIAGNOSIS.md; runtime 6,8 km native đã FAIL.
 - Trước chuyển cube Nanite, Max lỗi PageFault; tắt NonNanite.Batch vẫn lỗi.
   Tắt VSM đã hoàn tất 282,62 giây/55,71 FPS, chỉ là chẩn đoán, không tính đạt Max.
   Hai lượt Max sau chuyển Nanite chưa crash; chưa chứng minh đã sửa triệt để.
@@ -131,16 +151,18 @@ Nguồn: nhánh codex/city-expansion; chi tiết: CITY_MOBILITY_ROUND.md.
 - EXE CityExpanded 3,4 km build/cook/package PASS; menu Apply PASS, reload bị GPU PageFault Nanite/VSM.
 - EXE Max 1080p gốc: 47,71 FPS / p95 37,87 ms; 13.523 frame, 283,46 giây, GPU trung bình 20,12 ms.
   Giữ 1.760 frame trên 33,3 ms và 13 frame trên 50 ms. Chưa đạt 90 FPS; chưa kết luận lỗi GPU đã sửa.
-- Map 6,8 km đã apply/readback/body/đường/ranh giới và tám fixture vật lý PASS; ảnh/EXE vẫn chờ.
+- Map 6,8 km đã apply/readback/body/đường/ranh giới, tám fixture vật lý/HLOD/package PASS.
+  EXE Base/Reload FAIL GPU; ảnh metro diagnostic đã xem nhưng phát hiện lỗi sàn/camera cần sửa.
+  Mục tiêu 90 FPS và rìa EXE chưa đạt; các scope props nhỏ/công trình vẫn chờ ảnh native.
   Chi tiết thuyền/tàu/bể bơi trên mái/props nhỏ: CITY_6800_INTEGRATION_ROUND.md.
 - Đã chuyển 12.025 component / 113.907 instance khối đục sang Nanite;
   giữ geometry/material/collision; rà lại body và 3.992 điểm đường đạt.
 
 ## Tiếp tục
 
-1. Rebuild toàn bộ HLOD 6,8 km; kiểm nguồn/actor/GUID/geometry/material và loại collider ẩn.
-2. Chụp/xem năm góc từng vị trí mới; sửa nổi/chìm/xuyên/lệch và chất lượng mô hình.
-3. Package EXE riêng City6800; thử gameplay ngắn, cài đặt/save/reload và rìa map.
+1. Xem ảnh props nhỏ; sửa placement/camera còn lỗi và chụp công trình, hoàn tất các góc tàu.
+2. Khoanh vùng reload bằng Check shadow async On / Reload Off, cùng package/INI/QA slots.
+3. Dùng EXE City6800 đã package; thử gameplay ngắn, cài đặt/save/reload và rìa map.
 4. Đo native Max giữ mọi frame; so trial cùng package, kiểm hình ảnh và lỗi GPU trước đổi preset.
 5. Tiếp tục chất lượng nội thất/biển/cảng và mục tiêu 90 FPS; không suy ra từ cap hoặc build.
 6. Mỗi vòng cập nhật tài liệu, commit/push; map mới qua gate rồi mới stage, LFS fsck và remote SHA.

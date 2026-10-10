@@ -1,5 +1,6 @@
 """Build five portable static transit assets and audit every exported FBX."""
 import json
+import argparse
 import math
 import shutil
 import sys
@@ -11,6 +12,7 @@ HERE = Path(__file__).resolve().parent
 sys.dont_write_bytecode = True
 sys.path.insert(0, str(HERE))
 from finishing_materials import build_materials, digest
+from geometry import MATERIALS
 from metro_road import fire_engine, passenger_train
 from metro_air import helicopter, civilian_plane
 from metro_boat import rowboat
@@ -80,26 +82,49 @@ def export(obj):
 
 def main():
     assert bpy.app.version >= (5, 2, 0)
-    bpy.ops.wm.read_factory_settings(use_empty=True)
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--asset", choices=["Rowboat"])
+    args = parser.parse_args(sys.argv[sys.argv.index("--") + 1:] if "--" in sys.argv else [])
+    previous = json.loads((BASE / "metro_manifest.json").read_text()) if args.asset else None
+    if args.asset:
+        bpy.ops.wm.open_mainfile(filepath=str(OUT / "MetroDetails.blend"))
+        bpy.data.objects.remove(bpy.data.objects[args.asset], do_unlink=True)
+    else:
+        bpy.ops.wm.read_factory_settings(use_empty=True)
     for path in [OUT / "Meshes", OUT / "Sources/Generator", QA]:
         path.mkdir(parents=True, exist_ok=True)
     living = json.loads((BASE / "living_manifest.json").read_text(encoding="utf-8"))
     materials = [m for m in living["materials"] if m["id"] in ["Living_Enamel", "Living_Steel", "Living_Dark"]]
-    build_materials(materials, BASE)
-    records = []
+    catalog = json.loads((BASE / "source_catalog.json").read_text(encoding="utf-8"))
+    wood = next(m for m in living["materials"] + catalog["materials"] if m["id"] == "City_wood_floor")
+    materials.append(dict(wood, source="https://polyhaven.com/a/wood_floor", license="CC0-1.0"))
+    build_materials([m for m in materials if m["id"] not in bpy.data.materials], BASE)
+    MATERIALS.update({m["id"]: bpy.data.materials[m["id"]] for m in materials})
+    records = previous["meshes"] if previous else []
     audits = {}
-    for builder in [fire_engine, passenger_train, helicopter, civilian_plane, rowboat]:
+    builders = [rowboat] if args.asset else [fire_engine, passenger_train, helicopter, civilian_plane, rowboat]
+    for builder in builders:
         record, audit = export(builder())
-        records.append(record)
+        if args.asset:
+            old = next(r for r in records if r["id"] == args.asset)
+            for key in ["min", "max"]:
+                assert max(abs(a - b) for a, b in zip(old["boundsCm"][key], record["boundsCm"][key])) < .03
+            records[records.index(old)] = record
+        else:
+            records.append(record)
         audits[record["id"]] = audit
     provenance = dict(source="Original procedural authored geometry with dimensioned functional components",
                       materials="Reuses existing Living Enamel, Steel and Dark PBR maps without modifying them",
                       license="Original project asset", thirdPartyAssets=[],
                       authoring="Blender 5.2 metres; FBX centimetres, +X front, +Z up, origin bottom centre",
                       limitations="Static meshes only. Recommended LOD ratios are not generated LODs.")
-    write_json(OUT / "Sources/Provenance.json", provenance)
+    if not args.asset:
+        write_json(OUT / "Sources/Provenance.json", provenance)
     dependencies = ["geometry.py", "living_geometry.py", "finishing_materials.py"]
-    for source in list(HERE.glob("metro_*.py")) + [HERE / name for name in dependencies]:
+    sources = [HERE / name for name in ["metro_boat.py", "metro_build.py", "metro_render.py"]]
+    if not args.asset:
+        sources = list(HERE.glob("metro_*.py")) + [HERE / name for name in dependencies]
+    for source in sources:
         shutil.copy2(source, OUT / "Sources/Generator" / source.name)
     for image in bpy.data.images:
         if image.filepath:
@@ -113,12 +138,16 @@ def main():
         for key in ["baseColor", "normal", "roughness"]:
             path = BASE / material[key]
             source_files.append(dict(file=material[key], sha256=digest(path),
-                                     source="Existing shared ANANTA PBR texture", license="Original project asset"))
+                                     source=material.get("source", "Existing shared ANANTA PBR texture"),
+                                     license=material.get("license", "Original project asset")))
     manifest = dict(schemaVersion=1, units="cm", upAxis="Z", forwardAxis="X", meshes=records,
                     materials=materials, sourceFiles=source_files)
     write_json(BASE / "metro_manifest.json", manifest)
     # FBX reimport kiem chung don vi va kich thuoc that sau export.
     for record in records:
+        assert digest(BASE / record["file"]) == record["sha256"]
+        if args.asset and record["id"] != args.asset:
+            continue
         bpy.ops.wm.read_factory_settings(use_empty=True)
         bpy.ops.import_scene.fbx(filepath=str(BASE / record["file"]), use_custom_normals=True)
         obj = next(o for o in bpy.context.scene.objects if o.type == "MESH")
@@ -127,8 +156,9 @@ def main():
         audits[record["id"]]["fbxRoundTripBoundsCm"] = actual
         assert mesh_audit(obj)["triangles"] == record["triangles"]
     assert len(list((OUT / "Meshes").glob("*.fbx"))) == 5
-    write_json(QA / "build_audit.json", dict(status="PASS", blender=bpy.app.version_string,
-                                             count=5, meshes=audits, hashesVerified=True))
+    audit_name = "rowboat_dry_floor_build_audit.json" if args.asset else "build_audit.json"
+    write_json(QA / audit_name, dict(status="PASS", blender=bpy.app.version_string,
+                                   count=len(audits), manifestCount=5, meshes=audits, hashesVerified=True))
     print("METRO_BUILD_PASS", json.dumps({r["id"]: r["triangles"] for r in records}))
 
 

@@ -2,16 +2,26 @@
 param(
     [ValidateSet('metro', 'small', 'facilities')]
     [string]$Scope = 'metro',
+    [ValidateSet('All', 'Rowboat')]
+    [string]$Asset = 'All',
+    [ValidateSet('None', 'NaniteShadowAsyncOn')]
+    [string]$Diagnostic = 'None',
     [string]$EngineRoot = 'C:\Program Files\Epic Games\UE_5.8'
 )
 
 $ErrorActionPreference = 'Stop'
 $projectRoot = (Resolve-Path (Join-Path $PSScriptRoot '..\..')).Path
-& python (Join-Path $projectRoot 'Tools\QA\PrepareCityPlacementViews.py') --scope $Scope
+if ($Asset -ne 'All' -and $Scope -ne 'metro') {
+    throw 'Selected asset capture requires metro scope'
+}
+& python (Join-Path $projectRoot 'Tools\QA\PrepareCityPlacementViews.py') `
+    --scope $Scope --asset $Asset --diagnostic $Diagnostic
 if ($LASTEXITCODE -ne 0) {
     throw 'Placement camera preparation failed'
 }
-$qaDirectory = Join-Path $projectRoot "Saved\QA\CityPlacement_$Scope"
+$suffix = if ($Asset -eq 'All') { '' } else { "_$Asset" }
+$suffix += if ($Diagnostic -eq 'None') { '' } else { "_$Diagnostic" }
+$qaDirectory = Join-Path $projectRoot "Saved\QA\CityPlacement_$Scope$suffix"
 $manifest = Join-Path $qaDirectory 'Manifest.json'
 $qaConfig = Join-Path $qaDirectory 'GameUserSettings.ini'
 Copy-Item -LiteralPath (Join-Path $projectRoot 'Config\DefaultGameUserSettings.ini') -Destination $qaConfig
@@ -21,7 +31,7 @@ $settings = $settings -replace '(sg\.[A-Za-z]+Quality)=\d+', '${1}=3'
 $settings = $settings -replace 'sg\.ResolutionQuality=[0-9.]+', 'sg.ResolutionQuality=100'
 Set-Content -LiteralPath $qaConfig -Value $settings -Encoding ASCII
 $editorPath = Join-Path $EngineRoot 'Engine\Binaries\Win64\UnrealEditor-Cmd.exe'
-$logPath = Join-Path $projectRoot "Saved\Logs\CityPlacement_$Scope.log"
+$logPath = Join-Path $projectRoot "Saved\Logs\CityPlacement_$Scope$suffix.log"
 $arguments = @(
     "$projectRoot\ANANTA.uproject",
     '/Game/ANANTA/Maps/ANANTA_City',
@@ -40,7 +50,12 @@ $arguments = @(
     '-unattended',
     "-abslog=$logPath"
 )
-& $editorPath @arguments *> (Join-Path $projectRoot "Saved\Logs\CityPlacement_${Scope}Console.log")
+if ($Diagnostic -eq 'NaniteShadowAsyncOn') {
+    $arguments += '-ForceDPCVars=r.Nanite.AsyncRasterization.ShadowDepths=1'
+    'Shadow async diagnostic only; production graphics acceptance remains pending.' |
+        Set-Content -LiteralPath (Join-Path $qaDirectory 'Diagnostic.txt')
+}
+& $editorPath @arguments *> (Join-Path $projectRoot "Saved\Logs\CityPlacement_${Scope}${suffix}Console.log")
 if ($LASTEXITCODE -ne 0) {
     throw "Placement GPU capture failed: $LASTEXITCODE"
 }
@@ -49,6 +64,10 @@ if (-not (Get-Content -LiteralPath $logPath -Raw).Contains('CITY_CAPTURE_FINISH 
 }
 # Anh 1080p van co the render scale thap; gate doc gia tri thuc sau scalability.
 $renderConfig = Get-Content -LiteralPath (Join-Path $qaDirectory 'RenderConfig.txt')
+if ($Diagnostic -eq 'NaniteShadowAsyncOn' -and
+    -not $renderConfig.Contains('r.Nanite.AsyncRasterization.ShadowDepths=1')) {
+    throw 'Shadow async diagnostic did not reach the observed render configuration'
+}
 foreach ($name in @('sg.ResolutionQuality', 'r.ScreenPercentage')) {
     $entry = @($renderConfig | Where-Object { $_.StartsWith("$name=") })
     if ($entry.Count -ne 1) {
@@ -76,7 +95,8 @@ print('CITY_PLACEMENT_CAPTURE_OK', len(data['views']))
 if ($LASTEXITCODE -ne 0) {
     throw 'Placement images missing or wrong resolution'
 }
-& python (Join-Path $projectRoot 'Tools\QA\BuildCityPlacementContacts.py') --scope $Scope
+& python (Join-Path $projectRoot 'Tools\QA\BuildCityPlacementContacts.py') `
+    --scope $Scope --asset $Asset --diagnostic $Diagnostic
 if ($LASTEXITCODE -ne 0) {
     throw 'Placement contact generation failed'
 }

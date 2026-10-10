@@ -19,12 +19,23 @@ from CityLayout import APARTMENT
 def cameras(name, location, size, yaw, minimum=400):
     radius = max(minimum, math.hypot(size[0], size[1]) * .9)
     target = [location[0], location[1], location[2] + size[2] * .45]
+    if name == "Rowboat":
+        target[2] -= 25
     result = []
     for direction, angle, elevation in (("front", 0, .35), ("rear", 180, .35),
                                          ("left", -90, .35), ("right", 90, .35), ("upper", 45, 1.1)):
+        if name == "Rowboat" and direction == "upper":
+            angle = -45
         radians = math.radians(yaw + angle)
+        eye_z = target[2] + radius * elevation
+        if name == "PassengerTrain":
+            # Mai ga thap nhat 567,5 cm; giu camera duoi mai, tren muc san ga.
+            eye_z = 530 if direction == "upper" else 350
+        elif name == "Rowboat" and direction == "right":
+            # Goc phia cau tau can cao hon de tia nhin khong cat qua mat ben.
+            eye_z = location[2] + 1000
         eye = [target[0] + math.cos(radians) * radius,
-               target[1] + math.sin(radians) * radius, target[2] + radius * elevation]
+               target[1] + math.sin(radians) * radius, eye_z]
         delta = [target[i] - eye[i] for i in range(3)]
         pitch = math.degrees(math.atan2(delta[2], math.hypot(delta[0], delta[1])))
         facing = math.degrees(math.atan2(delta[1], delta[0]))
@@ -35,7 +46,12 @@ def cameras(name, location, size, yaw, minimum=400):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--scope", choices=("metro", "small", "facilities"), default="metro")
-    scope = parser.parse_args().scope
+    parser.add_argument("--diagnostic", choices=("None", "NaniteShadowAsyncOn"), default="None")
+    parser.add_argument("--asset", choices=("All", "Rowboat"), default="All")
+    args = parser.parse_args()
+    scope = args.scope
+    if args.asset != "All" and scope != "metro":
+        parser.error("Selected asset capture requires metro scope")
     placements = []
     views = []
     if scope == "metro":
@@ -49,6 +65,8 @@ def main():
         placements += [("Rowboat", ROWBOAT, 90),
                        ("PassengerTrain", (-68000, 198500, 51), 0),
                        ("PassengerTrain", (-64000, 197500, 51), 180)]
+        if args.asset != "All":
+            placements = [item for item in placements if item[0] == args.asset]
         for name, location, yaw in placements:
             views.extend(cameras(name, location, meshes[name]["boundsCm"]["size"], yaw))
     elif scope == "small":
@@ -75,8 +93,11 @@ def main():
     for index, view in enumerate(views):
         view["image"] = f"View_{index:02d}.png"
     result = dict(schemaVersion=1, placements=len(placements), views=views,
-                  scope="Real scene camera plan; visual inspection pending", accepted=False)
-    path = ROOT / f"Saved/QA/CityPlacement_{scope}/Manifest.json"
+                  scope="Real scene camera plan; visual inspection pending", accepted=False,
+                  diagnostic=args.diagnostic, asset=args.asset)
+    suffix = "" if args.asset == "All" else f"_{args.asset}"
+    suffix += "" if args.diagnostic == "None" else f"_{args.diagnostic}"
+    path = ROOT / f"Saved/QA/CityPlacement_{scope}{suffix}/Manifest.json"
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(result, indent=2), encoding="utf-8")
     print(json.dumps(dict(placements=len(placements), views=len(views), manifest=str(path))))
