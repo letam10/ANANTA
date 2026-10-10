@@ -36,9 +36,18 @@ Nguồn: nhánh codex/city-expansion; chi tiết: CITY_MOBILITY_ROUND.md.
   Gồm helper chờ mesh/physics, QA ranh giới, chuỗi gameplay và công cụ trial; không gồm map 6,8 km.
 - Fixture tàu đầu FAIL ở mốc khứ hồi lấy giữa đường: mỗi tàu chạy 591 m, lên/xuống tám lượt, không blocker.
   Sửa lấy mốc tại điểm dừng thật và đếm lượt mới; build PASS 68,40 giây; fixture hai tàu PASS.
-  Mỗi tàu lên hai/xuống hai lượt, đi 156,67 m, trở lại sai số 0,1 cm; tiếp tục mái/tuyến xe.
+  Mỗi tàu lên hai/xuống hai lượt, đi 156,67 m, trở lại sai số 0,1 cm.
 - Thuyền tại bến thật PASS E/W/Space/E: chèo 0,78 m, phanh dừng, xuống bến khô, từ chối xuống giữa biển.
   Capsule 38/92 giữ nguyên; không bypass collision/mặt đỡ/tốc độ trong đoạn đo; chưa kiểm chuyến biển dài.
+- Cầu thang mái PASS input W lên/xuống đủ 41 bậc, 2.600 mẫu floor/clearance, đứng mái và trở lại sân.
+  Capsule/tốc độ giữ nguyên, không teleport trong đoạn đo, không lỗi; chưa kiểm bơi hoặc hình ảnh bể bơi.
+- Chuỗi vật lý đạt 8/8, exit 0: Rail/Rowboat/RoofPool và Core/East/West/South/NorthEast.
+  Mỗi vùng xe kiểm tám loại/hai xe mỗi loại, đủ vòng/bốn trạm; hoàn tất lúc 03:15:57 UTC.
+  Đây là fixture vật lý trên map đã lưu; ảnh GPU, EXE và FPS vẫn chờ kiểm.
+- Checkpoint rail 67e4229266d4f052f7cab4783b36da9b9269b17f đã push, remote SHA khớp.
+- HLOD mới có gate identity/hash/log đầy đủ và đối chiếu actor/GUID; 27 fixture dữ liệu PASS.
+  Cầu nối metadata C++ build PASS 60,38 giây, tám regression boundary-source PASS.
+  API thực đọc 31 nguồn của một proxy PASS exit 0; chưa chứng minh độ phủ map mới.
 - 3.534 nhà, 784 ô; bảy bộ mặt tiền, tám dạng khối, màu/chiều cao khác nhau.
 - Map 3,4 km đọc lại theo lô: 25.026 nhóm, 602.965 instance; 19 đồ sinh hoạt và 16 đèn mới.
   Gồm năm nhóm civic mới; đã sửa báo cáo nền và cách đếm bỏ sót HISM mang nhãn Living.
@@ -111,19 +120,19 @@ Nguồn: nhánh codex/city-expansion; chi tiết: CITY_MOBILITY_ROUND.md.
 - EXE CityExpanded 3,4 km build/cook/package PASS; menu Apply PASS, reload bị GPU PageFault Nanite/VSM.
 - EXE Max 1080p gốc: 47,71 FPS / p95 37,87 ms; 13.523 frame, 283,46 giây, GPU trung bình 20,12 ms.
   Giữ 1.760 frame trên 33,3 ms và 13 frame trên 50 ms. Chưa đạt 90 FPS; chưa kết luận lỗi GPU đã sửa.
-- Map 6,8 km đã apply/readback/body/đường/ranh giới PASS; chưa nghiệm thu gameplay/ảnh.
+- Map 6,8 km đã apply/readback/body/đường/ranh giới và tám fixture vật lý PASS; ảnh/EXE vẫn chờ.
   Chi tiết thuyền/tàu/bể bơi trên mái/props nhỏ: CITY_6800_INTEGRATION_ROUND.md.
 - Đã chuyển 12.025 component / 113.907 instance khối đục sang Nanite;
   giữ geometry/material/collision; rà lại body và 3.992 điểm đường đạt.
 
 ## Tiếp tục
 
-1. Thử người chơi đi tại cảng và kiểm các tương tác trong EXE mới.
-2. Tiếp tục tối ưu render và tăng chi tiết nội thất/biển/cảng theo ảnh và số đo hiện tại.
-3. Commit/push checkpoint HLOD/civic và số đo EXE; giữ rõ lỗi reload và FPS chưa đạt.
-4. Áp dụng mở rộng 6,8 km, model mới, biển mở và ranh giới theo CITY_6800_CONTRACT.md.
-5. Kiểm va chạm, tám hướng model/năm góc đặt, HLOD, EXE và gameplay; giữ các build cũ.
-6. Tiếp tục chất lượng cảnh vật và ổn định 90 FPS; không coi build/test là nghiệm thu toàn game.
+1. Rebuild toàn bộ HLOD 6,8 km; kiểm nguồn/actor/GUID/geometry/material và loại collider ẩn.
+2. Chụp/xem năm góc từng vị trí mới; sửa nổi/chìm/xuyên/lệch và chất lượng mô hình.
+3. Package EXE riêng City6800; thử gameplay ngắn, cài đặt/save/reload và rìa map.
+4. Đo native Max giữ mọi frame; so trial cùng package, kiểm hình ảnh và lỗi GPU trước đổi preset.
+5. Tiếp tục chất lượng nội thất/biển/cảng và mục tiêu 90 FPS; không suy ra từ cap hoặc build.
+6. Mỗi vòng cập nhật tài liệu, commit/push; map mới qua gate rồi mới stage, LFS fsck và remote SHA.
 
 ## Bằng chứng
 

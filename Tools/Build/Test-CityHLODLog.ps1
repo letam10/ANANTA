@@ -2,7 +2,8 @@
 param(
     [Parameter(Mandatory)]
     [string]$LogPath,
-    [string]$SingleHLOD = ''
+    [string]$SingleHLOD = '',
+    [switch]$PassThru
 )
 
 $ErrorActionPreference = 'Stop'
@@ -33,4 +34,23 @@ for ($index = 0; $index -lt $actors.Count; $index++) {
 if ($SingleHLOD -and ($count -ne 1 -or -not $labels.ContainsKey($SingleHLOD))) {
     throw "Requested HLOD sample was not built: $SingleHLOD"
 }
-Write-Output "CITY_HLOD_LOG_OK actors=$count LOG=$LogPath"
+if (-not $SingleHLOD -and $log -match '(?i)-BuildSingleHLOD=') {
+    throw "Sample build log cannot validate a full build: $LogPath"
+}
+if ($PassThru) {
+    $stream = [IO.File]::OpenRead((Resolve-Path -LiteralPath $LogPath).Path)
+    $algorithm = [Security.Cryptography.SHA256]::Create()
+    try {
+        $hash = [BitConverter]::ToString($algorithm.ComputeHash($stream)).Replace('-', '').ToLowerInvariant()
+    } finally {
+        $algorithm.Dispose()
+        $stream.Dispose()
+    }
+    [pscustomobject]@{
+        builtActorCount = $count
+        builtActors = @($labels.Keys | Sort-Object -CaseSensitive)
+        logSha256 = $hash
+    }
+} else {
+    Write-Output "CITY_HLOD_LOG_OK actors=$count LOG=$LogPath"
+}

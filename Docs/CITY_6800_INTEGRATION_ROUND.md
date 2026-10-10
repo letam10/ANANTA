@@ -61,9 +61,9 @@ Cập nhật 2026-10-10. Map 6,8 km đã lưu; EXE đã kiểm vẫn là 3,4 km.
   Git LFS fsck PASS, upload 31/31 object mới. Map lưu tại checkpoint vẫn 3,4 km.
 - Apply 6,8 km PASS exit 0: 85.386 nhóm, 1.660.761 instance, 10.754 nhà, 87.142 actor.
   Commandlet mất 3.541,71 giây, peak RAM 4.290 MB; lưu xong lúc 00:47:52 UTC ngày 10/10.
-  Readback/body/đường/ranh giới đã PASS; gameplay và ảnh GPU chưa PASS.
+  Readback/body/đường/ranh giới và chuỗi tám fixture vật lý đã PASS; ảnh GPU/EXE vẫn chờ.
 - Đã sửa ray lên/xuống tàu bắt sàn bên dưới mái ga, kèm regression hai sân ga và vật cản cửa.
-  Build/regression PASS; hai tàu tại ga trong map mới vẫn chờ gate thực địa.
+  Build/regression và gate hai tàu tại ga trong map mới đã PASS.
 - Đã chạy 14 sweep capsule 38/92 qua rìa/góc/biển; lượt đầu FAIL 14/14 do mesh còn compiling.
   Chẩn đoán xác nhận physicsBefore=0, bounds=0; sau hoàn tất mesh/tree/body physicsAfter=1 và PASS 14/14.
   Gate chính chạy độc lập PASS exit 0, nạp đúng bốn collider; không đổi geometry hoặc clamp tọa độ.
@@ -75,7 +75,7 @@ Cập nhật 2026-10-10. Map 6,8 km đã lưu; EXE đã kiểm vẫn là 3,4 km.
   Build helper mới PASS 57,15 giây; gate Boundaries sau chuẩn bị mesh PASS độc lập.
   Test-City6800Gameplay.ps1 tiếp tục tám fixture từ prerequisite map/body/ranh giới đã đạt.
 - Fixture vật lý Core/East/West/South/NorthEast đã viết/build: 16 xe mỗi vùng, đủ vòng và bốn trạm.
-  Giữ đường, tốc độ, collider và giới hạn streaming; chưa chạy thực địa. Tàu authored giữ nguyên tick.
+  Giữ đường, tốc độ, collider và giới hạn streaming; năm vùng đều PASS. Tàu authored giữ nguyên tick.
 - Checkpoint QA 086104425cb8a59eb27f17d8b93d3a68d919107e đã push; LFS fsck PASS, remote SHA khớp.
 - Checkpoint tuyến khu vực/menu FPS/ảnh 98b9688241579567e1023b54faf5fdb2f6e90680 đã push, remote SHA khớp.
   Đã build/automation 23 bài PASS; map/EXE tại checkpoint nguồn vẫn 3,4 km.
@@ -99,7 +99,19 @@ Cập nhật 2026-10-10. Map 6,8 km đã lưu; EXE đã kiểm vẫn là 3,4 km.
   Rowboat tiếp theo PASS 29,91 giây cả process, 9,70 giây fixture input thật E/W/Space/E tại bến.
   Chèo 78 cm, đỉnh 4,32 km/h, phanh về gần 0, xuống bến khô/capsule không overlap, từ chối xuống biển.
   Test từ chối xuống biển dời thuyền riêng lúc setup; không tính phần dời vào quãng chèo đã đo.
-  Chuỗi chuyển RoofPool; mái/năm tuyến xe, chuyến biển dài, ảnh GPU và EXE vẫn chờ.
+  RoofPool tiếp theo PASS 63,41 giây cả process, 43,12 giây fixture W trên cầu thang map thật.
+  Lên/xuống đủ 41 bậc, 2.600 mẫu floor/clearance, đứng trên mái Z=840 và trở lại sân Z=20; không lỗi.
+  Không teleport/mặt đỡ giả/đổi movement trong đoạn đo; capsule 38/92 nguyên, chưa kiểm bơi hoặc hình ảnh.
+  Core tiếp theo PASS tám loại/hai xe mỗi loại, đủ bốn điểm lên/xuống, hai vòng đầy đủ mỗi loại.
+  Core đo 140,82 giây, process 182,20 giây; report mới 03:02:32 UTC ngày 10/10.
+  East/West/South/NorthEast tiếp theo đều PASS; process lần lượt 187,62/192,87/203,78/217,38 giây.
+  Chuỗi tổng PASS 8/8 và exit 0 lúc 03:15:57 UTC; giữ report FAIL đầu và log để truy nguyên.
+  Chuyến biển dài, ảnh GPU, EXE và FPS vẫn chờ; fixture không thay nghiệm thu gameplay người chơi.
+- Checkpoint rail 67e4229266d4f052f7cab4783b36da9b9269b17f đã push, remote SHA khớp.
+- Gate HLOD identity mới bắt đúng map 6,8 km, hash evidence, log rebuild mới và actor/GUID đầy đủ.
+  27 fixture dữ liệu PASS; tám regression cầu nối boundary-source PASS; build C++ PASS 60,38 giây.
+  API thực đọc 31 nguồn proxy cũ PASS exit 0; chỉ xác nhận binding, không nhận HLOD cũ làm map mới.
+  Chi tiết: CITY_6800_HLOD_IDENTITY_GATE.md; full rebuild/readback vẫn chờ.
 - Rà HLOD thấy report cũ 962 proxy/591.633 instance không thuộc map mở rộng; phải kiểm lại map identity.
   Chi tiết và các gap cần sửa: CITY_6800_HLOD_READINESS.md.
 - Rà GPU độc lập đã ghi ba phương án và đánh đổi trong CITY_GPU_COST_AUDIT.md; chưa áp dụng thử mới.
@@ -110,8 +122,8 @@ Cập nhật 2026-10-10. Map 6,8 km đã lưu; EXE đã kiểm vẫn là 3,4 km.
 ## Các bước cần làm tiếp
 
 1. Đã xong nguồn model/tám hướng/FBX/bounds/material/LOD; ảnh Unreal vẫn ở bước 4.
-2. Map 6,8 km đã apply; build mới, đọc lại nội dung, rà body/đường/capsule và ranh giới.
-3. Thử thuyền tại bến thật, hai tàu lên/xuống/khứ hồi, cầu thang lên mái.
+2. Map 6,8 km đã apply/readback, automation/body/đường/ranh giới PASS.
+3. Tám fixture vật lý thuyền/tàu/mái/năm vùng xe PASS; còn gameplay người chơi trong EXE.
 4. Chụp/xem năm góc từng vị trí mới; sửa nổi/chìm/xuyên/lệch hoặc silhouette chưa hợp lý.
 5. Rebuild toàn bộ HLOD, kiểm proxy, package EXE riêng City6800.
 6. Gameplay ngắn native Max, giữ mọi frame; kiểm cài đặt/save/reload và lỗi GPU.

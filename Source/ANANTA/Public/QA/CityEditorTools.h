@@ -5,6 +5,7 @@
 #include "CityEditorTools.generated.h"
 
 class ARecastNavMesh;
+class AActor;
 class UHierarchicalInstancedStaticMeshComponent;
 
 UCLASS()
@@ -30,4 +31,7 @@ public:
 
     UFUNCTION(BlueprintCallable, Category = "City Editor", meta = (DevelopmentOnly))
     static FString FinalizeInstanceCollision(UHierarchicalInstancedStaticMeshComponent* Component);
+
+    UFUNCTION(BlueprintCallable, Category = "City Editor", meta = (DevelopmentOnly))
+    static FString HLODSourceActorReferences(AActor* Actor);
 };
