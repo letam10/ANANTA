@@ -222,3 +222,14 @@ Nguồn: nhánh codex/city-expansion; chi tiết: CITY_MOBILITY_ROUND.md.
 - Self test instancing PASS; `CityMapBuild.json` chỉ có số tổng hợp nên report `CityInstanceReuse.json` là `PARTIAL` với 85.387 nhóm và 1.660.776 instance.
 - `py_compile` và generator PASS. Không chạy Unreal, native capture, benchmark, soak test hoặc gameplay dài trong vòng này.
 - Chưa nhận mỹ thuật, collision, HLOD, GPU hay 90 FPS từ manifest; bước tiếp theo là capture có mục tiêu sau khi map persistence/source control sạch.
+
+## Vòng city diversity và interactive venues 2026-10-11
+
+- Mở rộng `CityExpansionData.VENUES` từ 6 lên 10 venue: Library, Restaurant, Cinema và Hotel bổ sung bên cạnh Bookshop/Clinic/Market/Gallery/Workshop/Transit.
+- `CityExpansionVenues.py` có dressing riêng cho bốn venue mới bằng mesh đã có trong manifest; không thêm asset ngoài hoặc chạm model nhân vật.
+- `CityExpansionLandscape.py` thêm bốn kiểu pocket dressing và một phần playground dressing: quầy, shelter, bàn, ghế, planter, giá xe đạp, slide và swing; tất cả dùng instance tĩnh và collision nhỏ gọn.
+- Source audit PASS: 10.750 building, 87.998 nhóm, 1.668.218 instance, 7 style facade, pendingAssetMeshes rỗng, errors rỗng.
+- Gate 6,8 km PASS: width 6.788,225 m, area ratio 32, bốn boundary collider, ba mặt nước, chín access lane, không lỗi footprint.
+- `py_compile`, `VerifyCityExpansionLayout.py` và `VerifyCity6800Layout.py` PASS. Không chạy Unreal Apply, native capture, benchmark hoặc gameplay dài trong vòng này.
+- Map hiện chưa chứa source round mới vì ApplyCityExpansion sẽ xoá/ghi lại hàng chục nghìn actor; cần chạy riêng trong cửa sổ apply có log/marker và sau đó readback/HLOD.
+- 60 FPS đồ họa cao vẫn là mục tiêu chưa nghiệm thu; source audit không chứng minh FPS, GPU stability, collision runtime hay visual acceptance.

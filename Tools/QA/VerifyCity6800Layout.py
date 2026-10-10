@@ -119,7 +119,9 @@ def check_dimensions_and_ocean(layout):
     assert coast.DOCK_Y == -141000 and coast.QUAY_Y == -146000
     assert tuple(dock[1] for dock in coast.DOCKS) == (131000, 135200, 139400)
     assert tuple(venue["centre"] for venue in dimensions.VENUES) == (
-        (-38150, 2700), (-9750, 2550), (-21750, -2800), (14200, 2550), (38200, 2500), (62200, 2500))
+        (-38150, 2700), (-9750, 2550), (-21750, -2800), (14200, 2550),
+        (38200, 2500), (62200, 2500), (88200, 2600), (111000, -2500),
+        (-80000, -2500), (54000, -6200))
     for facility in metro.FACILITIES:
         left, bottom, right, top = facility["bounds"]
         assert -edge <= left < right <= edge and -edge <= bottom < top <= edge

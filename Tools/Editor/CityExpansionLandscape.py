@@ -27,6 +27,23 @@ def dress_block(layout, x, y, rng, park):
         prop(layout, "TrashBin", x + side * 700, y + 450, radius=75)
     prop(layout, "BikeRack", x - 4300, y + 600, yaw=90, radius=150)
     prop(layout, "StreetSign", x - 4480, y - 4500, radius=40)
+    theme = rng.randrange(4)
+    if theme == 0:
+        prop(layout, "MarketStall", x + 350, y + 520, yaw=90, radius=260)
+        prop(layout, "Bench", x - 350, y + 520, yaw=90, radius=180)
+        prop(layout, "TrashBin", x + 820, y + 520, radius=75)
+    elif theme == 1:
+        prop(layout, "BusShelter", x - 350, y + 520, yaw=90, radius=270)
+        prop(layout, "Bench", x + 350, y + 520, yaw=90, radius=180)
+        prop(layout, "BusStopSign", x - 900, y + 520, yaw=90, radius=40)
+    elif theme == 2:
+        prop(layout, "CafeTable", x + 350, y + 520, radius=130)
+        prop(layout, "Bench", x - 350, y + 520, yaw=90, radius=180)
+        prop(layout, "BikeRack", x + 820, y + 520, yaw=90, radius=150)
+    else:
+        prop(layout, "DetailedPlanter", x + 350, y + 520, radius=180)
+        prop(layout, "DetailedPlanter", x - 350, y + 520, radius=180)
+        prop(layout, "StreetSign", x, y + 820, radius=40)
     if park:
         layout.box("GardenSoil", (x, y, 4), (7800, 7800, 8), False)
         layout.box("Sidewalk", (x, y, 6), (1400, 9600, 12))
@@ -38,6 +55,12 @@ def dress_block(layout, x, y, rng, park):
                      (scale, scale, scale), radius=260)
         for side in (-1, 1):
             prop(layout, "BusShelter", x + side * 1900, y - 4450, radius=300)
+        if rng.random() < 0.75:
+            prop(layout, "PlaygroundSlide", x + 850, y + 350, yaw=90, radius=240)
+            prop(layout, "PlaygroundSwing", x + 1450, y + 350, yaw=90, radius=260)
+        if rng.random() < 0.55:
+            prop(layout, "CafeTable", x - 850, y - 350, radius=130)
+            prop(layout, "Bench", x - 1450, y - 350, yaw=90, radius=180)
     elif rng.random() < 0.32:
         prop(layout, "MarketStall", x, y - 650, radius=280)
     if rng.random() < 0.28:

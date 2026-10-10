@@ -29,6 +29,18 @@ VENUES = (
     dict(id="Transit", centre=(62200, 2500), size=(1700, 1700), face=-1,
          title="EASTLINE / VISITOR CENTRE", service="Read", serviceId="Transit_Read",
          description="Eastline connects the market streets, gardens and eastern business district."),
+    dict(id="Library", centre=(88200, 2600), size=(1900, 1600), face=-1,
+         title="NORTHSTAR / CITY LIBRARY", service="Read", serviceId="Library_Read",
+         description="The library keeps district maps, public records and a quiet reading room."),
+    dict(id="Restaurant", centre=(111000, -2500), size=(1900, 1600), face=1,
+         title="MIZU / NIGHT RESTAURANT", service="Rest", serviceId="Restaurant_Rest",
+         description="A short meal restores energy before the next city route."),
+    dict(id="Cinema", centre=(-80000, -2500), size=(2000, 1700), face=1,
+         title="ORBIT / CITY CINEMA", service="Read", serviceId="Cinema_Read",
+         description="The programme archive shows films from every district of the expanded city."),
+    dict(id="Hotel", centre=(54000, -6200), size=(2000, 1800), face=-1,
+         title="HARBORLIGHT / HOTEL", service="Rest", serviceId="Hotel_Rest",
+         description="A quiet room restores energy and records the current district checkpoint."),
 )
 
 

@@ -80,6 +80,34 @@ def furnish_venue(item):
         prop("CafeCounter", prefix + "_Workbench", (x, y - depth / 2 + 110, 15))
         prop("RoofEquipment", prefix + "_Compressor", (back, y - 450, 15), scale=(0.65, 0.65, 0.65))
         prop("BikeRack", prefix + "_Rack", (front + item["face"] * 160, y - 1200, 15))
+    elif item["id"] == "Library":
+        shelves(prefix, x - 420, y + depth / 2 - 100, count=4)
+        prop("CafeTable", prefix + "_ReadingTable", (x + 260, y - 280, 15))
+        chairs(prefix, x - 60, y - 500, 3)
+        prop("House_hanging_industrial_lamp", prefix + "_ReadingLamp",
+             (x + 260, y - 280, 185), collision=False)
+    elif item["id"] == "Restaurant":
+        prop("CafeCounter", prefix + "_KitchenCounter", (x, y + depth / 2 - 120, 15))
+        for index, xx in enumerate((x - 560, x, x + 560)):
+            prop("CafeTable", prefix + f"_Table{index}", (xx, y - 360, 15))
+            chairs(prefix, xx - 110, y - 560, 2)
+        prop("House_vintage_electric_kettle", prefix + "_KitchenKettle",
+             (x + 350, y + depth / 2 - 120, 120), collision=False)
+    elif item["id"] == "Cinema":
+        box(prefix + "_Screen", (x, y + depth / 2 - 45, 320),
+            (width - 260, 18, 430), "DistrictNavy", False)
+        for index, xx in enumerate((x - 560, x, x + 560)):
+            prop("House_mid_century_lounge_chair", prefix + f"_Seat{index}",
+                 (xx, y - 420, 15), yaw=180)
+        prop("CafeCounter", prefix + "_TicketDesk", (front - item["face"] * 160, y, 15))
+        prop("House_hanging_industrial_lamp", prefix + "_HallLamp",
+             (x, y - 100, 185), collision=False)
+    elif item["id"] == "Hotel":
+        prop("House_sofa_03", prefix + "_LobbySofa", (x - 350, y - 360, 15), yaw=90)
+        prop("CafeTable", prefix + "_LobbyTable", (x + 260, y - 360, 15))
+        prop("ApartmentBed", prefix + "_RoomBed", (x + 380, y + 430, 15), 90)
+        prop("House_hanging_industrial_lamp", prefix + "_LobbyLamp",
+             (x - 350, y - 360, 185), collision=False)
     else:
         chairs(prefix, x - 350, y + 500, 4)
         prop("CafeCounter", prefix + "_InformationDesk", (x, y - 430, 15))
