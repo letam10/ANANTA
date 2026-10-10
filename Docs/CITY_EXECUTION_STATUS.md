@@ -195,3 +195,12 @@ Nguồn: nhánh codex/city-expansion; chi tiết: CITY_MOBILITY_ROUND.md.
 - Preview cũ: Saved/Builds/CitySettingsPreview/Windows/ANANTA.exe, vẫn là bản 1,7 km.
 - Không đưa save cá nhân/log máy vào Git. Checkpoint b99f3956f đã push, remote SHA khớp;
   Git LFS fsck đạt, upload đủ 12.027 đối tượng / 108 MB.
+
+## Vòng camera Airport 2026-10-10
+
+- Tạo `Tools/QA/PrepareFacilityCloseViews.py` để lập năm góc nhìn thật cho terminal sân bay.
+- Bốn góc dùng cao độ mắt 170 cm; góc upper nâng cao để giữ terminal và sân đỗ trong khung.
+- Chạy `py_compile` và chạy generator hai lần; manifest có đúng 5 hướng, SHA256 lặp lại khớp
+  `c0539755de45ed9ffa2a3c3ca5ab50092a01cf39e26749674abcd9d995dffe59`.
+- Đây mới là kế hoạch camera, chưa tạo PNG, chưa di chuyển actor, chưa nhận mỹ thuật, collision,
+  gameplay hoặc FPS. Capture Unreal gần mặt đất là bước kế tiếp sau khi source nhà máy hoàn tất.
