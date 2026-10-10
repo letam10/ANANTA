@@ -20,7 +20,15 @@
   Log xác nhận DRED/allocation tracking bật; overhead không dùng làm nghiệm thu Max thông thường.
   Không tái hiện fault ở lượt này, không có bằng chứng resource gây lỗi hoặc đã sửa lỗi GPU.
 - Editor build QA PASS 49,99 giây; metro native shadow diagnostic hoàn tất 30 PNG và sáu contact.
-  Đã xem đủ sáu contact, phát hiện lỗi sàn thuyền và camera bị bến/mái ga che; đang sửa và chụp lại.
+  Đã xem đủ sáu contact, sửa/chụp lại sàn và vật liệu thuyền; góc tàu còn bị cột ga che một phần.
+- Cặp Check-On/Reload-Off PASS, run `20261010T074919491-b1b4510515a447a3937832bdf34029f5`.
+  EXE/containers cùng hash, INI trước/sau copy/Reload cùng SHA 8F26CD40837B9ACC, slot QA phục hồi.
+  Diagnostic startup ghi global async=1/shadow async=0 cho Reload; chưa tính đạt Max/90 FPS.
+- Đối chứng On/On run `20261010T075538957-ce20e6f5deb341378a9d01e9a3350a31` FAIL ngay Check.
+  GPU crash exit 3 lúc 07:55:49 UTC, frame 45; chưa tới Reload, slot QA đã phục hồi.
+  Shadow async On vẫn có thể lỗi lúc khởi động; không đủ bằng chứng nguyên nhân hoặc fix.
+- Thuyền đã reimport/binding/physics/năm ảnh native PASS; props nhỏ capture 45 ảnh/chín contact PASS.
+  Review props phát hiện nồi chồng vùng ấm và góc compact bị chân đèn che; xem CITY_6800_SMALL_VISUAL_REVIEW.md.
 
 ## Bằng chứng
 
@@ -36,8 +44,8 @@
 
 ## Tiếp tục
 
-1. Reimport thuyền 4.120 tris; kiểm vận hành, chụp lại sàn khô và camera tàu/boat đã sửa.
-2. Rà khác biệt giữa Reload FAIL và DRED PASS từ log thực; chưa thay đổi preset.
-3. Chụp các scope props nhỏ/công trình, xem năm góc từng vị trí và sửa các lỗi thấy được.
+1. Sửa placement/camera props và tàu còn lỗi; thuyền đã đạt gate sửa sàn/vật liệu/placement.
+2. Rà fault khởi động từ control On/On mới FAIL và cặp On/Off PASS; chưa thay đổi preset.
+3. Sửa/chụp lại props còn lỗi và chụp công trình; xem năm góc từng vị trí.
 4. Rà HISM/streaming độc lập; tối ưu theo render/GPU 13–14 ms, không suy ra 90 FPS từ cap.
 5. Cập nhật status, commit/push mã/tài liệu; map binary chờ gate hình ảnh/runtime hoàn tất.

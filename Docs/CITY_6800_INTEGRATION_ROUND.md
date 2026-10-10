@@ -15,12 +15,17 @@ Cập nhật 2026-10-10. Map/HLOD và EXE 6,8 km đã lưu; runtime native đang
 - Native lộ lỗi reimport giữ slot cũ; sửa gán material theo tên, sáu regression PASS.
   Wrapper thuyền sau sửa UTC PASS exit 0, chèo 79,08 cm; bảy regression timestamp PASS.
   Chụp/xem đủ năm ảnh thuyền mới native: sàn khô, gỗ đúng, góc phải/trên thông thoáng.
-  Hai tàu còn cột che một phần; props nhỏ đang chụp, công trình và package thuyền mới vẫn chờ.
+  Hai tàu còn cột che một phần; props nhỏ đã chụp/xem và còn lỗi, công trình/package thuyền mới vẫn chờ.
 - EXE cùng package: shadow diagnostic Check PASS, Reload FAIL exit 3; slot QA phục hồi.
 - DRED/TrackAllAllocations=1 hoàn tất một hành trình, 60,94 FPS; không tính đạt Max vì overhead.
   Chưa kết luận nguyên nhân GPU hoặc đổi preset. Mục tiêu native 90 FPS vẫn chưa đạt.
 - Chi tiết: CITY_6800_METRO_VISUAL_REVIEW.md, CITY_ROWBOAT_DRY_FLOOR_ROUND.md,
   CITY_6800_NATIVE_TRIAL_ROUND.md; ảnh props nhỏ/công trình và rìa EXE còn chờ.
+- Props nhỏ đã capture/xem 45 ảnh/chín contact; nồi chồng vùng ấm và compact có góc bị đèn che.
+  Chưa nghiệm thu toàn scope; CITY_6800_SMALL_VISUAL_REVIEW.md ghi từng vị trí và bước sửa.
+- Cặp menu Check-On/Reload-Off cùng EXE/INI PASS; đối chứng On/On mới FAIL ngay Check frame 45.
+  Cả hai phục hồi QA slots, chưa đổi preset hoặc nhận GPU/90 FPS ổn định.
+- Checkpoint 27d3ec9db5ea1419dd00ba66127d01f0c4c56e1e đã push/LFS fsck PASS/remote SHA khớp.
 
 ## Nguồn đã làm
 

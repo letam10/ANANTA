@@ -73,10 +73,15 @@ Nguồn: nhánh codex/city-expansion; chi tiết: CITY_MOBILITY_ROUND.md.
   Wrapper lỗi đọc UTC PowerShell 7 đã sửa/bảy regression PASS; chạy lại PASS, chèo 79,08 cm.
   Native phát hiện ba slot material bị reimport giữ thứ tự cũ; sửa gán theo tên, sáu regression PASS.
   Unreal readback và năm ảnh thuyền mới PASS: sàn khô, vân gỗ đúng, bến/người chơi không che model.
-  Hai tàu còn cột che một phần; props nhỏ đang chụp native, công trình và package thuyền mới còn chờ.
+  Hai tàu còn cột che một phần; props nhỏ đã chụp/xem và còn lỗi, công trình/package thuyền mới còn chờ.
   Settings cùng package: Check PASS, Reload FAIL GPU exit 3; hai slot QA phục hồi đúng.
   DRED/TrackAllAllocations=1 hoàn tất 281,93 giây, 60,94 FPS; có overhead, không tính đạt Max.
   DRED không tái hiện fault nên chưa xác định resource gây lỗi; chưa đổi preset sản phẩm.
+  Check-On/Reload-Off cùng package PASS một cặp, INI giữ nguyên hash, slot QA phục hồi.
+  Đối chứng On/On mới FAIL ngay Check exit 3 ở frame 45; slot QA phục hồi, không coi shadow On là fix.
+  Props nhỏ capture PASS 45 ảnh/chín contact, đã xem đủ: nồi chồng vùng ấm, compact có góc bị đèn che.
+  Các props còn lại chưa thấy nổi/xuyên rõ; toàn bộ scope chưa được nhận năm góc/đồ họa cuối.
+  Checkpoint 27d3ec9db5ea1419dd00ba66127d01f0c4c56e1e đã push, remote SHA khớp và LFS fsck PASS.
   Chi tiết: CITY_6800_NATIVE_TRIAL_ROUND.md và CITY_6800_METRO_VISUAL_REVIEW.md.
 - 3.534 nhà, 784 ô; bảy bộ mặt tiền, tám dạng khối, màu/chiều cao khác nhau.
 - Map 3,4 km đọc lại theo lô: 25.026 nhóm, 602.965 instance; 19 đồ sinh hoạt và 16 đèn mới.
@@ -161,7 +166,7 @@ Nguồn: nhánh codex/city-expansion; chi tiết: CITY_MOBILITY_ROUND.md.
 ## Tiếp tục
 
 1. Xem ảnh props nhỏ; sửa placement/camera còn lỗi và chụp công trình, hoàn tất các góc tàu.
-2. Khoanh vùng reload bằng Check shadow async On / Reload Off, cùng package/INI/QA slots.
+2. Khoanh vùng fault khởi động/reload từ cặp On/Off PASS và On/On Check FAIL; chưa đổi preset.
 3. Dùng EXE City6800 đã package; thử gameplay ngắn, cài đặt/save/reload và rìa map.
 4. Đo native Max giữ mọi frame; so trial cùng package, kiểm hình ảnh và lỗi GPU trước đổi preset.
 5. Tiếp tục chất lượng nội thất/biển/cảng và mục tiêu 90 FPS; không suy ra từ cap hoặc build.
