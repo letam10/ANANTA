@@ -55,6 +55,30 @@ WALL_DETAILS = {
         ("GardenPrint", "Botanical", "south", 330, 155),
         ("TravelPrint", "Gallery", "back", 440, 155),
     ),
+    "Library": (
+        ("ArchiveSlats", "Slat", "back", -420, 62),
+        ("ReadingPrint", "Gallery", "south", -360, 155),
+        ("MapPrint", "Gallery", "south", 20, 155),
+        ("BotanicalPrint", "Botanical", "north", 380, 155),
+    ),
+    "Restaurant": (
+        ("KitchenSlats", "Slat", "north", -420, 62),
+        ("MenuPrint", "Gallery", "south", -360, 155),
+        ("DiningPrint", "Gallery", "south", 20, 155),
+        ("NightBotanical", "Botanical", "back", 380, 155),
+    ),
+    "Cinema": (
+        ("LobbySlats", "Slat", "north", -430, 62),
+        ("PosterPrint", "Gallery", "south", -360, 155),
+        ("PosterPrintTwo", "Gallery", "south", 20, 155),
+        ("ProjectionPrint", "Gallery", "back", 380, 155),
+    ),
+    "Hotel": (
+        ("LobbySlats", "Slat", "south", -430, 62),
+        ("LobbyPrint", "Gallery", "north", -360, 155),
+        ("ReceptionPrint", "Gallery", "north", 20, 155),
+        ("RoomBotanical", "Botanical", "back", 380, 155),
+    ),
 }
 DETAIL_MESHES = {
     "Slat": "InteriorSlatPanel",

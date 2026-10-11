@@ -99,7 +99,7 @@ def furnish_venue(item):
         for index, xx in enumerate((x - 560, x, x + 560)):
             prop("House_mid_century_lounge_chair", prefix + f"_Seat{index}",
                  (xx, y - 420, 15), yaw=180)
-        prop("CafeCounter", prefix + "_TicketDesk", (front - item["face"] * 160, y, 15))
+        prop("CafeCounter", prefix + "_TicketDesk", (x - 500, y, 15))
         prop("House_hanging_industrial_lamp", prefix + "_HallLamp",
              (x, y - 100, 185), collision=False)
     elif item["id"] == "Hotel":

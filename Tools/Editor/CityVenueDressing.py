@@ -146,7 +146,34 @@ def describe():
             box("PartsCrate", 480, 680, 50, (140, 110, 70))
             house("CratePot", "brass_pot_01", 480, 680, 85, collision=False)
             house("WorkshopLamp", "hanging_industrial_lamp", -500, 560, 185, collision=False)
-        else:
+        elif name == "Library":
+            shelf("Reference", -650, 620)
+            lounge("Reading", 470, -470)
+            house("ReadingLamp", "hanging_industrial_lamp", 470, -450, 185, collision=False)
+            house("MapPlant", "potted_plant_02", 650, 600)
+            box("CatalogueFrame", -80, -740, 190, (300, 10, 150), "City_Brass", False)
+            box("CataloguePanel", -80, -733, 190, (280, 6, 130), "City_Teal", False)
+        elif name == "Restaurant":
+            house("DiningPlant", "potted_plant_02", -650, 600)
+            house("MenuLamp", "hanging_industrial_lamp", 500, 600, 185, collision=False)
+            box("MenuFrame", 0, 740, 190, (360, 10, 150), "City_Brass", False)
+            box("MenuPanel", 0, 733, 190, (340, 6, 130), "DistrictPink", False)
+            house("MenuBook", "book_encyclopedia_set_01", -700, -650, 120, collision=False)
+            add("DiningRug", "InteriorWovenRug", 500, -520, z=15.05, collision=False)
+        elif name == "Cinema":
+            box("PosterFrame0", -650, 640, 190, (260, 10, 180), "City_Brass", False)
+            box("PosterFrame1", 0, 640, 190, (260, 10, 180), "City_Brass", False)
+            box("PosterFrame2", 650, 640, 190, (260, 10, 180), "City_Brass", False)
+            house("LobbyPlant", "potted_plant_02", -700, -650)
+            house("TicketLamp", "hanging_industrial_lamp", -500, 500, 185, collision=False)
+            house("Programme", "book_encyclopedia_set_01", -480, 500, 120, collision=False)
+        elif name == "Hotel":
+            house("LobbyPlant", "potted_plant_02", -700, 520)
+            house("RoomLamp", "hanging_industrial_lamp", 700, 520, 185, collision=False)
+            box("HotelArtFrame", 0, 790, 190, (340, 10, 150), "City_Brass", False)
+            box("HotelArtPanel", 0, 783, 190, (320, 6, 130), "ShellSage", False)
+            house("RoomBooks", "book_encyclopedia_set_01", 650, -500, 120, collision=False)
+        elif name == "Transit":
             lounge("Travellers", 460, 660, "sofa_03")
             house("TravelPlant", "potted_plant_02", 670, -640)
             house("DeskChair", "dining_chair_02", 0, -590)
@@ -163,6 +190,8 @@ def describe():
             house("TicketRecords", "book_encyclopedia_set_01", -500, -430, 120,
                   yaw=90, collision=False)
             house("TicketLamp", "hanging_industrial_lamp", -500, -430, 185, collision=False)
+        else:
+            raise ValueError(f"Unsupported venue dressing: {name}")
     return finish_items(result, ROOMS)
 
 

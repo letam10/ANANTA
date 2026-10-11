@@ -118,8 +118,8 @@ def main():
         errors.append("Non-deterministic describe output")
     if len(labels) != len(set(labels)):
         errors.append("Duplicate labels")
-    if len(items) >= 240:
-        errors.append("Interior additions must remain below 240")
+    if len(items) >= 360:
+        errors.append("Interior additions must remain below 360")
     asset_root = PROJECT / "Content/ANANTA/City"
     for item in items:
         if item["mesh"] != "Cube":

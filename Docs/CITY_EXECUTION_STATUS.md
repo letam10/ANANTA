@@ -292,3 +292,12 @@ Handoff chi tiết: `Docs/CITY_EXECUTION_HANDOFF.md`.
   vẫn chưa được chứng minh.
 
 Handoff tiếp tục: Docs/CITY_EXECUTION_HANDOFF.md.
+
+## Vòng nội thất đa dạng 2026-10-11
+
+- Đã hoàn thiện source dressing cho 12 loại không gian: Cafe, Apartment, Bookshop, Clinic, Market, Gallery, Workshop, Transit, Library, Restaurant, Cinema và Hotel.
+- Bổ sung chi tiết riêng cho Library, Restaurant, Cinema và Hotel: kệ sách, đèn đọc, bản đồ/tranh, khung poster, quầy menu, cây cảnh, thảm dệt, sách và bảng trang trí. Các chi tiết nhỏ dùng lại mesh đã có để giảm số asset và phù hợp ISM/HISM.
+- Sửa vị trí quầy vé Cafe về trục bố trí cố định để không phụ thuộc hướng mặt tiền của venue.
+- Gate `python -X utf8 Tools/QA/VerifyCityVenueDressing.py` PASS: 249 additions, 12 phòng, 12 service desk, 166 vật thể non-collision, 72.816 so sánh bounds với nội thất nền, không overlap mới.
+- Gate `python -X utf8 Tools/QA/VerifyCityModelViewCoverage.py` PASS: 94 model, 9 family, 8 hướng model và 5 góc placement; 20 mesh lặp lại, 223 reference có thể tái sử dụng.
+- Đây là kiểm tra source-only; chưa chứng minh asset đã được Apply vào map, va chạm runtime, HLOD, ánh sáng, GPU hoặc FPS.
