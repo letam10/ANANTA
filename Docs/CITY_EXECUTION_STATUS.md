@@ -536,3 +536,36 @@ Handoff tiếp tục: Docs/CITY_EXECUTION_HANDOFF.md.
 - Chưa apply map hoặc readback Unreal, chưa native capture, chưa kiểm collision runtime, NPC/xe,
   HLOD, GPU hoặc FPS. Đây là source placement evidence; visual acceptance trong game chưa được
   xác nhận.
+
+## Vòng theater frontage 2026-10-11
+
+### Đã làm
+
+- Bổ sung hai dải marquee neon collision false ở mặt tiền Theater, dùng lại primitive đã có.
+- Bổ sung hai `DetailedPlanter`, hai `DetailedStreetLamp`, hai `Bench` collision true và một
+  `BusStopSign` ở hai bên mặt tiền; lối vào trung tâm rộng 600 cm được giữ nguyên.
+- Không đụng model nhân vật, gameplay actor, map generated hoặc ExternalActors.
+
+### Đã kiểm chứng
+
+- `CityExpansionLayout.py`: PASS, 10.750 building, 90.440 group, 1.668.011 instance,
+  source width 6,788 km và 9 facade style.
+- `VerifyCity6800Layout.py`: PASS, 10 facility, 4 hidden boundary, 3 ocean surface, 9 access
+  lane, không pending asset mesh; `inEngineVerified=false`, `visualAccepted=false`.
+- `VerifyCityInstanceReuse.py`: PASS, 146 signature và 1.667.865 reusable instance.
+- `VerifyCityDistrictVariety.py`, `VerifyCityRoofPool.py`, `py_compile` và `git diff --check`:
+  PASS.
+
+### Lỗi và bug còn mở
+
+- Chưa chứng minh kẹt/xuyên, collider của props, NPC boarding hoặc tuyến xe trong runtime Unreal.
+- Chưa có native eight direction model capture và five angle placement capture cho Theater.
+- Chưa chứng minh HLOD, occlusion, shader sample, shadow ray, GPU frame time hoặc 60 FPS.
+- Các venue hiện vẫn khai báo `shellOnly=true` và `gameplay=false`; tương tác nhà còn thiếu.
+
+### Kế hoạch tiếp theo
+
+- Rà source bounds và đặt thêm props cho civic/coastal/public-playground theo cùng quy tắc lane.
+- Tách nhóm nhà có thể vào được khỏi shell-only, sau đó viết gate collision/NPC ngắn trước khi
+  apply map.
+- Chỉ chạy kiểm tra source và gameplay ngắn có giới hạn; không benchmark hoặc soak test.

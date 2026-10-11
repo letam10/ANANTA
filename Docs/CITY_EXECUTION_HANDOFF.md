@@ -496,3 +496,28 @@ source/documentation checkpoint.
 - Chưa chạy Unreal/EXE, chưa apply hoặc readback map, chưa capture native năm góc, chưa chứng minh
   collision, NPC boarding, HLOD, GPU hoặc mục tiêu 90 FPS. Map và ExternalActors đang dirty có chủ
   ý và không thuộc commit này.
+
+## Vòng theater frontage 2026-10-11
+
+### Thay đổi nguồn
+
+- `Tools/Editor/CityMetroDistrict.py` thêm marquee neon, hai planter, hai đèn đường chi tiết,
+  hai bench collision true và một biển bus collision false cho Theater.
+- Tất cả instance nằm ngoài access lane trung tâm; không thêm asset mới, không sửa model nhân vật,
+  map hoặc ExternalActors.
+
+### Evidence
+
+- Layout PASS: 10.750 building, 90.440 group, 1.668.011 instance, width 6,788 km, 9 style.
+- Reuse PASS: 146 signature, 1.667.865 reusable instance, không invalid group.
+- Variety, roof pool, compile và diff check PASS.
+
+### Lỗi, giới hạn và việc cần làm
+
+- Runtime collision, chống xuyên/kẹt, NPC lên xuống phương tiện, HLOD, occlusion, GPU và 60 FPS
+  chưa được nghiệm thu; các cờ `inEngineVerified`, `visualAccepted`, `gameplayFacilities` vẫn
+  false.
+- Chưa có capture đủ 8 hướng model và 5 góc đặt trong Unreal cho vòng này.
+- Venue shell vẫn không tương tác; cần một vòng gameplay riêng với cửa, nav route và test ngắn.
+- Không được stage `Content/ANANTA/Maps/ANANTA_City.umap` hoặc
+  `Content/__ExternalActors__/ANANTA/Maps/ANANTA_City` nếu chưa có readback và review riêng.
