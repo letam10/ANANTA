@@ -44,3 +44,14 @@ signage, lighting, collision, traversal, performance, or gameplay are correct.
 An Unreal capture and human visual review are still required; visual acceptance
 is explicitly **not achieved** by this round.
 
+## Corrected terminal anchor checkpoint 2026-10-11
+
+- Camera source now uses the real terminal shell anchor `(186000,188000,20)` and target
+  `(186000,188000,425)`. The old airport site centre `(228000,204000)` is rejected by regression.
+- Five deterministic directions are emitted as `AirportTerminal`: front toward -Y, rear +Y,
+  left -X, right +X and upper. Ground views use 170 cm eye height.
+- Every view projects all eight envelope corners with 75 degree horizontal FOV and 16:9 aspect;
+  positive depth and a 0.92 normalized frame margin are required before writing the receipt.
+- `TestFacilityCloseViews.py`: 7/7 PASS; `py_compile` and manifest generation PASS.
+- `Saved/QA/CityAirportCloseViews.json` remains a source receipt with `accepted=false`; no Unreal
+  capture or visual acceptance is claimed.

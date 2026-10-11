@@ -1,19 +1,29 @@
-"""Prepare deterministic, close ground views for the Airport terminal review."""
+"""Prepare deterministic close views for the real airport terminal anchor."""
 
 import json
 import math
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[2]
-DIRECTIONS = (("front", 0.0), ("rear", 180.0), ("left", -90.0),
-              ("right", 90.0), ("upper", 45.0))
+TERMINAL_LOCATION = (186000.0, 188000.0, 20.0)
+TERMINAL_TARGET = (186000.0, 188000.0, 425.0)
+TERMINAL_SIZE = (6800.0, 5680.0, 810.0)
 GROUND_EYE_HEIGHT_CM = 170.0
+HORIZONTAL_FOV_DEGREES = 75.0
+ASPECT_RATIO = 16.0 / 9.0
+FRAME_MARGIN = 0.92
+DIRECTIONS = (
+    ("front", (0.0, -1.0, 0.0)),
+    ("rear", (0.0, 1.0, 0.0)),
+    ("left", (-1.0, 0.0, 0.0)),
+    ("right", (1.0, 0.0, 0.0)),
+    ("upper", (math.sqrt(0.5), -math.sqrt(0.5), 0.0)),
+)
 
 
 def _point(value, name):
     if len(value) != 3:
-        raise ValueError(f"{name} must contain x, y, z")
+        raise ValueError(f"{name} must contain x y z")
     return tuple(float(item) for item in value)
 
 
@@ -24,84 +34,168 @@ def _site_size(value):
     return size
 
 
-def build_close_views(location, target, site_size):
-    """Return front, rear, left, right and upper terminal camera records.
+def _normalize(vector):
+    length = math.sqrt(sum(item * item for item in vector))
+    if length <= 0:
+        raise ValueError("direction must not be zero")
+    return tuple(item / length for item in vector)
 
-    ``location`` is the terminal ground anchor, ``target`` is the point to keep
-    centred, and ``site_size`` is the terminal envelope in centimetres.  The
-    four horizontal views use a player eye height; the upper view is elevated
-    only enough to show the terminal roof and its immediate apron.
-    """
+
+def _dot(first, second):
+    return sum(first[index] * second[index] for index in range(3))
+
+
+def _cross(first, second):
+    return (
+        first[1] * second[2] - first[2] * second[1],
+        first[2] * second[0] - first[0] * second[2],
+        first[0] * second[1] - first[1] * second[0],
+    )
+
+
+def _camera_rotation(eye, target):
+    delta = tuple(target[index] - eye[index] for index in range(3))
+    yaw = math.degrees(math.atan2(delta[1], delta[0]))
+    pitch = math.degrees(math.atan2(delta[2], math.hypot(delta[0], delta[1])))
+    return [round(pitch, 3), round(yaw, 3), 0.0]
+
+
+def _envelope_corners(location, site_size):
+    width, depth, height = site_size
+    half_width = width / 2.0
+    half_depth = depth / 2.0
+    return [
+        (location[0] + x, location[1] + y, location[2] + z)
+        for x in (-half_width, half_width)
+        for y in (-half_depth, half_depth)
+        for z in (0.0, height)
+    ]
+
+
+def _project_envelope(eye, target, site_size, location):
+    forward = _normalize(tuple(target[index] - eye[index] for index in range(3)))
+    right = _normalize((-forward[1], forward[0], 0.0))
+    up = _normalize(_cross(forward, right))
+    horizontal_half_angle = math.radians(HORIZONTAL_FOV_DEGREES / 2.0)
+    vertical_half_angle = math.atan(math.tan(horizontal_half_angle) / ASPECT_RATIO)
+    tangent_x = math.tan(horizontal_half_angle)
+    tangent_y = math.tan(vertical_half_angle)
+    normalized = []
+    depths = []
+    for corner in _envelope_corners(location, site_size):
+        offset = tuple(corner[index] - eye[index] for index in range(3))
+        depth = _dot(offset, forward)
+        depths.append(depth)
+        if depth <= 0:
+            continue
+        normalized.append((
+            _dot(offset, right) / (depth * tangent_x),
+            _dot(offset, up) / (depth * tangent_y),
+        ))
+    maximum = max(
+        (max(abs(axis) for axis in pair) for pair in normalized),
+        default=math.inf,
+    )
+    return {
+        "cornerCount": 8,
+        "minDepthCm": round(min(depths), 3),
+        "maxAbsNormalized": round(maximum, 6),
+        "frameMargin": FRAME_MARGIN,
+        "passes": (
+            len(normalized) == 8
+            and min(depths) > 0
+            and maximum <= FRAME_MARGIN
+        ),
+    }
+
+
+def build_close_views(location, target, site_size):
+    """Return exactly five close camera records around the terminal envelope."""
     origin = _point(location, "location")
     focus = _point(target, "target")
-    width, depth, height = _site_size(site_size)
-    radius = max(650.0, math.hypot(width, depth) * 0.62)
-    upper_radius = max(700.0, math.hypot(width, depth) * 0.72)
+    size = _site_size(site_size)
+    width, depth, height = size
+    radius = max(10000.0, math.hypot(width, depth) * 1.4)
+    upper_radius = max(11000.0, math.hypot(width, depth) * 1.6)
     views = []
-    for direction, angle in DIRECTIONS:
+    for direction, vector in DIRECTIONS:
+        normalized = _normalize(vector)
         distance = upper_radius if direction == "upper" else radius
-        eye_height = (origin[2] + GROUND_EYE_HEIGHT_CM
-                      if direction != "upper"
-                      else origin[2] + max(900.0, height * 0.95))
-        radians = math.radians(angle)
-        eye = (origin[0] + math.cos(radians) * distance,
-               origin[1] + math.sin(radians) * distance,
-               eye_height)
-        delta_x = focus[0] - eye[0]
-        delta_y = focus[1] - eye[1]
-        delta_z = focus[2] - eye[2]
-        yaw = math.degrees(math.atan2(delta_y, delta_x))
-        pitch = math.degrees(math.atan2(delta_z, math.hypot(delta_x, delta_y)))
+        eye_height = (
+            origin[2] + GROUND_EYE_HEIGHT_CM
+            if direction != "upper"
+            else origin[2] + max(height + 1200.0, 2000.0)
+        )
+        eye = tuple(
+            origin[index] + normalized[index] * distance
+            for index in range(3)
+        )
+        eye = (eye[0], eye[1], eye_height)
+        projection = _project_envelope(eye, focus, size, origin)
         views.append({
-            "id": "Airport",
+            "id": "AirportTerminal",
             "direction": direction,
             "location": [round(value, 3) for value in eye],
             "target": [round(value, 3) for value in focus],
-            "rotation": [round(pitch, 3), round(yaw, 3), 0.0],
+            "rotation": _camera_rotation(eye, focus),
             "distanceCm": round(distance, 3),
             "eyeHeightCm": round(eye_height - origin[2], 3),
+            "projection": projection,
         })
-    assert [view["direction"] for view in views] == [item[0] for item in DIRECTIONS]
+    _validate(views, origin, focus)
     return views
 
 
 def _validate(views, location, target):
-    assert len(views) == 5
-    assert [view["direction"] for view in views] == [item[0] for item in DIRECTIONS]
-    ground_z = float(location[2])
+    assert len(views) == len(DIRECTIONS)
+    assert [view["direction"] for view in views] == [
+        item[0] for item in DIRECTIONS
+    ]
+    target_values = [round(float(item), 3) for item in target]
     for view in views:
-        assert view["target"] == [round(float(item), 3) for item in target]
+        assert view["id"] == "AirportTerminal"
+        assert view["target"] == target_values
         assert view["distanceCm"] > 0
+        assert view["projection"]["passes"]
         if view["direction"] != "upper":
             assert view["eyeHeightCm"] == GROUND_EYE_HEIGHT_CM
-            assert view["location"][2] == round(ground_z + GROUND_EYE_HEIGHT_CM, 3)
         else:
             assert view["eyeHeightCm"] > GROUND_EYE_HEIGHT_CM
 
 
 def main():
-    location = (228000.0, 204000.0, 21.0)
-    target = (228000.0, 204000.0, 620.0)
-    site_size = (6600.0, 4200.0, 1400.0)
-    views = build_close_views(location, target, site_size)
-    _validate(views, location, target)
+    views = build_close_views(
+        TERMINAL_LOCATION,
+        TERMINAL_TARGET,
+        TERMINAL_SIZE,
+    )
     output = ROOT / "Saved/QA/CityAirportCloseViews.json"
     output.parent.mkdir(parents=True, exist_ok=True)
     payload = {
-        "schemaVersion": 1,
-        "facility": "Airport",
-        "purpose": "Close ground-level terminal review",
-        "locationCm": list(location),
-        "targetCm": list(target),
-        "siteSizeCm": list(site_size),
+        "schemaVersion": 2,
+        "facility": "AirportTerminal",
+        "purpose": "Close five angle terminal review",
+        "locationCm": list(TERMINAL_LOCATION),
+        "targetCm": list(TERMINAL_TARGET),
+        "siteSizeCm": list(TERMINAL_SIZE),
+        "horizontalFovDegrees": HORIZONTAL_FOV_DEGREES,
+        "aspectRatio": ASPECT_RATIO,
         "views": views,
         "accepted": False,
-        "visualReview": "Pending Unreal capture; this manifest does not prove visual acceptance.",
+        "visualReview": (
+            "Pending Unreal capture; this manifest does not prove visual acceptance."
+        ),
     }
-    output.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
-    print(json.dumps({"views": len(views), "output": str(output)}))
+    output.write_text(
+        json.dumps(payload, indent=2) + chr(10),
+        encoding="utf-8",
+    )
+    print(json.dumps({
+        "views": len(views),
+        "output": str(output),
+        "accepted": False,
+    }))
 
 
 if __name__ == "__main__":
     main()
-

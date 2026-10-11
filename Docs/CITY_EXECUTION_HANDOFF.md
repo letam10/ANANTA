@@ -389,3 +389,24 @@ source/documentation checkpoint.
 
 - Chưa apply map, chưa import/readback Unreal, chưa native five-angle capture, simple collision,
   NPC/xe loading, HLOD hoặc GPU/FPS. Các số liệu hiện là source evidence.
+## Vòng airport close camera anchor 2026-10-11
+
+### Đã làm
+
+- Sửa generator camera dùng terminal thật tại `(186000,188000,20)`, không dùng site centre sân bay
+  `(228000,204000)` cho close review.
+- Thêm projection tám góc với FOV ngang 75 độ, aspect 16:9, positive depth và margin 0,92;
+  năm hướng có identity `AirportTerminal` và eye height ground 170 cm.
+- Thêm `Tools/QA/TestFacilityCloseViews.py` để bắt hồi quy anchor, hướng, frame, input và
+  determinism; cập nhật `Docs/CITY_AIRPORT_CLOSE_CAMERA_ROUND.md`.
+
+### Đã kiểm chứng
+
+- 7/7 airport unit tests PASS.
+- `py_compile` generator/test PASS.
+- Manifest `Saved/QA/CityAirportCloseViews.json` tạo đủ 5 view, `accepted=false`.
+
+### Giới hạn còn mở
+
+- Chưa mở Unreal, chưa capture PNG, chưa kiểm tỷ lệ native, vật cản, collision, HLOD, NPC route,
+  GPU hoặc FPS. Đây chỉ là camera/source evidence.
