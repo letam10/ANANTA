@@ -432,3 +432,25 @@ source/documentation checkpoint.
 
 - Chưa apply World Partition, chưa native five angle capture station, chưa kiểm collision runtime,
   NPC boarding, HLOD, GPU hoặc FPS. Đây là source placement evidence.
+## Vòng factory industrial facade 2026-10-11
+
+### Đã làm
+
+- Thêm `FacadeIndustrial` ở mặt trước lệch phải của factory để tạo nhận diện công nghiệp mà không
+  che access lane trung tâm.
+- Thêm hai `DetailedStreetLamp` và một `BusStopSign` collision false ở sân loading; giữ nguyên
+  apron, shutter, bollard và đường xe tải đã sửa ở vòng trước.
+
+### Đã kiểm chứng
+
+- `VerifyCityFactorySource.py`: PASS, 100 instances, không issue.
+- `TestCityFactorySource.py`: 7/7 PASS.
+- `VerifyCity6800Layout.py`: PASS, 10.750 building, 1.667.872 instance, 9 access lane.
+- `VerifyCityExpansionLayout.py`: PASS, 90.370 group, không pending mesh.
+- `VerifyCityInstanceReuse.py`: PASS, 144 signature, 1.667.728 instance dùng lại.
+- `VerifyCityDistrictVariety.py`, `VerifyCityRoofPool.py`, `py_compile`: PASS.
+
+### Giới hạn còn mở
+
+- Chưa apply map, chưa native capture factory, chưa kiểm collision runtime, NPC/xe loading, HLOD,
+  GPU hoặc FPS. Source gate không thay thế nghiệm thu Unreal.

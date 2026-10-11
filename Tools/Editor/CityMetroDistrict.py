@@ -155,6 +155,11 @@ def pool(layout, x, y):
 
 def factory(layout, x, y, height, material):
     shell(layout, x, y, height, material)
+    layout.add("FacadeIndustrial", (x + 1500, y - 2220, 15), collision=False)
+    for side in (-1, 1):
+        layout.add("DetailedStreetLamp", (x + side * 3000, y - 3600, 15),
+                   yaw=0, collision=False)
+    layout.add("BusStopSign", (x + 2500, y - 3500, 15), yaw=90, collision=False)
     for xx in (-2200, 0, 2200):
         for tier in range(5):
             layout.box("DistrictSteel", (x + xx, y, height + 100 + tier * 110),
