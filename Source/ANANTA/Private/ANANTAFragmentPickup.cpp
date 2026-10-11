@@ -1,6 +1,7 @@
 #include "ANANTAFragmentPickup.h"
 
 #include "ANANTAGameInstance.h"
+#include "City/ANANTACitySubsystem.h"
 #include "Components/BoxComponent.h"
 #include "Components/StaticMeshComponent.h"
 #include "Engine/World.h"
@@ -31,6 +32,10 @@ AANANTAFragmentPickup::AANANTAFragmentPickup()
 void AANANTAFragmentPickup::BeginPlay()
 {
     Super::BeginPlay();
+    const auto* State = GetGameInstance()->GetSubsystem<UANANTACitySubsystem>();
+    bCollected = State && State->HasLegacyFragment(FragmentId);
+    FragmentMesh->SetVisibility(!bCollected);
+    CollectionTrigger->SetCollisionEnabled(bCollected ? ECollisionEnabled::NoCollision : ECollisionEnabled::QueryOnly);
     CollectionTrigger->OnComponentBeginOverlap.AddDynamic(this, &AANANTAFragmentPickup::HandleTriggerBeginOverlap);
 }
 
@@ -41,7 +46,8 @@ bool AANANTAFragmentPickup::Collect(AActor* Collector)
         return false;
     }
 
-    if (!Collector->IsA<ACharacter>())
+    const ACharacter* Player = Cast<ACharacter>(Collector);
+    if (!Player || !Player->IsPlayerControlled())
     {
         return false;
     }
@@ -53,6 +59,8 @@ bool AANANTAFragmentPickup::Collect(AActor* Collector)
     }
 
     bCollected = true;
+    FragmentMesh->SetVisibility(false);
+    CollectionTrigger->SetCollisionEnabled(ECollisionEnabled::NoCollision);
     OnFragmentCollected.Broadcast(FragmentId);
 
     if (bDestroyOnCollect)

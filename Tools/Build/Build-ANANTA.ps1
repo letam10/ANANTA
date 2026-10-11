@@ -1,6 +1,8 @@
 [CmdletBinding()]
 param(
     [string]$ProjectRoot,
+    [ValidateSet('ANANTAEditor', 'ANANTA')]
+    [string]$Target = 'ANANTAEditor',
     [ValidateSet('Development', 'DebugGame', 'Shipping')]
     [string]$Configuration = 'Development',
     [int]$MaxParallelActions = 2,
@@ -19,7 +21,9 @@ $ubtPath = Join-Path $EngineRoot 'Engine\Binaries\DotNET\UnrealBuildTool\UnrealB
 if (-not (Test-Path -LiteralPath $uprojectPath)) { throw "Missing project: $uprojectPath" }
 if (-not (Test-Path -LiteralPath $ubtPath)) { throw "Missing UnrealBuildTool: $ubtPath" }
 
-$editorProcesses = @(Get-CimInstance Win32_Process -ErrorAction SilentlyContinue | Where-Object { $_.Name -ieq 'UnrealEditor.exe' })
+$editorProcesses = @(Get-CimInstance Win32_Process -ErrorAction SilentlyContinue | Where-Object {
+    $_.Name -in @('UnrealEditor.exe', 'UnrealEditor-Cmd.exe')
+})
 if ($editorProcesses.Count -gt 0) {
     $pids = ($editorProcesses | ForEach-Object { $_.ProcessId }) -join ', '
     throw "Unreal Editor is running (PID $pids). Close it before compiling ANANTA."
@@ -27,7 +31,7 @@ if ($editorProcesses.Count -gt 0) {
 
 $arguments = @(
     $ubtPath,
-    'ANANTAEditor',
+    $Target,
     'Win64',
     $Configuration,
     "-Project=$uprojectPath",
@@ -36,7 +40,7 @@ $arguments = @(
     "-MaxParallelActions=$MaxParallelActions"
 )
 
-Write-Output "Building ANANTAEditor $Configuration..."
+Write-Output "Building $Target $Configuration..."
 & dotnet @arguments
 if ($LASTEXITCODE -ne 0) {
     throw "UnrealBuildTool failed with exit code $LASTEXITCODE."

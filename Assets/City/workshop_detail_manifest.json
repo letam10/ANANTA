@@ -1,0 +1,266 @@
+{
+  "schemaVersion": 1,
+  "units": "cm",
+  "upAxis": "Z",
+  "forwardAxis": "X",
+  "meshes": [
+    {
+      "id": "WorkshopToolBoard",
+      "file": "WorkshopDetail/Meshes/WorkshopToolBoard.fbx",
+      "boundsCm": {
+        "min": [
+          -140.0,
+          -7.0,
+          0.0
+        ],
+        "max": [
+          140.0,
+          7.0,
+          140.0
+        ],
+        "size": [
+          280.0,
+          14.0,
+          140.0
+        ]
+      },
+      "materialSlots": [
+        "Workshop_Panel",
+        "Workshop_Steel",
+        "Workshop_Grip",
+        "Workshop_Markings"
+      ],
+      "triangles": 7456,
+      "source": "Original ANANTA workshop geometry and labels",
+      "license": "Original project asset",
+      "sha256": "d1d8f22e1b9d7857528238ace400b6c0320131cd1eebf709635da9f5488caafd",
+      "lodRecommendation": {
+        "screenSizes": [
+          1.0,
+          0.4,
+          0.15
+        ],
+        "triangleRatios": [
+          1,
+          0.5,
+          0.2
+        ]
+      },
+      "visibleFront": "-Y"
+    },
+    {
+      "id": "WorkshopPartsCrate",
+      "file": "WorkshopDetail/Meshes/WorkshopPartsCrate.fbx",
+      "boundsCm": {
+        "min": [
+          -70.0,
+          -55.0,
+          0.0
+        ],
+        "max": [
+          70.0,
+          55.0,
+          70.0
+        ],
+        "size": [
+          140.0,
+          110.0,
+          70.0
+        ]
+      },
+      "materialSlots": [
+        "Workshop_Wood",
+        "Workshop_Steel",
+        "Workshop_Markings"
+      ],
+      "triangles": 3096,
+      "source": "Original ANANTA workshop geometry and labels",
+      "license": "Original project asset",
+      "sha256": "b286309e8762780a8c5cd2063c3e1c23ac9e7cb8442fb4e5c6ca53807d9ed526",
+      "lodRecommendation": {
+        "screenSizes": [
+          1.0,
+          0.4,
+          0.15
+        ],
+        "triangleRatios": [
+          1,
+          0.5,
+          0.2
+        ]
+      },
+      "visibleFront": "-Y"
+    }
+  ],
+  "materials": [
+    {
+      "id": "Workshop_Wood",
+      "baseColor": "WorkshopDetail/Textures/Wood/color.png",
+      "normal": "WorkshopDetail/Textures/Wood/normal.png",
+      "roughness": "WorkshopDetail/Textures/Wood/roughness.png",
+      "ao": null,
+      "metallic": null,
+      "baseColorFactor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "metallicFactor": 0,
+      "roughnessFactor": 0.78,
+      "normalConvention": "OpenGL",
+      "source": "https://polyhaven.com/a/wood_floor",
+      "license": "CC0-1.0"
+    },
+    {
+      "id": "Workshop_Panel",
+      "baseColor": null,
+      "normal": null,
+      "roughness": null,
+      "ao": null,
+      "metallic": null,
+      "baseColorFactor": [
+        0.037,
+        0.072,
+        0.065,
+        1
+      ],
+      "metallicFactor": 0,
+      "roughnessFactor": 0.55,
+      "normalConvention": "OpenGL",
+      "source": "Original ANANTA workshop design",
+      "license": "Original project asset"
+    },
+    {
+      "id": "Workshop_Steel",
+      "baseColor": null,
+      "normal": null,
+      "roughness": null,
+      "ao": null,
+      "metallic": null,
+      "baseColorFactor": [
+        0.53,
+        0.56,
+        0.58,
+        1
+      ],
+      "metallicFactor": 1,
+      "roughnessFactor": 0.34,
+      "normalConvention": "OpenGL",
+      "source": "Original ANANTA workshop design",
+      "license": "Original project asset"
+    },
+    {
+      "id": "Workshop_Grip",
+      "baseColor": null,
+      "normal": null,
+      "roughness": null,
+      "ao": null,
+      "metallic": null,
+      "baseColorFactor": [
+        0.38,
+        0.14,
+        0.026,
+        1
+      ],
+      "metallicFactor": 0,
+      "roughnessFactor": 0.58,
+      "normalConvention": "OpenGL",
+      "source": "Original ANANTA workshop design",
+      "license": "Original project asset"
+    },
+    {
+      "id": "Workshop_Markings",
+      "baseColor": "WorkshopDetail/Textures/WorkshopLabels.png",
+      "normal": null,
+      "roughness": null,
+      "ao": null,
+      "metallic": null,
+      "baseColorFactor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "metallicFactor": 0,
+      "roughnessFactor": 0.88,
+      "normalConvention": "OpenGL",
+      "source": "Original ANANTA workshop design",
+      "license": "Original project asset"
+    }
+  ],
+  "sourceFiles": [
+    {
+      "file": "WorkshopDetail/Sources/Generator/build_city_assets.py",
+      "sha256": "0bea25576944d0460719e59713b70b5f5eebb66b01c6f2f7aa0b36c7957608b8",
+      "source": "Original ANANTA workshop source",
+      "license": "Original project asset"
+    },
+    {
+      "file": "WorkshopDetail/Sources/Generator/finishing_materials.py",
+      "sha256": "0b0ee12b7f46d0f76d2f553fd675ac750379951ec21b7da08507062f7df73eef",
+      "source": "Original ANANTA workshop source",
+      "license": "Original project asset"
+    },
+    {
+      "file": "WorkshopDetail/Sources/Generator/geometry.py",
+      "sha256": "2879b80bc580d0d0a72a47fc5713097664eb3a8b5979e34db9181ebc6e227c54",
+      "source": "Original ANANTA workshop source",
+      "license": "Original project asset"
+    },
+    {
+      "file": "WorkshopDetail/Sources/Generator/workshop_detail_art.py",
+      "sha256": "3d81b446616576b6ab99827a76db20328ae738862faa7520e861ea0d25e2c0a7",
+      "source": "Original ANANTA workshop source",
+      "license": "Original project asset"
+    },
+    {
+      "file": "WorkshopDetail/Sources/Generator/workshop_detail_audit.py",
+      "sha256": "ad648e275b3a0278ef3b02882c8f7883081c45a31ec533b8df4217ad7adf368f",
+      "source": "Original ANANTA workshop source",
+      "license": "Original project asset"
+    },
+    {
+      "file": "WorkshopDetail/Sources/Generator/workshop_detail_build.py",
+      "sha256": "595fe2a6e057393aa0b103a04f94599f444dbdf9be25fe0044443a50357c8d29",
+      "source": "Original ANANTA workshop source",
+      "license": "Original project asset"
+    },
+    {
+      "file": "WorkshopDetail/Sources/Generator/workshop_detail_geometry.py",
+      "sha256": "5b41d77a97e50e2011f8fb05f1cccd682804ff20ece0e973383215c54b9c4407",
+      "source": "Original ANANTA workshop source",
+      "license": "Original project asset"
+    },
+    {
+      "file": "WorkshopDetail/Textures/Wood/color.png",
+      "sha256": "b550d8685056c5810c3a73654aeed7d2bc80f8a2edeb47999a3e7c6ebec548b8",
+      "source": "https://polyhaven.com/a/wood_floor",
+      "license": "CC0-1.0"
+    },
+    {
+      "file": "WorkshopDetail/Textures/Wood/normal.png",
+      "sha256": "c9c4a66d53a9078b5342c4b90ea426cbae868e394e2b6920ba342ed4af93ba54",
+      "source": "https://polyhaven.com/a/wood_floor",
+      "license": "CC0-1.0"
+    },
+    {
+      "file": "WorkshopDetail/Textures/Wood/roughness.png",
+      "sha256": "cd4e5e10dae7b90100f0341f8720c83bffd725f6a3364f837f37c28f95830288",
+      "source": "https://polyhaven.com/a/wood_floor",
+      "license": "CC0-1.0"
+    },
+    {
+      "file": "WorkshopDetail/Textures/WorkshopLabels.png",
+      "sha256": "abf75e66bcf4443e2b44fb5e9cd96f52a6e2dc76be9e672a82ba92133b7bf002",
+      "source": "Original ANANTA workshop source",
+      "license": "Original project asset"
+    },
+    {
+      "file": "WorkshopDetail/WorkshopDetail.blend",
+      "sha256": "6cc4dedc62b57209088796efeb8d22758b3d3502779baa9bb287dc32d00f99e8",
+      "source": "Original ANANTA workshop authoring scene",
+      "license": "Original project asset"
+    }
+  ]
+}

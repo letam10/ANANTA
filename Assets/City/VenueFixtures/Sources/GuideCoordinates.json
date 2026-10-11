@@ -1,0 +1,120 @@
+{
+  "title": "NEIGHBORHOOD GUIDE",
+  "source": "Tools/Editor/CityVenueDressing.py ROOMS",
+  "convention": "X east/right, Y north/up; uniform scale, centimetres",
+  "imageSize": [
+    2048,
+    768
+  ],
+  "pixelsPerCm": 0.017,
+  "originPixel": [
+    790,
+    349
+  ],
+  "venues": [
+    {
+      "number": 1,
+      "id": "Cafe",
+      "centreCm": [
+        -26150,
+        2400
+      ],
+      "markerPixel": [
+        345.45,
+        308.2
+      ],
+      "legend": "CAFE"
+    },
+    {
+      "number": 2,
+      "id": "Apartment",
+      "centreCm": [
+        2350,
+        2500
+      ],
+      "markerPixel": [
+        829.95,
+        306.5
+      ],
+      "legend": "APARTMENT"
+    },
+    {
+      "number": 3,
+      "id": "Bookshop",
+      "centreCm": [
+        -38150,
+        2700
+      ],
+      "markerPixel": [
+        141.45,
+        303.1
+      ],
+      "legend": "BOOKSHOP"
+    },
+    {
+      "number": 4,
+      "id": "Clinic",
+      "centreCm": [
+        -9750,
+        2550
+      ],
+      "markerPixel": [
+        624.25,
+        305.65
+      ],
+      "legend": "CLINIC"
+    },
+    {
+      "number": 5,
+      "id": "Market",
+      "centreCm": [
+        -21750,
+        -2800
+      ],
+      "markerPixel": [
+        420.25,
+        396.6
+      ],
+      "legend": "MARKET"
+    },
+    {
+      "number": 6,
+      "id": "Gallery",
+      "centreCm": [
+        14200,
+        2550
+      ],
+      "markerPixel": [
+        1031.4,
+        305.65
+      ],
+      "legend": "GALLERY"
+    },
+    {
+      "number": 7,
+      "id": "Workshop",
+      "centreCm": [
+        38200,
+        2500
+      ],
+      "markerPixel": [
+        1439.4,
+        306.5
+      ],
+      "legend": "WORKSHOP"
+    },
+    {
+      "number": 8,
+      "id": "Transit",
+      "centreCm": [
+        62200,
+        2500
+      ],
+      "markerPixel": [
+        1847.4,
+        306.5
+      ],
+      "legend": "VISITOR CENTRE"
+    }
+  ]
+}
