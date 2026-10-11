@@ -33,9 +33,9 @@ def main():
     assert abs(data["audit"]["areaRatio"] - 32) < 0.00001
     assert abs(data["audit"]["previousAreaRatio"] - 4) < 0.00001
     assert data["audit"]["roadBlocks"] == 3136
-    assert len(VENUES) == 11
+    assert len(VENUES) == 12
     assert {venue["id"] for venue in VENUES} == {
-        "Bookshop", "Clinic", "Market", "ToyShop", "Gallery", "Workshop",
+        "Bookshop", "Clinic", "Market", "ToyShop", "Salon", "Gallery", "Workshop",
         "Transit", "Library", "Restaurant", "Cinema", "Hotel",
     }
     # Kiem tra loai tai nguyen can import, khong chap nhan mesh khong co trong nguon.

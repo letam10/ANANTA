@@ -567,3 +567,24 @@ source/documentation checkpoint.
 
 - Chưa apply hoặc readback map, chưa kiểm actor persistence, cửa, collision, NPC route hoặc boarding,
   HLOD, GPU hoặc FPS. Không stage map và ExternalActors khi chưa có review runtime riêng.
+
+## Vòng accessible Salon 2026-10-11
+
+### Thay đổi nguồn
+
+- \`CityExpansionData.py\` thêm Salon tại \`(126000, 2600)\`; \`CityExpansionVenues.py\` và
+  \`CityVenueDressing.py\` thêm quầy, ghế, đèn và \`MakeupCompact\`.
+- \`CityInteriorArchitecture.py\`, \`VerifyCityExpansionLayout.py\`,
+  \`VerifyCity6800Layout.py\` và \`VerifyCityModelViewCoverage.py\` được cập nhật đồng bộ.
+- Không sửa model nhân vật, map generated hoặc ExternalActors.
+
+### Evidence
+
+- 12 venue expansion và 4 civic service được kiểm ID/kind; gate interaction PASS.
+- 14 phòng dressing, 284 item, sparse limit 294, 22 mesh lặp và 256 reusable references.
+- Layout, eight model views, five placement views, compile và diff check PASS.
+
+### Việc còn lại
+
+- Chưa có runtime smoke test, native capture, map readback, collision/NPC/HLOD/GPU/FPS acceptance.
+- Không stage map hoặc ExternalActors trước khi có review runtime riêng.

@@ -623,3 +623,29 @@ Handoff tiếp tục: Docs/CITY_EXECUTION_HANDOFF.md.
   hoặc 60 FPS.
 - Cần apply map và chạy gameplay smoke test ngắn sau khi có checkpoint runtime an toàn; không
   benchmark hoặc soak test.
+
+## Vòng accessible Salon 2026-10-11
+
+### Đã làm
+
+- Thêm venue tương tác Salon tại \`(126000, 2600)\` với footprint 1800x1500 cm và service
+  \`Salon_Read\`.
+- Thêm quầy tiếp nhận, ba \`MakeupCompact\`, hai ghế, cây và đèn; các đồ trang trí nhỏ giữ
+  collision false để không chặn hành lang.
+- Thêm wall details Salon và cập nhật các gate exact venue cùng coverage cosmetics.
+
+### Đã kiểm chứng
+
+- Interaction gate PASS: 12 expansion service ID, 4 civic service, không ID trùng hoặc service
+  kind không hợp lệ.
+- Model view gate PASS: 95 model, 11 manifest, 8 hướng model, 5 góc placement, 14 phòng,
+  284 dressing item, sparse limit 294.
+- Reuse PASS: 22 mesh lặp, 256 reusable references; layout 10.750 building, 6,788 km,
+  4 boundary, 3 ocean surface, 9 access lane, không pending mesh.
+- Diversity, roof pool, compile và diff check PASS.
+
+### Lỗi và giới hạn còn mở
+
+- Chưa apply/readback Unreal, chưa chứng minh actor persistence, collision runtime, NPC path,
+  HLOD, GPU hoặc 60 FPS; runtimeVerified vẫn false.
+- Chưa có native capture tám hướng và năm góc cho Salon; các view hiện là source metadata.

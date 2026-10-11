@@ -63,6 +63,7 @@ VENUE_REQUIREMENTS = {
     "Clinic": {"medical_storage": ("ClinicSupplyCabinet",)},
     "Market": {"stock": ("House_brass_pot_01",), "checkout": ("CafeCounter",)},
     "ToyShop": {"toys": ("ToyBlocks",), "checkout": ("CafeCounter",)},
+    "Salon": {"cosmetics": ("MakeupCompact",), "reception": ("CafeCounter",)},
     "Gallery": {"display": ("InteriorGalleryFrame",)},
     "Workshop": {"tools": ("WorkshopToolBoard",), "parts": ("WorkshopPartsCrate",)},
     "Transit": {"route": ("TransitRouteDisplay",)},

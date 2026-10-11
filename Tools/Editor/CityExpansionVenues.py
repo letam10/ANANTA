@@ -71,6 +71,16 @@ def furnish_venue(item):
                  scale=(0.8, 0.8, 0.8), collision=False)
         prop("ToyBlocks", prefix + "_WindowDisplay", (front + item["face"] * 180, y - 860, 55),
              scale=(0.7, 0.7, 0.7), collision=False)
+    elif item["id"] == "Salon":
+        prop("CafeCounter", prefix + "_Reception", (x, y - 360, 15))
+        for index, xx in enumerate((-360, 0, 360)):
+            prop("MakeupCompact", prefix + f"_Compact{index}", (x + xx, y - 360, 82),
+                 collision=False)
+        prop("House_modern_arm_chair_01", prefix + "_ChairLeft", (x - 480, y + 360, 15), 90)
+        prop("House_modern_arm_chair_01", prefix + "_ChairRight", (x + 480, y + 360, 15), 270)
+        prop("House_potted_plant_02", prefix + "_Plant", (x + 650, y + 520, 15))
+        prop("House_hanging_industrial_lamp", prefix + "_Lamp",
+             (x, y + 250, 185), collision=False)
     elif item["id"] == "Gallery":
         for index, tint in enumerate(("ShellTerracotta", "ShellBlue", "ShellSage")):
             xx = x - 480 + index * 480
