@@ -212,3 +212,15 @@ source/documentation checkpoint.
 ### Giới hạn
 - Đây là source AABB/support gate. Chưa chứng minh import/reopen, simple collision trong Unreal, ánh sáng, HLOD, map persistence hoặc FPS.
 - Tám prop đã được `ApplyCityExpansion.py` gọi qua `CitySmallDetails.furnish`; việc gọi đó chưa được chạy lại trong Unreal ở checkpoint này.
+
+## Checkpoint handoff: civic dressing 2026-10-11
+
+### Đã xác nhận
+- `Tools/Editor/CityCivicDressing.py` tạo sáu cabinet thật ở ba vị trí mỗi bên Arcade, xoay vào phòng và giữ lane trung tâm.
+- `Tools/Editor/CityCivicDistrict.py` gọi civic dressing sau shell và room details; source apply path đã có sẵn trong `ApplyCityExpansion.py`.
+- Gate `python -X utf8 Tools/Editor/VerifyCivicDressingLayout.py` PASS với 54 instance và 43 collider.
+
+### Giới hạn còn mở
+- Chưa Apply lại World Partition map vì actor tree đang dirty rất lớn.
+- Chưa có native five angle capture, readback HLOD, collision runtime, NPC route hoặc GPU/FPS evidence.
+- Khi được phép chạy lượt native riêng, cần kiểm Arcade prompt approach, door clearance, cabinet simple collision và không nhân đôi actor Living.

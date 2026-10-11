@@ -308,3 +308,10 @@ Handoff tiếp tục: Docs/CITY_EXECUTION_HANDOFF.md.
 - Bổ sung material references từ các placement source vào `VerifyCitySmallPlacement.py`. Gate trước đó fail vì dressing dùng `ShellSage` nhưng catalog fixture chỉ lấy material mặc định; đây là lỗi của gate, không phải lỗi mesh.
 - Gate sau sửa: `CITY_SMALL_PLACEMENT_SOURCE_OK 8 regressions 3`; tám prop đều nằm trên surface hợp lệ, không overlap với obstacle hoặc nhau, và ba tọa độ sai bị regression test loại đúng.
 - Không mở Unreal, không import asset vào map, không chạy EXE, không benchmark; visual native, collision runtime và persistence vẫn cần lượt riêng.
+
+## Vòng civic dressing source-only 2026-10-11
+
+- `CityCivicDressing.py` dùng sáu ArcadeCabinet mesh thật cho Pixel Pier, bố trí hai dãy theo tường; hai cabinet living hiện có được giữ lại, không để lại hộp cabinet procedural trùng hình.
+- `VerifyCivicDressingLayout.py` PASS: 5 nhóm mesh, 54 instance, 43 collider, capsule radius 38 cm; containment, hành lang, overlap mới và overlap seating đều đạt.
+- Bar giữ route vào rộng 480 cm, ba counter, ba bàn và sáu ghế; không thêm đèn động hoặc nội thất phía trên không cần thiết.
+- Đây là source layout evidence; chưa chứng minh map persistence, import/reopen, collision trong Unreal, HLOD, ảnh native hoặc FPS.
