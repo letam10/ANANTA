@@ -365,3 +365,44 @@ Handoff tiếp tục: Docs/CITY_EXECUTION_HANDOFF.md.
 - Giữ nguyên 41 bậc cầu thang, lan can, mặt nước DistrictWater không collision và đường tiếp cận mái.
 - `VerifyCity6800Layout.py` PASS: 10.750 building, 1.667.856 instance, 10 facility, 4 boundary, 3 ocean, 9 access lane, pendingAssetMeshes rỗng.
 - Đây là source dressing evidence; chưa có native pool capture mới, map persistence, HLOD/readback, collision runtime hoặc FPS acceptance.
+## Checkpoint handoff: chẩn đoán EXE và bản đóng gói 2026-10-11
+
+### Kết luận đã kiểm tra
+
+- EXE vẫn tồn tại. Bootstrap của bản City nằm ở
+  `Saved/Builds/City/Windows/ANANTA.exe` (171,520 bytes, ghi ngày 07/10/2026).
+- Runtime chính nằm ở
+  `Saved/Builds/City/Windows/ANANTA/Binaries/Win64/ANANTA.exe`
+  (337,542,656 bytes, ghi ngày 07/10/2026).
+- Ngoài ra còn bản City6800 và staged copy 338,096,640 bytes ghi ngày 10/10/2026;
+  đây là các package khác nhau, không được coi là bản mới nhất của source.
+- `Binaries/` và `Saved/` bị Git ignore nên EXE không xuất hiện trên GitHub. Lịch sử Git
+  cũng không chứa `.exe` hoặc `.pak`; người nhận checkout phải dùng artifact local hoặc
+  tự package lại.
+- Commit source mới nhất `f7536deeee` ngày 11/10/2026 chưa được đóng gói vào các EXE
+  hiện có. Vì vậy mở EXE cũ không thể hiện các facade/pool dressing mới nhất.
+- Không mở game, không probe port, không benchmark và không tạo log runtime trong lượt
+  chẩn đoán này. Không có bằng chứng để kết luận crash mới từ bản hiện tại.
+
+### Nguyên nhân dễ gây lỗi hoặc tưởng như không có game
+
+1. Chỉ sao chép `ANANTA.exe` ra ngoài sẽ thiếu thư mục `ANANTA`, `Engine`, Content/Paks
+   và DLL đi kèm; bootstrap hoặc runtime sẽ không khởi động đúng.
+2. Mở `Binaries/Win64/ANANTA.exe` của source root hoặc bản City6800 cũ sẽ chạy artifact
+   khác với bản được mô tả trong handoff hiện tại.
+3. Tài liệu `CITY_PLAYABLE_BUILD.md` đang trỏ tới bootstrap
+   `Saved/Builds/City/Windows/ANANTA.exe`; phải giữ nguyên toàn bộ cây thư mục bên cạnh
+   file đó.
+4. Project config vẫn đặt GameDefaultMap là Slice, trong khi script package chọn
+   `ANANTA_City`; package mới cần được build và kiểm tra map khởi động trước khi gọi là
+   bản thành phố 6,8 km.
+
+### Cách khôi phục có thể kiểm chứng ở lượt được phép package
+
+- Chạy `Tools/Build/Package-City.ps1` với Unreal Engine 5.8 và output mặc định
+  `Saved/Builds/City`; script dùng BuildCookRun Win64 Development, cook City, stage,
+  pak và archive.
+- Sau khi script trả `CITY_PACKAGE_OK`, kiểm tra cả bootstrap và inner EXE cùng các
+  file Paks/Engine. Ghi timestamp, kích thước, SHA-256 và map startup vào handoff.
+- Chỉ sau package mới được thực hiện một lần chạy ngắn có giới hạn để kiểm tra startup;
+  lượt này chưa thực hiện theo yêu cầu không chạy game nặng/lâu.
