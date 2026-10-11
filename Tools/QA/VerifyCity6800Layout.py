@@ -139,7 +139,9 @@ def check_buildings(layout):
         assert min(abs(x - road) for road in dimensions.ROAD_LINES) >= width / 2 + 1350
         assert min(abs(y - road) for road in dimensions.ROAD_LINES) >= depth / 2 + 1350
     assert len(layout.buildings) > 7000
-    assert len({building["style"] for building in layout.buildings}) == 7
+    styles = {building["style"] for building in layout.buildings}
+    assert len(styles) == 8
+    assert "FacadeCivic" in styles
     schema = city.Layout()
     schema.collider((200000, 200000, 50), (100, 100, 100))
     data = schema.export()

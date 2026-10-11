@@ -323,3 +323,9 @@ Handoff tiếp tục: Docs/CITY_EXECUTION_HANDOFF.md.
 - Project đang dùng Lumen/VSM/TSR. Quality 2 dùng VSM SMRT directional 8 rays x 4 samples per ray và local 4 x 4; đây là shadow controls, không phải global path tracing samples.
 - Không tìm thấy CVar project cho 12 rays hoặc 4096 samples. Không được đổi các con số đó theo suy đoán; thí nghiệm hợp lệ tiếp theo là HLOD rebuild comparison, VSM resolution bias diagnostic và VSM off crash isolation, mỗi nhánh phải ghi rõ chất lượng.
 - Max native 1080p hiện có bằng chứng cũ khoảng 52,56 FPS; mục tiêu 60 FPS chưa đạt và mục tiêu 90 FPS vẫn chưa nghiệm thu.
+
+## Vòng sửa gate 6,8 km FacadeCivic 2026-10-11
+
+- `VerifyCity6800Layout.py` đã được đồng bộ với source facade hiện tại: yêu cầu 8 style và kiểm tra bắt buộc `FacadeCivic`, thay cho điều kiện cũ đúng 7 style.
+- Gate sau sửa PASS: width 6.788,225 m, 10.750 building, 1.661.320 instance, 10 facility, 4 hidden boundary, 3 ocean surface, 9 access lane, pendingAssetMeshes rỗng.
+- Đây là sửa phạm vi QA, không thay đổi geometry, map, actor tree hay model nhân vật. Các cờ `inEngineVerified`, `visualAccepted` và `gameplayFacilities` vẫn false.

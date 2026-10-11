@@ -237,3 +237,16 @@ source/documentation checkpoint.
 2. Diagnostic VSM bias với cùng độ phân giải 1920x1080, ghi frame time và ảnh gần/trung/xa.
 3. Diagnostic VSM off chỉ để xác định liên quan PageFault, không tính là preset sản phẩm.
 4. Chỉ sau khi map sạch mới chạy lượt gameplay ngắn có log `stat unit`, `stat gpu`, `stat levels` và xác nhận 60 FPS thực tế.
+
+## Checkpoint handoff: sửa gate layout 6,8 km 2026-10-11
+
+### Nguyên nhân
+- Asset `FacadeCivic` đã được thêm ở checkpoint trước nhưng `VerifyCity6800Layout.py` vẫn assert đúng bảy style, khiến audit dừng với AssertionError dù source layout không có lỗi.
+
+### Đã sửa và kiểm chứng
+- Gate hiện tạo tập `styles`, yêu cầu đúng tám style và yêu cầu có `FacadeCivic`.
+- `python -X utf8 Tools/QA/VerifyCity6800Layout.py` PASS với 10.750 building và không có errors/pending meshes.
+- `py_compile` và `git diff --check` PASS.
+
+### Giới hạn
+- Số liệu là source layout audit; chưa chứng minh map persistence, native visuals, HLOD rebuild, runtime collision, NPC/transport hoặc FPS.
