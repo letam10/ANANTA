@@ -233,3 +233,22 @@ Nguồn: nhánh codex/city-expansion; chi tiết: CITY_MOBILITY_ROUND.md.
 - `py_compile`, `VerifyCityExpansionLayout.py` và `VerifyCity6800Layout.py` PASS. Không chạy Unreal Apply, native capture, benchmark hoặc gameplay dài trong vòng này.
 - Map hiện chưa chứa source round mới vì ApplyCityExpansion sẽ xoá/ghi lại hàng chục nghìn actor; cần chạy riêng trong cửa sổ apply có log/marker và sau đó readback/HLOD.
 - 60 FPS đồ họa cao vẫn là mục tiêu chưa nghiệm thu; source audit không chứng minh FPS, GPU stability, collision runtime hay visual acceptance.
+
+## Vòng handoff và model quality source-only 2026-10-11
+
+- Theo yêu cầu mới, đã dừng handle Unreal cũ `9031`; vòng này không mở Unreal, không chạy game,
+  không kiểm tra cổng, không benchmark và không chạy soak test.
+- Tạo `Docs/CITY_EXECUTION_HANDOFF.md`: kiểm kê source, generated `.uasset`, report, trạng thái Git,
+  chênh lệch source/map, gate HLOD/GPU/visual/collision/Player/FPS và hành động an toàn cho chat sau.
+- Tạo `Docs/CITY_HANDOFF_REVIEW_CONTRACT.md`: quy định tách source khỏi actor map, kiểm 8 hướng model,
+  5 góc placement, instance reuse, nội thất shell-only và không suy ra FPS từ source audit.
+- Cập nhật `CityExpansionBuildings.py`: bảy facade style có `STYLE_QUALITY` với accent material,
+  cờ vertical/balcony và metadata quality; điểm nhấn dùng mesh/material hiện có để giữ instancing.
+- Generator source-only đạt: 10.750 building, 89.078 group, 1.671.256 instance và đủ 7 style.
+  Đây là số của generator sau source patch, chưa phải số map đã apply.
+- Map/external actor dirty tree vẫn chưa stage. Report cũ còn `hlodRebuildRequired=true`,
+  `runtimeVerified=false`, `physicalBoundaryCheckRequired=true`; không dùng làm nghiệm thu vòng này.
+- Chưa thể xác nhận model thực tế, collision, HLOD, GPU hay 90 FPS vì người dùng yêu cầu không chạy
+  Unreal/runtime; bước kế tiếp là native capture có kiểm soát sau khi user cho phép.
+
+Handoff chi tiết: `Docs/CITY_EXECUTION_HANDOFF.md`.

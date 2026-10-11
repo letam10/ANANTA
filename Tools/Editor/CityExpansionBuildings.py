@@ -4,6 +4,17 @@ STYLES = ("FacadeResidential", "FacadeCommercial", "FacadeTower", "FacadeBrickAr
           "FacadeBay", "FacadeArtDeco", "FacadeIndustrial")
 TINTS = ("ShellIvory", "ShellTerracotta", "ShellSage", "ShellSlate", "ShellSand", "ShellBlue")
 
+# Quy tac vat lieu va diem nhan nhe cho tung phong cach, dung chung mesh de giu instancing.
+STYLE_QUALITY = {
+    "FacadeResidential": dict(accent="City_oak_veneer_01", vertical=True, balcony=True),
+    "FacadeCommercial": dict(accent="City_Brass", vertical=True, balcony=False),
+    "FacadeTower": dict(accent="City_Aluminium", vertical=True, balcony=False),
+    "FacadeBrickArch": dict(accent="City_stone_wall_02", vertical=False, balcony=False),
+    "FacadeBay": dict(accent="City_oak_veneer_01", vertical=True, balcony=True),
+    "FacadeArtDeco": dict(accent="City_Brass", vertical=True, balcony=False),
+    "FacadeIndustrial": dict(accent="City_Dark", vertical=False, balcony=False),
+}
+
 
 def floor_band(layout, x, y, columns, rows, first, count, style, tint, podium=False):
     width, depth = columns * 400, rows * 400
@@ -35,10 +46,14 @@ def floor_band(layout, x, y, columns, rows, first, count, style, tint, podium=Fa
 def building(layout, x, y, columns, rows, floors, style, rng):
     width, depth = columns * 400, rows * 400
     tint = rng.choice(TINTS)
+    quality = STYLE_QUALITY[style]
     form = rng.choice(("slab", "stepped", "corner", "terrace", "twin", "crown", "pavilion", "lantern"))
     layout.building_centre = (x, y)
     layout.buildings.append(dict(centre=[x, y], width=width, depth=depth, height=floors * 320,
-                                 style=style, tint=tint, form=form, interior=False))
+                                 style=style, tint=tint, form=form, interior=False,
+                                 quality=dict(profile=style, accent=quality["accent"],
+                                              vertical=quality["vertical"],
+                                              balcony=quality["balcony"])))
     lower = min(floors, rng.choice((2, 3, 4))) if form != "slab" else floors
     floor_band(layout, x, y, columns, rows, 0, lower, style, tint, podium=True)
     top_x, top_y = x, y
@@ -61,7 +76,7 @@ def building(layout, x, y, columns, rows, floors, style, rng):
         for side in (-1, 1):
             layout.add("Planter", (x + side * (width / 2 - 150), y, lower * 320 + 45),
                        collision=False)
-    if style in ("FacadeResidential", "FacadeBay"):
+    if quality["balcony"]:
         for floor in range(1, floors, 2):
             layout.add("Balcony", (top_x, top_y - top_rows * 200, floor * 320 + 15), collision=False)
     layout.add("RoofEquipment", (top_x, top_y, floors * 320 + 45),
@@ -78,9 +93,9 @@ def building(layout, x, y, columns, rows, floors, style, rng):
             layout.box("Roof", (top_x, top_y, floors * 320 + 45 + step * 55),
                        (width * (1 - step * .18), depth + 80, 65), False)
     # Nhip cot, bien mai va chan de thay doi theo tung toa; van chi la vo nha.
-    if style in ("FacadeArtDeco", "FacadeCommercial"):
+    if quality["vertical"]:
         for offset in (-.46, .46):
-            layout.box(trim, (x + width * offset, y - depth / 2 - 12, lower * 160 + 15),
+            layout.box(quality["accent"], (x + width * offset, y - depth / 2 - 12, lower * 160 + 15),
                        (60, 40, lower * 320), False)
     if rng.random() < .55:
         for offset in (-.3, .3):
