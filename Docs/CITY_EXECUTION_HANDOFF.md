@@ -661,6 +661,18 @@ source/documentation checkpoint.
 - VerifyCityDistricts, VerifyCity6800Layout, VerifyCityInstanceReuse và VerifyCityPerformanceBudget
   phải được chạy lại sau thay đổi; source evidence không thay thế map readback hoặc FPS.
 
+## Vòng passenger service contract 2026-10-11
+
+- Thêm `bPassengerService` vào `FCityTransportRoute` để phân biệt xe có thể đón NPC với xe chỉ
+  chạy tuyến công vụ hoặc chở hàng.
+- Coach, CityBus, Taxi, PassengerTrain, Motorboat và Sailboat được phép boarding/alighting;
+  BoxTruck, CargoTruck, TankerTruck, PoliceCar, Ambulance, FireEngine và CargoShip không sinh
+  hành khách giả tại điểm dừng, chỉ dừng ngắn rồi tiếp tục tuyến.
+- Fleet fixture vẫn đặt `Route.bPassengerService=true` để kiểm tra capsule, cửa, mặt đường và
+  cleanup của từng mesh; đây là fixture vật lý riêng, không thay đổi hành vi route thật.
+- Cổng Unreal automation C++ chưa chạy trong vòng này; cần build/editor test ngắn sau khi map có
+  checkpoint sạch để xác nhận log boarding/alighting và không có NPC trong xe hàng.
+
 ## Vòng accessible Bakery 2026-10-11
 
 ### Thay đổi nguồn

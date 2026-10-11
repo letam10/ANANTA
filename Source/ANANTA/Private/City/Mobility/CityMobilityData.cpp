@@ -24,6 +24,12 @@ FCityTransportRoute CityMobility::MakeRoute(const ECityTransportKind Kind)
 {
     FCityTransportRoute Result;
     Result.Id = FName(MeshName(Kind));
+    Result.bPassengerService = Kind == ECityTransportKind::Coach
+        || Kind == ECityTransportKind::CityBus
+        || Kind == ECityTransportKind::Taxi
+        || Kind == ECityTransportKind::Motorboat
+        || Kind == ECityTransportKind::Sailboat
+        || Kind == ECityTransportKind::PassengerTrain;
     Result.bWater = Kind == ECityTransportKind::CargoShip || Kind == ECityTransportKind::Motorboat
         || Kind == ECityTransportKind::Sailboat;
     Result.bRail = Kind == ECityTransportKind::PassengerTrain;

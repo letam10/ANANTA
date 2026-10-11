@@ -13,6 +13,14 @@ bool FCityTransportRoutesTest::RunTest(const FString& Parameters)
     {
         const auto Kind = static_cast<ECityTransportKind>(Index);
         const auto Route = CityMobility::MakeRoute(Kind);
+        const bool ExpectedPassengerService = Kind == ECityTransportKind::Coach
+            || Kind == ECityTransportKind::CityBus
+            || Kind == ECityTransportKind::Taxi
+            || Kind == ECityTransportKind::Motorboat
+            || Kind == ECityTransportKind::Sailboat
+            || Kind == ECityTransportKind::PassengerTrain;
+        TestEqual(TEXT("Passenger service classification"), Route.bPassengerService,
+            ExpectedPassengerService);
         TestFalse(TEXT("Unique fleet identity"), Names.Contains(Route.Id));
         Names.Add(Route.Id);
         TestTrue(TEXT("Closed route has corners"), Route.Points.Num() >= 4);

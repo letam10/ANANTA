@@ -47,6 +47,16 @@ bool ACityRouteVehicle::DoorAndSidewalk(FVector& Door, FVector& Sidewalk) const
 void ACityRouteVehicle::ServiceStop(const float DeltaTime)
 {
     StopElapsed += DeltaTime;
+    if (!Route.bPassengerService)
+    {
+        // Xe hang va xe cong vu chi nhuong duong tai moc dung, khong tao NPC ao len xe.
+        if (StopElapsed > 1.0f)
+        {
+            bServiced = true;
+            bStopped = false;
+        }
+        return;
+    }
     if (!bServiced)
     {
         FVector Door;

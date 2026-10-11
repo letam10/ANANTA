@@ -723,3 +723,14 @@ Handoff tiếp tục: Docs/CITY_EXECUTION_HANDOFF.md.
   NPC hoặc vùng boarding tàu; xe động, tuyến chạy và lên xuống vẫn chưa được nghiệm thu runtime.
 - Cần chạy lại coastal collision/layout/reuse/performance source gates; chưa có native capture,
   map persistence, HLOD/GPU hoặc FPS mới từ thay đổi này.
+
+## Vòng passenger service contract 2026-10-11
+
+- Route mobility hiện có cờ `bPassengerService`; chỉ Coach, CityBus, Taxi, PassengerTrain,
+  Motorboat và Sailboat tạo hành khách NPC tại stop.
+- Xe tải, xe bồn, xe cảnh sát, xe cứu thương, xe cứu hỏa và CargoShip giữ tuyến cố định nhưng
+  không tạo hành khách giả; điều này khớp vai trò gameplay và giảm actor/tick không cần thiết.
+- Fleet fixture tiếp tục ép passenger service cho mọi mesh để giữ coverage collision/boarding của
+  vehicle body; đây không phải bằng chứng runtime của route thông thường.
+- Đã kiểm tra static source, collision 9/9 và small placement; chưa build C++/mở Unreal, chưa đo
+  FPS hoặc xác nhận map persistence.
