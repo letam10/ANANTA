@@ -454,3 +454,24 @@ source/documentation checkpoint.
 
 - Chưa apply map, chưa native capture factory, chưa kiểm collision runtime, NPC/xe loading, HLOD,
   GPU hoặc FPS. Source gate không thay thế nghiệm thu Unreal.
+## Vòng highway roadside dressing 2026-10-11
+
+### Đã làm
+
+- Bổ sung 56 `RoadBarrier` và 56 `DetailedStreetLamp` collision false dọc vai highway mỗi
+  24.000 cm, giữ nguyên lòng đường, vỉa hè và reserve.
+- Bổ sung 14 `TrafficSignal` collision false tại bảy nút lớn để highway có nhận diện giao thông
+  rõ hơn mà không thêm collider hoặc logic xe mới.
+
+### Đã kiểm chứng
+
+- `VerifyCity6800Layout.py`: PASS, 10.750 building, 1.667.998 instance, 9 access lane,
+  4 hidden boundary, 3 ocean surface và không pending mesh.
+- `VerifyCityExpansionLayout.py`: PASS, 90.433 group, width source 6.788 km.
+- `VerifyCityInstanceReuse.py`: PASS, 145 signature, 1.667.853 instance dùng lại.
+- `VerifyCityDistrictVariety.py`, `VerifyCityRoofPool.py` và `py_compile`: PASS.
+
+### Giới hạn còn mở
+
+- Chưa apply World Partition, chưa native highway capture, chưa kiểm collision runtime, NPC/xe,
+  HLOD, GPU hoặc FPS. Highway visual acceptance vẫn chưa được nghiệm thu trong Unreal.

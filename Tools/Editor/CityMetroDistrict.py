@@ -234,6 +234,17 @@ def highway(layout):
             for lane in (470, 940):
                 for offset in range(-4200, 4201, 1400):
                     layout.box("RoadMark", (x + offset, 252000 + side * lane, 9), (650, 15, 2), False)
+    # Bo sung vai duong va den thua de highway doc lap hon, khong tao collider moi.
+    for x in range(-324000, 324001, 24000):
+        for side in (-1, 1):
+            layout.add("RoadBarrier", (x, 252000 + side * 1950, 15), collision=False)
+            layout.add("DetailedStreetLamp", (x + 7000, 252000 + side * 2000, 15),
+                       yaw=0, collision=False)
+    # Tin hieu nhan dien cac nut highway lon; mesh khong collision de giu luong xe thong.
+    for x in (-288000, -192000, -96000, 0, 96000, 192000, 288000):
+        for side in (-1, 1):
+            layout.add("TrafficSignal", (x, 252000 + side * 1500, 15),
+                       yaw=0 if side > 0 else 180, collision=False)
 
 
 def generate(layout):
