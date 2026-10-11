@@ -600,3 +600,26 @@ Handoff tiếp tục: Docs/CITY_EXECUTION_HANDOFF.md.
   mới chưa được nghiệm thu trong gameplay.
 - Quy tắc sparse interior hiện tính `max(250, số phòng x 21)` để số lượng tăng theo venue nhưng
   vẫn giữ trung bình tối đa 21 item mỗi phòng.
+## Vòng venue interaction source gate 2026-10-11
+
+### Đã làm
+
+- Thêm `Tools/QA/VerifyCityVenueInteractions.py` để kiểm tra source service actor cho 11 venue
+  mở rộng và 4 civic venue.
+- Gate kiểm tra ID service duy nhất, service kind hợp lệ, title description đầy đủ, civic list
+  đồng bộ và `ApplyCityExpansion` gọi các furnish pipeline.
+
+### Đã kiểm chứng
+
+- Interaction source gate PASS, 11 expansion service ID, 4 civic service, không lỗi.
+- Model view gate PASS, 8 hướng model, 5 góc placement, 13 phòng và sparse limit 273.
+- Layout gate PASS, 10.750 building, width source 6,788 km, 4 boundary, 3 ocean surface,
+  9 access lane, không pending mesh.
+- Chưa có runtime verification; `runtimeVerified=false` vẫn được giữ trong report.
+
+### Lỗi và giới hạn còn mở
+
+- Source gate không chứng minh actor persist trong map, collision runtime, NPC path, HLOD, GPU
+  hoặc 60 FPS.
+- Cần apply map và chạy gameplay smoke test ngắn sau khi có checkpoint runtime an toàn; không
+  benchmark hoặc soak test.

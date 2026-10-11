@@ -547,3 +547,23 @@ source/documentation checkpoint.
 - Bước kế tiếp là civic/coastal/playground dressing và sau đó audit collision/NPC/HLOD/GPU bằng
   editor hoặc packaged game ngắn, không benchmark hoặc soak test.
 - Không stage map hoặc ExternalActors trong commit nguồn này.
+## Vòng venue interaction source gate 2026-10-11
+
+### Thay đổi
+
+- Tạo `Tools/QA/VerifyCityVenueInteractions.py`, source only gate không import Unreal và không
+  mở game.
+- Gate bao phủ 11 venue expansion, 4 civic service, service kind Read Heal Rest Supplies, ID duy
+  nhất và luồng `ApplyCityExpansion`.
+
+### Evidence
+
+- Gate PASS; không có service ID trùng, thiếu trường, service kind lạ hoặc civic room thiếu service.
+- Các gate layout, model eight view five placement, reuse, compile và diff check vẫn PASS.
+- Báo cáo JSON ghi tại `Saved/QA/CityVenueInteractionSourceAudit.json`; đây là source evidence
+  và không phải runtime acceptance.
+
+### Việc còn lại
+
+- Chưa apply hoặc readback map, chưa kiểm actor persistence, cửa, collision, NPC route hoặc boarding,
+  HLOD, GPU hoặc FPS. Không stage map và ExternalActors khi chưa có review runtime riêng.
