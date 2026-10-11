@@ -734,3 +734,12 @@ Handoff tiếp tục: Docs/CITY_EXECUTION_HANDOFF.md.
   vehicle body; đây không phải bằng chứng runtime của route thông thường.
 - Đã kiểm tra static source, collision 9/9 và small placement; chưa build C++/mở Unreal, chưa đo
   FPS hoặc xác nhận map persistence.
+
+## Vòng small interior dressing 2026-10-11
+
+- Đã thêm các props nhỏ cho Cafe, Market, Apartment, Bakery và Workshop: CoffeeMug, RoomVase,
+  BathroomSoap và Saucepan.
+- Dressing source gate PASS sau khi sửa overlap MarketMug; tổng 305 additions, 15 phòng và
+  không lỗi bounds hoặc corridor. Small placement source gate PASS.
+- Đây là source evidence; chưa chứng minh import Unreal, ảnh tám hướng/năm góc native, map
+  persistence, collision runtime, GPU, NPC route hoặc 60 FPS.

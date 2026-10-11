@@ -673,6 +673,17 @@ source/documentation checkpoint.
 - Cổng Unreal automation C++ chưa chạy trong vòng này; cần build/editor test ngắn sau khi map có
   checkpoint sạch để xác nhận log boarding/alighting và không có NPC trong xe hàng.
 
+## Vòng small interior dressing 2026-10-11
+
+- CityVenueDressing.py bổ sung CoffeeMug cho Cafe và Market, RoomVase cùng BathroomSoap cho
+  Apartment, Saucepan cho Bakery và Workshop.
+- Tất cả vật dụng nhỏ dùng mesh trong small_manifest, collision=false và đặt ngoài hành lang;
+  MarketMug đã được dời sau khi source gate phát hiện overlap với StockIsland.
+- VerifyCityVenueDressing --source-only PASS với 305 additions, 15 phòng, errors rỗng; small
+  placement PASS và coverage vẫn giữ 8 hướng model, 5 góc placement.
+- Chưa import/readback Unreal hoặc capture native; chất lượng vật liệu, ánh sáng, collision runtime
+  và FPS vẫn chưa được nghiệm thu.
+
 ## Vòng accessible Bakery 2026-10-11
 
 ### Thay đổi nguồn
