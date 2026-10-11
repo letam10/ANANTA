@@ -119,3 +119,23 @@ def industrial():
     box("Rain hood", (0, -0.29, 2.71), (3.55, 0.77, 0.07), "Aluminium")
     box("Factory sill", (0, -0.13, 0.61), (3.53, 0.46, 0.13), "Stone")
     return combine("FacadeIndustrial")
+
+def civic():
+    # Module cong cong cong cong: tao loi vao cong cong va mai che nhan dien cong trinh cong.
+    border("Stone")
+    box("Civic plinth", (0, -0.02, 0.28), (3.64, 0.58, 0.34), "Stone")
+    box("Civic canopy", (0, -0.46, 2.66), (3.46, 0.92, 0.16), "Brass")
+    box("Civic canopy underside", (0, -0.44, 2.56), (3.18, 0.76, 0.06), "Dark")
+    for x in (-1.55, 1.55):
+        box("Civic column", (x, 0.02, 1.62), (0.34, 0.48, 2.88), "Stone")
+        box("Civic column inset", (x, -0.25, 1.62), (0.08, 0.06, 2.38), "Brass", 0.002)
+    box("Civic entry glass", (0, -0.03, 1.55), (2.78, 0.04, 2.22), "Glass")
+    box("Civic entry mullion", (0, -0.12, 1.55), (0.08, 0.16, 2.14), "Dark", 0.002)
+    for x in (-0.92, 0.92):
+        box("Civic side mullion", (x, -0.12, 1.55), (0.045, 0.12, 2.05), "Aluminium", 0.002)
+    for z in (0.72, 1.55, 2.38):
+        box("Civic transom", (0, -0.13, z), (2.72, 0.12, 0.045), "Aluminium", 0.002)
+    box("Civic sign panel", (0, -0.54, 3.02), (2.25, 0.08, 0.22), "Teal", 0.004)
+    for x in (-0.84, 0, 0.84):
+        box("Civic sign light", (x, -0.60, 3.02), (0.42, 0.025, 0.035), "Light", 0)
+    return combine("FacadeCivic")

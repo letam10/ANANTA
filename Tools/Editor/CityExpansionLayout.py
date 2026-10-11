@@ -123,7 +123,7 @@ def city_blocks(layout):
                     x, y = cx + ox + rng.choice((-100, 0, 100)), cy + oy + rng.choice((-100, 0, 100))
                     if overlaps_reserved(x, y, columns * 400, rows * 400, 200):
                         continue
-                    styles = ((1, 3, 5, 6), (0, 3, 4, 5), (1, 2, 5, 6))[district]
+                    styles = ((1, 3, 5, 6, 7), (0, 3, 4, 5, 7), (1, 2, 5, 6, 7))[district]
                     style = STYLES[rng.choice(styles)]
                     floor_choices = ((3, 4, 5, 6, 8), (5, 7, 9, 11, 14),
                                      (4, 6, 8, 10, 13))[district]

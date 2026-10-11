@@ -1,7 +1,7 @@
 """Seeded shell architecture: no hidden furnished floors in background buildings."""
 
 STYLES = ("FacadeResidential", "FacadeCommercial", "FacadeTower", "FacadeBrickArch",
-          "FacadeBay", "FacadeArtDeco", "FacadeIndustrial")
+          "FacadeBay", "FacadeArtDeco", "FacadeIndustrial", "FacadeCivic")
 TINTS = ("ShellIvory", "ShellTerracotta", "ShellSage", "ShellSlate", "ShellSand", "ShellBlue")
 
 # Quy tac vat lieu va diem nhan nhe cho tung phong cach, dung chung mesh de giu instancing.
@@ -13,6 +13,7 @@ STYLE_QUALITY = {
     "FacadeBay": dict(accent="City_oak_veneer_01", vertical=True, balcony=True),
     "FacadeArtDeco": dict(accent="City_Brass", vertical=True, balcony=False),
     "FacadeIndustrial": dict(accent="City_Dark", vertical=False, balcony=False),
+    "FacadeCivic": dict(accent="City_Brass", vertical=True, balcony=False),
 }
 
 DISTRICT_PROFILES = {

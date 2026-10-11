@@ -253,6 +253,26 @@ Nguồn: nhánh codex/city-expansion; chi tiết: CITY_MOBILITY_ROUND.md.
 
 Handoff chi tiết: `Docs/CITY_EXECUTION_HANDOFF.md`.
 
+## Vòng FacadeCivic và asset Blender headless 2026-10-11
+
+- Thêm module `FacadeCivic` 4 x 3,2 m cho sảnh công cộng: cột đá, kính cao, mái che kim loại,
+  bảng nhận diện và các thanh mullion; không chỉnh model nhân vật hoặc actor map.
+- Blender 5.2 headless build PASS: 12 mesh, `FacadeCivic` 2.088 triangles, dưới ngân sách facade
+  6.000 triangles; FBX roundtrip PASS 12/12, hash/bounds/material/UV/manifold đều đạt.
+- Render review offline PASS 24 ảnh Cycles 24 samples, 2 góc cho 12 mesh. Hai ảnh FacadeCivic
+  front/quarter đã xem; sảnh và mái che đọc rõ, chưa coi là nghiệm thu trong Unreal.
+- Mở rộng style gate từ 7 lên 8 (`VerifyCityDistrictVariety.py`), thêm `FacadeCivic` vào phân bố
+  west/core/east. Map/external actor chưa apply và không stage trong vòng này.
+- Cảnh báo Blender chỉ liên quan đường dẫn brush mặc định; không có lỗi mesh hay exit failure.
+
+## Còn tồn động sau vòng FacadeCivic
+
+- Cần apply map có kiểm soát để style mới xuất hiện trong World Partition, rồi readback/HLOD riêng.
+- Cần tiếp tục thay prototype identity cho Station/Hotel/Restaurant/Cinema/Pool/Factory/Airport
+  bằng module facade/props tương ứng; source asset mới chưa chứng minh visual trong game.
+- 60 FPS đồ họa cao, collision runtime, NPC/xe và GPU PageFault vẫn chưa được xác nhận trong vòng
+  này vì chỉ chạy Blender/source audit, không mở Unreal hoặc packaged game.
+
 ## Vòng district variety và pocket dressing source-only 2026-10-11
 
 - Bổ sung hồ sơ kiến trúc west/core/east trong CityExpansionBuildings.py.
