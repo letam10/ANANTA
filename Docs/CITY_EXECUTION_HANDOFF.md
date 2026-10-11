@@ -475,3 +475,24 @@ source/documentation checkpoint.
 
 - Chưa apply World Partition, chưa native highway capture, chưa kiểm collision runtime, NPC/xe,
   HLOD, GPU hoặc FPS. Highway visual acceptance vẫn chưa được nghiệm thu trong Unreal.
+## Vòng cinema commercial facade 2026-10-11
+
+### Đã làm
+
+- `Tools/Editor/CityMetroDistrict.py` thêm `FacadeCommercial` tại mặt tiền Cinema, hai
+  `DetailedPlanter` đối xứng và `BusStopSign` collision false ở mép phía trước.
+- Khối facade đặt lệch khỏi lối vào trung tâm; không thay đổi road, access lane, collider gameplay
+  hay hệ thống NPC hiện có.
+
+### Đã kiểm chứng
+
+- Layout nguồn: 10.750 building, rộng 6,788 km, 1.668.002 instance, 10 facility, 4 boundary,
+  3 ocean surface, 9 access lane, không pending mesh.
+- Reuse: 90.436 group, 146 signature, 1.667.856 reusable instance, gate PASS.
+- District variety và roof pool gate PASS; `py_compile` và `git diff --check` PASS.
+
+### Giới hạn / việc còn lại
+
+- Chưa chạy Unreal/EXE, chưa apply hoặc readback map, chưa capture native năm góc, chưa chứng minh
+  collision, NPC boarding, HLOD, GPU hoặc mục tiêu 90 FPS. Map và ExternalActors đang dirty có chủ
+  ý và không thuộc commit này.

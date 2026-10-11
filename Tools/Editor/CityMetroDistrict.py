@@ -87,6 +87,10 @@ def hospitality(layout, name, x, y, height, material):
             layout.add("FacadeBay", (x + 1500, y - 2220, 15), collision=False)
             layout.add("DetailedPlanter", (x + 1980, y - 2460, 15), collision=False)
     elif name == "Cinema":
+        layout.add("FacadeCommercial", (x + 1500, y - 2220, 15), collision=False)
+        layout.add("DetailedPlanter", (x + 1980, y - 2460, 15), collision=False)
+        layout.add("DetailedPlanter", (x + 1020, y - 2460, 15), collision=False)
+        layout.add("BusStopSign", (x + 2500, y - 3500, 15), yaw=90, collision=False)
         layout.box("DistrictPink", (x, y - 2450, 740), (6000, 1100, 260))
         for xx in (-2400, -1400, 1400, 2400):
             layout.box("DistrictNeon", (x + xx, y - 3030, 735), (800, 18, 130), False)

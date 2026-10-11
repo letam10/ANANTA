@@ -513,3 +513,26 @@ Handoff tiếp tục: Docs/CITY_EXECUTION_HANDOFF.md.
 
 - Chưa apply World Partition, chưa native highway capture, chưa kiểm collision runtime, NPC/xe,
   HLOD, GPU hoặc FPS. Highway visual acceptance vẫn chưa được nghiệm thu trong Unreal.
+## Vòng cinema commercial facade 2026-10-11
+
+### Đã làm
+
+- Bổ sung một `FacadeCommercial` ở mặt tiền rạp chiếu phim, lệch khỏi lối vào trung tâm để tạo
+  khối nhận diện thương mại rõ hơn mà không chặn access lane.
+- Bổ sung hai `DetailedPlanter` đối xứng phía trước và một `BusStopSign` ở mép tiếp cận; các
+  prop này để collision false, giữ lối đi và vùng tương tác sạch.
+
+### Đã kiểm chứng
+
+- `VerifyCity6800Layout.py`: PASS, 10.750 building, 1.668.002 instance, 9 access lane,
+  4 hidden boundary, 3 ocean surface và không pending mesh.
+- `VerifyCityExpansionLayout.py`: PASS, nguồn rộng 6,788 km, tỉ lệ diện tích 4x.
+- `VerifyCityInstanceReuse.py`: PASS, 90.436 group, 146 signature, 1.667.856 reusable instance.
+- `VerifyCityDistrictVariety.py`, `VerifyCityRoofPool.py`, `py_compile` và `git diff --check`:
+  PASS.
+
+### Giới hạn còn mở
+
+- Chưa apply map hoặc readback Unreal, chưa native capture, chưa kiểm collision runtime, NPC/xe,
+  HLOD, GPU hoặc FPS. Đây là source placement evidence; visual acceptance trong game chưa được
+  xác nhận.
