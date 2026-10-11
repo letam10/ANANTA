@@ -315,3 +315,11 @@ Handoff tiếp tục: Docs/CITY_EXECUTION_HANDOFF.md.
 - `VerifyCivicDressingLayout.py` PASS: 5 nhóm mesh, 54 instance, 43 collider, capsule radius 38 cm; containment, hành lang, overlap mới và overlap seating đều đạt.
 - Bar giữ route vào rộng 480 cm, ba counter, ba bàn và sáu ghế; không thêm đèn động hoặc nội thất phía trên không cần thiết.
 - Đây là source layout evidence; chưa chứng minh map persistence, import/reopen, collision trong Unreal, HLOD, ảnh native hoặc FPS.
+
+## Vòng render audit và kế hoạch CVar 2026-10-11
+
+- Đọc `Saved/QA/CityRenderConfigAudit.md` và `Saved/QA/CityRenderingNextSteps.md` theo phạm vi read-only; không mở Unreal, không benchmark và không đổi Config.
+- Frustum/occlusion/HZB không bị tắt bởi project override được tìm thấy; World Partition/HLOD và Nanite đã có đường source, nhưng runtime residency/culling chưa được đo.
+- Project đang dùng Lumen/VSM/TSR. Quality 2 dùng VSM SMRT directional 8 rays x 4 samples per ray và local 4 x 4; đây là shadow controls, không phải global path tracing samples.
+- Không tìm thấy CVar project cho 12 rays hoặc 4096 samples. Không được đổi các con số đó theo suy đoán; thí nghiệm hợp lệ tiếp theo là HLOD rebuild comparison, VSM resolution bias diagnostic và VSM off crash isolation, mỗi nhánh phải ghi rõ chất lượng.
+- Max native 1080p hiện có bằng chứng cũ khoảng 52,56 FPS; mục tiêu 60 FPS chưa đạt và mục tiêu 90 FPS vẫn chưa nghiệm thu.

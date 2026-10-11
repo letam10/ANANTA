@@ -224,3 +224,16 @@ source/documentation checkpoint.
 - Chưa Apply lại World Partition map vì actor tree đang dirty rất lớn.
 - Chưa có native five angle capture, readback HLOD, collision runtime, NPC route hoặc GPU/FPS evidence.
 - Khi được phép chạy lượt native riêng, cần kiểm Arcade prompt approach, door clearance, cabinet simple collision và không nhân đôi actor Living.
+
+## Checkpoint handoff: render audit 2026-10-11
+
+### Kết luận source/config
+- `Saved/QA/CityRenderConfigAudit.md` là bằng chứng đọc Config, source và log capture; nó không khẳng định CVar cuối cùng sau gameplay.
+- `Config/DefaultEngine.ini` bật Lumen/VSM; `Config/DefaultScalability.ini` quality 2 có texture pool 3000 và VSM bias; log capture có nhiều lần áp profile nên không được dùng như runtime Max cuối.
+- HLOD cell/loading intent nằm trong `Tools/Editor/CreateCityHLOD.py`; HLOD vẫn stale và cần rebuild sau map persistence.
+
+### Việc còn lại
+1. Controlled HLOD rebuild rồi so sánh route và proxy identity.
+2. Diagnostic VSM bias với cùng độ phân giải 1920x1080, ghi frame time và ảnh gần/trung/xa.
+3. Diagnostic VSM off chỉ để xác định liên quan PageFault, không tính là preset sản phẩm.
+4. Chỉ sau khi map sạch mới chạy lượt gameplay ngắn có log `stat unit`, `stat gpu`, `stat levels` và xác nhận 60 FPS thực tế.
