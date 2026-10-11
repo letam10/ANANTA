@@ -301,3 +301,10 @@ Handoff tiếp tục: Docs/CITY_EXECUTION_HANDOFF.md.
 - Gate `python -X utf8 Tools/QA/VerifyCityVenueDressing.py` PASS: 249 additions, 12 phòng, 12 service desk, 166 vật thể non-collision, 72.816 so sánh bounds với nội thất nền, không overlap mới.
 - Gate `python -X utf8 Tools/QA/VerifyCityModelViewCoverage.py` PASS: 94 model, 9 family, 8 hướng model và 5 góc placement; 20 mesh lặp lại, 223 reference có thể tái sử dụng.
 - Đây là kiểm tra source-only; chưa chứng minh asset đã được Apply vào map, va chạm runtime, HLOD, ánh sáng, GPU hoặc FPS.
+
+## Vòng sửa gate đồ nhỏ 2026-10-11
+
+- Rà lại `small_manifest.json`, tám FBX và `SmallDetails.blend`; audit Blender headless PASS cho CookingPot, Saucepan, KitchenBowl, CoffeeMug, MakeupCompact, ToyBlocks, RoomVase và BathroomSoap.
+- Bổ sung material references từ các placement source vào `VerifyCitySmallPlacement.py`. Gate trước đó fail vì dressing dùng `ShellSage` nhưng catalog fixture chỉ lấy material mặc định; đây là lỗi của gate, không phải lỗi mesh.
+- Gate sau sửa: `CITY_SMALL_PLACEMENT_SOURCE_OK 8 regressions 3`; tám prop đều nằm trên surface hợp lệ, không overlap với obstacle hoặc nhau, và ba tọa độ sai bị regression test loại đúng.
+- Không mở Unreal, không import asset vào map, không chạy EXE, không benchmark; visual native, collision runtime và persistence vẫn cần lượt riêng.

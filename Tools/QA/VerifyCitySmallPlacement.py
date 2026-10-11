@@ -22,9 +22,13 @@ def footprint_on(item, surface):
 
 def main():
     meshes, materials = catalogues()
+    dressing_items = dressing()
+    living_items = living()
+    materials.update(item.get("material") for item in dressing_items + living_items
+                     if item.get("material"))
     fixtures = Layout(meshes, materials)
     civic(fixtures)
-    for item in dressing() + living():
+    for item in dressing_items + living_items:
         fixtures.add(item["mesh"], item["location"], item["scale"], item["yaw"],
                      item.get("material"), item["collision"])
     ax, ay = APARTMENT["centre"]

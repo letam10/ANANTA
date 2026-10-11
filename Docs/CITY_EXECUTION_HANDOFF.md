@@ -197,3 +197,18 @@ source/documentation checkpoint.
 2. Kiểm tra năm góc placement trong Unreal cho các venue mới và rà corridor/door clearance.
 3. Chạy HLOD/instance identity, collision fixture và GPU capture có giới hạn thời gian sau khi map sạch.
 4. Tiếp tục thêm facade/transport/water/landmark theo từng checkpoint nhỏ.
+
+## Checkpoint handoff: sửa gate đồ nhỏ 2026-10-11
+
+### Thay đổi
+- `Tools/QA/VerifyCitySmallPlacement.py` giữ lại danh sách dressing/living một lần và thêm các material field thực tế vào fixture catalog trước khi gọi `Layout.add`.
+- Không hard-code `ShellSage`; gate phản ánh material mà source placement thực sự dùng, nên không che giấu thiếu tài nguyên khác.
+
+### Bằng chứng
+- `small_audit.py` PASS: 8 mesh, topology/UV/normals/bounds/hash đạt, renderCount 0 ở lượt audit nhẹ.
+- `VerifyCitySmallPlacement.py` PASS: 8 placement, 3 overhang regressions bị từ chối.
+- `py_compile` và `git diff --check` PASS.
+
+### Giới hạn
+- Đây là source AABB/support gate. Chưa chứng minh import/reopen, simple collision trong Unreal, ánh sáng, HLOD, map persistence hoặc FPS.
+- Tám prop đã được `ApplyCityExpansion.py` gọi qua `CitySmallDetails.furnish`; việc gọi đó chưa được chạy lại trong Unreal ở checkpoint này.
