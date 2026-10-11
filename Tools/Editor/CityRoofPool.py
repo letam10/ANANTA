@@ -28,5 +28,10 @@ def generate(layout, x, y):
         layout.box("DistrictLimestone", (x + side * 2520, y + 300, 910), (160, 2800, 140))
     for xx in (-2400, -1200, 0, 1200, 2400):
         layout.add("House_mid_century_lounge_chair", (x + xx, y - 1600, 840), yaw=90)
+    for side in (-1, 1):
+        layout.add("DetailedStreetLamp", (x + side * 2750, y - 1500, 840),
+                   yaw=180 if side > 0 else 0, collision=False)
+        layout.add("DetailedPlanter", (x + side * 2500, y + 1500, 840), collision=False)
+    layout.add("BusStopSign", (x, y - 1950, 840), yaw=90, collision=False)
     for lane in range(-1800, 1801, 900):
         layout.box("DistrictYellow", (x + lane, y + 300, 940.1), (12, 2500, .2), False)

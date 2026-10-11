@@ -312,3 +312,18 @@ source/documentation checkpoint.
 ### Còn mở
 - Cần camera native gần terminal để kiểm tỷ lệ, lối vào và biển hiệu.
 - Cần map readback/HLOD và gameplay airport access sau controlled apply.
+
+## Checkpoint handoff: pool roof dressing 2026-10-11
+
+### Đã làm
+- `Tools/Editor/CityRoofPool.py` thêm `DetailedStreetLamp`, `DetailedPlanter` và `BusStopSign` ở roof deck.
+- Các actor trang trí không collision; water surface, stair body, railings và roof bounds giữ nguyên.
+
+### Đã kiểm chứng
+- `VerifyCity6800Layout.py` PASS.
+- `VerifyCityExpansionLayout.py`, py_compile và diff check PASS.
+- Không mở Unreal, không Apply map, không chạy EXE, port hoặc benchmark.
+
+### Còn mở
+- Cần native five angle pool capture để kiểm tỷ lệ đồ deck và lan can.
+- Cần player roof traversal, HLOD/readback và GPU/FPS evidence sau controlled map apply.
