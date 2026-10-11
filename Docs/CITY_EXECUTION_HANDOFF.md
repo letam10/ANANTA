@@ -267,3 +267,18 @@ source/documentation checkpoint.
 ### Giới hạn
 - FBX/Blender render không chứng minh Unreal import, map persistence, HLOD, collision, NPC traversal hoặc FPS.
 - Các FBX facade cũ được khôi phục để checkpoint chỉ chứa binary mới `FacadeTransit.fbx`; manifest hash đã đồng bộ.
+
+## Checkpoint handoff: station concourse 2026-10-11
+
+### Đã làm
+- `Tools/Editor/CityMetroDistrict.py` đặt một `FacadeTransit` và một `BusStopSign` tại sân ga tây nam, collision tắt để không chặn capsule hoặc xe.
+- Layout source giữ nguyên 10 facility, 4 hidden boundary và 9 access lane; facade được lấy từ expansion manifest đã hash PASS.
+
+### Đã kiểm chứng
+- `VerifyCity6800Layout.py` PASS.
+- `VerifyCityExpansionLayout.py`, py_compile và diff check PASS.
+- Không mở Unreal, không apply World Partition, không chạy EXE, port hoặc benchmark.
+
+### Còn mở
+- Native capture năm góc cho station, kiểm simple collision và prompt route sau map persistence.
+- HLOD rebuild/readback và gameplay boarding vẫn chưa được chứng minh.

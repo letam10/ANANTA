@@ -120,6 +120,9 @@ def station(layout, x, y):
         for step in range(4):
             layout.box("DistrictPaving", (x - 4260 + step * 75, platform_y, 20 + (step + 1) * 10),
                        (75, 940, (step + 1) * 20))
+    # Sanh transit doc lap nam phia tay nam, cach loi vao ga va khong chen ray.
+    layout.add("FacadeTransit", (x - 3900, y - 3900, 15), yaw=90, collision=False)
+    layout.add("BusStopSign", (x - 3400, y - 3600, 15), yaw=90, collision=False)
     layout.add("TransitRouteDisplay", (x - 2400, y - 1700, 160), collision=False)
 
 

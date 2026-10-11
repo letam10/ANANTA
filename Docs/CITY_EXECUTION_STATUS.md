@@ -337,3 +337,10 @@ Handoff tiếp tục: Docs/CITY_EXECUTION_HANDOFF.md.
 - Render review PASS 26 ảnh Cycles 24 samples cho 13 mesh. Đã xem `FacadeTransit_front.png` và `FacadeTransit_quarter.png`; silhouette, kính và canopy đọc rõ.
 - Style distribution PASS với 9 style; `FacadeTransit` xuất hiện 1.800 building records. Model review coverage tiếp tục dùng 8 hướng model và 5 góc placement.
 - Đây là source/Blender evidence; chưa Apply map, import Unreal, HLOD, collision runtime, NPC route hoặc FPS.
+
+## Vòng station concourse FacadeTransit 2026-10-11
+
+- Dùng lại `FacadeTransit` ở sân ga Station tại vị trí source `(x-3900,y-3900,15)`, xoay 90 độ; thêm `BusStopSign` collision false để tạo điểm nhận diện lối vào.
+- Vị trí nằm trong reserve nhà ga và ngoài access lane rộng 300 cm; không thay ray, platform, gameplay anchor hoặc model nhân vật.
+- `VerifyCity6800Layout.py` PASS sau thay đổi: width 6.788,225 m, 10.750 building, 1.667.839 instance, 4 boundary, 3 ocean, 9 access lane, pendingAssetMeshes rỗng.
+- Đây là source placement evidence; chưa chứng minh actor map persistence, collision runtime, native visual, NPC boarding hoặc FPS.
