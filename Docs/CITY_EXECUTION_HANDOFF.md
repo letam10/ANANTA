@@ -297,3 +297,18 @@ source/documentation checkpoint.
 ### Còn mở
 - Cần native capture năm góc để xác nhận facade không che cửa, bảng hiệu và lối vào.
 - Cần HLOD/readback, collision fixture, interaction prompt và gameplay route sau map persistence.
+
+## Checkpoint handoff: airport terminal facade 2026-10-11
+
+### Đã làm
+- `Tools/Editor/CityMetroDistrict.py` đặt facade transit tại `(207000,181900,15)` và `(220000,181900,15)`, cùng bus signs tại y 180950.
+- Placement nằm trong `AIRPORT` reserve và ngoài access lane; collision tắt để giữ lối đón khách và runway logic.
+
+### Đã kiểm chứng
+- `VerifyCity6800Layout.py` PASS.
+- `VerifyCityExpansionLayout.py`, py_compile và diff check PASS.
+- Không mở Unreal, không Apply map, không chạy EXE, port hoặc benchmark.
+
+### Còn mở
+- Cần camera native gần terminal để kiểm tỷ lệ, lối vào và biển hiệu.
+- Cần map readback/HLOD và gameplay airport access sau controlled apply.

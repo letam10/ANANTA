@@ -188,6 +188,8 @@ def airport(layout):
         layout.box("DistrictSteel", (xx, 185000, 700), (8500, 4700, 1400))
         layout.box("DistrictTeal", (xx, 185000, 1450), (8800, 5000, 100))
         layout.box("InteriorGlass", (xx, 187370, 570), (7600, 20, 1080), False)
+        layout.add("FacadeTransit", (xx, 181900, 15), collision=False)
+        layout.add("BusStopSign", (xx, 180950, 15), yaw=90, collision=False)
     layout.add("CivilianPlane", (218000, 193000, 20), yaw=180)
     layout.box("DistrictNavy", (231000, 192000, 21), (4800, 4800, 2), False)
     for offset in (-600, 600):

@@ -351,3 +351,10 @@ Handoff tiếp tục: Docs/CITY_EXECUTION_HANDOFF.md.
 - Các điểm nhận diện đặt ở mặt đường với collision false, giữ shell, ray, platform, access lane và tầng trên shell-only; không thêm texture hoặc ánh sáng động.
 - Gate `VerifyCity6800Layout.py` PASS: 10.750 building, 1.667.847 instance, 10 facility, 4 boundary, 3 ocean, 9 access lane, pendingAssetMeshes rỗng.
 - Đây là source placement evidence; visual native, collision runtime, NPC traversal, HLOD persistence và FPS vẫn chưa nghiệm thu.
+
+## Vòng airport terminal facade 2026-10-11
+
+- Bổ sung hai `FacadeTransit` và hai `BusStopSign` trước hai khối terminal sân bay, dùng mesh đã import/hash PASS và collision false.
+- Giữ nguyên runway, apron, heli pad, aircraft, access lane 1200 cm và ranh giới airport; không thêm nước hoặc mặt sàn collision mới.
+- Gate `VerifyCity6800Layout.py` PASS: 10.750 building, 1.667.851 instance, 10 facility, 4 boundary, 3 ocean, 9 access lane, pendingAssetMeshes rỗng.
+- Đây là source placement evidence; terminal native close view, map persistence, HLOD, collision, NPC/aircraft interaction và FPS vẫn chưa nghiệm thu.
