@@ -129,10 +129,23 @@ def station(layout, x, y):
         for step in range(4):
             layout.box("DistrictPaving", (x - 4260 + step * 75, platform_y, 20 + (step + 1) * 10),
                        (75, 940, (step + 1) * 20))
-    # Sanh transit doc lap nam phia tay nam, cach loi vao ga va khong chen ray.
+    # Hai sanh transit doi xung nam, cach loi vao ga va khong chen ray.
     layout.add("FacadeTransit", (x - 3900, y - 3900, 15), yaw=90, collision=False)
     layout.add("BusStopSign", (x - 3400, y - 3600, 15), yaw=90, collision=False)
-    layout.add("TransitRouteDisplay", (x - 2400, y - 1700, 160), collision=False)
+    layout.add("FacadeTransit", (x + 3900, y - 3900, 15), yaw=270, collision=False)
+    layout.add("BusStopSign", (x + 3400, y - 3600, 15), yaw=270, collision=False)
+    for side in (-1, 1):
+        platform_y = y + side * 1370
+        for xx in (-3000, 3000):
+            layout.add("DetailedStreetLamp", (x + xx, platform_y, 100),
+                       yaw=90, collision=False)
+        for xx in (-1500, 1500):
+            layout.add("Bench", (x + xx, platform_y + side * 180, 100),
+                       yaw=90, collision=True)
+        layout.add("TransitRouteDisplay", (x + 2500, platform_y, 160),
+                   yaw=90, collision=False)
+        layout.add("BusStopSign", (x - 2500, platform_y, 100),
+                   yaw=90, collision=False)
 
 
 def pool(layout, x, y):

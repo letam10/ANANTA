@@ -410,3 +410,25 @@ source/documentation checkpoint.
 
 - Chưa mở Unreal, chưa capture PNG, chưa kiểm tỷ lệ native, vật cản, collision, HLOD, NPC route,
   GPU hoặc FPS. Đây chỉ là camera/source evidence.
+## Vòng station concourse dressing 2026-10-11
+
+### Đã làm
+
+- `Tools/Editor/CityMetroDistrict.py` thêm sảnh `FacadeTransit` đối xứng phía đông nam của ga,
+  hai biển lối vào, bốn đèn sân ga, bốn ghế, hai route display và hai biển platform.
+- Các asset đặt trên hai platform ở cao độ 100 cm; ghế giữ collision, các đèn/biển/display tắt
+  collision. Access lane phía tây, ray và platform bounds không bị thay đổi.
+
+### Đã kiểm chứng
+
+- `VerifyCity6800Layout.py`: PASS, 10.750 building, 1.667.868 instance, 9 access lane,
+  4 hidden boundary, 3 ocean surface, không pending mesh.
+- `VerifyCityExpansionLayout.py`: PASS, 90.368 group, 1.667.868 instance, 9 facade style.
+- `VerifyCityInstanceReuse.py`: PASS, 143 signature, 1.667.725 instance dùng lại.
+- `VerifyCityDistrictVariety.py` và `VerifyCityRoofPool.py`: PASS.
+- `py_compile` và `git diff --check` sẽ chạy trước commit.
+
+### Giới hạn còn mở
+
+- Chưa apply World Partition, chưa native five angle capture station, chưa kiểm collision runtime,
+  NPC boarding, HLOD, GPU hoặc FPS. Đây là source placement evidence.
