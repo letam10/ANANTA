@@ -65,6 +65,9 @@ def shell(layout, x, y, height, material):
 def hospitality(layout, name, x, y, height, material):
     shell(layout, x, y, height, material)
     if name == "Hotel":
+        layout.add("FacadeCivic", (x, y - 2220, 15), collision=False)
+        for side in (-1, 1):
+            layout.add("DetailedPlanter", (x + side * 420, y - 2460, 15), collision=False)
         layout.box("DistrictLimestone", (x, y + 500, height + 350), (3900, 2400, 600))
         for xx in (-2700, -2100, 2100, 2700):
             layout.box("DistrictSteel", (x + xx, y - 2130, 2400), (80, 240, 4200), False)
@@ -78,6 +81,11 @@ def hospitality(layout, name, x, y, height, material):
                 layout.add("House_dining_chair_02", (x + xx, y + yy, 16), yaw=180 if yy == -3100 else 0)
         if name == "Restaurant":
             layout.add("RoofEquipment", (x + 2200, y + 600, height + 85), collision=False)
+            layout.add("FacadeBrickArch", (x - 1500, y - 2220, 15), collision=False)
+            layout.add("DetailedPlanter", (x - 1980, y - 2460, 15), collision=False)
+        else:
+            layout.add("FacadeBay", (x + 1500, y - 2220, 15), collision=False)
+            layout.add("DetailedPlanter", (x + 1980, y - 2460, 15), collision=False)
     elif name == "Cinema":
         layout.box("DistrictPink", (x, y - 2450, 740), (6000, 1100, 260))
         for xx in (-2400, -1400, 1400, 2400):
@@ -94,6 +102,7 @@ def hospitality(layout, name, x, y, height, material):
                          (width, 3500 - step * 230, 130), yaw)
         for xx in (-2700, -1800, 1800, 2700):
             layout.box("DistrictLimestone", (x + xx, y - 2400, 550), (150, 150, 1060))
+        layout.add("FacadeArtDeco", (x, y - 2220, 15), collision=False)
 
 
 def station(layout, x, y):

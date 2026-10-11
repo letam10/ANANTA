@@ -344,3 +344,10 @@ Handoff tiếp tục: Docs/CITY_EXECUTION_HANDOFF.md.
 - Vị trí nằm trong reserve nhà ga và ngoài access lane rộng 300 cm; không thay ray, platform, gameplay anchor hoặc model nhân vật.
 - `VerifyCity6800Layout.py` PASS sau thay đổi: width 6.788,225 m, 10.750 building, 1.667.839 instance, 4 boundary, 3 ocean, 9 access lane, pendingAssetMeshes rỗng.
 - Đây là source placement evidence; chưa chứng minh actor map persistence, collision runtime, native visual, NPC boarding hoặc FPS.
+
+## Vòng facility facade identity 2026-10-11
+
+- Dùng lại asset facade đã kiểm định để cải thiện nhận diện facility: Hotel dùng `FacadeCivic`, Restaurant dùng `FacadeBrickArch`, Cafe dùng `FacadeBay`, Theater dùng `FacadeArtDeco`.
+- Các điểm nhận diện đặt ở mặt đường với collision false, giữ shell, ray, platform, access lane và tầng trên shell-only; không thêm texture hoặc ánh sáng động.
+- Gate `VerifyCity6800Layout.py` PASS: 10.750 building, 1.667.847 instance, 10 facility, 4 boundary, 3 ocean, 9 access lane, pendingAssetMeshes rỗng.
+- Đây là source placement evidence; visual native, collision runtime, NPC traversal, HLOD persistence và FPS vẫn chưa nghiệm thu.

@@ -282,3 +282,18 @@ source/documentation checkpoint.
 ### Còn mở
 - Native capture năm góc cho station, kiểm simple collision và prompt route sau map persistence.
 - HLOD rebuild/readback và gameplay boarding vẫn chưa được chứng minh.
+
+## Checkpoint handoff: facility facade identity 2026-10-11
+
+### Đã làm
+- `Tools/Editor/CityMetroDistrict.py` thêm facade front detail cho Hotel, Restaurant, Cafe và Theater.
+- Mesh đều lấy từ `expansion_manifest.json` đã hash/FBX roundtrip PASS; placement không tạo interior giả và không bật collision.
+
+### Đã kiểm chứng
+- `VerifyCity6800Layout.py` PASS và không có pending asset mesh.
+- `VerifyCityExpansionLayout.py`, py_compile và diff check PASS.
+- Không mở Unreal, không apply map, không chạy EXE, port hoặc benchmark.
+
+### Còn mở
+- Cần native capture năm góc để xác nhận facade không che cửa, bảng hiệu và lối vào.
+- Cần HLOD/readback, collision fixture, interaction prompt và gameplay route sau map persistence.
