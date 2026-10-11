@@ -224,6 +224,51 @@
       }
     },
     {
+      "id": "FacadeTransit",
+      "file": "Expansion/Meshes/FacadeTransit.fbx",
+      "boundsCm": {
+        "min": [
+          -200.0,
+          -85.0,
+          0.0
+        ],
+        "max": [
+          200.0,
+          26.0,
+          320.0
+        ],
+        "size": [
+          400.0,
+          111.0,
+          320.0
+        ]
+      },
+      "materialSlots": [
+        "City_stone_wall_02",
+        "City_Aluminium",
+        "City_Teal",
+        "City_Glass",
+        "City_Dark",
+        "City_Light"
+      ],
+      "triangles": 2304,
+      "source": "Original ANANTA expansion generator",
+      "license": "Original project asset",
+      "sha256": "08ccba6a322c9019dedf313779a406244f108e65fb7542ef2318fac8adca3ed8",
+      "lodRecommendation": {
+        "screenSizes": [
+          1.0,
+          0.4,
+          0.15
+        ],
+        "triangleRatios": [
+          1,
+          0.5,
+          0.2
+        ]
+      }
+    },
+    {
       "id": "TreeBroadleaf",
       "file": "Expansion/Meshes/TreeBroadleaf.fbx",
       "boundsCm": {
@@ -529,7 +574,7 @@
     },
     {
       "file": "Expansion/Sources/expansion_architecture.py",
-      "sha256": "9f9fdba8371fd6afa5de909ccce1c9f37f1649472e26fe1ef19d0eda8451b385",
+      "sha256": "7eae89de3117a66bff13ce9c6acbad77669531c2fb8f1c2320b7032de30d2e50",
       "source": "Original project generator",
       "license": "Original project asset"
     },
@@ -541,7 +586,7 @@
     },
     {
       "file": "Expansion/Sources/expansion_build.py",
-      "sha256": "eaa4c5c61bcc65eab3a48386ae1f0f384ef9cc0502120e09b3fa1052c5aea074",
+      "sha256": "922044c83ccf167d4165e9944e19499accb448eb64d8d777b99ee13fccca2c79",
       "source": "Original project generator",
       "license": "Original project asset"
     },

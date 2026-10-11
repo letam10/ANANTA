@@ -30,7 +30,8 @@ def main():
     catalog = json.loads((BASE / "source_catalog.json").read_text(encoding="utf-8"))
     materials.build(catalog["materials"], BASE)
     objects = [architecture.brick_arch(), architecture.bay(), architecture.art_deco(),
-               architecture.industrial(), architecture.civic(), nature.tree(), nature.tree(True), props.bus_shelter(),
+               architecture.industrial(), architecture.civic(), architecture.transit(),
+               nature.tree(), nature.tree(True), props.bus_shelter(),
                props.market_stall(), props.trash_bin(), props.bike_rack(), props.street_sign()]
     existing.OUT = OUT
     records = []

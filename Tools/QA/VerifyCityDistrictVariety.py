@@ -19,6 +19,7 @@ REQUIRED_STYLES = {
     "FacadeArtDeco",
     "FacadeIndustrial",
     "FacadeCivic",
+    "FacadeTransit",
 }
 REQUIRED_FORMS = {
     "slab",

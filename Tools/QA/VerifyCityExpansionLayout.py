@@ -29,7 +29,7 @@ def main():
                 if abs(yy - y) < (depth + other["depth"]) / 2 + 80:
                     errors.append(f"Building footprints intersect {index}: {item['centre']} / {other['centre']}")
     assert len(buildings) > 1200, len(buildings)
-    assert len(data["audit"]["styles"]) == 7
+    assert len(data["audit"]["styles"]) == 9
     assert abs(data["audit"]["areaRatio"] - 32) < 0.00001
     assert abs(data["audit"]["previousAreaRatio"] - 4) < 0.00001
     assert data["audit"]["roadBlocks"] == 3136

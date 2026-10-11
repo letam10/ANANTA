@@ -139,3 +139,23 @@ def civic():
     for x in (-0.84, 0, 0.84):
         box("Civic sign light", (x, -0.60, 3.02), (0.42, 0.025, 0.035), "Light", 0)
     return combine("FacadeCivic")
+
+def transit():
+    # San ga nho gon voi mai che va dai nhan dien, khong chen noi that vao toa nha nen.
+    border("Stone")
+    box("Transit plinth", (0, -0.02, 0.24), (3.72, 0.56, 0.30), "Stone")
+    box("Transit canopy", (0, -0.42, 2.70), (3.52, 0.76, 0.14), "Aluminium")
+    box("Transit canopy edge", (0, -0.82, 2.60), (3.52, 0.06, 0.16), "Teal")
+    box("Transit entry glass", (0, -0.04, 1.56), (2.86, 0.04, 2.20), "Glass")
+    for x in (-1.42, -0.47, 0.47, 1.42):
+        box("Transit mullion", (x, -0.13, 1.56), (0.055, 0.14, 2.12), "Aluminium", 0.002)
+    for z in (0.70, 1.55, 2.39):
+        box("Transit transom", (0, -0.14, z), (2.78, 0.12, 0.045), "Dark", 0.002)
+    for x in (-1.68, 1.68):
+        box("Transit route pillar", (x, -0.02, 1.60), (0.22, 0.42, 2.88), "Stone")
+        box("Transit route inset", (x, -0.28, 1.62), (0.06, 0.05, 2.42), "Teal", 0.002)
+    box("Transit route sign", (0, -0.54, 3.02), (2.28, 0.08, 0.20), "Teal", 0.004)
+    for x in (-0.78, 0, 0.78):
+        box("Transit route light", (x, -0.60, 3.02), (0.38, 0.025, 0.03), "Light", 0)
+    box("Transit ticket sill", (0, -0.24, 0.55), (2.65, 0.34, 0.10), "Aluminium")
+    return combine("FacadeTransit")

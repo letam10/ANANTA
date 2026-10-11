@@ -250,3 +250,20 @@ source/documentation checkpoint.
 
 ### Giới hạn
 - Số liệu là source layout audit; chưa chứng minh map persistence, native visuals, HLOD rebuild, runtime collision, NPC/transport hoặc FPS.
+
+## Checkpoint handoff: FacadeTransit 2026-10-11
+
+### File và API
+- `Tools/CityAssets/expansion_architecture.py` thêm `transit()` và `Tools/CityAssets/expansion_build.py` xuất mesh mới.
+- `Tools/Editor/CityExpansionBuildings.py` thêm style `FacadeTransit`; `CityExpansionLayout.py` phân phối style ở west/core/east.
+- `FacadeTransit` không tạo `V_FacadeTransit_*` material variant; mesh dùng material slots PBR đã có để tránh tham chiếu import mới.
+
+### Bằng chứng
+- `Saved/QA/CityExpansionAssets/build.json`: 13 mesh, build PASS.
+- `Saved/QA/CityExpansionAssets/fbx_roundtrip.json`: 13/13 hash/bounds/material/UV/manifold PASS.
+- Render review: 26 ảnh, `FacadeTransit_front.png` và `FacadeTransit_quarter.png` đã xem.
+- District variety, 6.8 km layout, py_compile và diff check PASS.
+
+### Giới hạn
+- FBX/Blender render không chứng minh Unreal import, map persistence, HLOD, collision, NPC traversal hoặc FPS.
+- Các FBX facade cũ được khôi phục để checkpoint chỉ chứa binary mới `FacadeTransit.fbx`; manifest hash đã đồng bộ.

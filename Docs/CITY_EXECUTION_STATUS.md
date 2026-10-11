@@ -329,3 +329,11 @@ Handoff tiếp tục: Docs/CITY_EXECUTION_HANDOFF.md.
 - `VerifyCity6800Layout.py` đã được đồng bộ với source facade hiện tại: yêu cầu 8 style và kiểm tra bắt buộc `FacadeCivic`, thay cho điều kiện cũ đúng 7 style.
 - Gate sau sửa PASS: width 6.788,225 m, 10.750 building, 1.661.320 instance, 10 facility, 4 hidden boundary, 3 ocean surface, 9 access lane, pendingAssetMeshes rỗng.
 - Đây là sửa phạm vi QA, không thay đổi geometry, map, actor tree hay model nhân vật. Các cờ `inEngineVerified`, `visualAccepted` và `gameplayFacilities` vẫn false.
+
+## Vòng FacadeTransit và style facade thứ chín 2026-10-11
+
+- Tạo module `FacadeTransit` cho sảnh ga/terminal: khung đá, kính phân ô, mái che nhôm, dải tuyến teal, cột nhận diện và đèn sign; dùng vật liệu đã có, không thêm texture mới.
+- Blender 5.2 headless build PASS: 13 mesh, `FacadeTransit` 2.304 triangles, dưới ngân sách facade 6.000 tris; FBX roundtrip/hash PASS 13/13.
+- Render review PASS 26 ảnh Cycles 24 samples cho 13 mesh. Đã xem `FacadeTransit_front.png` và `FacadeTransit_quarter.png`; silhouette, kính và canopy đọc rõ.
+- Style distribution PASS với 9 style; `FacadeTransit` xuất hiện 1.800 building records. Model review coverage tiếp tục dùng 8 hướng model và 5 góc placement.
+- Đây là source/Blender evidence; chưa Apply map, import Unreal, HLOD, collision runtime, NPC route hoặc FPS.

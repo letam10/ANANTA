@@ -1,7 +1,7 @@
 """Seeded shell architecture: no hidden furnished floors in background buildings."""
 
 STYLES = ("FacadeResidential", "FacadeCommercial", "FacadeTower", "FacadeBrickArch",
-          "FacadeBay", "FacadeArtDeco", "FacadeIndustrial", "FacadeCivic")
+          "FacadeBay", "FacadeArtDeco", "FacadeIndustrial", "FacadeCivic", "FacadeTransit")
 TINTS = ("ShellIvory", "ShellTerracotta", "ShellSage", "ShellSlate", "ShellSand", "ShellBlue")
 
 # Quy tac vat lieu va diem nhan nhe cho tung phong cach, dung chung mesh de giu instancing.
@@ -14,6 +14,7 @@ STYLE_QUALITY = {
     "FacadeArtDeco": dict(accent="City_Brass", vertical=True, balcony=False),
     "FacadeIndustrial": dict(accent="City_Dark", vertical=False, balcony=False),
     "FacadeCivic": dict(accent="City_Brass", vertical=True, balcony=False),
+    "FacadeTransit": dict(accent="City_Teal", vertical=True, balcony=False),
 }
 
 DISTRICT_PROFILES = {
@@ -30,7 +31,7 @@ def floor_band(layout, x, y, columns, rows, first, count, style, tint, podium=Fa
     layout.box(tint, (x, y, base + height / 2), (width - 32, depth - 32, height))
     for floor in range(first, first + count):
         z = 15 + floor * 320
-        variant = f"V_{style}_{tint}" if style != "FacadeTower" else None
+        variant = f"V_{style}_{tint}" if style not in ("FacadeTower", "FacadeTransit") else None
         for column in range(columns):
             xx = x - width / 2 + 200 + column * 400
             front = "Storefront" if floor == 0 and podium else style
