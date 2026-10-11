@@ -612,6 +612,46 @@ source/documentation checkpoint.
 - Cần rà 24 collision prop cảnh báo trong editor trước khi sửa collider, tránh làm NPC hoặc người
   chơi xuyên vật thể.
 
+## Vòng source collision và venue dressing repair 2026-10-11
+
+### Nguyên nhân lỗi lặp lại
+
+- Cổng civic bắt đúng các bàn bar nằm trong hành lang đi bộ 240 cm; lỗi này không phải do Unreal
+  bị treo mà do hai hàng bàn nguồn đặt gần hai phía của hành lang.
+- ToyShelfBack cao hơn biên trần một phần nhỏ và ghế Bakery chồng lên bàn; manifest dressing chưa
+  đọc small manifest nên các mesh ToyBlocks, MakeupCompact và CookingPot từng bị báo thiếu.
+- CityExpansionVenues còn tạo lại visual actor cho ToyShop, Salon và Bakery sau khi CityVenueDressing
+  đã tạo chúng, khiến verifier thấy actor trùng và overlap giả.
+
+### Đã sửa
+
+- CityBarSeating.py dời các hàng bàn khỏi hành lang trung tâm; VerifyCityDistricts.py cho phép
+  hình nền DistrictWater/DistrictSand nằm ngoài land reserve để không coi biển và đáy biển là
+  block nhà hợp lệ.
+- CityVenueDressing.py hạ ToyShelfBack còn 210 cm, dời ghế Bakery sang x=650 cm và giữ bàn
+  cùng đèn ở vùng sử dụng được.
+- CityExpansionVenues.py để CityVenueDressing sở hữu visual dressing của ba venue mới, chỉ giữ
+  một service actor cho mỗi venue; VerifyCityVenueDressing.py hợp nhất small_manifest vào lookup.
+
+### Evidence source-only sau sửa
+
+- VerifyCityDistricts: PASS, civic 360, coastal 3509, collision 1420, integrationIssues rỗng;
+  engineAccepted=false vì chưa apply/readback Unreal.
+- VerifyCityVenueDressing --source-only: PASS, 299 additions, 15 phòng, 64 wall details,
+  30 mesh id và 90280 bounds comparisons; errors rỗng.
+- Collision source 9/9, small placement PASS, model coverage PASS, venue interactions PASS,
+  performance budget PASS, layout/reuse/variety/roof pool PASS.
+- Performance source budget vẫn là 90440 group, 1668011 instance, 146 signature, reusable
+  fraction 0.999912, 95 mesh có LOD recommendation; đây không phải đo FPS hoặc draw call.
+
+### Handoff còn mở
+
+- Chưa mở Unreal, chưa import/readback map, chưa capture native tám hướng hoặc năm góc placement,
+  chưa đi bộ qua cửa, chưa thử NPC/boarding, HLOD/Nanite/culling/GPU và chưa đo 60 FPS.
+- 24 decorative collision groups vẫn là cảnh báo review; không tự xóa vì có thể cần chặn lối đi.
+- Không stage hoặc commit ANANTA_City.umap và ExternalActors đang dirty; commit chỉ gồm source,
+  QA và tài liệu. Vòng kế tiếp cần editor smoke test ngắn, không benchmark hoặc soak test.
+
 ## Vòng accessible Bakery 2026-10-11
 
 ### Thay đổi nguồn

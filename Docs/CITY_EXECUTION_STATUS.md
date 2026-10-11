@@ -699,3 +699,19 @@ Handoff tiếp tục: Docs/CITY_EXECUTION_HANDOFF.md.
 - 24 collision prop đường phố được ghi thành cảnh báo cần review, không phải lỗi source cứng.
 - Gate chưa đo draw call, GPU frame time, shader sample, Nanite runtime, HLOD persistence hoặc
   FPS; runtimeFpsVerified vẫn false.
+
+## Vòng source collision và venue dressing repair 2026-10-11
+
+- Đã sửa hàng bàn CityBarSeating để không chặn hành lang bar 240 cm; districts source gate hiện
+  PASS thay vì lặp lỗi CafeTable trong side corridor.
+- Đã sửa ToyShelfBack nằm trong biên sàn/trần, dời ghế Bakery khỏi bàn và ngăn visual actor
+  ToyShop/Salon/Bakery bị tạo trùng giữa CityExpansionVenues và CityVenueDressing.
+- Venue dressing verifier đọc thêm small_manifest nên ToyBlocks, MakeupCompact và CookingPot
+  được kiểm bounds như mesh thật; không còn lỗi missing asset hoặc overlap giả.
+- Kết quả: districts PASS; dressing PASS với 299 additions và 15 phòng; collision 9/9;
+  placement, model coverage, interactions, layout, reuse, variety, roof pool và performance
+  budget đều PASS.
+- Giới hạn: đây là source-only evidence. Unreal apply/readback, native eight-view/five-placement,
+  collision/NPC/boarding, HLOD/Nanite/GPU và FPS 60 vẫn chưa được xác nhận.
+- Không stage map/ExternalActors dirty; vòng kế tiếp chỉ cần editor smoke test ngắn và review
+  24 decorative collision warnings, không benchmark hay soak test.

@@ -106,6 +106,8 @@ def main():
     meshes.update({item["id"]: item for item in workshop["meshes"]})
     fixtures = json.loads((PROJECT / "Assets/City/venue_fixture_manifest.json").read_text(encoding="utf-8"))
     meshes.update({item["id"]: item for item in fixtures["meshes"]})
+    small = json.loads((PROJECT / "Assets/City/small_manifest.json").read_text(encoding="utf-8"))
+    meshes.update({item["id"]: item for item in small["meshes"]})
     items = describe()
     errors = []
     for mesh, (low, high) in ARCHITECTURE_BOUNDS.items():
