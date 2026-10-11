@@ -15,6 +15,12 @@ STYLE_QUALITY = {
     "FacadeIndustrial": dict(accent="City_Dark", vertical=False, balcony=False),
 }
 
+DISTRICT_PROFILES = {
+    "west": dict(forms=("slab", "terrace", "pavilion", "lantern")),
+    "core": dict(forms=("stepped", "corner", "twin", "crown", "lantern")),
+    "east": dict(forms=("slab", "stepped", "twin", "crown", "pavilion")),
+}
+
 
 def floor_band(layout, x, y, columns, rows, first, count, style, tint, podium=False):
     width, depth = columns * 400, rows * 400
@@ -43,14 +49,15 @@ def floor_band(layout, x, y, columns, rows, first, count, style, tint, podium=Fa
     return roof
 
 
-def building(layout, x, y, columns, rows, floors, style, rng):
+def building(layout, x, y, columns, rows, floors, style, rng, district="core"):
     width, depth = columns * 400, rows * 400
     tint = rng.choice(TINTS)
     quality = STYLE_QUALITY[style]
-    form = rng.choice(("slab", "stepped", "corner", "terrace", "twin", "crown", "pavilion", "lantern"))
+    district_profile = DISTRICT_PROFILES.get(district, DISTRICT_PROFILES["core"])
+    form = rng.choice(district_profile["forms"])
     layout.building_centre = (x, y)
     layout.buildings.append(dict(centre=[x, y], width=width, depth=depth, height=floors * 320,
-                                 style=style, tint=tint, form=form, interior=False,
+                                 style=style, tint=tint, form=form, interior=False, district=district,
                                  quality=dict(profile=style, accent=quality["accent"],
                                               vertical=quality["vertical"],
                                               balcony=quality["balcony"])))

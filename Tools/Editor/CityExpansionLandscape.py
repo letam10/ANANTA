@@ -27,7 +27,7 @@ def dress_block(layout, x, y, rng, park):
         prop(layout, "TrashBin", x + side * 700, y + 450, radius=75)
     prop(layout, "BikeRack", x - 4300, y + 600, yaw=90, radius=150)
     prop(layout, "StreetSign", x - 4480, y - 4500, radius=40)
-    theme = rng.randrange(4)
+    theme = rng.randrange(6)
     if theme == 0:
         prop(layout, "MarketStall", x + 350, y + 520, yaw=90, radius=260)
         prop(layout, "Bench", x - 350, y + 520, yaw=90, radius=180)
@@ -40,10 +40,20 @@ def dress_block(layout, x, y, rng, park):
         prop(layout, "CafeTable", x + 350, y + 520, radius=130)
         prop(layout, "Bench", x - 350, y + 520, yaw=90, radius=180)
         prop(layout, "BikeRack", x + 820, y + 520, yaw=90, radius=150)
-    else:
+    elif theme == 3:
         prop(layout, "DetailedPlanter", x + 350, y + 520, radius=180)
         prop(layout, "DetailedPlanter", x - 350, y + 520, radius=180)
         prop(layout, "StreetSign", x, y + 820, radius=40)
+    elif theme == 4:
+        prop(layout, "Bench", x - 500, y + 520, yaw=90, radius=180)
+        prop(layout, "Bench", x + 500, y + 520, yaw=90, radius=180)
+        prop(layout, "DetailedPlanter", x, y + 820, radius=180)
+        prop(layout, "TrashBin", x + 820, y + 520, radius=75)
+    else:
+        prop(layout, "MarketStall", x - 420, y + 520, yaw=90, radius=260)
+        prop(layout, "MarketStall", x + 420, y + 520, yaw=90, radius=260)
+        prop(layout, "CafeTable", x, y - 420, radius=130)
+        prop(layout, "Bench", x, y - 760, yaw=90, radius=180)
     if park:
         layout.box("GardenSoil", (x, y, 4), (7800, 7800, 8), False)
         layout.box("Sidewalk", (x, y, 6), (1400, 9600, 12))

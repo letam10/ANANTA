@@ -252,3 +252,23 @@ Nguồn: nhánh codex/city-expansion; chi tiết: CITY_MOBILITY_ROUND.md.
   Unreal/runtime; bước kế tiếp là native capture có kiểm soát sau khi user cho phép.
 
 Handoff chi tiết: `Docs/CITY_EXECUTION_HANDOFF.md`.
+
+## Vòng district variety và pocket dressing source-only 2026-10-11
+
+- Bổ sung hồ sơ kiến trúc west/core/east trong CityExpansionBuildings.py.
+  Mỗi building record hiện ghi district và dùng nhóm form riêng để giảm lặp hình khối.
+- Generator vẫn giữ width 6.788,225 m và 10.750 building, nhưng phân bố được kiểm chứng:
+  west 5.529, core 994, east 4.227; đủ 7 facade style và 8 form.
+- CityExpansionLandscape.py tăng từ 4 lên 6 theme pocket.
+  Hai theme mới là plaza đôi ghế/planter và market pocket; dùng mesh hiện có,
+  collision nhỏ gọn và phù hợp instancing.
+- Tạo Tools/QA/VerifyCityDistrictVariety.py làm gate source-only.
+  Gate PASS; VerifyCityExpansionLayout.py PASS; py_compile PASS.
+  Generator hiện ghi 89.097 group và 1.659.861 instance.
+- Không mở Unreal, không apply map, không kiểm tra cổng, không chạy game,
+  không benchmark và không đo FPS trong vòng này.
+- Map/external actor dirty tree vẫn ngoài staging. Các số trên là source generator,
+  chưa phải readback map. HLOD, collision runtime, visual acceptance và mục tiêu 60 FPS
+  vẫn chưa được chứng minh.
+
+Handoff tiếp tục: Docs/CITY_EXECUTION_HANDOFF.md.

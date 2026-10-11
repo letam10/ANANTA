@@ -149,3 +149,18 @@ per-group mesh/material signatures, so reuse ratio and duplicate-group conclusio
 The only file created by this handoff is `Docs/CITY_EXECUTION_HANDOFF.md`. Do not stage or commit it
 from this subtask; the parent chat should review the diff and decide whether to include it in the next
 source/documentation checkpoint.
+
+## Current source-only continuation 2026-10-11
+
+- Source changes after the previous handoff add deterministic west/core/east building profiles,
+  district metadata and six pocket themes. The character model and saved gameplay anchors were not
+  edited.
+- Offline evidence: VerifyCityDistrictVariety PASS with 10.750 buildings, 3 districts, 7 facade
+  styles and 8 forms. VerifyCityExpansionLayout PASS with width 6.788,225 m, four hidden boundary
+  colliders, three ocean surfaces and nine access lanes. Python compilation PASS.
+- The generator output is 89.097 groups and 1.659.861 instances. This is source evidence only.
+  It does not prove that the dirty World Partition map contains the new source.
+- No Unreal, packaged game, port probe, benchmark or long gameplay run was started. Do not infer
+  visual quality, runtime collision, HLOD, GPU stability or 60 FPS from these gates.
+- Safe next step is a controlled map apply/readback after the actor tree is reviewed. Keep the map
+  and external actors out of a source-only commit until persistence and ownership are accepted.

@@ -110,6 +110,7 @@ def city_blocks(layout):
                 continue
             rng = random.Random(SEED + int(cx) * 31 + int(cy))
             district = 0 if cx < -20000 else 1 if cx < 20000 else 2
+            district_name = ("west", "core", "east")[district]
             outer = max(abs(cx), abs(cy)) > 84000
             park = (int(cx // BLOCK) * 7 + int(cy // BLOCK) * 3) % 13 == 0 and abs(cy) > 12000
             if not park:
@@ -124,12 +125,14 @@ def city_blocks(layout):
                         continue
                     styles = ((1, 3, 5, 6), (0, 3, 4, 5), (1, 2, 5, 6))[district]
                     style = STYLES[rng.choice(styles)]
-                    floors = rng.randint(3, 9) if district == 1 else rng.randint(4, 15)
+                    floor_choices = ((3, 4, 5, 6, 8), (5, 7, 9, 11, 14),
+                                     (4, 6, 8, 10, 13))[district]
+                    floors = rng.choice(floor_choices)
                     if outer:
                         floors = rng.randint(2, 7)
                     if district == 2 and (ix + iy) % 4 == 0:
                         floors += 8
-                    building(layout, x, y, columns, rows, floors, style, rng)
+                    building(layout, x, y, columns, rows, floors, style, rng, district_name)
             if not overlaps_reserved(cx, cy, 9000, 9000):
                 dress_block(layout, cx, cy, rng, park)
 
