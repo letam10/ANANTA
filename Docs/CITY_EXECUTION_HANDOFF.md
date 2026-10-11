@@ -588,3 +588,24 @@ source/documentation checkpoint.
 
 - Chưa có runtime smoke test, native capture, map readback, collision/NPC/HLOD/GPU/FPS acceptance.
 - Không stage map hoặc ExternalActors trước khi có review runtime riêng.
+
+## Vòng accessible Bakery 2026-10-11
+
+### Thay đổi nguồn
+
+- CityExpansionData.py thêm Bakery tại (150000, 2600); CityExpansionVenues.py và
+  CityVenueDressing.py thêm quầy, CookingPot, KitchenBowl, bàn, ghế và đèn.
+- CityInteriorArchitecture.py, VerifyCityExpansionLayout.py, VerifyCity6800Layout.py và
+  VerifyCityModelViewCoverage.py được cập nhật đồng bộ.
+- Không sửa model nhân vật, map generated hoặc ExternalActors.
+
+### Evidence
+
+- 13 venue expansion và 4 civic service được kiểm ID/kind; interaction gate PASS.
+- 15 phòng dressing, 299 item, sparse limit 315, 24 mesh lặp và 269 reusable references.
+- Layout, eight model views, five placement views, compile và diff check PASS.
+
+### Việc còn lại
+
+- Chưa có runtime smoke test, native capture, map readback, collision/NPC/HLOD/GPU/FPS acceptance.
+- Không stage map hoặc ExternalActors trước khi có review runtime riêng.

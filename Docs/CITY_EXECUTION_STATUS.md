@@ -649,3 +649,29 @@ Handoff tiếp tục: Docs/CITY_EXECUTION_HANDOFF.md.
 - Chưa apply/readback Unreal, chưa chứng minh actor persistence, collision runtime, NPC path,
   HLOD, GPU hoặc 60 FPS; runtimeVerified vẫn false.
 - Chưa có native capture tám hướng và năm góc cho Salon; các view hiện là source metadata.
+
+## Vòng accessible Bakery 2026-10-11
+
+### Đã làm
+
+- Thêm venue tương tác Bakery tại (150000, 2600) với footprint 1800x1500 cm và service
+  Bakery_Supplies.
+- Thêm quầy, ba CookingPot, ba KitchenBowl, bàn, ghế và đèn; cooking props dùng mesh nhỏ chung
+  và collision false để giữ lối đi thông thoáng.
+- Thêm wall details Bakery và cập nhật coverage requirement cho cooking/counter.
+
+### Đã kiểm chứng
+
+- Interaction gate PASS: 13 expansion service ID, 4 civic service, không ID trùng hoặc service
+  kind không hợp lệ.
+- Model view gate PASS: 95 model, 11 manifest, 8 hướng model, 5 góc placement, 15 phòng,
+  299 dressing item, sparse limit 315.
+- Reuse PASS: 24 mesh lặp, 269 reusable references; layout 10.750 building, 6,788 km,
+  4 boundary, 3 ocean surface, 9 access lane, không pending mesh.
+- Diversity, roof pool, compile và diff check PASS.
+
+### Lỗi và giới hạn còn mở
+
+- Chưa apply hoặc readback Unreal, chưa chứng minh actor persistence, collision runtime, NPC path,
+  HLOD, GPU hoặc 60 FPS; runtimeVerified vẫn false.
+- Chưa có native capture tám hướng và năm góc cho Bakery; các view hiện là source metadata.

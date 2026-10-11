@@ -140,6 +140,16 @@ def describe():
             house("SalonChairRight", "modern_arm_chair_01", 480, 360, yaw=270)
             house("SalonPlant", "potted_plant_02", 650, 520)
             house("SalonLamp", "hanging_industrial_lamp", 0, 250, 185, collision=False)
+        elif name == "Bakery":
+            add("Counter", "CafeCounter", -420, -340)
+            for index, dx in enumerate((-400, 0, 400)):
+                add(f"CookingPot{index}", "CookingPot", dx, -340, 110,
+                    collision=False)
+                add(f"KitchenBowl{index}", "KitchenBowl", dx, -120, 105,
+                    collision=False)
+            add("Table", "CafeTable", 420, 420)
+            house("Chair", "dining_chair_02", 420, 120, yaw=180)
+            house("BakeryLamp", "hanging_industrial_lamp", 420, 420, 185, collision=False)
         elif name == "Gallery":
             for index, (dx, dy, height, asset) in enumerate(((420, 390, 95, "brass_pot_01"),
                                                           (-400, 390, 115, "ceramic_vase_03"),

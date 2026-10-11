@@ -64,6 +64,7 @@ VENUE_REQUIREMENTS = {
     "Market": {"stock": ("House_brass_pot_01",), "checkout": ("CafeCounter",)},
     "ToyShop": {"toys": ("ToyBlocks",), "checkout": ("CafeCounter",)},
     "Salon": {"cosmetics": ("MakeupCompact",), "reception": ("CafeCounter",)},
+    "Bakery": {"cooking": ("CookingPot", "KitchenBowl"), "counter": ("CafeCounter",)},
     "Gallery": {"display": ("InteriorGalleryFrame",)},
     "Workshop": {"tools": ("WorkshopToolBoard",), "parts": ("WorkshopPartsCrate",)},
     "Transit": {"route": ("TransitRouteDisplay",)},

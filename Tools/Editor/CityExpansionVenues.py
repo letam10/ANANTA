@@ -81,6 +81,17 @@ def furnish_venue(item):
         prop("House_potted_plant_02", prefix + "_Plant", (x + 650, y + 520, 15))
         prop("House_hanging_industrial_lamp", prefix + "_Lamp",
              (x, y + 250, 185), collision=False)
+    elif item["id"] == "Bakery":
+        prop("CafeCounter", prefix + "_Counter", (x, y - 360, 15))
+        for index, xx in enumerate((-400, 0, 400)):
+            prop("CookingPot", prefix + f"_Pot{index}", (x + xx, y - 360, 110),
+                 collision=False)
+            prop("KitchenBowl", prefix + f"_Bowl{index}", (x + xx, y - 120, 105),
+                 collision=False)
+        prop("CafeTable", prefix + "_Table", (x + 420, y + 420, 15))
+        prop("House_dining_chair_02", prefix + "_Chair", (x + 420, y + 120, 15), 180)
+        prop("House_hanging_industrial_lamp", prefix + "_Lamp",
+             (x + 420, y + 420, 185), collision=False)
     elif item["id"] == "Gallery":
         for index, tint in enumerate(("ShellTerracotta", "ShellBlue", "ShellSage")):
             xx = x - 480 + index * 480

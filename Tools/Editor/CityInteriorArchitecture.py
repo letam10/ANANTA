@@ -47,6 +47,12 @@ WALL_DETAILS = {
         ("SalonPosterTwo", "Gallery", "south", 220, 155),
         ("SalonBotanical", "Botanical", "north", 380, 155),
     ),
+    "Bakery": (
+        ("BakerySlats", "Slat", "back", -420, 62),
+        ("BakeryPoster", "Gallery", "south", -120, 155),
+        ("BakeryPosterTwo", "Gallery", "south", 220, 155),
+        ("BakeryBotanical", "Botanical", "north", 380, 155),
+    ),
     "Gallery": (
         ("VisitorSlats", "Slat", "south", -440, 62),
         ("CataloguePrint", "Gallery", "south", -110, 155),
