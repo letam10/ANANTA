@@ -675,3 +675,27 @@ Handoff tiếp tục: Docs/CITY_EXECUTION_HANDOFF.md.
 - Chưa apply hoặc readback Unreal, chưa chứng minh actor persistence, collision runtime, NPC path,
   HLOD, GPU hoặc 60 FPS; runtimeVerified vẫn false.
 - Chưa có native capture tám hướng và năm góc cho Bakery; các view hiện là source metadata.
+
+## Vòng render performance source budget 2026-10-11
+
+### Đã làm
+
+- Thêm Tools/QA/VerifyCityPerformanceBudget.py để kiểm tra ngân sách render nguồn trước khi apply
+  map: reuse signature, reusable fraction, LOD recommendation, HISM path và water collision.
+- Giữ collision của planter và một số prop đường phố là cảnh báo review vì chúng có thể cần chặn
+  lối đi; không tự ý xóa collision gameplay.
+
+### Đã kiểm chứng
+
+- Performance gate PASS: 90.440 group, 1.668.011 instance, 146 signature, reusable fraction
+  0,999912 và 1.667.865 reusable instance.
+- 95 mesh từ manifest đều có LOD recommendation hợp lệ; không thiếu hoặc sai thứ tự screen size
+  và triangle ratio.
+- HISM component path và add_instances PASS; water collision groups bằng 0; invalid groups bằng 0.
+- Compile và diff check PASS.
+
+### Lỗi và giới hạn còn mở
+
+- 24 collision prop đường phố được ghi thành cảnh báo cần review, không phải lỗi source cứng.
+- Gate chưa đo draw call, GPU frame time, shader sample, Nanite runtime, HLOD persistence hoặc
+  FPS; runtimeFpsVerified vẫn false.

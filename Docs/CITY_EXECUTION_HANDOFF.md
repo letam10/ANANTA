@@ -589,6 +589,29 @@ source/documentation checkpoint.
 - Chưa có runtime smoke test, native capture, map readback, collision/NPC/HLOD/GPU/FPS acceptance.
 - Không stage map hoặc ExternalActors trước khi có review runtime riêng.
 
+## Vòng render performance source budget 2026-10-11
+
+### Thay đổi
+
+- Tạo Tools/QA/VerifyCityPerformanceBudget.py, source-only gate cho LOD, HISM, instance reuse,
+  water collision và collision prop đường phố.
+- Không thay đổi map, actor tree, model nhân vật hoặc collision source hiện hữu; planter và prop
+  đường phố có collision được giữ lại để review gameplay riêng.
+
+### Evidence
+
+- Gate PASS với 90.440 group, 1.668.011 instance, reusable fraction 0,999912, 146 signature
+  và 95 mesh có LOD recommendation hợp lệ.
+- Water collision bằng 0, HISM bulk insertion có mặt, invalid group bằng 0; compile/diff check PASS.
+- Báo cáo JSON nằm tại Saved/QA/CityPerformanceSourceAudit.json và ghi runtimeFpsVerified false.
+
+### Việc còn lại
+
+- Cần import/readback Unreal, HLOD/culling review, GPU capture và gameplay smoke test ngắn để
+  xác nhận 60 FPS; không dùng source gate thay cho runtime đo FPS.
+- Cần rà 24 collision prop cảnh báo trong editor trước khi sửa collider, tránh làm NPC hoặc người
+  chơi xuyên vật thể.
+
 ## Vòng accessible Bakery 2026-10-11
 
 ### Thay đổi nguồn
