@@ -652,6 +652,15 @@ source/documentation checkpoint.
 - Không stage hoặc commit ANANTA_City.umap và ExternalActors đang dirty; commit chỉ gồm source,
   QA và tài liệu. Vòng kế tiếp cần editor smoke test ngắn, không benchmark hoặc soak test.
 
+## Vòng coastal cargo dressing 2026-10-11
+
+- CityCoastalDistrict.py bổ sung CargoTruck và BoxTruck tại hai vị trí trống trong cargo yard.
+  Đây là mesh đã có trong mobility_manifest, dùng collision=false để không chiếm đường xe/NPC.
+- Xe được đặt ngoài các hàng container và ngoài chân cẩu; chúng chỉ là điểm nhấn trực quan cho
+  bãi hàng, còn phương tiện động và boarding vẫn thuộc runtime mobility pipeline.
+- VerifyCityDistricts, VerifyCity6800Layout, VerifyCityInstanceReuse và VerifyCityPerformanceBudget
+  phải được chạy lại sau thay đổi; source evidence không thay thế map readback hoặc FPS.
+
 ## Vòng accessible Bakery 2026-10-11
 
 ### Thay đổi nguồn

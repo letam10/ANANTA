@@ -94,6 +94,9 @@ def cargo_yard(layout):
             color = "DistrictContainerRed" if (row + column) % 2 else "DistrictContainerBlue"
             for tier in range(1 + (row + column) % 3):
                 container(layout, x, y, 15 + tier * 280, color)
+    # Hai xe hang tinh tao diem nhan cho bai xep; khong dung collision de giu lane NPC thong.
+    layout.add("CargoTruck", (162000, -164000, 15), yaw=90, collision=False)
+    layout.add("BoxTruck", (162000, -149000, 15), yaw=90, collision=False)
     for x in (138000, 155000):
         for yy in (-151000, -160000):
             for dx in (-1700, 1700):

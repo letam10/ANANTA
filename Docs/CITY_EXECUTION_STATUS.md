@@ -715,3 +715,11 @@ Handoff tiếp tục: Docs/CITY_EXECUTION_HANDOFF.md.
   collision/NPC/boarding, HLOD/Nanite/GPU và FPS 60 vẫn chưa được xác nhận.
 - Không stage map/ExternalActors dirty; vòng kế tiếp chỉ cần editor smoke test ngắn và review
   24 decorative collision warnings, không benchmark hay soak test.
+
+## Vòng coastal cargo dressing 2026-10-11
+
+- Đã thêm một CargoTruck và một BoxTruck vào cargo yard ven biển bằng mesh mobility hiện có.
+- Hai xe là visual dressing collision=false, nằm ngoài container stack và không thay đổi lane
+  NPC hoặc vùng boarding tàu; xe động, tuyến chạy và lên xuống vẫn chưa được nghiệm thu runtime.
+- Cần chạy lại coastal collision/layout/reuse/performance source gates; chưa có native capture,
+  map persistence, HLOD/GPU hoặc FPS mới từ thay đổi này.
