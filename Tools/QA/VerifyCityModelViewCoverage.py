@@ -62,6 +62,7 @@ VENUE_REQUIREMENTS = {
     "Bookshop": {"books": ("House_book_encyclopedia_set_01",), "reading": ("House_",)},
     "Clinic": {"medical_storage": ("ClinicSupplyCabinet",)},
     "Market": {"stock": ("House_brass_pot_01",), "checkout": ("CafeCounter",)},
+    "ToyShop": {"toys": ("ToyBlocks",), "checkout": ("CafeCounter",)},
     "Gallery": {"display": ("InteriorGalleryFrame",)},
     "Workshop": {"tools": ("WorkshopToolBoard",), "parts": ("WorkshopPartsCrate",)},
     "Transit": {"route": ("TransitRouteDisplay",)},
@@ -189,8 +190,10 @@ def check_venues(rooms, items, errors):
     expected_rooms = [room["id"] for room in rooms]
     if set(room_counts) != set(expected_rooms):
         errors.append("Venue set differs from CityVenueDressing.ROOMS")
-    if len(items) > 250:
-        errors.append(f"Interior additions exceed 250 ({len(items)})")
+    # Gioi han theo so phong de giu noi that thua khi them venue moi.
+    sparse_limit = max(250, len(expected_rooms) * 21)
+    if len(items) > sparse_limit:
+        errors.append(f"Interior additions exceed sparse limit {sparse_limit} ({len(items)})")
     non_collision = sum(not item.get("collision", True) for item in items)
     if items and non_collision / len(items) < 0.35:
         errors.append("Interior dressing is too collision-heavy for sparse rooms")
@@ -204,13 +207,13 @@ def check_venues(rooms, items, errors):
         for category, prefixes in VENUE_REQUIREMENTS.get(room, {}).items():
             if not has_mesh(meshes, prefixes):
                 errors.append(f"{room}: missing {category} review category")
-    return room_counts, room_meshes
+    return room_counts, room_meshes, sparse_limit
 
 def main():
     errors = []
     records = load_models(errors)
     rooms, items = import_dressing(errors)
-    room_counts, room_meshes = check_venues(rooms, items, errors)
+    room_counts, room_meshes, sparse_limit = check_venues(rooms, items, errors)
 
     family_counts = Counter(record["family"] for record in records)
     for family in REQUIRED_FAMILIES:
@@ -253,7 +256,7 @@ def main():
             and placement_metadata["unique"]
         ),
         "venue_categories": bool(rooms) and set(room_counts) == {room["id"] for room in rooms},
-        "sparse_interiors": len(items) <= 250 and (
+        "sparse_interiors": len(items) <= sparse_limit and (
             not items or sum(not item.get("collision", True) for item in items) / len(items) >= 0.35
         ),
         "instance_reuse_source": len(reusable) >= 5 and "add_instances" in scene_text,
@@ -275,6 +278,7 @@ def main():
         "placementReview": placement_metadata,
         "venues": {
             "count": len(rooms),
+            "sparseInteriorLimit": sparse_limit,
             "dressingItems": len(items),
             "itemsByRoom": dict(sorted(room_counts.items())),
             "categories": {

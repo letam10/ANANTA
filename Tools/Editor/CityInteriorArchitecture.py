@@ -35,6 +35,12 @@ WALL_DETAILS = {
         ("HomewaresSlats", "Slat", "back", -400, 62),
         ("StockPrint", "Botanical", "back", 380, 155),
     ),
+    "ToyShop": (
+        ("ToyShopSlats", "Slat", "back", -420, 62),
+        ("ToyPoster", "Gallery", "south", -120, 155),
+        ("ToyPosterTwo", "Gallery", "south", 220, 155),
+        ("ToyBotanical", "Botanical", "north", 380, 155),
+    ),
     "Gallery": (
         ("VisitorSlats", "Slat", "south", -440, 62),
         ("CataloguePrint", "Gallery", "south", -110, 155),

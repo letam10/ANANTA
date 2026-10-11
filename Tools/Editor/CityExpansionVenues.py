@@ -63,6 +63,14 @@ def furnish_venue(item):
         for index in range(3):
             prop("House_ceramic_vase_03", prefix + f"_Goods{index}", (x - 90 + index * 90, y - 350, 121))
         prop("MarketStall", prefix + "_OutdoorStand", (front + item["face"] * 180, y - 1050, 15), 90)
+    elif item["id"] == "ToyShop":
+        shelves(prefix, x - 420, y + depth / 2 - 100, count=3)
+        prop("CafeCounter", prefix + "_Checkout", (x, y - 350, 15))
+        for index, (xx, yy) in enumerate(((-420, -820), (0, -760), (420, -820))):
+            prop("ToyBlocks", prefix + f"_ToyBlocks{index}", (x + xx, y + yy, 45),
+                 scale=(0.8, 0.8, 0.8), collision=False)
+        prop("ToyBlocks", prefix + "_WindowDisplay", (front + item["face"] * 180, y - 860, 55),
+             scale=(0.7, 0.7, 0.7), collision=False)
     elif item["id"] == "Gallery":
         for index, tint in enumerate(("ShellTerracotta", "ShellBlue", "ShellSage")):
             xx = x - 480 + index * 480

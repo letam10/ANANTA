@@ -521,3 +521,29 @@ source/documentation checkpoint.
 - Venue shell vẫn không tương tác; cần một vòng gameplay riêng với cửa, nav route và test ngắn.
 - Không được stage `Content/ANANTA/Maps/ANANTA_City.umap` hoặc
   `Content/__ExternalActors__/ANANTA/Maps/ANANTA_City` nếu chưa có readback và review riêng.
+
+## Vòng accessible ToyShop 2026-10-11
+
+### Thay đổi nguồn
+
+- `CityExpansionData.py` thêm ToyShop và reserve footprint; `CityExpansionVenues.py` thêm quầy,
+  kệ và ToyBlocks; `CityVenueDressing.py` thêm nội thất chi tiết; `CityInteriorArchitecture.py`
+  thêm wall details.
+- `VerifyCityExpansionLayout.py`, `VerifyCity6800Layout.py` và `VerifyCityModelViewCoverage.py`
+  được cập nhật để kiểm đúng 11 venue nguồn, 13 phòng dressing và asset nhỏ.
+- Không sửa model nhân vật, map generated hoặc ExternalActors.
+
+### Evidence
+
+- 95 model từ 11 manifest; metadata 8 hướng model và 5 góc placement vẫn PASS ở source gate.
+- 271 item dressing, sparseInteriorLimit 273; 21 mesh được lặp và 244 reusable references.
+- Layout, reuse, district variety, roof pool, compile và diff check đều PASS.
+
+### Lỗi, giới hạn và bước kế tiếp
+
+- `CityServiceInteractable` đã được tạo trong source pipeline nhưng chưa có runtime proof cho
+  ToyShop; cần gameplay smoke test ngắn sau khi apply map.
+- Chưa có native capture tám hướng và năm góc cho ToyShop; coverage hiện là metadata/source gate.
+- Bước kế tiếp là civic/coastal/playground dressing và sau đó audit collision/NPC/HLOD/GPU bằng
+  editor hoặc packaged game ngắn, không benchmark hoặc soak test.
+- Không stage map hoặc ExternalActors trong commit nguồn này.

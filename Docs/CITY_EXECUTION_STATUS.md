@@ -569,3 +569,34 @@ Handoff tiếp tục: Docs/CITY_EXECUTION_HANDOFF.md.
 - Tách nhóm nhà có thể vào được khỏi shell-only, sau đó viết gate collision/NPC ngắn trước khi
   apply map.
 - Chỉ chạy kiểm tra source và gameplay ngắn có giới hạn; không benchmark hoặc soak test.
+
+## Vòng accessible ToyShop 2026-10-11
+
+### Đã làm
+
+- Thêm venue tương tác `ToyShop` tại `(-102000, 2600)` với footprint 1800x1500 cm, service
+  `ToyShop_Supplies` dùng cơ chế `CityServiceInteractable` hiện có.
+- Thêm kệ hàng, quầy checkout, `ToyBlocks`, bàn chơi, ghế và cây nhỏ; đồ chơi lặp lại dùng cùng
+  mesh để giữ reuse và các item trang trí đặt collision false.
+- Thêm wall details cho ToyShop và mở rộng coverage requirement để kiểm tra đồ chơi cùng quầy.
+
+### Đã kiểm chứng
+
+- `VerifyCityExpansionLayout.py` và `VerifyCity6800Layout.py`: PASS; layout giữ 10.750 building,
+  9 style, width source 6,788 km, 4 hidden boundary, 3 ocean surface, 9 access lane và không
+  pending asset mesh.
+- `VerifyCityInstanceReuse.py`: PASS, 90.440 group, 1.668.011 instance, 146 signature và
+  1.667.865 reusable instance.
+- `VerifyCityModelViewCoverage.py`: PASS, 95 model, 11 manifest, 8 model views, 5 placement
+  views, 13 phòng, 271 dressing item, sparse limit 273, 21 mesh lặp và 244 reusable references.
+- `VerifyCityDistrictVariety.py`, `VerifyCityRoofPool.py`, `py_compile` và `git diff --check`:
+  PASS.
+
+### Lỗi và giới hạn còn mở
+
+- Đây là source evidence; chưa apply/readback Unreal, chưa mở EXE, chưa capture native, chưa
+  chứng minh collision runtime, NPC traversal, HLOD, GPU hoặc 60 FPS.
+- Các cờ `inEngineVerified`, `visualAccepted` và `gameplayFacilities` vẫn false; service actor
+  mới chưa được nghiệm thu trong gameplay.
+- Quy tắc sparse interior hiện tính `max(250, số phòng x 21)` để số lượng tăng theo venue nhưng
+  vẫn giữ trung bình tối đa 21 item mỗi phòng.

@@ -120,6 +120,17 @@ def describe():
             for index, dx in enumerate((-550, -430)):
                 house(f"CratePot{index}", "brass_pot_01", dx, -540, 75, collision=False)
             house("ShopPlant", "potted_plant_02", 640, 360)
+        elif name == "ToyShop":
+            box("ToyShelfBack", -600, 560, 120, (900, 20, 220))
+            for row, z in enumerate((55, 115, 175)):
+                box(f"ToyShelf{row}", -600, 535, z, (850, 40, 8), collision=False)
+                for column, dx in enumerate((-840, -600, -360)):
+                    add(f"ToyBlocks{row}_{column}", "ToyBlocks", dx, 525, z + 12,
+                        scale=(0.8, 0.8, 0.8), collision=False)
+            add("Checkout", "CafeCounter", -120, -360)
+            house("ToyPlant", "potted_plant_02", 650, 470)
+            house("PlayTable", "modern_coffee_table_01", 220, -280)
+            house("PlayChair", "dining_chair_02", 430, -280, yaw=90)
         elif name == "Gallery":
             for index, (dx, dy, height, asset) in enumerate(((420, 390, 95, "brass_pot_01"),
                                                           (-400, 390, 115, "ceramic_vase_03"),
