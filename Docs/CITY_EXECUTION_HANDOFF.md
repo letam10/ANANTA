@@ -32,8 +32,9 @@ Evidence: `git status --porcelain=v1 -uall`, `git log --oneline -20`, and read-o
 - Untracked documentation contracts: `Docs/CITY_AIRPORT_ANCHOR_REPAIR_CONTRACT.md`,
   `Docs/CITY_FACTORY_SOURCE_AUDIT_CONTRACT.md`, and
   `Docs/CITY_HANDOFF_REVIEW_CONTRACT.md`.
-- The current head is `9b071830d` (`city: add diverse venues and pocket dressing`, 2026-10-11).
-  The preceding relevant head is `656277dc6` (`qa: add model view and instance reuse gates`).
+- The current head is `02813bb64` (`docs: record city model handoff and quality source pass`, 2026-10-11).
+  The preceding relevant heads are `9b071830d` (`city: add diverse venues and pocket dressing`)
+  and `656277dc6` (`qa: add model view and instance reuse gates`).
 
 ## Audit inventory
 
