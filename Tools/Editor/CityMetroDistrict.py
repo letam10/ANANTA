@@ -153,18 +153,20 @@ def factory(layout, x, y, height, material):
     for xx in (2000, 3000):
         layout.box("DistrictSteel", (x + xx, y + 1200, 2400), (330, 330, 2000))
         layout.box("DistrictFireBrick", (x + xx, y + 1200, 2900), (360, 360, 160), False)
-    # Dock loading faces the street side (-Y), so the apron and shutters share one alignment.
-    dock_y = y - 2520
-    layout.box("DistrictPaving", (x + 2100, dock_y, 20), (3600, 1200, 40))
-    layout.box("DistrictYellow", (x + 2100, dock_y - 620, 68), (3600, 90, 136), False)
-    for xx in (900, 1800, 2700, 3600):
-        layout.box("DistrictSteel", (x + xx, dock_y - 680, 350), (70, 70, 700), False)
+    # Dock loading faces the street side (-Y), flush with the shell and clear of the lane.
+    dock_x = x + 1800
+    dock_y = y - 2600
+    layout.box("DistrictPaving", (dock_x, dock_y, 20), (3000, 1200, 40))
+    layout.box("DistrictYellow", (dock_x, dock_y - 880, 68), (3000, 90, 136), False)
+    for xx in (700, 1500, 2300, 3100):
+        layout.box("DistrictSteel", (x + xx, dock_y - 680, 55), (70, 70, 110), False)
+    front_y = y - 2027
     for xx in (1400, 2600):
-        layout.box("DistrictSteel", (x + xx, y - 2042, 700), (920, 54, 1160), False)
-        layout.box("DistrictYellow", (x + xx, y - 2085, 1310), (980, 72, 80), False)
-        layout.box("DistrictSteel", (x + xx, y - 2115, 1325), (1080, 55, 70), False)
-    layout.box("DistrictSteel", (x + 2100, y - 2070, 1510), (3900, 110, 120), False)
-    for xx in (400, 1100, 1800, 2500, 3200, 3900):
+        layout.box("DistrictSteel", (x + xx, front_y, 620), (920, 54, 1160), False)
+        layout.box("DistrictYellow", (x + xx, front_y, 1230), (980, 72, 80), False)
+        layout.box("DistrictSteel", (x + xx, front_y, 1245), (1080, 55, 70), False)
+    layout.box("DistrictSteel", (dock_x, y - 2055, 1510), (3000, 110, 120), False)
+    for xx in (500, 1100, 1700, 2300, 2900):
         layout.box("DistrictYellow", (x + xx, y - 2125, 1530), (420, 32, 28), False)
 
 

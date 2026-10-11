@@ -368,3 +368,24 @@ source/documentation checkpoint.
   file Paks/Engine. Ghi timestamp, kích thước, SHA-256 và map startup vào handoff.
 - Chỉ sau package mới được thực hiện một lần chạy ngắn có giới hạn để kiểm tra startup;
   lượt này chưa thực hiện theo yêu cầu không chạy game nặng/lâu.
+## Vòng factory loading alignment 2026-10-11
+
+### Đã làm
+
+- `Tools/Editor/CityMetroDistrict.py` căn lại khu loading factory: apron 3.000 cm nằm trong
+  shell, sát mặt trước và không che access lane; hai shutter flush tường và chạm cao độ apron.
+- Bốn bollard được hạ từ 700 cm xuống 110 cm; dải vàng được dời khỏi AABB planter để tránh giao
+  hình ảnh khi import.
+- Tạo receipt `Docs/CITY_FACTORY_SOURCE_AUDIT.md` và giữ audit JSON source-only.
+
+### Đã kiểm chứng
+
+- `TestCityFactorySource.py`: 7/7 PASS.
+- `VerifyCityFactorySource.py`: PASS, 96 instances, không issue.
+- `VerifyCity6800Layout.py`: PASS, 10.750 building, width source 6.788 km, 9 access lane.
+- `py_compile` và `git diff --check` PASS.
+
+### Giới hạn còn mở
+
+- Chưa apply map, chưa import/readback Unreal, chưa native five-angle capture, simple collision,
+  NPC/xe loading, HLOD hoặc GPU/FPS. Các số liệu hiện là source evidence.
