@@ -14,6 +14,7 @@ struct FCityTransportRoute
     TArray<FVector> Points;
     TArray<int32> Stops;
     TArray<int32> ReverseTargets;
+    bool bPassengerService = false;
     bool bWater = false;
     bool bRail = false;
 };

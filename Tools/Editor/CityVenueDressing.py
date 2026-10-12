@@ -66,6 +66,7 @@ def describe():
             box("MenuFrame", -675, 540, 195, (180, 8, 120), "City_Brass", False)
             box("MenuPanel", -675, 534, 195, (162, 4, 102), "City_Teal", False)
             house("CounterPot", "brass_pot_01", -500, -220, 120, collision=False)
+            add("CounterMug", "CoffeeMug", -350, -220, 105, collision=False)
             house("TableBooks", "book_encyclopedia_set_01", 210, 380, 92, collision=False)
             house("WindowLamp", "hanging_industrial_lamp", -330, 430, 185, collision=False)
         elif name == "Apartment":
@@ -82,6 +83,8 @@ def describe():
             house("BedroomTable", "modern_coffee_table_01", 850, 410)
             house("BedroomPlant", "potted_plant_02", 810, 670)
             house("BedroomVase", "ceramic_vase_03", 850, 410, 54, collision=False)
+            add("BedroomRoomVase", "RoomVase", 930, 250, 92, collision=False)
+            add("BathroomSoap", "BathroomSoap", 930, -610, 95, collision=False)
             box("DiningRug", -530, -475, 15.6, (450, 370, 1.2), "City_rough_linen", False)
         elif name == "Bookshop":
             shelf("Archive", -550, -610)
@@ -119,7 +122,39 @@ def describe():
             box("ProduceCrate1", -430, -540, 45, (95, 75, 60))
             for index, dx in enumerate((-550, -430)):
                 house(f"CratePot{index}", "brass_pot_01", dx, -540, 75, collision=False)
+            add("MarketMug", "CoffeeMug", 350, -300, 105, collision=False)
             house("ShopPlant", "potted_plant_02", 640, 360)
+        elif name == "ToyShop":
+            box("ToyShelfBack", -250, 620, 120, (850, 20, 210))
+            for row, z in enumerate((55, 115, 175)):
+                box(f"ToyShelf{row}", -250, 540, z, (800, 30, 8), collision=False)
+                for column, dx in enumerate((-480, -250, -20)):
+                    add(f"ToyBlocks{row}_{column}", "ToyBlocks", dx, 510, z + 12,
+                        scale=(0.8, 0.8, 0.8), collision=False)
+            add("Checkout", "CafeCounter", -120, -360)
+            house("ToyPlant", "potted_plant_02", 650, 470)
+            house("PlayTable", "modern_coffee_table_01", 220, -470)
+            house("PlayChair", "dining_chair_02", 430, -470, yaw=90)
+        elif name == "Salon":
+            add("Reception", "CafeCounter", -420, -340)
+            for index, dx in enumerate((-360, 0, 360)):
+                add(f"MakeupCompact{index}", "MakeupCompact", dx, -520, 82,
+                    collision=False)
+            house("SalonChairLeft", "modern_arm_chair_01", -480, 360, yaw=90)
+            house("SalonChairRight", "modern_arm_chair_01", 480, 360, yaw=270)
+            house("SalonPlant", "potted_plant_02", 650, 520)
+            house("SalonLamp", "hanging_industrial_lamp", 0, 250, 185, collision=False)
+        elif name == "Bakery":
+            add("Counter", "CafeCounter", -420, -340)
+            for index, dx in enumerate((-400, 0, 400)):
+                add(f"CookingPot{index}", "CookingPot", dx, 520, 110,
+                    collision=False)
+                add(f"KitchenBowl{index}", "KitchenBowl", dx, 680, 105,
+                    collision=False)
+            add("Saucepan", "Saucepan", 250, 520, 110, collision=False)
+            add("Table", "CafeTable", 420, 420)
+            house("Chair", "dining_chair_02", 650, 420, yaw=180)
+            house("BakeryLamp", "hanging_industrial_lamp", 420, 420, 185, collision=False)
         elif name == "Gallery":
             for index, (dx, dy, height, asset) in enumerate(((420, 390, 95, "brass_pot_01"),
                                                           (-400, 390, 115, "ceramic_vase_03"),
@@ -136,6 +171,7 @@ def describe():
             house("MechanicChair", "dining_chair_02", -300, 590, yaw=-90)
             house("Manuals", "book_encyclopedia_set_01", -500, 590, 120, yaw=90, collision=False)
             house("PartsPot", "brass_pot_01", -500, 510, 120, collision=False)
+            add("PartsSaucepan", "Saucepan", -650, 510, 110, collision=False)
             house("BreakChair", "modern_arm_chair_01", -500, -510, yaw=90)
             house("BreakTable", "modern_coffee_table_01", -320, -550)
             house("BreakKettle", "vintage_electric_kettle", -320, -550, 54, collision=False)

@@ -63,6 +63,9 @@ def furnish_venue(item):
         for index in range(3):
             prop("House_ceramic_vase_03", prefix + f"_Goods{index}", (x - 90 + index * 90, y - 350, 121))
         prop("MarketStall", prefix + "_OutdoorStand", (front + item["face"] * 180, y - 1050, 15), 90)
+    elif item["id"] in ("ToyShop", "Salon", "Bakery"):
+        # Visual dressing is authored in CityVenueDressing to avoid duplicate actors.
+        pass
     elif item["id"] == "Gallery":
         for index, tint in enumerate(("ShellTerracotta", "ShellBlue", "ShellSage")):
             xx = x - 480 + index * 480

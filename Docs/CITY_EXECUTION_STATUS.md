@@ -536,3 +536,210 @@ Handoff tiếp tục: Docs/CITY_EXECUTION_HANDOFF.md.
 - Chưa apply map hoặc readback Unreal, chưa native capture, chưa kiểm collision runtime, NPC/xe,
   HLOD, GPU hoặc FPS. Đây là source placement evidence; visual acceptance trong game chưa được
   xác nhận.
+
+## Vòng theater frontage 2026-10-11
+
+### Đã làm
+
+- Bổ sung hai dải marquee neon collision false ở mặt tiền Theater, dùng lại primitive đã có.
+- Bổ sung hai `DetailedPlanter`, hai `DetailedStreetLamp`, hai `Bench` collision true và một
+  `BusStopSign` ở hai bên mặt tiền; lối vào trung tâm rộng 600 cm được giữ nguyên.
+- Không đụng model nhân vật, gameplay actor, map generated hoặc ExternalActors.
+
+### Đã kiểm chứng
+
+- `CityExpansionLayout.py`: PASS, 10.750 building, 90.440 group, 1.668.011 instance,
+  source width 6,788 km và 9 facade style.
+- `VerifyCity6800Layout.py`: PASS, 10 facility, 4 hidden boundary, 3 ocean surface, 9 access
+  lane, không pending asset mesh; `inEngineVerified=false`, `visualAccepted=false`.
+- `VerifyCityInstanceReuse.py`: PASS, 146 signature và 1.667.865 reusable instance.
+- `VerifyCityDistrictVariety.py`, `VerifyCityRoofPool.py`, `py_compile` và `git diff --check`:
+  PASS.
+
+### Lỗi và bug còn mở
+
+- Chưa chứng minh kẹt/xuyên, collider của props, NPC boarding hoặc tuyến xe trong runtime Unreal.
+- Chưa có native eight direction model capture và five angle placement capture cho Theater.
+- Chưa chứng minh HLOD, occlusion, shader sample, shadow ray, GPU frame time hoặc 60 FPS.
+- Các venue hiện vẫn khai báo `shellOnly=true` và `gameplay=false`; tương tác nhà còn thiếu.
+
+### Kế hoạch tiếp theo
+
+- Rà source bounds và đặt thêm props cho civic/coastal/public-playground theo cùng quy tắc lane.
+- Tách nhóm nhà có thể vào được khỏi shell-only, sau đó viết gate collision/NPC ngắn trước khi
+  apply map.
+- Chỉ chạy kiểm tra source và gameplay ngắn có giới hạn; không benchmark hoặc soak test.
+
+## Vòng accessible ToyShop 2026-10-11
+
+### Đã làm
+
+- Thêm venue tương tác `ToyShop` tại `(-102000, 2600)` với footprint 1800x1500 cm, service
+  `ToyShop_Supplies` dùng cơ chế `CityServiceInteractable` hiện có.
+- Thêm kệ hàng, quầy checkout, `ToyBlocks`, bàn chơi, ghế và cây nhỏ; đồ chơi lặp lại dùng cùng
+  mesh để giữ reuse và các item trang trí đặt collision false.
+- Thêm wall details cho ToyShop và mở rộng coverage requirement để kiểm tra đồ chơi cùng quầy.
+
+### Đã kiểm chứng
+
+- `VerifyCityExpansionLayout.py` và `VerifyCity6800Layout.py`: PASS; layout giữ 10.750 building,
+  9 style, width source 6,788 km, 4 hidden boundary, 3 ocean surface, 9 access lane và không
+  pending asset mesh.
+- `VerifyCityInstanceReuse.py`: PASS, 90.440 group, 1.668.011 instance, 146 signature và
+  1.667.865 reusable instance.
+- `VerifyCityModelViewCoverage.py`: PASS, 95 model, 11 manifest, 8 model views, 5 placement
+  views, 13 phòng, 271 dressing item, sparse limit 273, 21 mesh lặp và 244 reusable references.
+- `VerifyCityDistrictVariety.py`, `VerifyCityRoofPool.py`, `py_compile` và `git diff --check`:
+  PASS.
+
+### Lỗi và giới hạn còn mở
+
+- Đây là source evidence; chưa apply/readback Unreal, chưa mở EXE, chưa capture native, chưa
+  chứng minh collision runtime, NPC traversal, HLOD, GPU hoặc 60 FPS.
+- Các cờ `inEngineVerified`, `visualAccepted` và `gameplayFacilities` vẫn false; service actor
+  mới chưa được nghiệm thu trong gameplay.
+- Quy tắc sparse interior hiện tính `max(250, số phòng x 21)` để số lượng tăng theo venue nhưng
+  vẫn giữ trung bình tối đa 21 item mỗi phòng.
+## Vòng venue interaction source gate 2026-10-11
+
+### Đã làm
+
+- Thêm `Tools/QA/VerifyCityVenueInteractions.py` để kiểm tra source service actor cho 11 venue
+  mở rộng và 4 civic venue.
+- Gate kiểm tra ID service duy nhất, service kind hợp lệ, title description đầy đủ, civic list
+  đồng bộ và `ApplyCityExpansion` gọi các furnish pipeline.
+
+### Đã kiểm chứng
+
+- Interaction source gate PASS, 11 expansion service ID, 4 civic service, không lỗi.
+- Model view gate PASS, 8 hướng model, 5 góc placement, 13 phòng và sparse limit 273.
+- Layout gate PASS, 10.750 building, width source 6,788 km, 4 boundary, 3 ocean surface,
+  9 access lane, không pending mesh.
+- Chưa có runtime verification; `runtimeVerified=false` vẫn được giữ trong report.
+
+### Lỗi và giới hạn còn mở
+
+- Source gate không chứng minh actor persist trong map, collision runtime, NPC path, HLOD, GPU
+  hoặc 60 FPS.
+- Cần apply map và chạy gameplay smoke test ngắn sau khi có checkpoint runtime an toàn; không
+  benchmark hoặc soak test.
+
+## Vòng accessible Salon 2026-10-11
+
+### Đã làm
+
+- Thêm venue tương tác Salon tại \`(126000, 2600)\` với footprint 1800x1500 cm và service
+  \`Salon_Read\`.
+- Thêm quầy tiếp nhận, ba \`MakeupCompact\`, hai ghế, cây và đèn; các đồ trang trí nhỏ giữ
+  collision false để không chặn hành lang.
+- Thêm wall details Salon và cập nhật các gate exact venue cùng coverage cosmetics.
+
+### Đã kiểm chứng
+
+- Interaction gate PASS: 12 expansion service ID, 4 civic service, không ID trùng hoặc service
+  kind không hợp lệ.
+- Model view gate PASS: 95 model, 11 manifest, 8 hướng model, 5 góc placement, 14 phòng,
+  284 dressing item, sparse limit 294.
+- Reuse PASS: 22 mesh lặp, 256 reusable references; layout 10.750 building, 6,788 km,
+  4 boundary, 3 ocean surface, 9 access lane, không pending mesh.
+- Diversity, roof pool, compile và diff check PASS.
+
+### Lỗi và giới hạn còn mở
+
+- Chưa apply/readback Unreal, chưa chứng minh actor persistence, collision runtime, NPC path,
+  HLOD, GPU hoặc 60 FPS; runtimeVerified vẫn false.
+- Chưa có native capture tám hướng và năm góc cho Salon; các view hiện là source metadata.
+
+## Vòng accessible Bakery 2026-10-11
+
+### Đã làm
+
+- Thêm venue tương tác Bakery tại (150000, 2600) với footprint 1800x1500 cm và service
+  Bakery_Supplies.
+- Thêm quầy, ba CookingPot, ba KitchenBowl, bàn, ghế và đèn; cooking props dùng mesh nhỏ chung
+  và collision false để giữ lối đi thông thoáng.
+- Thêm wall details Bakery và cập nhật coverage requirement cho cooking/counter.
+
+### Đã kiểm chứng
+
+- Interaction gate PASS: 13 expansion service ID, 4 civic service, không ID trùng hoặc service
+  kind không hợp lệ.
+- Model view gate PASS: 95 model, 11 manifest, 8 hướng model, 5 góc placement, 15 phòng,
+  299 dressing item, sparse limit 315.
+- Reuse PASS: 24 mesh lặp, 269 reusable references; layout 10.750 building, 6,788 km,
+  4 boundary, 3 ocean surface, 9 access lane, không pending mesh.
+- Diversity, roof pool, compile và diff check PASS.
+
+### Lỗi và giới hạn còn mở
+
+- Chưa apply hoặc readback Unreal, chưa chứng minh actor persistence, collision runtime, NPC path,
+  HLOD, GPU hoặc 60 FPS; runtimeVerified vẫn false.
+- Chưa có native capture tám hướng và năm góc cho Bakery; các view hiện là source metadata.
+
+## Vòng render performance source budget 2026-10-11
+
+### Đã làm
+
+- Thêm Tools/QA/VerifyCityPerformanceBudget.py để kiểm tra ngân sách render nguồn trước khi apply
+  map: reuse signature, reusable fraction, LOD recommendation, HISM path và water collision.
+- Giữ collision của planter và một số prop đường phố là cảnh báo review vì chúng có thể cần chặn
+  lối đi; không tự ý xóa collision gameplay.
+
+### Đã kiểm chứng
+
+- Performance gate PASS: 90.440 group, 1.668.011 instance, 146 signature, reusable fraction
+  0,999912 và 1.667.865 reusable instance.
+- 95 mesh từ manifest đều có LOD recommendation hợp lệ; không thiếu hoặc sai thứ tự screen size
+  và triangle ratio.
+- HISM component path và add_instances PASS; water collision groups bằng 0; invalid groups bằng 0.
+- Compile và diff check PASS.
+
+### Lỗi và giới hạn còn mở
+
+- 24 collision prop đường phố được ghi thành cảnh báo cần review, không phải lỗi source cứng.
+- Gate chưa đo draw call, GPU frame time, shader sample, Nanite runtime, HLOD persistence hoặc
+  FPS; runtimeFpsVerified vẫn false.
+
+## Vòng source collision và venue dressing repair 2026-10-11
+
+- Đã sửa hàng bàn CityBarSeating để không chặn hành lang bar 240 cm; districts source gate hiện
+  PASS thay vì lặp lỗi CafeTable trong side corridor.
+- Đã sửa ToyShelfBack nằm trong biên sàn/trần, dời ghế Bakery khỏi bàn và ngăn visual actor
+  ToyShop/Salon/Bakery bị tạo trùng giữa CityExpansionVenues và CityVenueDressing.
+- Venue dressing verifier đọc thêm small_manifest nên ToyBlocks, MakeupCompact và CookingPot
+  được kiểm bounds như mesh thật; không còn lỗi missing asset hoặc overlap giả.
+- Kết quả: districts PASS; dressing PASS với 299 additions và 15 phòng; collision 9/9;
+  placement, model coverage, interactions, layout, reuse, variety, roof pool và performance
+  budget đều PASS.
+- Giới hạn: đây là source-only evidence. Unreal apply/readback, native eight-view/five-placement,
+  collision/NPC/boarding, HLOD/Nanite/GPU và FPS 60 vẫn chưa được xác nhận.
+- Không stage map/ExternalActors dirty; vòng kế tiếp chỉ cần editor smoke test ngắn và review
+  24 decorative collision warnings, không benchmark hay soak test.
+
+## Vòng coastal cargo dressing 2026-10-11
+
+- Đã thêm một CargoTruck và một BoxTruck vào cargo yard ven biển bằng mesh mobility hiện có.
+- Hai xe là visual dressing collision=false, nằm ngoài container stack và không thay đổi lane
+  NPC hoặc vùng boarding tàu; xe động, tuyến chạy và lên xuống vẫn chưa được nghiệm thu runtime.
+- Cần chạy lại coastal collision/layout/reuse/performance source gates; chưa có native capture,
+  map persistence, HLOD/GPU hoặc FPS mới từ thay đổi này.
+
+## Vòng passenger service contract 2026-10-11
+
+- Route mobility hiện có cờ `bPassengerService`; chỉ Coach, CityBus, Taxi, PassengerTrain,
+  Motorboat và Sailboat tạo hành khách NPC tại stop.
+- Xe tải, xe bồn, xe cảnh sát, xe cứu thương, xe cứu hỏa và CargoShip giữ tuyến cố định nhưng
+  không tạo hành khách giả; điều này khớp vai trò gameplay và giảm actor/tick không cần thiết.
+- Fleet fixture tiếp tục ép passenger service cho mọi mesh để giữ coverage collision/boarding của
+  vehicle body; đây không phải bằng chứng runtime của route thông thường.
+- Đã kiểm tra static source, collision 9/9 và small placement; chưa build C++/mở Unreal, chưa đo
+  FPS hoặc xác nhận map persistence.
+
+## Vòng small interior dressing 2026-10-11
+
+- Đã thêm các props nhỏ cho Cafe, Market, Apartment, Bakery và Workshop: CoffeeMug, RoomVase,
+  BathroomSoap và Saucepan.
+- Dressing source gate PASS sau khi sửa overlap MarketMug; tổng 305 additions, 15 phòng và
+  không lỗi bounds hoặc corridor. Small placement source gate PASS.
+- Đây là source evidence; chưa chứng minh import Unreal, ảnh tám hướng/năm góc native, map
+  persistence, collision runtime, GPU, NPC route hoặc 60 FPS.

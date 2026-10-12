@@ -84,6 +84,8 @@ bool UCityFleetCheck::BuildFixtures()
         }
         FCityTransportRoute Route;
         Route.Id = FName(*(TEXT("QA_Fixture_") + Fixture.Name));
+        // Fixture van ep luong boarding cho moi mesh de kiem tra capsule va cua len xuong.
+        Route.bPassengerService = true;
         Route.bWater = bWater;
         Route.bRail = bRail;
         Route.Points = {Base, Base + FVector(Length, 0, 0), Base + FVector(Length + 4000, 0, 0)};

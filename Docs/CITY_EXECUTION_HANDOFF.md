@@ -496,3 +496,211 @@ source/documentation checkpoint.
 - Chưa chạy Unreal/EXE, chưa apply hoặc readback map, chưa capture native năm góc, chưa chứng minh
   collision, NPC boarding, HLOD, GPU hoặc mục tiêu 90 FPS. Map và ExternalActors đang dirty có chủ
   ý và không thuộc commit này.
+
+## Vòng theater frontage 2026-10-11
+
+### Thay đổi nguồn
+
+- `Tools/Editor/CityMetroDistrict.py` thêm marquee neon, hai planter, hai đèn đường chi tiết,
+  hai bench collision true và một biển bus collision false cho Theater.
+- Tất cả instance nằm ngoài access lane trung tâm; không thêm asset mới, không sửa model nhân vật,
+  map hoặc ExternalActors.
+
+### Evidence
+
+- Layout PASS: 10.750 building, 90.440 group, 1.668.011 instance, width 6,788 km, 9 style.
+- Reuse PASS: 146 signature, 1.667.865 reusable instance, không invalid group.
+- Variety, roof pool, compile và diff check PASS.
+
+### Lỗi, giới hạn và việc cần làm
+
+- Runtime collision, chống xuyên/kẹt, NPC lên xuống phương tiện, HLOD, occlusion, GPU và 60 FPS
+  chưa được nghiệm thu; các cờ `inEngineVerified`, `visualAccepted`, `gameplayFacilities` vẫn
+  false.
+- Chưa có capture đủ 8 hướng model và 5 góc đặt trong Unreal cho vòng này.
+- Venue shell vẫn không tương tác; cần một vòng gameplay riêng với cửa, nav route và test ngắn.
+- Không được stage `Content/ANANTA/Maps/ANANTA_City.umap` hoặc
+  `Content/__ExternalActors__/ANANTA/Maps/ANANTA_City` nếu chưa có readback và review riêng.
+
+## Vòng accessible ToyShop 2026-10-11
+
+### Thay đổi nguồn
+
+- `CityExpansionData.py` thêm ToyShop và reserve footprint; `CityExpansionVenues.py` thêm quầy,
+  kệ và ToyBlocks; `CityVenueDressing.py` thêm nội thất chi tiết; `CityInteriorArchitecture.py`
+  thêm wall details.
+- `VerifyCityExpansionLayout.py`, `VerifyCity6800Layout.py` và `VerifyCityModelViewCoverage.py`
+  được cập nhật để kiểm đúng 11 venue nguồn, 13 phòng dressing và asset nhỏ.
+- Không sửa model nhân vật, map generated hoặc ExternalActors.
+
+### Evidence
+
+- 95 model từ 11 manifest; metadata 8 hướng model và 5 góc placement vẫn PASS ở source gate.
+- 271 item dressing, sparseInteriorLimit 273; 21 mesh được lặp và 244 reusable references.
+- Layout, reuse, district variety, roof pool, compile và diff check đều PASS.
+
+### Lỗi, giới hạn và bước kế tiếp
+
+- `CityServiceInteractable` đã được tạo trong source pipeline nhưng chưa có runtime proof cho
+  ToyShop; cần gameplay smoke test ngắn sau khi apply map.
+- Chưa có native capture tám hướng và năm góc cho ToyShop; coverage hiện là metadata/source gate.
+- Bước kế tiếp là civic/coastal/playground dressing và sau đó audit collision/NPC/HLOD/GPU bằng
+  editor hoặc packaged game ngắn, không benchmark hoặc soak test.
+- Không stage map hoặc ExternalActors trong commit nguồn này.
+## Vòng venue interaction source gate 2026-10-11
+
+### Thay đổi
+
+- Tạo `Tools/QA/VerifyCityVenueInteractions.py`, source only gate không import Unreal và không
+  mở game.
+- Gate bao phủ 11 venue expansion, 4 civic service, service kind Read Heal Rest Supplies, ID duy
+  nhất và luồng `ApplyCityExpansion`.
+
+### Evidence
+
+- Gate PASS; không có service ID trùng, thiếu trường, service kind lạ hoặc civic room thiếu service.
+- Các gate layout, model eight view five placement, reuse, compile và diff check vẫn PASS.
+- Báo cáo JSON ghi tại `Saved/QA/CityVenueInteractionSourceAudit.json`; đây là source evidence
+  và không phải runtime acceptance.
+
+### Việc còn lại
+
+- Chưa apply hoặc readback map, chưa kiểm actor persistence, cửa, collision, NPC route hoặc boarding,
+  HLOD, GPU hoặc FPS. Không stage map và ExternalActors khi chưa có review runtime riêng.
+
+## Vòng accessible Salon 2026-10-11
+
+### Thay đổi nguồn
+
+- \`CityExpansionData.py\` thêm Salon tại \`(126000, 2600)\`; \`CityExpansionVenues.py\` và
+  \`CityVenueDressing.py\` thêm quầy, ghế, đèn và \`MakeupCompact\`.
+- \`CityInteriorArchitecture.py\`, \`VerifyCityExpansionLayout.py\`,
+  \`VerifyCity6800Layout.py\` và \`VerifyCityModelViewCoverage.py\` được cập nhật đồng bộ.
+- Không sửa model nhân vật, map generated hoặc ExternalActors.
+
+### Evidence
+
+- 12 venue expansion và 4 civic service được kiểm ID/kind; gate interaction PASS.
+- 14 phòng dressing, 284 item, sparse limit 294, 22 mesh lặp và 256 reusable references.
+- Layout, eight model views, five placement views, compile và diff check PASS.
+
+### Việc còn lại
+
+- Chưa có runtime smoke test, native capture, map readback, collision/NPC/HLOD/GPU/FPS acceptance.
+- Không stage map hoặc ExternalActors trước khi có review runtime riêng.
+
+## Vòng render performance source budget 2026-10-11
+
+### Thay đổi
+
+- Tạo Tools/QA/VerifyCityPerformanceBudget.py, source-only gate cho LOD, HISM, instance reuse,
+  water collision và collision prop đường phố.
+- Không thay đổi map, actor tree, model nhân vật hoặc collision source hiện hữu; planter và prop
+  đường phố có collision được giữ lại để review gameplay riêng.
+
+### Evidence
+
+- Gate PASS với 90.440 group, 1.668.011 instance, reusable fraction 0,999912, 146 signature
+  và 95 mesh có LOD recommendation hợp lệ.
+- Water collision bằng 0, HISM bulk insertion có mặt, invalid group bằng 0; compile/diff check PASS.
+- Báo cáo JSON nằm tại Saved/QA/CityPerformanceSourceAudit.json và ghi runtimeFpsVerified false.
+
+### Việc còn lại
+
+- Cần import/readback Unreal, HLOD/culling review, GPU capture và gameplay smoke test ngắn để
+  xác nhận 60 FPS; không dùng source gate thay cho runtime đo FPS.
+- Cần rà 24 collision prop cảnh báo trong editor trước khi sửa collider, tránh làm NPC hoặc người
+  chơi xuyên vật thể.
+
+## Vòng source collision và venue dressing repair 2026-10-11
+
+### Nguyên nhân lỗi lặp lại
+
+- Cổng civic bắt đúng các bàn bar nằm trong hành lang đi bộ 240 cm; lỗi này không phải do Unreal
+  bị treo mà do hai hàng bàn nguồn đặt gần hai phía của hành lang.
+- ToyShelfBack cao hơn biên trần một phần nhỏ và ghế Bakery chồng lên bàn; manifest dressing chưa
+  đọc small manifest nên các mesh ToyBlocks, MakeupCompact và CookingPot từng bị báo thiếu.
+- CityExpansionVenues còn tạo lại visual actor cho ToyShop, Salon và Bakery sau khi CityVenueDressing
+  đã tạo chúng, khiến verifier thấy actor trùng và overlap giả.
+
+### Đã sửa
+
+- CityBarSeating.py dời các hàng bàn khỏi hành lang trung tâm; VerifyCityDistricts.py cho phép
+  hình nền DistrictWater/DistrictSand nằm ngoài land reserve để không coi biển và đáy biển là
+  block nhà hợp lệ.
+- CityVenueDressing.py hạ ToyShelfBack còn 210 cm, dời ghế Bakery sang x=650 cm và giữ bàn
+  cùng đèn ở vùng sử dụng được.
+- CityExpansionVenues.py để CityVenueDressing sở hữu visual dressing của ba venue mới, chỉ giữ
+  một service actor cho mỗi venue; VerifyCityVenueDressing.py hợp nhất small_manifest vào lookup.
+
+### Evidence source-only sau sửa
+
+- VerifyCityDistricts: PASS, civic 360, coastal 3509, collision 1420, integrationIssues rỗng;
+  engineAccepted=false vì chưa apply/readback Unreal.
+- VerifyCityVenueDressing --source-only: PASS, 299 additions, 15 phòng, 64 wall details,
+  30 mesh id và 90280 bounds comparisons; errors rỗng.
+- Collision source 9/9, small placement PASS, model coverage PASS, venue interactions PASS,
+  performance budget PASS, layout/reuse/variety/roof pool PASS.
+- Performance source budget vẫn là 90440 group, 1668011 instance, 146 signature, reusable
+  fraction 0.999912, 95 mesh có LOD recommendation; đây không phải đo FPS hoặc draw call.
+
+### Handoff còn mở
+
+- Chưa mở Unreal, chưa import/readback map, chưa capture native tám hướng hoặc năm góc placement,
+  chưa đi bộ qua cửa, chưa thử NPC/boarding, HLOD/Nanite/culling/GPU và chưa đo 60 FPS.
+- 24 decorative collision groups vẫn là cảnh báo review; không tự xóa vì có thể cần chặn lối đi.
+- Không stage hoặc commit ANANTA_City.umap và ExternalActors đang dirty; commit chỉ gồm source,
+  QA và tài liệu. Vòng kế tiếp cần editor smoke test ngắn, không benchmark hoặc soak test.
+
+## Vòng coastal cargo dressing 2026-10-11
+
+- CityCoastalDistrict.py bổ sung CargoTruck và BoxTruck tại hai vị trí trống trong cargo yard.
+  Đây là mesh đã có trong mobility_manifest, dùng collision=false để không chiếm đường xe/NPC.
+- Xe được đặt ngoài các hàng container và ngoài chân cẩu; chúng chỉ là điểm nhấn trực quan cho
+  bãi hàng, còn phương tiện động và boarding vẫn thuộc runtime mobility pipeline.
+- VerifyCityDistricts, VerifyCity6800Layout, VerifyCityInstanceReuse và VerifyCityPerformanceBudget
+  phải được chạy lại sau thay đổi; source evidence không thay thế map readback hoặc FPS.
+
+## Vòng passenger service contract 2026-10-11
+
+- Thêm `bPassengerService` vào `FCityTransportRoute` để phân biệt xe có thể đón NPC với xe chỉ
+  chạy tuyến công vụ hoặc chở hàng.
+- Coach, CityBus, Taxi, PassengerTrain, Motorboat và Sailboat được phép boarding/alighting;
+  BoxTruck, CargoTruck, TankerTruck, PoliceCar, Ambulance, FireEngine và CargoShip không sinh
+  hành khách giả tại điểm dừng, chỉ dừng ngắn rồi tiếp tục tuyến.
+- Fleet fixture vẫn đặt `Route.bPassengerService=true` để kiểm tra capsule, cửa, mặt đường và
+  cleanup của từng mesh; đây là fixture vật lý riêng, không thay đổi hành vi route thật.
+- Cổng Unreal automation C++ chưa chạy trong vòng này; cần build/editor test ngắn sau khi map có
+  checkpoint sạch để xác nhận log boarding/alighting và không có NPC trong xe hàng.
+
+## Vòng small interior dressing 2026-10-11
+
+- CityVenueDressing.py bổ sung CoffeeMug cho Cafe và Market, RoomVase cùng BathroomSoap cho
+  Apartment, Saucepan cho Bakery và Workshop.
+- Tất cả vật dụng nhỏ dùng mesh trong small_manifest, collision=false và đặt ngoài hành lang;
+  MarketMug đã được dời sau khi source gate phát hiện overlap với StockIsland.
+- VerifyCityVenueDressing --source-only PASS với 305 additions, 15 phòng, errors rỗng; small
+  placement PASS và coverage vẫn giữ 8 hướng model, 5 góc placement.
+- Chưa import/readback Unreal hoặc capture native; chất lượng vật liệu, ánh sáng, collision runtime
+  và FPS vẫn chưa được nghiệm thu.
+
+## Vòng accessible Bakery 2026-10-11
+
+### Thay đổi nguồn
+
+- CityExpansionData.py thêm Bakery tại (150000, 2600); CityExpansionVenues.py và
+  CityVenueDressing.py thêm quầy, CookingPot, KitchenBowl, bàn, ghế và đèn.
+- CityInteriorArchitecture.py, VerifyCityExpansionLayout.py, VerifyCity6800Layout.py và
+  VerifyCityModelViewCoverage.py được cập nhật đồng bộ.
+- Không sửa model nhân vật, map generated hoặc ExternalActors.
+
+### Evidence
+
+- 13 venue expansion và 4 civic service được kiểm ID/kind; interaction gate PASS.
+- 15 phòng dressing, 299 item, sparse limit 315, 24 mesh lặp và 269 reusable references.
+- Layout, eight model views, five placement views, compile và diff check PASS.
+
+### Việc còn lại
+
+- Chưa có runtime smoke test, native capture, map readback, collision/NPC/HLOD/GPU/FPS acceptance.
+- Không stage map hoặc ExternalActors trước khi có review runtime riêng.

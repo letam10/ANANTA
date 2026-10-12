@@ -35,6 +35,24 @@ WALL_DETAILS = {
         ("HomewaresSlats", "Slat", "back", -400, 62),
         ("StockPrint", "Botanical", "back", 380, 155),
     ),
+    "ToyShop": (
+        ("ToyShopSlats", "Slat", "back", -420, 62),
+        ("ToyPoster", "Gallery", "south", -120, 155),
+        ("ToyPosterTwo", "Gallery", "south", 220, 155),
+        ("ToyBotanical", "Botanical", "north", 380, 155),
+    ),
+    "Salon": (
+        ("SalonSlats", "Slat", "back", -420, 62),
+        ("SalonPoster", "Gallery", "south", -120, 155),
+        ("SalonPosterTwo", "Gallery", "south", 220, 155),
+        ("SalonBotanical", "Botanical", "north", 380, 155),
+    ),
+    "Bakery": (
+        ("BakerySlats", "Slat", "back", -420, 62),
+        ("BakeryPoster", "Gallery", "south", -120, 155),
+        ("BakeryPosterTwo", "Gallery", "south", 220, 155),
+        ("BakeryBotanical", "Botanical", "north", 380, 155),
+    ),
     "Gallery": (
         ("VisitorSlats", "Slat", "south", -440, 62),
         ("CataloguePrint", "Gallery", "south", -110, 155),

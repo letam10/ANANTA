@@ -5,8 +5,8 @@ from CityCivicDistrict import FLOOR_Z, SITES
 
 def generate(layout):
     _, x, y, _, _ = next(site for site in SITES if site[0] == "Bar")
-    tables = [(xx, yy) for xx in (2300, 3150, 4000, 4850) for yy in (-1550, -550)]
-    tables.extend((xx, 650) for xx in (2300, 3150, 4000))
+    tables = [(xx, yy) for xx in (2300, 3150, 4000, 4850) for yy in (-1550, -900)]
+    tables.extend((xx, 950) for xx in (2300, 3150, 4000))
     # Cac cum ngoi nam ngoai hanh lang trung tam rong 480 cm.
     for xx, yy in tables:
         layout.add("CafeTable", (x + xx, y + yy, FLOOR_Z))

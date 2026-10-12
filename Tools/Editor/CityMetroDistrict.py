@@ -106,6 +106,15 @@ def hospitality(layout, name, x, y, height, material):
                          (width, 3500 - step * 230, 130), yaw)
         for xx in (-2700, -1800, 1800, 2700):
             layout.box("DistrictLimestone", (x + xx, y - 2400, 550), (150, 150, 1060))
+        for xx in (-2200, 2200):
+            layout.box("DistrictNeon", (x + xx, y - 2270, 410), (500, 20, 90), False)
+            layout.add("DetailedPlanter", (x + xx, y - 2480, 15), collision=False)
+        for side in (-1, 1):
+            layout.add("DetailedStreetLamp", (x + side * 2750, y - 3450, 15),
+                       yaw=0, collision=False)
+            layout.add("Bench", (x + side * 1300, y - 3150, 16),
+                       yaw=180 if side < 0 else 0, collision=True)
+        layout.add("BusStopSign", (x + 3400, y - 3500, 15), yaw=90, collision=False)
         layout.add("FacadeArtDeco", (x, y - 2220, 15), collision=False)
 
 

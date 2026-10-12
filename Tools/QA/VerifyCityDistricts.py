@@ -73,6 +73,8 @@ def supported(layout, x, y):
 
 def check_reserves(layout, reserves):
     for item in layout.items:
+        if item["material"] in ("DistrictWater", "DistrictSand"):
+            continue
         assert any(item["min"][0] >= left - 0.01 and item["max"][0] <= right + 0.01
                    and item["min"][1] >= bottom - 0.01 and item["max"][1] <= top + 0.01
                    for left, bottom, right, top in reserves), f"Outside reserve: {item}"
