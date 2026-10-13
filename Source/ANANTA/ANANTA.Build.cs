@@ -13,6 +13,8 @@ public class ANANTA : ModuleRules
 				"CoreUObject",
 				"Engine",
 				"InputCore",
+				"Json",
+				"RHI",
 				"UMG"
 			});
 	}
