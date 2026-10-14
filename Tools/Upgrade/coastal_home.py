@@ -4,6 +4,8 @@ import math
 
 import unreal
 
+from coastal_prop_actions import place_interactive_prop
+
 
 def transformed_bounds(item, position, yaw, scale):
     angle = math.radians(yaw)
@@ -43,7 +45,17 @@ def furnish_home(scene, data):
     }
     furnishings = []
 
-    def prop(name, horizontal, depth, zone, elevation=0, yaw=0, scale=(1, 1, 1), wall_mount=False):
+    def prop(
+        name,
+        horizontal,
+        depth,
+        zone,
+        elevation=0,
+        yaw=0,
+        scale=(1, 1, 1),
+        wall_mount=False,
+        interactive_message=None,
+    ):
         limits = zones[zone]
         if wall_mount:
             # Mép trong tường 11 - 0.11 m; lưng khung chừa đúng 1 cm.
@@ -53,7 +65,19 @@ def furnish_home(scene, data):
         bounds = transformed_bounds(scene.model_data[name], (horizontal, depth), yaw, scale)
         assert bounds[0] >= limits[0] and bounds[1] <= limits[1], (name, bounds, limits)
         assert bounds[2] >= limits[2] and bounds[3] <= limits[3], (name, bounds, limits)
-        scene.model(name, (center_x + horizontal, center_y + depth, ground + elevation), yaw, scale)
+        position = (center_x + horizontal, center_y + depth, ground + elevation)
+        if interactive_message:
+            place_interactive_prop(
+                scene,
+                f"{data['name']}_{name}_Prop",
+                name,
+                position,
+                interactive_message,
+                yaw=yaw,
+                scale=scale,
+            )
+        else:
+            scene.model(name, position, yaw, scale)
         furnishings.append({"model": name, "room": zone, "bounds_xy_m": bounds,
                             "elevation_m": elevation})
 
@@ -106,7 +130,15 @@ def furnish_home(scene, data):
     prop("Chair", -5.2, 8.2, "bedroom", yaw=180)
     prop("Perfume", -4.9, 9.2, "bedroom", elevation=0.77)
     prop("Lipstick", -5.3, 9.2, "bedroom", elevation=0.77)
-    prop("BedroomClock", -8.9, 7.5, "bedroom", elevation=0.5575, scale=(0.7, 0.7, 0.7))
+    prop(
+        "BedroomClock",
+        -8.9,
+        7.5,
+        "bedroom",
+        elevation=0.5575,
+        scale=(0.7, 0.7, 0.7),
+        interactive_message="Clock inspected. The bedroom time is set.",
+    )
     prop("CoastalPicture", -5.3, 0, "bedroom", elevation=1.2, wall_mount=True)
 
     east_limit = data["width_m"] / 2 - 0.11 - 0.01
@@ -118,8 +150,16 @@ def furnish_home(scene, data):
     prop("Kettle", counter_x, -7.2, "kitchen", elevation=0.885, yaw=-90)
     prop("ChoppingBoard", counter_x, -5.6, "kitchen", elevation=0.885, yaw=-90)
     prop("BottleTray", counter_x, -8.8, "kitchen", elevation=0.885, yaw=-90)
-    prop("KitchenKnifeBlock", counter_x, -8.8, "kitchen", elevation=0.885,
-         yaw=-90, scale=(0.8, 0.8, 0.8))
+    prop(
+        "KitchenKnifeBlock",
+        counter_x,
+        -8.8,
+        "kitchen",
+        elevation=0.885,
+        yaw=-90,
+        scale=(0.8, 0.8, 0.8),
+        interactive_message="Knife block inspected. Blades are stored safely.",
+    )
     prop("Stove", stove_x, -4.3, "kitchen", yaw=-90)
     prop("CookingPot", stove_x, -4.3, "kitchen", elevation=0.89)
     prop("Fridge", fridge_x, -3.1, "kitchen", yaw=-90)
@@ -137,7 +177,22 @@ def furnish_home(scene, data):
     basin_y = data["depth_m"] / 2 - 0.12 - scene.model_data["Washbasin"]["bounds_max_m"][1]
     prop("SoapDispenser", 6.27, basin_y, "bathroom", elevation=0.845)
     prop("WallMirror", 6, 0, "bathroom", elevation=1.15, wall_mount=True)
-    prop("BathroomBin", 8.7, 8.55, "bathroom", scale=(0.8, 0.8, 0.8))
-    prop("ToyBlocks", -6.0, -4.7, "living", elevation=0.48, scale=(0.65, 0.65, 0.65))
+    prop(
+        "BathroomBin",
+        8.7,
+        8.55,
+        "bathroom",
+        scale=(0.8, 0.8, 0.8),
+        interactive_message="Bathroom bin inspected. It is ready for use.",
+    )
+    prop(
+        "ToyBlocks",
+        -6.0,
+        -4.7,
+        "living",
+        elevation=0.48,
+        scale=(0.65, 0.65, 0.65),
+        interactive_message="Toy blocks inspected. The set is complete.",
+    )
     data["rooms"] = zones
     data["furnishings"] = furnishings

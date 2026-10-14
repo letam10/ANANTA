@@ -88,3 +88,50 @@ asset sinh bởi bộ công cụ, công cụ kiểm chứng và Docs thuộc lư
 Đã ủy quyền commit/push cho nhánh codex/coastal-interiors-20261014.
 AGENTS.md không được stage; sau khi kiểm tra status sẽ stage đúng nguồn, asset và
 Docs của lượt này, rồi đối chiếu git rev-parse HEAD với git ls-remote origin.
+
+
+## Cập nhật 2026-10-15 — prop nhỏ có tương tác
+
+- Thêm Tools/Upgrade/coastal_prop_actions.py với hàm
+  place_interactive_prop(scene, label, model, position, message, yaw, scale).
+  Hàm dùng ACoastalInteractable Kind=5, giữ mesh riêng cho prop nhỏ và scale
+  theo đúng placement đã review; các prop ngoài trời vẫn dùng HISM để giữ chi phí thấp.
+- Bốn prop trong nhà có thể nhấn E để kiểm tra: BedroomClock, KitchenKnifeBlock,
+  BathroomBin và ToyBlocks. BarGlassRack trong cafe/restaurant/bar cũng có message
+  tương tác. HUD hiện có hiển thị action_name và Use() trả message reusable.
+- BuildCoastalCity commandlet chạy bằng script path tuyệt đối đạt
+  COASTAL_MAP_OK 23 enterable buildings, 6906 instances / 928 HISM batches,
+  0 error; hai warning là Slate startup và API save level deprecated.
+- CoastalQAGameplay.cpp thêm check micro_props_respond. Build Development exit 0.
+  Quick gameplay r8 ghi micro_props_respond PASS và
+  COASTAL_QA_COMPLETE failures=0 views=122 trong
+  Saved/Upgrade/runtime-r8-microprops.log.
+- Lệnh commandlet phải dùng absolute path cho Tools/Upgrade/*.py vì Unreal có thể
+  resolve path tương đối từ Engine/Binaries/Win64; lần chạy sai path đã được giữ
+  làm chẩn đoán, không dùng làm bằng chứng PASS.
+- Đây vẫn là bounded NullRHI gameplay proof; chưa phải headed visual acceptance,
+  benchmark 60 FPS, GPU/VRAM percentile hay test người chơi tự do trong từng phòng.
+
+
+
+## Cập nhật 2026-10-15 — prop nhỏ có tương tác
+
+- Thêm Tools/Upgrade/coastal_prop_actions.py với hàm
+  place_interactive_prop(scene, label, model, position, message, yaw, scale).
+  Hàm dùng ACoastalInteractable Kind=5, giữ mesh riêng cho prop nhỏ và scale
+  theo đúng placement đã review; các prop ngoài trời vẫn dùng HISM để giữ chi phí thấp.
+- Bốn prop trong nhà có thể nhấn E để kiểm tra: BedroomClock, KitchenKnifeBlock,
+  BathroomBin và ToyBlocks. BarGlassRack trong cafe/restaurant/bar cũng có message
+  tương tác. HUD hiện có hiển thị action_name và Use() trả message reusable.
+- BuildCoastalCity commandlet chạy bằng script path tuyệt đối đạt
+  COASTAL_MAP_OK 23 enterable buildings, 6906 instances / 928 HISM batches,
+  0 error; hai warning là Slate startup và API save level deprecated.
+- CoastalQAGameplay.cpp thêm check micro_props_respond. Build Development exit 0.
+  Quick gameplay r8 ghi micro_props_respond PASS và
+  COASTAL_QA_COMPLETE failures=0 views=122 trong
+  Saved/Upgrade/runtime-r8-microprops.log.
+- Lệnh commandlet phải dùng absolute path cho Tools/Upgrade/*.py vì Unreal có thể
+  resolve path tương đối từ Engine/Binaries/Win64; lần chạy sai path đã được giữ
+  làm chẩn đoán, không dùng làm bằng chứng PASS.
+- Đây vẫn là bounded NullRHI gameplay proof; chưa phải headed visual acceptance,
+  benchmark 60 FPS, GPU/VRAM percentile hay test người chơi tự do trong từng phòng.

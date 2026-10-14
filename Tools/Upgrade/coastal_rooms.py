@@ -3,14 +3,27 @@
 import unreal
 
 from coastal_home import furnish_home, room_light
+from coastal_prop_actions import place_interactive_prop
 
 
 def dress(scene, data, kind):
     x, y = data["center_m"]
     z = data["ground_m"]
 
-    def prop(name, dx, dy, dz=0, yaw=0, scale=(1, 1, 1)):
-        scene.model(name, (x + dx, y + dy, z + dz), yaw, scale)
+    def prop(name, dx, dy, dz=0, yaw=0, scale=(1, 1, 1), interactive_message=None):
+        position = (x + dx, y + dy, z + dz)
+        if interactive_message:
+            place_interactive_prop(
+                scene,
+                f"{data['name']}_{name}_Prop",
+                name,
+                position,
+                interactive_message,
+                yaw=yaw,
+                scale=scale,
+            )
+        else:
+            scene.model(name, position, yaw, scale)
 
     service_model = "FactoryControl"
     if kind in ("cafe", "restaurant", "bar"):
@@ -27,7 +40,14 @@ def dress(scene, data, kind):
         prop("CookingPan", 1.15, 7.9, 0.89)
         prop("CookingPot", 1.35, 8.2, 0.89)
         prop("Fridge", 3.2, 8)
-        prop("BarGlassRack", 4.8, 7.7, 1.05, scale=(0.8, 0.8, 0.8))
+        prop(
+            "BarGlassRack",
+            4.8,
+            7.7,
+            1.05,
+            scale=(0.8, 0.8, 0.8),
+            interactive_message="Glass rack inspected. The bar stock is ready.",
+        )
         service_model = "Mug"
     elif kind in ("home", "hotel", "beauty"):
         furnish_home(scene, data)

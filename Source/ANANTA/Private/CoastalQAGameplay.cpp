@@ -22,6 +22,7 @@ void ACoastalQA::TestInteractions()
     int32 Services = 0;
     int32 Citizens = 0;
     int32 Items = 0;
+    int32 SmallProps = 0;
     ACoastalInteractable* FirstDoor = nullptr;
     for (TActorIterator<ACoastalInteractable> It(GetWorld()); It; ++It)
     {
@@ -63,11 +64,17 @@ void ACoastalQA::TestInteractions()
             Check(TEXT("lift_landing_clear"), !GetWorld()->OverlapBlockingTestByChannel(
                 It->Destination, FQuat::Identity, ECC_Pawn, FCollisionShape::MakeCapsule(34, 90), Query));
         }
+        else if (It->Kind == 5)
+        {
+            const FString Response = It->Use();
+            SmallProps += !Response.IsEmpty() && It->bUsed ? 1 : 0;
+        }
     }
     Check(TEXT("all_23_doorways_close_and_clear_on_open"), Doors == 23 && ClearDoors == Doors);
     Check(TEXT("23_services_respond"), Services >= 23);
     Check(TEXT("23_npcs_respond"), Citizens == 23);
     Check(TEXT("5_items_collect"), Items == 5);
+    Check(TEXT("micro_props_respond"), SmallProps >= 5);
     if (FirstDoor)
     {
         FVector Position = FirstDoor->Mesh->Bounds.Origin - FVector(0, 190, 0);
