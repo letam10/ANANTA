@@ -40,8 +40,8 @@ cấu hình render, công cụ kiểm chứng và Docs thuộc lượt này.
 - Giữ `runtime-r6-quick.log`, `Saved/Upgrade/Runtime/2026.10.14-23.08.44`
   với `checks.csv`, `frames.csv`, `metadata.txt` làm bằng chứng.
 - Không có PNG được tạo trong lượt NullRHI.
-- Bytecode `AuditCoastalQuality` trong `Tools/Upgrade/__pycache__` là cache tạm
-  cần xóa khi hệ thống cho phép; không xóa asset/model hay file của người dùng.
+- Bytecode `AuditCoastalQuality` trong `Tools/Upgrade/__pycache__` đã được dọn
+  sau kiểm chứng; không xóa asset/model hay file của người dùng.
 
 ## Chưa hoàn tất và giới hạn bằng chứng
 
