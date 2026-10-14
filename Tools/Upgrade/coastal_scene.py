@@ -41,7 +41,8 @@ class Scene:
 
     def instance(self, mesh, mat, position, size=(1, 1, 1), yaw=0, collision=True, cull=0, pitch=0):
         tile = (math.floor(position[0] / 64), math.floor(position[1] / 64))
-        key = (mesh.get_name(), mat.get_name(), tile, collision, int(cull))
+        cull_band = 0 if cull <= 0 else max(10, min(300, int(math.ceil(cull / 5) * 5)))
+        key = (mesh.get_name(), mat.get_name(), tile, collision, cull_band)
         if key not in self.batches:
             actor = self.spawn(unreal.CoastalBatch, f"Batch_{len(self.batches):03}", (0, 0, 0))
             component = actor.instances
@@ -50,9 +51,15 @@ class Scene:
             component.set_collision_enabled(
                 unreal.CollisionEnabled.QUERY_AND_PHYSICS if collision else unreal.CollisionEnabled.NO_COLLISION
             )
-            component.set_cull_distances(int(cull * 80), int(cull * 100))
-            component.set_editor_property("affect_distance_field_lighting", cull == 0 or cull > 150)
-            component.set_editor_property("cast_shadow", collision or (cull > 50 and mesh != self.cube))
+            start_cull_cm = int(cull_band * 100)
+            end_cull_cm = int(cull_band * 120)
+            component.set_cull_distances(start_cull_cm, end_cull_cm)
+            component.set_editor_property(
+                "affect_distance_field_lighting", cull_band == 0 or cull_band > 150
+            )
+            component.set_editor_property(
+                "cast_shadow", collision or (cull_band > 50 and mesh != self.cube)
+            )
             self.batches[key] = component
         transform = unreal.Transform(
             location=unreal.Vector(*(value * 100 for value in position)),

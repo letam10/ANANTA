@@ -85,3 +85,22 @@ bố trí bằng người chơi ở đủ 5 góc.
 - Lệnh đã chạy: `Validate-ANANTA.ps1`, `Build-ANANTA.ps1 -MaxParallelActions 2`,
   `python Tools/Upgrade/ComposeModelReviews.py`, BuildCoastalCity commandlet và
   UnrealEditor-Cmd `-CoastalQA -RenderOffscreen`.
+
+## Cập nhật 2026-10-15 — quality gate và render budget
+
+- Đã thêm `Tools/Upgrade/AuditCoastalQuality.py` để kiểm tra độc lập manifest,
+  8 hướng/model, 5 góc cho từng review unit, hash FBX, LOD và collision.
+- Audit hiện tại đạt `COASTAL_QUALITY_OK manifest_models=55 review_units=36 warnings=0`;
+  báo cáo mới là `Saved/Upgrade/coastal-quality-report.json`.
+- `Tools/Upgrade/coastal_scene.py` đã sửa quy đổi cull từ mét sang cm Unreal,
+  gom band 5 m và fade 120%. Đây là tối ưu visibility/draw cost theo kích thước,
+  không phải bằng chứng FPS.
+- `Config/DefaultEngine.ini` giữ DX12/SM6, Lumen software/VSM và TSR; tắt hardware
+  ray tracing, bật HZB/occlusion/instance culling và loại khóa trùng.
+- Build Development exit 0 trong 20.37 s; `Validate-ANANTA.ps1` exit 0.
+- Quick gameplay headless mới ghi `COASTAL_QA_COMPLETE failures=0 views=122` trong
+  `Saved/Upgrade/runtime-r6-quick.log`; spawn, cửa, dịch vụ, NPC, item, rìa biển,
+  đi bộ, xe và xuồng đều PASS.
+- Chưa benchmark headed 60 FPS; con số 16.667 ms chỉ là ngân sách mục tiêu.
+  Chưa có World Partition/HLOD, lịch NPC, lái bay, minigame, kinh tế/save đầy đủ
+  hoặc visual acceptance Unreal headed. Xem handoff ngày 15/10 để biết kế hoạch.
