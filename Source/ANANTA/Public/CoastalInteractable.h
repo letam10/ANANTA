@@ -23,7 +23,7 @@ public:
     UPROPERTY(EditAnywhere, BlueprintReadWrite)
     FString Message = TEXT("Welcome to the coastal district.");
 
-    // 0: dịch vụ, 1: cửa, 2: NPC, 3: vật phẩm, 4: thang máy.
+    // 0: dịch vụ, 1: cửa, 2: NPC, 3: vật phẩm, 4: thang máy, 5: prop nhỏ.
     UPROPERTY(EditAnywhere, BlueprintReadWrite)
     int32 Kind = 0;
 
