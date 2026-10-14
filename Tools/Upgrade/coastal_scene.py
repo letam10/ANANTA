@@ -17,9 +17,10 @@ class Scene:
         self.batches = {}
         self.placements = []
         self.models = {}
+        self.review_views = []
         source = Path(unreal.Paths.project_dir()) / "Assets" / "CoastalUpgrade" / "manifest.json"
-        self.dimensions = {item["name"]: item["dimensions_m"]
-                           for item in json.loads(source.read_text())["models"]}
+        self.model_data = {item["name"]: item for item in json.loads(source.read_text())["models"]}
+        self.dimensions = {name: item["dimensions_m"] for name, item in self.model_data.items()}
         self.cube = unreal.load_asset("/Engine/BasicShapes/Cube")
         self.cylinder = unreal.load_asset("/Engine/BasicShapes/Cylinder")
         self.sphere = unreal.load_asset("/Engine/BasicShapes/Sphere")
@@ -58,7 +59,8 @@ class Scene:
             rotation=unreal.Rotator(pitch=pitch, yaw=yaw), scale=unreal.Vector(*size),
         )
         index = self.batches[key].add_instance(transform, world_space=True)
-        self.placements.append({"mesh": mesh.get_name(), "position_m": position,
+        self.placements.append({"mesh": mesh.get_name(), "material": mat.get_name(),
+                                "pitch": pitch, "position_m": position,
                                 "scale": size, "yaw": yaw, "batch": self.batches[key].get_owner().get_actor_label(),
                                 "instance": index, "collision": collision, "cull_m": cull})
 

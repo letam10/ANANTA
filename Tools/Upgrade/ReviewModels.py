@@ -2,6 +2,7 @@
 
 import json
 import math
+import hashlib
 from pathlib import Path
 
 import bpy
@@ -53,7 +54,9 @@ def main():
             scene.render.filepath = str(output / f"{obj.name}_{index}.png")
             bpy.ops.render.render(write_still=True)
             paths.append(scene.render.filepath)
-        coverage.append({"model": obj.name, "azimuth_degrees": list(range(0, 360, 45)), "views": paths})
+        mesh_source = ROOT / "Assets" / "CoastalUpgrade" / f"{obj.name}.fbx"
+        coverage.append({"model": obj.name, "azimuth_degrees": list(range(0, 360, 45)), "views": paths,
+                         "source_sha256": hashlib.sha256(mesh_source.read_bytes()).hexdigest()})
     (output / "coverage.json").write_text(json.dumps(coverage, indent=2), encoding="utf-8")
     print(f"MODEL_VIEW_COVERAGE_OK {len(coverage)} models x 8 views")
 

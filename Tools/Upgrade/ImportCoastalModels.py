@@ -69,7 +69,9 @@ def main():
             auto_compute_lod_screen_size=False, reduction_settings=reductions
         )
         assert subsystem.set_lods(mesh, options) == 3, item["name"]
+        subsystem.remove_collisions(mesh)
         subsystem.add_simple_collisions(mesh, unreal.ScriptCollisionShapeType.BOX)
+        assert subsystem.get_simple_collision_count(mesh) == 1, item["name"]
         library.save_loaded_asset(mesh)
         bounds = mesh.get_bounds().box_extent
         actual = [2 * bounds.x, 2 * bounds.y, 2 * bounds.z]

@@ -33,11 +33,12 @@ void ACoastalHUD::DrawHUD()
     if (Time > NextQuery)
     {
         Prompt.Empty();
-        if (ACoastalInteractable* Item = Cast<ACoastalInteractable>(Character->FindAction()))
+        AActor* Target = Character->FindAction();
+        if (ACoastalInteractable* Item = Cast<ACoastalInteractable>(Target))
         {
             Prompt = TEXT("E: ") + Item->ActionName;
         }
-        else if (ACoastalVehicle* Vehicle = Cast<ACoastalVehicle>(Character->FindAction()))
+        else if (ACoastalVehicle* Vehicle = Cast<ACoastalVehicle>(Target))
         {
             Prompt = TEXT("E: Board ") + Vehicle->VehicleName;
         }

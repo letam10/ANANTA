@@ -2,6 +2,8 @@
 
 import unreal
 
+from coastal_windows import ground_wall
+
 
 FLOOR_HEIGHT = 3.2
 FLOOR_Z = 2.0
@@ -15,21 +17,19 @@ def building(scene, name, center, floors, color, width=20, depth=22):
     z = FLOOR_Z
     scene.box((x, y, z - 0.12), (width + 0.4, depth + 0.4, 0.24), "Concrete")
     for side in (-1, 1):
-        scene.box((x + side * width / 2, y, z + height / 2), (0.22, depth, height), color)
+        ground_wall(scene, (x + side * width / 2, y, z), depth, color, yaw=90)
+        if floors > 1:
+            scene.box((x + side * width / 2, y, z + (height + FLOOR_HEIGHT) / 2),
+                      (0.22, depth, height - FLOOR_HEIGHT), color)
     scene.box((x, y + depth / 2, z + height / 2), (width, 0.22, height), color)
-    segment = (width - DOOR_CLEARANCE) / 2
-    for side in (-1, 1):
-        center_x = x + side * (width + DOOR_CLEARANCE) / 4
-        scene.box((center_x, front, z + FLOOR_HEIGHT / 2), (segment, 0.22, FLOOR_HEIGHT), color)
-    scene.box((x, front, z + (2.35 + FLOOR_HEIGHT) / 2),
-              (DOOR_CLEARANCE, 0.22, FLOOR_HEIGHT - 2.35), color)
+    ground_wall(scene, (x, front, z), width, color, doorway=True)
     door = scene.action(f"{name}_Door", (x, front - 0.12, z), "", kind=1, model="Door", yaw=90)
     # Mesh local Y là chiều ngang cửa: xoay 90° để mặt cửa hướng về phía phố.
     door.set_actor_location(unreal.Vector((x - 0.45) * 100, (front - 0.12) * 100, z * 100), False, False)
     door.mesh.set_relative_location(unreal.Vector(0, -45, 0), False, False)
     for floor in range(1, floors):
         level_z = z + floor * FLOOR_HEIGHT
-        scene.box((x, y, level_z - 0.09), (width, depth, 0.18), "White")
+        scene.box((x, y, level_z - 0.09), (width, depth, 0.18), "Plaster")
         scene.box((x, front, level_z + FLOOR_HEIGHT / 2), (width, 0.22, FLOOR_HEIGHT), color)
         scene.box((x, front - 0.13, level_z), (width + 0.5, 0.42, 0.13), "White")
         count = int((width - 2) / 3)

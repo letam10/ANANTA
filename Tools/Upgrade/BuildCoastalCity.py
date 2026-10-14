@@ -124,7 +124,8 @@ def main():
     assert unreal.EditorLevelLibrary.save_current_level()
     output = Path(unreal.Paths.project_dir()) / "Saved" / "Upgrade"
     report = {"built_at": datetime.now().isoformat(), "map": MAP, "buildings": buildings,
-              "batches": len(scene.batches), "placements": scene.placements}
+              "batches": len(scene.batches), "placements": scene.placements,
+              "review_views": scene.review_views}
     (output / "city-layout.json").write_text(json.dumps(report, indent=2), encoding="utf-8")
     unreal.log(f"COASTAL_MAP_OK {len(buildings)} enterable buildings, "
                f"{len(scene.placements)} instances / {len(scene.batches)} HISM batches")

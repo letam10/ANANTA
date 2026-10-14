@@ -20,6 +20,8 @@ COLORS = {
     "Blue": (0.025, 0.15, 0.4, 0.5),
     "Red": (0.43, 0.025, 0.035, 0.6),
     "Yellow": (0.82, 0.58, 0.045, 0.6),
+    "Plaster": (0.74, 0.71, 0.65, 0.9),
+    "WindowGlass": (0.36, 0.55, 0.62, 0.12),
 }
 
 
@@ -47,6 +49,9 @@ def palette():
     for name, rgba in COLORS.items():
         mat, created = material(name)
         if created:
+            if name == "WindowGlass":
+                mat.set_editor_property("blend_mode", unreal.BlendMode.BLEND_TRANSLUCENT)
+                constant(mat, 0.12, unreal.MaterialProperty.MP_OPACITY, 220)
             node = editing.create_material_expression(mat, unreal.MaterialExpressionConstant3Vector, -400, 0)
             node.constant = unreal.LinearColor(*rgba[:3], 1)
             editing.connect_material_property(node, "", unreal.MaterialProperty.MP_BASE_COLOR)

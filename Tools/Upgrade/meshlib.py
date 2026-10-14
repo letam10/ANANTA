@@ -117,6 +117,10 @@ def lathe(profile, color, vertices=24):
 
 
 def finish(name):
+    for obj in PARTS:
+        bpy.context.view_layer.objects.active = obj
+        for modifier in list(obj.modifiers):
+            bpy.ops.object.modifier_apply(modifier=modifier.name)
     bpy.ops.object.select_all(action="DESELECT")
     for obj in PARTS:
         obj.select_set(True)

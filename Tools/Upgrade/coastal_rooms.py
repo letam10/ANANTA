@@ -2,6 +2,8 @@
 
 import unreal
 
+from coastal_home import furnish_home, room_light
+
 
 def dress(scene, data, kind):
     x, y = data["center_m"]
@@ -27,23 +29,7 @@ def dress(scene, data, kind):
         prop("Fridge", 3.2, 8)
         service_model = "Mug"
     elif kind in ("home", "hotel", "beauty"):
-        prop("Sofa", -4.2, -4)
-        prop("Table", -4.2, -1.8)
-        prop("Book", -4, -1.8, 0.77)
-        prop("Bed", -5, 5)
-        prop("TeddyToy", -5, 5.35, 0.75, scale=(0.65, 0.65, 0.65))
-        prop("KitchenCounter", 5, -5)
-        prop("Stove", 6.1, -5)
-        prop("CookingPot", 6.1, -5, 0.89)
-        prop("Fridge", 7.4, -5)
-        prop("Table", -5, 8)
-        prop("Perfume", -4.7, 8, 0.77)
-        prop("Lipstick", -5.2, 8, 0.77)
-        prop("Toilet", 6.8, 7.7, yaw=0)
-        prop("Washbasin", 4.5, 7.7)
-        # Hai vách phòng tắm để vật nhỏ không lộ ra từ lối vào chính.
-        scene.box((x + 3.3, y + 7, z + 1.5), (0.16, 5.4, 3), "White")
-        scene.box((x + 6.5, y + 4.3, z + 1.5), (4.2, 0.16, 3), "White")
+        furnish_home(scene, data)
     elif kind in ("cinema", "opera"):
         scene.box((x, y + 7.5, z + 0.3), (13, 4, 0.6), "Wood")
         scene.box((x, y + 9, z + 2.1), (12, 0.08, 2.8), "Glass", collision=False)
@@ -72,16 +58,21 @@ def dress(scene, data, kind):
         prop("Sofa", -5, -5)
     prop("PotPlant", 8, -7, scale=(1.8, 1.8, 1.8))
     action_position = (x + 2.1, y - 5.5, z + (0.8 if service_model == "Mug" else 0))
+    resident_position = (x - 2.8, y - 5, z)
+    if kind in ("home", "hotel", "beauty"):
+        # Đặt bảng ở mép hành lang, tránh chặn cửa bếp mới mở rộng.
+        action_position = (x + 0.8, y - 2, z)
+        resident_position = (x - 3, y - 8, z)
     scene.action(data["name"] + "_Service", action_position,
                  service_message(kind), model=service_model, yaw=90)
-    scene.action(data["name"] + "_Resident", (x - 2.8, y - 5, z),
+    scene.action(data["name"] + "_Resident", resident_position,
                  "Welcome. The station is north, the beach is east. E opens doors and boards vehicles.",
                  kind=2, model="Citizen", yaw=-90)
-    light = scene.spawn(unreal.PointLight, data["name"] + "_RoomLight", (x, y, z + 2.7))
-    light.point_light_component.set_intensity(900)
-    light.point_light_component.set_editor_property("attenuation_radius", 1350)
-    light.point_light_component.set_editor_property("cast_shadows", False)
-    light.point_light_component.set_light_color(unreal.LinearColor(1, 0.88, 0.7, 1))
+    if kind not in ("home", "hotel", "beauty"):
+        for horizontal in (-5, 5):
+            for depth in (-5, 5):
+                room_light(scene, f"{data['name']}_Light_{horizontal}_{depth}",
+                           (x + horizontal, y + depth, z + 2.8))
 
 
 def service_message(kind):

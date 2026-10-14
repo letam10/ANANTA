@@ -1,5 +1,9 @@
 # Nâng cấp thành phố ven biển — 2026-10-13
 
+> Cập nhật 14/10/2026: xem [bàn giao mới](COASTAL_20261014_HANDOFF.md).
+> Bộ kit hiện có 55 model; bản mới chưa chạy game/benchmark theo yêu cầu.
+> Các kết quả runtime bên dưới chỉ thuộc bản ngày 13/10, không áp dụng cho bản mới.
+
 ## Phạm vi và trạng thái
 
 Giữ Unreal Engine 5.8.3 và map gốc `ANANTA_Slice`. Bản nâng cấp được dựng trong

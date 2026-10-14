@@ -11,11 +11,13 @@ import bpy
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(Path(__file__).parent))
 import fleet
+import domestic_models
 import interior_models
 import street_models
 
 
 def main():
+    bpy.context.preferences.filepaths.save_version = 0
     output = ROOT / "Assets" / "CoastalUpgrade"
     output.mkdir(parents=True, exist_ok=True)
     bpy.ops.object.select_all(action="SELECT")
@@ -28,7 +30,7 @@ def main():
     shader.inputs["Metallic"].default_value = 0.12
     material.node_tree.links.new(attribute.outputs["Color"], shader.inputs["Base Color"])
     material.node_tree.links.new(attribute.outputs["Alpha"], shader.inputs["Roughness"])
-    objects = fleet.build() + interior_models.furniture() + street_models.build()
+    objects = fleet.build() + interior_models.furniture() + street_models.build() + domestic_models.build()
     objects.append(street_models.opera_roof())
     report = {"generated_at": datetime.now().isoformat(), "units": "metres", "models": []}
     for obj in objects:
@@ -58,6 +60,10 @@ def main():
         assert triangles < 20000, (obj.name, triangles)
         report["models"].append({
             "name": obj.name, "dimensions_m": dimensions,
+            "bounds_min_m": [round(min(vertex.co[axis] for vertex in obj.data.vertices), 5)
+                             for axis in range(3)],
+            "bounds_max_m": [round(max(vertex.co[axis] for vertex in obj.data.vertices), 5)
+                             for axis in range(3)],
             "triangles": triangles, "material_sections": 1,
             "pivot": "ground center", "forward": "+X",
         })

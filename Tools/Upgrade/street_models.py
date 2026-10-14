@@ -102,18 +102,26 @@ def build():
 
 
 def opera_roof():
-    for offset in (-5, 0, 5):
+    # Vỏ mái có bề dày 12 cm, tiết diện cong liên tục và ba đỉnh cao khác nhau.
+    # Lưới không dồn 17 đỉnh trùng nhau tại cực như phiên bản bán cầu cũ.
+    for offset, height in ((-6, 6.5), (0, 8.5), (6, 7.3)):
         vertices = []
-        for ring in range(13):
-            a = ring * math.pi / 24
-            for side in range(17):
-                b = (side / 16 - 0.5) * math.pi
-                vertices.append((offset + 4.8 * math.cos(b) * math.sin(a),
-                                 9 * math.sin(b) * math.sin(a), 1 + 9 * math.cos(a)))
+        for depth_index in range(17):
+            progress = depth_index / 16
+            for width_index in range(17):
+                across = width_index / 8 - 1
+                rise = height * math.sin(progress * math.pi / 2) * (1 - 0.65 * across * across)
+                vertices.append((offset + 2.9 * across * (0.75 + 0.25 * progress),
+                                 -7 + 14 * progress, 0.2 + rise))
         faces = []
-        for ring in range(12):
-            for side in range(16):
-                a = ring * 17 + side
-                faces.append((a, a + 1, a + 18, a + 17))
-        mesh(vertices, faces, "white")
+        for depth_index in range(16):
+            for width_index in range(16):
+                start = depth_index * 17 + width_index
+                faces.append((start, start + 1, start + 18, start + 17))
+        shell = mesh(vertices, faces, "white")
+        for face in shell.data.polygons:
+            face.use_smooth = True
+        modifier = shell.modifiers.new("ConcreteThickness", "SOLIDIFY")
+        modifier.thickness = 0.12
+        modifier.offset = -1
     return finish("OperaShells")

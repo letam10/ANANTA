@@ -1,6 +1,7 @@
 """Create readable contact sheets and verify fresh eight-view coverage."""
 
 import json
+import hashlib
 from pathlib import Path
 
 from PIL import Image, ImageDraw
@@ -15,6 +16,8 @@ for page in range(0, len(coverage), 5):
     draw = ImageDraw.Draw(sheet)
     for row, item in enumerate(items):
         assert len(item["views"]) == 8
+        mesh = ROOT / "Assets" / "CoastalUpgrade" / f"{item['model']}.fbx"
+        assert item["source_sha256"] == hashlib.sha256(mesh.read_bytes()).hexdigest(), item["model"]
         draw.text((8, row * 225 + 5), item["model"], fill="white")
         for column, path in enumerate(item["views"]):
             with Image.open(path) as source:
