@@ -27,6 +27,7 @@ def dress(scene, data, kind):
         prop("CookingPan", 1.15, 7.9, 0.89)
         prop("CookingPot", 1.35, 8.2, 0.89)
         prop("Fridge", 3.2, 8)
+        prop("BarGlassRack", 4.8, 7.7, 1.05, scale=(0.8, 0.8, 0.8))
         service_model = "Mug"
     elif kind in ("home", "hotel", "beauty"):
         furnish_home(scene, data)

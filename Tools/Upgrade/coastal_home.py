@@ -106,6 +106,7 @@ def furnish_home(scene, data):
     prop("Chair", -5.2, 8.2, "bedroom", yaw=180)
     prop("Perfume", -4.9, 9.2, "bedroom", elevation=0.77)
     prop("Lipstick", -5.3, 9.2, "bedroom", elevation=0.77)
+    prop("BedroomClock", -8.9, 7.5, "bedroom", elevation=0.5575, scale=(0.7, 0.7, 0.7))
     prop("CoastalPicture", -5.3, 0, "bedroom", elevation=1.2, wall_mount=True)
 
     east_limit = data["width_m"] / 2 - 0.11 - 0.01
@@ -117,6 +118,8 @@ def furnish_home(scene, data):
     prop("Kettle", counter_x, -7.2, "kitchen", elevation=0.885, yaw=-90)
     prop("ChoppingBoard", counter_x, -5.6, "kitchen", elevation=0.885, yaw=-90)
     prop("BottleTray", counter_x, -8.8, "kitchen", elevation=0.885, yaw=-90)
+    prop("KitchenKnifeBlock", counter_x, -8.8, "kitchen", elevation=0.885,
+         yaw=-90, scale=(0.8, 0.8, 0.8))
     prop("Stove", stove_x, -4.3, "kitchen", yaw=-90)
     prop("CookingPot", stove_x, -4.3, "kitchen", elevation=0.89)
     prop("Fridge", fridge_x, -3.1, "kitchen", yaw=-90)
@@ -134,5 +137,7 @@ def furnish_home(scene, data):
     basin_y = data["depth_m"] / 2 - 0.12 - scene.model_data["Washbasin"]["bounds_max_m"][1]
     prop("SoapDispenser", 6.27, basin_y, "bathroom", elevation=0.845)
     prop("WallMirror", 6, 0, "bathroom", elevation=1.15, wall_mount=True)
+    prop("BathroomBin", 8.7, 8.55, "bathroom", scale=(0.8, 0.8, 0.8))
+    prop("ToyBlocks", -6.0, -4.7, "living", elevation=0.48, scale=(0.65, 0.65, 0.65))
     data["rooms"] = zones
     data["furnishings"] = furnishings

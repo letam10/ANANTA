@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-14T18:37:27.423610",
+  "generated_at": "2026-10-15T06:25:15.412730",
   "units": "metres",
   "models": [
     {
@@ -1186,6 +1186,226 @@
         0.3095
       ],
       "triangles": 528,
+      "material_sections": 1,
+      "pivot": "ground center",
+      "forward": "+X"
+    },
+    {
+      "name": "KitchenKnifeBlock",
+      "dimensions_m": [
+        0.32,
+        0.19,
+        0.5235
+      ],
+      "bounds_min_m": [
+        -0.16,
+        -0.095,
+        0.0
+      ],
+      "bounds_max_m": [
+        0.16,
+        0.095,
+        0.52353
+      ],
+      "triangles": 672,
+      "material_sections": 1,
+      "pivot": "ground center",
+      "forward": "+X"
+    },
+    {
+      "name": "BathroomBin",
+      "dimensions_m": [
+        0.38,
+        0.41,
+        0.4075
+      ],
+      "bounds_min_m": [
+        -0.19,
+        -0.22,
+        0.0
+      ],
+      "bounds_max_m": [
+        0.19,
+        0.19,
+        0.4075
+      ],
+      "triangles": 324,
+      "material_sections": 1,
+      "pivot": "ground center",
+      "forward": "+X"
+    },
+    {
+      "name": "BedroomClock",
+      "dimensions_m": [
+        0.32,
+        0.14,
+        0.46
+      ],
+      "bounds_min_m": [
+        -0.16,
+        -0.07,
+        0.0
+      ],
+      "bounds_max_m": [
+        0.16,
+        0.07,
+        0.46
+      ],
+      "triangles": 360,
+      "material_sections": 1,
+      "pivot": "ground center",
+      "forward": "+X"
+    },
+    {
+      "name": "ToyBlocks",
+      "dimensions_m": [
+        0.42,
+        0.31,
+        0.315
+      ],
+      "bounds_min_m": [
+        -0.23,
+        -0.13,
+        0.0
+      ],
+      "bounds_max_m": [
+        0.19,
+        0.18,
+        0.315
+      ],
+      "triangles": 368,
+      "material_sections": 1,
+      "pivot": "ground center",
+      "forward": "+X"
+    },
+    {
+      "name": "BarGlassRack",
+      "dimensions_m": [
+        0.9,
+        0.242,
+        0.86
+      ],
+      "bounds_min_m": [
+        -0.45,
+        -0.132,
+        0.0
+      ],
+      "bounds_max_m": [
+        0.45,
+        0.11,
+        0.86
+      ],
+      "triangles": 896,
+      "material_sections": 1,
+      "pivot": "ground center",
+      "forward": "+X"
+    },
+    {
+      "name": "TrafficCone",
+      "dimensions_m": [
+        0.32,
+        0.32,
+        0.51
+      ],
+      "bounds_min_m": [
+        -0.16,
+        -0.16,
+        0.0
+      ],
+      "bounds_max_m": [
+        0.16,
+        0.16,
+        0.51
+      ],
+      "triangles": 464,
+      "material_sections": 1,
+      "pivot": "ground center",
+      "forward": "+X"
+    },
+    {
+      "name": "FireHydrant",
+      "dimensions_m": [
+        0.36,
+        0.4225,
+        0.62
+      ],
+      "bounds_min_m": [
+        -0.18,
+        -0.2425,
+        0.0
+      ],
+      "bounds_max_m": [
+        0.18,
+        0.18,
+        0.62
+      ],
+      "triangles": 320,
+      "material_sections": 1,
+      "pivot": "ground center",
+      "forward": "+X"
+    },
+    {
+      "name": "ParkingMeter",
+      "dimensions_m": [
+        0.46,
+        0.46,
+        1.58
+      ],
+      "bounds_min_m": [
+        -0.23,
+        -0.23,
+        0.0
+      ],
+      "bounds_max_m": [
+        0.23,
+        0.23,
+        1.58
+      ],
+      "triangles": 708,
+      "material_sections": 1,
+      "pivot": "ground center",
+      "forward": "+X"
+    },
+    {
+      "name": "AirportCart",
+      "dimensions_m": [
+        0.9,
+        0.47,
+        0.708
+      ],
+      "bounds_min_m": [
+        -0.45,
+        -0.235,
+        0.0
+      ],
+      "bounds_max_m": [
+        0.45,
+        0.235,
+        0.708
+      ],
+      "triangles": 632,
+      "material_sections": 1,
+      "pivot": "ground center",
+      "forward": "+X"
+    },
+    {
+      "name": "Lifebuoy",
+      "dimensions_m": [
+        0.5,
+        0.1,
+        0.64
+      ],
+      "bounds_min_m": [
+        -0.25,
+        -0.05,
+        0.0
+      ],
+      "bounds_max_m": [
+        0.25,
+        0.05,
+        0.64
+      ],
+      "triangles": 432,
       "material_sections": 1,
       "pivot": "ground center",
       "forward": "+X"

@@ -32,6 +32,9 @@ def streets(scene):
             if all(abs(coordinate - crossing) > 12 for crossing in ROADS):
                 scene.model("StreetLamp", (road + 8.4, coordinate, 2.16), yaw=180)
                 scene.model("StreetBin", (road + 8.6, coordinate + 2, 2.16))
+                if coordinate % 64 == 0:
+                    scene.model("ParkingMeter", (road + 6.4, coordinate + 3.2, 2.16),
+                                yaw=180, scale=(0.8, 0.8, 0.8), collision=False)
     for x in ROADS:
         for y in ROADS:
             for side in (-1, 1):
@@ -40,6 +43,9 @@ def streets(scene):
                               (0.5, 2.3, 0.01), "White", collision=False)
                 scene.model("TrafficLight", (x + side * 8.8, y - side * 8.8, 2.16),
                             yaw=90 if side > 0 else -90)
+    for coordinate in ROADS[:-1]:
+        scene.model("FireHydrant", (coordinate + 4.4, coordinate + 4.4, 2.16),
+                    scale=(0.8, 0.8, 0.8), collision=False)
     # Tuyến cao tốc phía nam dùng bốn làn; dải phân cách tách hai chiều.
     scene.box((-16, -223, 2.01), (430, 16, 0.02), "Road")
     scene.box((-16, -223, 2.3), (430, 0.7, 0.6), "Concrete")
@@ -62,6 +68,10 @@ def coast(scene):
     scene.box((187, -115, 1.4), (26, 3.8, 0.22), "Wood", pitch=-slope)
     scene.vehicle("Rowboat", (211, -117.5, 0.48), yaw=0, boat=True)
     scene.vehicle("Rowboat", (211, -112.5, 0.48), yaw=0, boat=True)
+    scene.model("Lifebuoy", (207.5, -115, 1.55), yaw=90, scale=(0.9, 0.9, 0.9), collision=False)
+    for x in (202, 207, 212):
+        scene.model("TrafficCone", (x, -108.5, 2.16), yaw=90,
+                    scale=(0.75, 0.75, 0.75), collision=False)
     for y in range(-205, 197, 12):
         scene.model("ParkBench", (178, y, 2.16), yaw=90)
         scene.model("ParkTree", (172, y, 2))

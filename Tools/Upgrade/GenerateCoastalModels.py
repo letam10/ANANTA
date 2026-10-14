@@ -13,6 +13,7 @@ sys.path.insert(0, str(Path(__file__).parent))
 import fleet
 import domestic_models
 import interior_models
+import coastal_micro_props
 import street_models
 
 
@@ -30,7 +31,8 @@ def main():
     shader.inputs["Metallic"].default_value = 0.12
     material.node_tree.links.new(attribute.outputs["Color"], shader.inputs["Base Color"])
     material.node_tree.links.new(attribute.outputs["Alpha"], shader.inputs["Roughness"])
-    objects = fleet.build() + interior_models.furniture() + street_models.build() + domestic_models.build()
+    objects = (fleet.build() + interior_models.furniture() + street_models.build()
+               + domestic_models.build() + coastal_micro_props.build())
     objects.append(street_models.opera_roof())
     report = {"generated_at": datetime.now().isoformat(), "units": "metres", "models": []}
     for obj in objects:

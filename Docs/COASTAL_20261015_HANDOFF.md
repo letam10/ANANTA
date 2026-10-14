@@ -2,77 +2,89 @@
 
 ## Phạm vi lượt này
 
-Tiếp tục nhánh `codex/coastal-interiors-20261014` của Unreal Engine 5.8.3.
-Giữ nguyên thay đổi người dùng trong `AGENTS.md`; chỉ cập nhật nguồn Coastal,
-cấu hình render, công cụ kiểm chứng và Docs thuộc lượt này.
+Tiếp tục nhánh codex/coastal-interiors-20261014 của Unreal Engine 5.8.3.
+Giữ nguyên thay đổi người dùng trong AGENTS.md; chỉ cập nhật nguồn Coastal,
+asset sinh bởi bộ công cụ, công cụ kiểm chứng và Docs thuộc lượt này.
 
 ## Đã thực hiện
 
-- Thêm `Tools/Upgrade/AuditCoastalQuality.py`, audit engine-free cho manifest,
-  hash FBX, 8 hướng/model, LOD/collision và review placement.
-- Audit mới đạt: `COASTAL_QUALITY_OK manifest_models=55 review_units=36 warnings=0`.
-  Bằng chứng có 55 model coverage/import, 23 building, 36 room review unit,
-  180 view và 2 room coverage file tại `Saved/Upgrade/coastal-quality-report.json`.
-- Sửa `Tools/Upgrade/coastal_scene.py`: cull distance được gom band 5 m,
-  quy đổi đúng từ mét sang cm Unreal, fade 120%; không đổi placement, scale hay collision.
-  Điều này giảm object nhỏ tồn tại quá xa do công thức cũ nhân 80/100 sai đơn vị.
-- Sửa `Config/DefaultEngine.ini`: bỏ khóa trùng, giữ DX12/SM6, thêm TSR,
-  tắt hardware ray tracing, giữ Lumen software/VSM, bật HZB/occlusion/instance culling.
-  Comment cấu hình ghi rõ ngân sách mục tiêu 16.667 ms, chưa phải benchmark.
+- Thêm Tools/Upgrade/coastal_micro_props.py với 10 prop low-poly có pivot nền:
+  KitchenKnifeBlock, BathroomBin, BedroomClock, ToyBlocks, BarGlassRack,
+  TrafficCone, FireHydrant, ParkingMeter, AirportCart và Lifebuoy.
+- Nối 10 prop vào GenerateCoastalModels.py và đặt vào phòng ngủ, bếp, phòng tắm,
+  phòng khách, cafe/bar/nhà hàng, sân bay, giao lộ, phố biển và bến thuyền.
+- Cập nhật placement để prop nhỏ tắt collision khi không cần, giữ bounds assertion
+  cho các đồ trong phòng, và không thay đổi hệ trục/đơn vị hiện có.
+- Sinh lại bộ kit: 65 model FBX và CoastalModels.blend. Mỗi model có 8 hướng review.
+- Import vào Unreal thành công 65 model; map commandlet dựng lại 23 building,
+  6.947 placement và 969 HISM batch.
+- Review hình học phòng đạt 180 view cho 36 review unit, tương ứng 5 view/unit.
+- Cấu hình render đã có từ lượt trước: TSR, Lumen software, hardware ray tracing
+  tắt, HZB/occlusion/instance culling bật; cull distance đã sửa từ mét sang cm Unreal.
 
 ## Kiểm chứng mới
 
-- `python -m py_compile Tools/Upgrade/AuditCoastalQuality.py`: PASS.
-- `python Tools/Upgrade/AuditCoastalQuality.py --root .`: PASS, không warning.
-- `git diff --check`: PASS.
-- `Tools/Build/Build-ANANTA.ps1 -Configuration Development -MaxParallelActions 2`:
-  PASS, UnrealBuildTool exit 0, thời gian 20.37 s.
-- `Tools/Build/Validate-ANANTA.ps1`: PASS; plugin, workflow và file nền tảng đầy đủ.
-- Quick gameplay headless dùng map CoastalCity với `-game -CoastalQA -NullRHI`:
-  `Saved/Upgrade/runtime-r6-quick.log` ghi
-  `COASTAL_QA_COMPLETE failures=0 views=122`.
-  Các check spawn, 23 cửa, 23 dịch vụ, 23 NPC, 5 item, cửa từ phố,
-  chặn biên biển, đi bộ, lên/lái/xuống xe, lên/chèo/xuống xuồng đều PASS.
-  Đây là acceptance run bounded, không phải benchmark 60 FPS.
+- python -m py_compile trên GenerateCoastalModels.py, coastal_micro_props.py,
+  coastal_home.py, coastal_rooms.py, coastal_landscape.py và coastal_transit.py:
+  PASS.
+- Blender 4.5.1: COASTAL_MODELS_OK 65 models; max triangles=9678; exit 0.
+- ReviewModels.py: MODEL_VIEW_COVERAGE_OK 65 models x 8 views; exit 0.
+- ComposeModelReviews.py: MODEL_REVIEWS_OK 65 models, 520 rendered views; exit 0.
+- AuditCoastalQuality.py: COASTAL_QUALITY_OK manifest_models=65 review_units=36
+  warnings=0; import_readback=65, layout_buildings=23, review_views=180.
+- ImportCoastalModels.py commandlet với NullRHI: IMPORT_EXIT=0, Python script
+  executed successfully, 0 import errors; có 1 cảnh báo UE-MCP Slate startup.
+- BuildCoastalCity.py commandlet với NullRHI:
+  COASTAL_MAP_OK 23 enterable buildings, 6947 instances / 969 HISM batches,
+  map check 0 Error(s), 0 Warning(s); còn cảnh báo API deprecated của Unreal
+  và UE-MCP Slate startup.
+- ReviewRoomGeometry.py: ROOM_GEOMETRY_VIEWS_OK 180 views; đây là review hình học,
+  không thay thế gameplay hoặc lighting acceptance.
+- Quick gameplay bounded với map CoastalCity, -game -CoastalQA -NullRHI:
+  runtime-r7-quick.log ghi COASTAL_QA_COMPLETE failures=0 views=122.
+  Các check spawn, cửa, dịch vụ, NPC, item, chọn cửa từ phố, biên biển, đi bộ,
+  lên/lái/xuống xe và lên/chèo/xuống xuồng đều đạt. Đây không phải benchmark 60 FPS.
 
 ## Dọn file tạm
 
-- Giữ `runtime-r6-quick.log`, `Saved/Upgrade/Runtime/2026.10.14-23.08.44`
-  với `checks.csv`, `frames.csv`, `metadata.txt` làm bằng chứng.
-- Không có PNG được tạo trong lượt NullRHI.
-- Bytecode `AuditCoastalQuality` trong `Tools/Upgrade/__pycache__` đã được dọn
-  sau kiểm chứng; không xóa asset/model hay file của người dùng.
+- Đã dọn bytecode pyc sinh trong Tools/Upgrade/__pycache__ cho các script của lượt.
+- Giữ log import/build/QA, manifest, city-layout, audit report, ảnh 8 hướng và
+  room geometry để làm bằng chứng; không xóa asset/model hay file người dùng.
+- AGENTS.md vẫn dirty từ trước và không được stage.
 
 ## Chưa hoàn tất và giới hạn bằng chứng
 
-- Chưa đo headed 60 FPS, GPU p95, VRAM hoặc benchmark soak; cấu hình hiện chỉ là target.
-- CoastalCity vẫn chưa chuyển sang World Partition/HLOD/Data Layers.
-- NPC vẫn chưa có lịch sinh hoạt và phương tiện vẫn là kinematic; chưa có lái máy bay,
+- Chưa có headed/player capture để xác nhận visual, material, collision cảm nhận,
+  VRAM, GPU p95 hay 60 FPS; NullRHI chỉ xác nhận logic bounded.
+- CoastalCity chưa chuyển sang World Partition/HLOD/Data Layers.
+- NPC chưa có lịch sinh hoạt; xe/thuyền còn kinematic; chưa có lái máy bay,
   hoạt ảnh chèo tay, minigame, kinh tế/save đầy đủ hoặc phản chiếu gương riêng.
-- 55 model hiện có đã được kiểm 8 hướng và 36 unit phòng đã có 5 view/unit;
-  chưa tạo thêm một tranche model mới trong lượt này vì các nhóm phố, transit,
-  nội thất, venue và dịch vụ đã có trong bộ kit hiện tại.
-- Ảnh editor Unreal/material lighting không được dùng làm bằng chứng mới trong lượt này;
-  hình học Blender và runtime NullRHI không thay thế visual acceptance headed.
+- Các building đã vào được theo harness nhưng chất liệu/ánh sáng và mật độ đô thị
+  chưa đạt mức photoreal/AAA cho mọi camera.
+- 5 view/unit hiện là review camera; chưa phải người chơi tự do kiểm từng phòng
+  trên headed build.
 
 ## Kế hoạch còn tồn đọng
 
-1. Dọn cache đúng phạm vi và giữ lại log/checks cần thiết.
-2. Tạo hero slice có World Partition/HLOD và đo streaming trước khi nhân rộng district.
-3. Thêm material/lighting review headed riêng, sau đó đo ba view downtown, interior và traffic.
-4. Mở rộng interaction data-driven cho đồ nhỏ, NPC schedule, transit và save state.
-5. Chỉ tuyên bố đạt 60 FPS sau khi có log headed mới với preset và phần cứng ghi rõ.
+1. Tạo hero slice có World Partition/HLOD và đo streaming trước khi nhân rộng district.
+2. Thêm material/lighting review headed, sau đó đo downtown, interior và traffic.
+3. Mở rộng interaction data-driven cho đồ nhỏ, NPC schedule, transit và save state.
+4. Chỉ tuyên bố đạt 60 FPS sau khi có log headed mới ghi preset, độ phân giải,
+  phần cứng và frame-time percentile.
 
 ## Evidence
 
-- `Saved/Upgrade/coastal-quality-report.json`
-- `Saved/Upgrade/runtime-r6-quick.log`
-- `Saved/Upgrade/Runtime/2026.10.14-23.08.44/checks.csv`
-- `Saved/Upgrade/Runtime/2026.10.14-23.08.44/frames.csv`
-- `Docs/Evidence/Coastal20261014/model-review.jpg`
-- `Docs/Evidence/Coastal20261014/rooms-five-views.jpg`
+- Saved/Upgrade/coastal-quality-report.json
+- Saved/Upgrade/runtime-r7-quick.log
+- Saved/Upgrade/Runtime/2026.10.14-23.31.04/checks.csv
+- Saved/Upgrade/Runtime/2026.10.14-23.31.04/frames.csv
+- Saved/Upgrade/ModelViews/coverage.json và review-page-*.jpg
+- Saved/Upgrade/RoomGeometry/20261014-232832
+- Saved/Upgrade/import-coastal-65.log
+- Saved/Upgrade/build-coastal-65.log
 
 ## Git
 
-`AGENTS.md` đang dirty từ trước và không được stage. Chỉ stage nguồn/config/audit/Docs
-thuộc lượt này; kiểm tra push bằng `git rev-parse HEAD` và `git ls-remote` sau commit.
+Đã ủy quyền commit/push cho nhánh codex/coastal-interiors-20261014.
+AGENTS.md không được stage; sau khi kiểm tra status sẽ stage đúng nguồn, asset và
+Docs của lượt này, rồi đối chiếu git rev-parse HEAD với git ls-remote origin.

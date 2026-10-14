@@ -104,3 +104,29 @@ bố trí bằng người chơi ở đủ 5 góc.
 - Chưa benchmark headed 60 FPS; con số 16.667 ms chỉ là ngân sách mục tiêu.
   Chưa có World Partition/HLOD, lịch NPC, lái bay, minigame, kinh tế/save đầy đủ
   hoặc visual acceptance Unreal headed. Xem handoff ngày 15/10 để biết kế hoạch.
+
+
+## Cập nhật 2026-10-15 — tranche 65 model và micro props
+
+- Thêm Tools/Upgrade/coastal_micro_props.py với 10 model nhỏ: KitchenKnifeBlock,
+  BathroomBin, BedroomClock, ToyBlocks, BarGlassRack, TrafficCone, FireHydrant,
+  ParkingMeter, AirportCart và Lifebuoy. Các model dùng primitive low-poly, pivot
+  nền ổn định và được đưa vào generator, phòng, đường phố, sân bay và bến biển.
+- Generator đạt COASTAL_MODELS_OK 65 models; max triangles=9678. Review đạt
+  MODEL_VIEW_COVERAGE_OK 65 models x 8 views và MODEL_REVIEWS_OK 65 models,
+  520 rendered views.
+- Import commandlet exit 0 với 65 model readback. BuildCoastalCity đạt
+  COASTAL_MAP_OK 23 enterable buildings, 6947 instances / 969 HISM batches;
+  map check 0 Error(s), 0 Warning(s). Hai cảnh báo còn lại là API Unreal deprecated
+  và UE-MCP Slate startup, không phải lỗi nội dung.
+- ReviewRoomGeometry đạt ROOM_GEOMETRY_VIEWS_OK 180 views cho 36 review unit;
+  đây là kiểm tra hình học phòng, không phải visual acceptance headed.
+- Audit engine-free đạt COASTAL_QUALITY_OK manifest_models=65 review_units=36
+  warnings=0; import_readback=65, layout_buildings=23, review_views=180.
+- Quick gameplay bounded mới chạy trên CoastalCity với
+  -game -CoastalQA -NullRHI và ghi COASTAL_QA_COMPLETE failures=0 views=122
+  trong Saved/Upgrade/runtime-r7-quick.log. Đây là kiểm tra logic ngắn, không phải
+  benchmark/soak và không chứng minh 60 FPS headed.
+- Giữ mục tiêu render 16.667 ms cho 60 FPS, TSR và Lumen software; chưa có log
+  headed ghi GPU/VRAM/frame-time percentile. Chưa có World Partition/HLOD,
+  lịch NPC, lái máy bay, hoạt ảnh chèo, minigame hoặc save/kinh tế đầy đủ.
