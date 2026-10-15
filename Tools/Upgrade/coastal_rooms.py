@@ -36,10 +36,12 @@ def dress(scene, data, kind):
                 prop("Chair", dx, dy + 1)
         for dx in (-4.8, -3.2, -1.6, 0):
             prop("KitchenCounter", dx, 8)
-        prop("Stove", 1.2, 8)
-        prop("CookingPan", 1.15, 7.9, 0.89)
-        prop("CookingPot", 1.35, 8.2, 0.89)
-        prop("Fridge", 3.2, 8)
+        prop("Stove", 1.2, 8, interactive_message="Stove inspected.")
+        prop("CookingPan", 1.15, 7.9, 0.89,
+             interactive_message="Cooking pan inspected.")
+        prop("CookingPot", 1.35, 8.2, 0.89,
+             interactive_message="Cooking pot inspected.")
+        prop("Fridge", 3.2, 8, interactive_message="Fridge inspected.")
         prop(
             "BarGlassRack",
             4.8,
@@ -112,17 +114,42 @@ def dress(scene, data, kind):
             for column in range(6):
                 dx = (column - 2.5) * 1.1
                 dy = -5 + row * 1.5
-                prop("Chair", dx, dy, yaw=180)
+                prop(
+                    "Chair",
+                    dx,
+                    dy,
+                    yaw=180,
+                    interactive_message=(
+                        "Auditorium seat inspected."
+                        if row == 0 and column == 0
+                        else None
+                    ),
+                )
     elif kind == "factory":
         for dx in (-5, 0, 5):
             prop("FactoryConveyor", dx, 2)
-            prop("FactoryControl", dx, 6, yaw=90)
+            prop(
+                "FactoryControl",
+                dx,
+                6,
+                yaw=90,
+                interactive_message=(
+                    "Factory control inspected." if dx == 0 else None
+                ),
+            )
             prop("FactoryCrate", dx, -3)
             for dy in (-4, -2, 0):
                 prop("FactoryBarrel", -8, dy)
     elif kind == "arcade":
         for dx in (-6, -3, 3, 6):
-            prop("ArcadeCabinet", dx, 6)
+            prop(
+                "ArcadeCabinet",
+                dx,
+                6,
+                interactive_message=(
+                    "Arcade cabinet inspected." if dx == -3 else None
+                ),
+            )
             prop("ArcadeCabinet", dx, -3, yaw=180)
         prop("Table", 0, 2)
     else:

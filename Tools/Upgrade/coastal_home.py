@@ -116,7 +116,13 @@ def furnish_home(scene, data):
     prop("Table", -6.4, -4.7, "living", scale=(1, 1, 0.65))
     prop("Book", -6.5, -4.7, "living", elevation=0.77 * 0.65)
     prop("Mug", -6, -4.7, "living", elevation=0.77 * 0.65)
-    prop("TVConsole", -6.4, -2.4, "living")
+    prop(
+        "TVConsole",
+        -6.4,
+        -2.4,
+        "living",
+        interactive_message="TV inspected. The coastal channel is ready.",
+    )
     prop("FloorLamp", -8.8, -7.2, "living")
     prop("Bookshelf", -9.3, -2.8, "living", yaw=90)
     scene.box((center_x - 6.4, center_y - 5.2, ground + 0.02), (3.8, 3.4, 0.018),
@@ -128,7 +134,14 @@ def furnish_home(scene, data):
     prop("Book", -8.9, 7.5, "bedroom", elevation=0.5575)
     prop("Table", -5.2, 9.2, "bedroom")
     prop("Chair", -5.2, 8.2, "bedroom", yaw=180)
-    prop("Perfume", -4.9, 9.2, "bedroom", elevation=0.77)
+    prop(
+        "Perfume",
+        -4.9,
+        9.2,
+        "bedroom",
+        elevation=0.77,
+        interactive_message="Perfume inspected. The bottle is capped and ready.",
+    )
     prop("Lipstick", -5.3, 9.2, "bedroom", elevation=0.77)
     prop(
         "BedroomClock",
@@ -147,7 +160,15 @@ def furnish_home(scene, data):
     fridge_x = east_limit - scene.model_data["Fridge"]["bounds_max_m"][1]
     for depth in (-8.8, -7.2, -5.6):
         prop("KitchenCounter", counter_x, depth, "kitchen", yaw=-90)
-    prop("Kettle", counter_x, -7.2, "kitchen", elevation=0.885, yaw=-90)
+    prop(
+        "Kettle",
+        counter_x,
+        -7.2,
+        "kitchen",
+        elevation=0.885,
+        yaw=-90,
+        interactive_message="Kettle inspected. It is empty and ready to boil.",
+    )
     prop("ChoppingBoard", counter_x, -5.6, "kitchen", elevation=0.885, yaw=-90)
     prop("BottleTray", counter_x, -8.8, "kitchen", elevation=0.885, yaw=-90)
     prop(
@@ -162,20 +183,48 @@ def furnish_home(scene, data):
     )
     prop("Stove", stove_x, -4.3, "kitchen", yaw=-90)
     prop("CookingPot", stove_x, -4.3, "kitchen", elevation=0.89)
-    prop("Fridge", fridge_x, -3.1, "kitchen", yaw=-90)
+    prop(
+        "Fridge",
+        fridge_x,
+        -3.1,
+        "kitchen",
+        yaw=-90,
+        interactive_message="Fridge inspected. The door seal is holding.",
+    )
     prop("Table", 5.3, -4, "kitchen")
     for side in (-1, 1):
         prop("Chair", 5.3, -4 + side * 0.95, "kitchen", yaw=0 if side > 0 else 180)
-        prop("DinnerPlate", 5.3 + side * 0.36, -4, "kitchen", elevation=0.77)
+        prop(
+            "DinnerPlate",
+            5.3 + side * 0.36,
+            -4,
+            "kitchen",
+            elevation=0.77,
+            interactive_message="Dinner plate inspected. It is set for a meal.",
+        )
         prop("Cutlery", 5.3 + side * 0.36, -3.72, "kitchen", elevation=0.77, yaw=90)
 
-    prop("ShowerTray", 3.8, 0, "bathroom", wall_mount=True)
+    prop(
+        "ShowerTray",
+        3.8,
+        0,
+        "bathroom",
+        wall_mount=True,
+        interactive_message="Shower tray inspected. The drain is clear.",
+    )
     prop("Toilet", 8, 0, "bathroom", wall_mount=True)
     prop("Washbasin", 6, 0, "bathroom", wall_mount=True)
     prop("SideTable", 7.2, 8.2, "bathroom")
     prop("TowelStack", 7.2, 8.2, "bathroom", elevation=0.5575)
     basin_y = data["depth_m"] / 2 - 0.12 - scene.model_data["Washbasin"]["bounds_max_m"][1]
-    prop("SoapDispenser", 6.27, basin_y, "bathroom", elevation=0.845)
+    prop(
+        "SoapDispenser",
+        6.27,
+        basin_y,
+        "bathroom",
+        elevation=0.845,
+        interactive_message="Soap dispenser inspected. It is filled and ready.",
+    )
     prop("WallMirror", 6, 0, "bathroom", elevation=1.15, wall_mount=True)
     prop(
         "BathroomBin",

@@ -179,3 +179,19 @@ bố trí bằng người chơi ở đủ 5 góc.
 - Map đạt 23 building vào được, 6842 instances và 899 HISM batches; MapCheck 0 lỗi. Ocean vẫn là plane opaque với normal động nhẹ, foam chỉ là lớp thị giác rẻ.
 - QA r14 exit 0 đạt `ocean_boundary_blocks PASS`, `train_two_way_present PASS`, `traffic_signals_present PASS`, `11_micro_props_present PASS`, `npc_schedule_moves PASS`, vehicle/rowboat checks và `COASTAL_QA_COMPLETE failures=0 views=122`.
 - Chưa có headed capture, water simulation, foam collision/buoyancy hoặc GPU/VRAM frame-time proof; mục tiêu 60 FPS vẫn là ngân sách cấu hình chứ chưa phải benchmark.
+
+## Cập nhật r15 — tương tác nội thất mở rộng và quick QA
+
+- Tăng độ phong phú tương tác mà không thêm prototype mesh: home/hotel/beauty có TVConsole, Perfume, Kettle, Fridge, DinnerPlate, ShowerTray và SoapDispenser dùng `place_interactive_prop`; cafe/restaurant/bar có Stove, CookingPan, CookingPot, Fridge; cinema/opera có một ghế kiểm tra; factory có một FactoryControl; arcade có một ArcadeCabinet. Các placement còn lại vẫn là HISM/static để giữ chi phí render.
+- Placement không đổi trục, yaw, scale, bounds hoặc khoảng hở đã được review. Kind=5 chỉ gọi `Use()` trả message, không bật tick hoặc collision riêng ngoài cấu hình actor tương tác hiện có.
+- AST parse và `git diff --check` đạt; Development build đạt `Result: Succeeded` trong 26,46 giây. BuildCoastalCity chạy bằng `.uproject` path tuyệt đối đạt `COASTAL_MAP_OK 23 enterable buildings, 6745 instances / 816 HISM batches`, MapCheck 0 error/0 warning, script exit 0.
+- QA r15 đạt `COASTAL_QA_COMPLETE failures=0 views=122`; log mới ghi profile High/Lumen, TSR 900p/1080p và ngân sách 16.667 ms. Các gate cửa, 23 service/NPC, schedule, micro props, tín hiệu, train hai chiều, boundary, đi bộ, xe và xuồng đều PASS.
+- 19 material `.uasset` bị Unreal serialize lại trong commandlet đã được khôi phục để tránh đưa thay đổi không liên quan vào commit. Map được giữ vì nó là asset tracked chứa placement của tranche.
+- Không coi r15 là bằng chứng headed 60 FPS. Chưa có visual capture người chơi, frame-time/GPU/VRAM percentile, World Partition/HLOD/Data Layers, điều khiển máy bay, animation chèo, economy/save đầy đủ hoặc photoreal AAA toàn map.
+- Dọn tạm: không thấy `.tmp` còn lại dưới `Saved`; giữ log/Runtime/JSON cần thiết làm evidence. `AGENTS.md` dirty từ trước vẫn không được stage.
+
+### Evidence r15
+
+- `Saved/Upgrade/build-coastal-interactive.log`
+- `Saved/Upgrade/runtime-r15-interactive.log`
+- `Saved/Upgrade/Runtime/2026.10.15-01.19.19`
