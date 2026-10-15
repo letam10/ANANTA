@@ -195,3 +195,12 @@ bố trí bằng người chơi ở đủ 5 góc.
 - `Saved/Upgrade/build-coastal-interactive.log`
 - `Saved/Upgrade/runtime-r15-interactive.log`
 - `Saved/Upgrade/Runtime/2026.10.15-01.19.19`
+
+## Cập nhật 2026-10-15 — báo cáo chốt dự án
+
+- Báo cáo handoff chính thức: `Docs/COASTAL_FINAL_HANDOFF_20261015.md`.
+- Verify cuối: `Tools/Build/Validate-ANANTA.ps1` exit 0, foundation validation passed.
+- Runtime r15 bounded đạt failures=0 với 23 cửa/service/NPC, NPC schedule, micro props, tín hiệu, tàu hai chiều, boundary biển, xe và xuồng. Map commandlet đạt 23 building, 6745 instances, 816 HISM; MapCheck 0 lỗi/0 cảnh báo.
+- Không còn `.tmp` dưới `Saved`; chỉ giữ log/Runtime/JSON cần làm evidence, không stage `AGENTS.md`.
+- Capture editor-only 195 ảnh chạy exit 0 nhưng pixel variance toàn bộ dưới ngưỡng compose. Đây là lỗi chất lượng capture/lighting evidence, không được ghi thành visual acceptance.
+- Chưa có headed GPU/VRAM/frame-time percentile hay proof 60 FPS; persistent level cũng chưa có World Partition/HLOD/Data Layers/PCG district. Aircraft, rowing animation, railway signals, economy/save và photoreal AAA toàn map vẫn nằm trong backlog.

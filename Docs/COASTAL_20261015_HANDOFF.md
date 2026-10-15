@@ -176,3 +176,12 @@ Docs của lượt này, rồi đối chiếu git rev-parse HEAD với git ls-re
 - Commandlet đã ghi lại materials nhưng các material `.uasset` sinh lại không thuộc tranche và đã được khôi phục. Map được giữ vì là asset đã theo dõi từ các tranche trước và cần lưu placement tương tác mới.
 - Đây vẫn là bounded NullRHI proof. Chưa có headed/player visual capture, collision cảm nhận, GPU/VRAM percentile, frame-time headed hoặc benchmark/soak; mục tiêu 60 FPS vẫn chỉ là ngân sách 16,667 ms. World Partition/HLOD/Data Layers, aircraft control, rowing animation, economy/save và visual AAA toàn map vẫn là tồn đọng.
 - Worktree giữ nguyên `AGENTS.md` dirty có sẵn và không stage file đó. Evidence mới: `Saved/Upgrade/runtime-r15-interactive.log`, `Saved/Upgrade/build-coastal-interactive.log` và `Saved/Upgrade/Runtime/2026.10.15-01.19.19`.
+
+## Cập nhật 2026-10-15 — final closure handoff
+
+- Báo cáo chốt đầy đủ được lưu tại `Docs/COASTAL_FINAL_HANDOFF_20261015.md`.
+- Foundation verify mới nhất đạt `ANANTA foundation validation passed.` với BridgeDescriptor và WorkflowConfig đúng, không thiếu plugin/file.
+- Bằng chứng runtime r15 vẫn là `COASTAL_QA_COMPLETE failures=0 views=122`; map commandlet đạt 23 building, 6745 instances, 816 HISM và MapCheck 0 lỗi/0 cảnh báo.
+- Không còn `.tmp` dưới `Saved`; `AGENTS.md` dirty từ trước không được stage.
+- Capture editor-only 195 ảnh đã chạy nhưng compose pixel validation thất bại vì variance dưới ngưỡng ở toàn bộ ảnh. Vì vậy không dùng capture này làm visual acceptance.
+- Chốt trung thực: logic/placement/interior tranche đã bàn giao; headed visual, GPU/VRAM/frame-time và 60 FPS chưa được chứng minh. World Partition/HLOD/Data Layers, aircraft/rowing, railway signal control, economy/save và photoreal AAA toàn map vẫn là tồn đọng.
