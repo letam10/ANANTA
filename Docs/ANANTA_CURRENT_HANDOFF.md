@@ -271,3 +271,8 @@ Trạng thái: DONE bounded — source, map, runtime logic and headed hero colli
 ### Commit scope
 
 Chỉ stage file P4A/P4B và handoff này; giữ `AGENTS.md` untouched. Generated CoastalCity map/material packages được review là output của map commandlet và nằm trong scope P4. Commit/push chỉ thực hiện sau khi diff review và mọi gate bắt buộc ở trên vẫn đạt.
+
+### P4A P4B commit and push receipt
+
+Commit hash: `8f0889168cfe169d1f0b309526afceea7341aa66`
+Push hash: `8f0889168cfe169d1f0b309526afceea7341aa66` (`refs/heads/main`)
