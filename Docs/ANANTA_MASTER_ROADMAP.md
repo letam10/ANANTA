@@ -66,6 +66,20 @@ P0 ngày 2026-10-15 đã đạt sau khi đọc parent history và fast-forward a
 **Gate:** generator/audit, 8-view coverage, 5-view placement, transformed-bounds không
 lỗi, import readback, `py_compile`/build cần thiết đạt. Chưa claim headed visual hoặc FPS.
 
+## P1 checkpoint — 2026-10-15
+
+P1 source/review gate đạt trên baseline `9057c9...`:
+
+- `ReviewModels.py` và `ReviewRoomGeometry.py` có fallback `BLENDER_EEVEE` cho Blender 5.2;
+  không đổi asset geometry.
+- Blender headless tạo lại 72 model x 8 hướng (576 PNG + coverage hash mới).
+- Blender headless tạo lại 36 review unit x 5 góc (180 PNG) tại
+  `Saved/Upgrade/RoomGeometry/20261015-092127`.
+- `AuditCoastalQuality` chạy read-only exit 0: manifest=72, coverage=72,
+  import_readback=72, layout_buildings=23, review_units=36, room_coverage_files=4,
+  errors=0, warnings=0.
+- AST parse 130 script exit 0. Đây là source/geometry evidence; chưa phải headed
+  visual/material/FPS acceptance.
 ## P2 — Hero slice, material graph và headed visual
 
 **Phạm vi:** một hero slice 200–300 m, không nhân rộng district trước khi hình ảnh đạt.
@@ -145,6 +159,6 @@ shader/streaming, có log mới. Không dùng target cấu hình hoặc NullRHI 
 ## Thứ tự chat
 
 1. P0 đã khóa baseline `9057c9...`; bắt đầu P1 bằng audit source/readback/review, chưa mở rộng map.
-2. Chạy P1 theo một nhóm asset/placement có contract và evidence riêng.
+2. P1 đã đạt asset/geometry review gate; giữ 72 model và evidence mới.
 3. Chỉ chuyển P2, P3, P4, P5, P6 khi gate pha trước đạt.
 4. Mỗi chat cập nhật roadmap này và handoff hiện hành; không tạo roadmap cạnh tranh.

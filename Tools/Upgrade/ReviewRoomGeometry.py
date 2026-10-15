@@ -42,7 +42,10 @@ def main():
     output.mkdir(parents=True, exist_ok=True)
     materials = palette()
     scene = bpy.context.scene
-    scene.render.engine = "BLENDER_EEVEE_NEXT"
+    try:
+        scene.render.engine = "BLENDER_EEVEE_NEXT"
+    except TypeError:
+        scene.render.engine = "BLENDER_EEVEE"
     scene.eevee.taa_render_samples = 16
     scene.render.resolution_x = 960
     scene.render.resolution_y = 540

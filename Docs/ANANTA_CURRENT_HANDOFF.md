@@ -1,8 +1,8 @@
 # ANANTA Current Handoff
 
 Ngày cập nhật: 2026-10-15
-Phase ID: P0 — Baseline, Git và ngữ cảnh
-Trạng thái: PASS cho P0 baseline/audit/docs; P1 chưa bắt đầu
+Phase ID: P1 — Asset, prop nhỏ và geometry pipeline
+Trạng thái: PASS cho P0 và P1 source/geometry review; P2 chưa bắt đầu
 
 ## Checkout và dirty-state
 
@@ -11,7 +11,7 @@ Trạng thái: PASS cho P0 baseline/audit/docs; P1 chưa bắt đầu
 - Branch: `codex/coastal-interiors-20261014`
 - Local HEAD sau baseline sync: `9057c9beecd2ef1e1cc433eb4f672b9130343e79`
 - Dirty file có sẵn: `AGENTS.md`; không sửa, stage, commit hoặc xóa.
-- Hai Docs P0 là file mới do chat này tạo; không sửa gameplay, asset, map hoặc source.
+- Hai Docs P0 là file do chat này tạo; P1 chỉ sửa fallback Blender trong `Tools/Upgrade/ReviewModels.py` và `Tools/Upgrade/ReviewRoomGeometry.py`; không sửa asset, map hoặc C++.
 
 ## Git đối chiếu và baseline sync
 
@@ -67,9 +67,23 @@ local đã đồng bộ remote. Không cần reset hoặc force-push.
   - Đây là bounded NullRHI logic proof, không phải headed visual, material,
     collision cảm nhận, GPU/VRAM, frame-time hoặc 60 FPS proof.
 
+## P1 source/geometry review evidence
+
+- Lần audit read-only đầu tiên exit 1 vì 71 source_sha256 trong coverage cũ lệch FBX;
+  nguyên nhân là commit fe7b67fe... refresh model kit nhưng evidence Saved/ bị ignore và
+  chưa được tạo lại.
+- ReviewModels.py được sửa tối thiểu để thử BLENDER_EEVEE_NEXT, fallback BLENDER_EEVEE
+  trên Blender 5.2. Chạy background tạo lại 72 model x 8 hướng, 576 PNG và coverage hash mới.
+- ReviewRoomGeometry.py có cùng fallback. Chạy background exit 0 và ghi
+  ROOM_GEOMETRY_VIEWS_OK 180 views vào folder Saved/Upgrade/RoomGeometry/20261015-092127.
+- AuditCoastalQuality read-only exit 0: manifest_models=72, coverage_models=72,
+  import_readback=72, layout_buildings=23, layout_review_units=36,
+  layout_review_views=195, room_coverage_files=4, errors=0, warnings=0.
+- AST parse 130 Python scripts exit 0. Evidence này chỉ xác nhận source/geometry; không claim
+  headed visual, material graph, GPU/VRAM hoặc FPS.
 ## Phân loại
 
-**DONE ở baseline local:** fast-forward baseline; foundation validation; 72 model
+**DONE ở baseline/P1:** fast-forward baseline; foundation validation; 72 model
 source/manifest và 8-view coverage; 36 unit/180 room geometry review; 23 building;
 r15 bounded NullRHI logic; roadmap/handoff P0.
 
@@ -81,7 +95,7 @@ World Partition, HLOD, Data Layers, PCG, aircraft control, rowing animation,
 railway signal control, save/economy và AAA quality toàn map.
 
 **BLOCKED:** không còn blocker baseline P0; headed visual/FPS và các pha nội dung vẫn
-chưa đạt gate. P1 sẽ bắt đầu bằng audit source/readback/review.
+chưa đạt gate. P2 sẽ bắt đầu bằng material graph/output readback và hero slice.
 
 ## Evidence stale cần giữ nguyên
 
@@ -103,19 +117,17 @@ chưa đạt gate. P1 sẽ bắt đầu bằng audit source/readback/review.
 ## Commit và push
 
 - P0 Docs commit: `927369f8bbc4fa5b0a1a5981fa1d927533e6bf3d` (`docs: establish ANANTA master roadmap and handoff`).
+- P1 implementation/docs commit: **chưa tạo**.
 - Push hash: **chưa chạy**; không push trong chat này do policy `AGENTS.md`.
-- P0 đã PASS về baseline/audit/docs; không claim headed visual/FPS.
+- P0 và P1 đã PASS về baseline/source/geometry; không claim headed visual/FPS.
 
 ## Prompt pha tiếp theo
 
 ```text
-PHASE P1 — Asset and geometry pipeline.
+PHASE P2 — Hero slice, material graph và headed visual.
 
 Đọc ANANTA_MASTER_ROADMAP.md và ANANTA_CURRENT_HANDOFF.md.
-Baseline đã đồng bộ ở 9057c9be..., không sửa AGENTS.md và không mở rộng toàn map.
-Chạy audit source/generator/import-readback/review hiện có; ưu tiên đọc evidence
-72 model, 8-view, 36 unit/180 placement. Nếu cần sửa, chốt contract trước,
-chỉ sửa file thuộc P1, kiểm tra transformed bounds và không claim headed visual/FPS.
-Cuối pha cập nhật hai Docs với lệnh, exit code, evidence mới, commit hash và
-push hash; không push nếu AGENTS.md policy chưa cho phép.
+Baseline P1 đã đạt source/geometry gate; không sửa AGENTS.md, evidence cũ, map hoặc gameplay ngoài scope.
+Chốt material graph/output readback và hero slice 200–300 m; headed capture chỉ chạy khi prompt cho phép.
+Không claim visual/FPS từ Blender, static parse, build hoặc NullRHI; cập nhật hai Docs với evidence mới.
 ```
