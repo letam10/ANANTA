@@ -8,6 +8,12 @@
 #include "GameFramework/PlayerController.h"
 #include "InputKeyEventArgs.h"
 
+namespace
+{
+    FVector ScheduledOrigin = FVector::ZeroVector;
+    bool bScheduledOriginCaptured = false;
+}
+
 void ACoastalQA::Key(const FKey& KeyName, bool Pressed)
 {
     GetWorld()->GetFirstPlayerController()->InputKey(FInputKeyEventArgs(nullptr,
@@ -22,6 +28,7 @@ void ACoastalQA::TestInteractions()
     int32 Services = 0;
     int32 Citizens = 0;
     int32 Items = 0;
+    int32 ScheduledCitizens = 0;
     int32 SmallProps = 0;
     ACoastalInteractable* FirstDoor = nullptr;
     for (TActorIterator<ACoastalInteractable> It(GetWorld()); It; ++It)
@@ -52,6 +59,15 @@ void ACoastalQA::TestInteractions()
         else if (It->Kind == 2)
         {
             Citizens += !It->Use().IsEmpty() && It->bUsed ? 1 : 0;
+            if (It->bScheduleEnabled)
+            {
+                ++ScheduledCitizens;
+                if (!bScheduledOriginCaptured)
+                {
+                    ScheduledOrigin = It->GetActorLocation();
+                    bScheduledOriginCaptured = true;
+                }
+            }
         }
         else if (It->Kind == 0)
         {
@@ -73,6 +89,7 @@ void ACoastalQA::TestInteractions()
     Check(TEXT("all_23_doorways_close_and_clear_on_open"), Doors == 23 && ClearDoors == Doors);
     Check(TEXT("23_services_respond"), Services >= 23);
     Check(TEXT("23_npcs_respond"), Citizens == 23);
+    Check(TEXT("23_npcs_scheduled"), ScheduledCitizens == 23);
     Check(TEXT("5_items_collect"), Items == 5);
     Check(TEXT("micro_props_respond"), SmallProps >= 5);
     if (FirstDoor)
@@ -105,6 +122,16 @@ bool ACoastalQA::AdvanceGameplayTests()
     else if (Phase == 1 && Age > 0.4)
     {
         Key(EKeys::E, false);
+        bool bScheduleMoved = false;
+        for (TActorIterator<ACoastalInteractable> It(GetWorld()); It; ++It)
+        {
+            if (It->Kind == 2 && It->bScheduleEnabled)
+            {
+                bScheduleMoved = FVector::Dist2D(ScheduledOrigin, It->GetActorLocation()) > 1.0f;
+                break;
+            }
+        }
+        Check(TEXT("npc_schedule_moves"), bScheduledOriginCaptured && bScheduleMoved);
         int32 Opened = 0;
         for (TActorIterator<ACoastalInteractable> It(GetWorld()); It; ++It)
         {

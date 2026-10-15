@@ -88,7 +88,7 @@ def dress(scene, data, kind):
                  service_message(kind), model=service_model, yaw=90)
     scene.action(data["name"] + "_Resident", resident_position,
                  "Welcome. The station is north, the beach is east. E opens doors and boards vehicles.",
-                 kind=2, model="Citizen", yaw=-90)
+                 kind=2, model="Citizen", yaw=-90, schedule=True)
     if kind not in ("home", "hotel", "beauty"):
         for horizontal in (-5, 5):
             for depth in (-5, 5):

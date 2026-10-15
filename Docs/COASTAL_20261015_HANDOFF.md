@@ -111,3 +111,21 @@ Docs của lượt này, rồi đối chiếu git rev-parse HEAD với git ls-re
   làm chẩn đoán, không dùng làm bằng chứng PASS.
 - Đây vẫn là bounded NullRHI gameplay proof; chưa phải headed visual acceptance,
   benchmark 60 FPS, GPU/VRAM percentile hay test người chơi tự do trong từng phòng.\n
+
+## Cập nhật 2026-10-15 — lịch cư dân nhẹ
+
+- Kind=2 resident NPC nay có lịch chuyển động nhẹ quanh anchor trong bán kính
+  120 cm, tick interval 0,1 giây; service, cửa, item, prop nhỏ và HISM không tick.
+- coastal_scene.py đặt schedule_enabled, schedule_radius và schedule_speed bằng
+  set_editor_property để tương thích Unreal Python. coastal_rooms.py bật lịch cho
+  23 resident actor.
+- CoastalInteractable.cpp giữ anchor, pha dao động xác định theo vị trí và di chuyển
+  bằng hai hàm sin nhỏ; không đổi độ cao, không dùng pathfinding hoặc tick toàn map.
+- Build Development đạt Result: Succeeded. BuildCoastalCity log tuyệt đối ghi
+  COASTAL_MAP_OK 23 enterable buildings, 6906 instances / 928 HISM batches,
+  Python script executed successfully, 0 error(s), 2 warning(s).
+- CoastalQA r9 ghi 23_npcs_scheduled PASS, npc_schedule_moves PASS,
+  micro_props_respond PASS và COASTAL_QA_COMPLETE failures=0 views=122.
+  Đây vẫn là bounded NullRHI gameplay proof, chưa phải headed visual/FPS benchmark.
+- Một lần chạy commandlet dùng tên thuộc tính trực tiếp b_schedule_enabled đã lỗi
+  AttributeError; lỗi đã được sửa bằng set_editor_property và lần chạy sau đạt.

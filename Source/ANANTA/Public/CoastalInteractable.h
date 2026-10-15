@@ -27,6 +27,16 @@ public:
     UPROPERTY(EditAnywhere, BlueprintReadWrite)
     int32 Kind = 0;
 
+    // Lịch nhẹ cho cư dân (Kind = 2), di chuyển quanh điểm neo.
+    UPROPERTY(EditAnywhere, BlueprintReadWrite)
+    bool bScheduleEnabled = false;
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite)
+    float ScheduleRadius = 120.f;
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite)
+    float ScheduleSpeed = 0.65f;
+
     UPROPERTY(EditAnywhere, BlueprintReadWrite)
     FVector Destination = FVector::ZeroVector;
 
@@ -38,5 +48,8 @@ public:
 
 private:
     FRotator ClosedRotation;
+    FVector ScheduleOrigin;
+    float SchedulePhase = 0.f;
     virtual void BeginPlay() override;
+    virtual void Tick(float DeltaSeconds) override;
 };

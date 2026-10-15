@@ -96,13 +96,26 @@ class Scene:
         component.set_editor_property("cast_shadow", False)
         return actor
 
-    def action(self, name, position, message, kind=0, model="FactoryControl", yaw=0):
+    def action(
+        self,
+        name,
+        position,
+        message,
+        kind=0,
+        model="FactoryControl",
+        yaw=0,
+        schedule=False,
+    ):
         actor = self.spawn(unreal.CoastalInteractable, name, position, yaw)
         actor.action_name = name.replace("_", " ")
         actor.message = message
         actor.kind = kind
         actor.mesh.set_static_mesh(unreal.load_asset(f"{ROOT}/Models/{model}"))
         actor.mesh.set_material(0, self.surface)
+        if schedule and kind == 2:
+            actor.set_editor_property("schedule_enabled", True)
+            actor.set_editor_property("schedule_radius", 120.0)
+            actor.set_editor_property("schedule_speed", 0.65)
         if kind == 1:
             actor.mesh.set_relative_location(unreal.Vector(0, 45, 0), False, False)
         if kind == 4:

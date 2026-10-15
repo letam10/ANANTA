@@ -130,3 +130,18 @@ bố trí bằng người chơi ở đủ 5 góc.
 - Giữ mục tiêu render 16.667 ms cho 60 FPS, TSR và Lumen software; chưa có log
   headed ghi GPU/VRAM/frame-time percentile. Chưa có World Partition/HLOD,
   lịch NPC, lái máy bay, hoạt ảnh chèo, minigame hoặc save/kinh tế đầy đủ.
+
+
+## Cập nhật 2026-10-15 — lịch NPC và QA chuyển động
+
+- Thêm lịch nhẹ cho resident NPC Kind=2: 23 actor giữ anchor, di chuyển dao động
+  nhỏ mỗi 0,1 giây trong phạm vi 120 cm. Các actor còn lại không bật tick.
+- Unreal Python dùng set_editor_property cho schedule_enabled, schedule_radius và
+  schedule_speed; cách này tránh lỗi AttributeError khi đặt UPROPERTY bool.
+- Build Development exit 0; map commandlet log tuyệt đối đạt
+  COASTAL_MAP_OK 23 enterable buildings, 6906 instances / 928 HISM batches,
+  Python script executed successfully và 0 error(s), 2 warning(s).
+- QA r9 đạt 23_npcs_scheduled, npc_schedule_moves, micro_props_respond và
+  COASTAL_QA_COMPLETE failures=0 views=122.
+- Bằng chứng vẫn là NullRHI bounded QA, không thay thế headed material, visual,
+  GPU, VRAM hoặc 60 FPS acceptance.
