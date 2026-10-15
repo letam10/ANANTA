@@ -163,3 +163,11 @@ bố trí bằng người chơi ở đủ 5 góc.
 - Map commandlet đạt `COASTAL_MAP_OK 23 enterable buildings, 6834 instances / 892 HISM batches`; Build Development exit 0 trong 18,63 giây.
 - QA r11 exit 0 đạt `11_micro_props_present PASS`, `micro_props_respond PASS`, `traffic_signals_present PASS`, `npc_schedule_moves PASS` và `COASTAL_QA_COMPLETE failures=0 views=122`.
 - Đây là kiểm tra logic bounded NullRHI. Chưa có headed visual/material acceptance, đo frame-time/GPU/VRAM hoặc benchmark 60 FPS; các giới hạn này vẫn được giữ trong kế hoạch.
+
+## Cập nhật 2026-10-15 — gate tàu hai hướng
+
+- `coastal_transit.py` dựng hai ray song song, hai platform, cầu vượt và hai `ACoastalTrain` độc lập. `Train_0` chạy về phía đông (`Direction=+1`), `Train_1` chạy về phía tây (`Direction=-1`).
+- `CoastalTrain.cpp` giữ chuyển động kinematic nhẹ 650 cm/s, dwell 6 giây tại ga X=0 và vòng lại ở cuối tuyến. Cách này giữ chi phí thấp, nhưng chưa phải hệ thống tín hiệu/AI railway hoàn chỉnh.
+- QA bổ sung `train_two_way_present` để đếm hai actor và xác nhận đủ một hướng mỗi chiều. Build Development exit 0 trong 11,15 giây.
+- QA r12 exit 0 đạt `train_two_way_present PASS`, `11_micro_props_present PASS`, `traffic_signals_present PASS`, `npc_schedule_moves PASS` và `COASTAL_QA_COMPLETE failures=0 views=122` trong `Saved/Upgrade/runtime-r12-train.log`.
+- Đây là proof runtime bounded bằng NullRHI. Chưa có headed review tàu/ga, collision/player boarding, signal control, âm thanh tàu, schedule giao thông hoặc frame-time/GPU 60 FPS.

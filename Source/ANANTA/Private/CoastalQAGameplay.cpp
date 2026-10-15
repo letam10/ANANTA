@@ -2,6 +2,7 @@
 
 #include "CoastalCharacter.h"
 #include "CoastalInteractable.h"
+#include "CoastalTrain.h"
 #include "CoastalVehicle.h"
 #include "Components/StaticMeshComponent.h"
 #include "EngineUtils.h"
@@ -32,6 +33,9 @@ void ACoastalQA::TestInteractions()
     int32 SmallProps = 0;
     int32 Signals = 0;
     int32 SignalStates = 0;
+    int32 Trains = 0;
+    int32 EastboundTrains = 0;
+    int32 WestboundTrains = 0;
     ACoastalInteractable* FirstDoor = nullptr;
     for (TActorIterator<ACoastalInteractable> It(GetWorld()); It; ++It)
     {
@@ -93,6 +97,12 @@ void ACoastalQA::TestInteractions()
             SmallProps += !Response.IsEmpty() && It->bUsed ? 1 : 0;
         }
     }
+    for (TActorIterator<ACoastalTrain> It(GetWorld()); It; ++It)
+    {
+        ++Trains;
+        EastboundTrains += It->Direction > 0 ? 1 : 0;
+        WestboundTrains += It->Direction < 0 ? 1 : 0;
+    }
     Check(TEXT("all_23_doorways_close_and_clear_on_open"), Doors == 23 && ClearDoors == Doors);
     Check(TEXT("23_services_respond"), Services >= 23);
     Check(TEXT("23_npcs_respond"), Citizens == 23);
@@ -101,6 +111,7 @@ void ACoastalQA::TestInteractions()
     Check(TEXT("micro_props_respond"), SmallProps >= 5);
     Check(TEXT("11_micro_props_present"), SmallProps >= 11);
     Check(TEXT("traffic_signals_present"), Signals >= 20 && SignalStates == Signals);
+    Check(TEXT("train_two_way_present"), Trains == 2 && EastboundTrains == 1 && WestboundTrains == 1);
     if (FirstDoor)
     {
         FVector Position = FirstDoor->Mesh->Bounds.Origin - FVector(0, 190, 0);

@@ -148,3 +148,11 @@ Docs của lượt này, rồi đối chiếu git rev-parse HEAD với git ls-re
 - Build map đạt `COASTAL_MAP_OK 23 enterable buildings, 6834 instances / 892 HISM batches`, MapCheck 0 Error/Warning; warning còn lại là Slate startup và `save_current_level` deprecated.
 - Build Development đạt `Result: Succeeded` trong 18,63 giây. QA r11 exit 0 với `11_micro_props_present PASS`, `micro_props_respond PASS`, `traffic_signals_present PASS`, `npc_schedule_moves PASS` và `COASTAL_QA_COMPLETE failures=0 views=122` trong `Saved/Upgrade/runtime-r11-microprops.log`.
 - Đây vẫn là bounded NullRHI proof; chưa thay thế headed visual review, kiểm tra va chạm cảm nhận, GPU/VRAM hoặc benchmark 60 FPS. Asset cũ bị generator/import ghi lại đã được phục hồi, chỉ giữ blend/manifest và sáu asset mới cho tranche này.
+
+## Cập nhật 2026-10-15 — gate tàu hai hướng
+
+- Ga Nova Coast hiện có hai đường ray độc lập tại hai cao độ ngang khác nhau, hai platform và cầu vượt; `coastal_transit.py` tạo `Train_0` chạy `Direction=+1` và `Train_1` chạy `Direction=-1`.
+- `ACoastalTrain` chạy dọc trục X ở tốc độ 650 cm/s, dừng 6 giây khi qua mốc ga X=0 rồi tiếp tục, và đảo vị trí ở hai đầu `RouteHalfLength`; đây là chuyển động nhẹ, không thêm tick cho actor tĩnh/HISM.
+- `CoastalQAGameplay.cpp` thêm gate `train_two_way_present`, đếm đúng hai train actor và kiểm tra một hướng đông, một hướng tây.
+- Build Development sau thay đổi đạt `Result: Succeeded` trong 11,15 giây. QA r12 exit 0 ghi `train_two_way_present PASS`, `11_micro_props_present PASS`, `traffic_signals_present PASS`, `npc_schedule_moves PASS` và `COASTAL_QA_COMPLETE failures=0 views=122` trong `Saved/Upgrade/runtime-r12-train.log`.
+- Gate này chứng minh actor và hướng tuyến trong runtime bounded NullRHI; chưa chứng minh headed visual, va chạm tàu với người chơi, tín hiệu đường ray điều khiển tàu, âm thanh, schedule giao thông hoặc FPS 60.
