@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-15T06:25:15.412730",
+  "generated_at": "2026-10-15T07:26:37.584524",
   "units": "metres",
   "models": [
     {
@@ -1406,6 +1406,138 @@
         0.64
       ],
       "triangles": 432,
+      "material_sections": 1,
+      "pivot": "ground center",
+      "forward": "+X"
+    },
+    {
+      "name": "MakeupKit",
+      "dimensions_m": [
+        0.38,
+        0.24,
+        0.26
+      ],
+      "bounds_min_m": [
+        -0.19,
+        -0.12,
+        0.0
+      ],
+      "bounds_max_m": [
+        0.19,
+        0.12,
+        0.26
+      ],
+      "triangles": 652,
+      "material_sections": 1,
+      "pivot": "ground center",
+      "forward": "+X"
+    },
+    {
+      "name": "SaucePan",
+      "dimensions_m": [
+        0.73,
+        0.36,
+        0.185
+      ],
+      "bounds_min_m": [
+        -0.18,
+        -0.18,
+        0.0
+      ],
+      "bounds_max_m": [
+        0.55,
+        0.18,
+        0.185
+      ],
+      "triangles": 336,
+      "material_sections": 1,
+      "pivot": "ground center",
+      "forward": "+X"
+    },
+    {
+      "name": "BathroomTowel",
+      "dimensions_m": [
+        0.386,
+        0.25,
+        0.165
+      ],
+      "bounds_min_m": [
+        -0.19,
+        -0.125,
+        0.0
+      ],
+      "bounds_max_m": [
+        0.196,
+        0.125,
+        0.165
+      ],
+      "triangles": 432,
+      "material_sections": 1,
+      "pivot": "ground center",
+      "forward": "+X"
+    },
+    {
+      "name": "SofaCushion",
+      "dimensions_m": [
+        0.44,
+        0.42,
+        0.23
+      ],
+      "bounds_min_m": [
+        -0.22,
+        -0.21,
+        0.0
+      ],
+      "bounds_max_m": [
+        0.22,
+        0.21,
+        0.23
+      ],
+      "triangles": 1656,
+      "material_sections": 1,
+      "pivot": "ground center",
+      "forward": "+X"
+    },
+    {
+      "name": "ToyDoll",
+      "dimensions_m": [
+        0.288,
+        0.3476,
+        0.68
+      ],
+      "bounds_min_m": [
+        -0.13,
+        -0.1738,
+        0.0
+      ],
+      "bounds_max_m": [
+        0.158,
+        0.1738,
+        0.68
+      ],
+      "triangles": 2552,
+      "material_sections": 1,
+      "pivot": "ground center",
+      "forward": "+X"
+    },
+    {
+      "name": "Laptop",
+      "dimensions_m": [
+        0.48,
+        0.34,
+        0.3
+      ],
+      "bounds_min_m": [
+        -0.24,
+        -0.17,
+        0.0
+      ],
+      "bounds_max_m": [
+        0.24,
+        0.17,
+        0.3
+      ],
+      "triangles": 1556,
       "material_sections": 1,
       "pivot": "ground center",
       "forward": "+X"

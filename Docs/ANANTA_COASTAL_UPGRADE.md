@@ -154,3 +154,12 @@ bố trí bằng người chơi ở đủ 5 góc.
 - Build Development thành công; map commandlet ghi `COASTAL_MAP_OK 23 enterable buildings, 6834 instances / 892 HISM batches`, Python script executed successfully và 0 error(s), 2 warning(s). Hai warning là Slate startup và API save level deprecated.
 - Quick gameplay QA r10 exit 0 với `traffic_signals_present PASS`, `npc_schedule_moves PASS`, `micro_props_respond PASS` và `COASTAL_QA_COMPLETE failures=0 views=122` trong `Saved/Upgrade/runtime-r10-signal.log`.
 - Kết quả này chỉ xác nhận logic bounded bằng NullRHI. Chưa có headed visual/material review, kiểm tra màu đèn, đo GPU/VRAM hoặc benchmark 60 FPS; các bước đó vẫn nằm trong kế hoạch hero slice.
+
+## Cập nhật 2026-10-15 — sáu prop nội thất mới
+
+- Bộ model tăng từ 65 lên 71 với `MakeupKit`, `SaucePan`, `BathroomTowel`, `SofaCushion`, `ToyDoll` và `Laptop`. Tất cả dùng primitive low-poly, pivot nền, hướng `+X`, 3 LOD và tối đa 9.678 tam giác theo generator report.
+- Blender 8-view review đạt `MODEL_VIEW_COVERAGE_OK 71 models x 8 views`; compose đạt `MODEL_REVIEWS_OK 71 models, 568 rendered views`. Import readback Unreal đạt `COASTAL_IMPORT_OK 71 models with 3 LODs; dimensions verified`.
+- Phòng home/hotel/beauty gọi `place_interactive_prop` cho vanity, bếp, phòng tắm, sofa, đồ chơi và laptop; tất cả là Kind=5, message ngắn, không tạo tick riêng và giữ khoảng trống lối đi.
+- Map commandlet đạt `COASTAL_MAP_OK 23 enterable buildings, 6834 instances / 892 HISM batches`; Build Development exit 0 trong 18,63 giây.
+- QA r11 exit 0 đạt `11_micro_props_present PASS`, `micro_props_respond PASS`, `traffic_signals_present PASS`, `npc_schedule_moves PASS` và `COASTAL_QA_COMPLETE failures=0 views=122`.
+- Đây là kiểm tra logic bounded NullRHI. Chưa có headed visual/material acceptance, đo frame-time/GPU/VRAM hoặc benchmark 60 FPS; các giới hạn này vẫn được giữ trong kế hoạch.

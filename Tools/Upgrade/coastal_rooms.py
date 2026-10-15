@@ -51,6 +51,60 @@ def dress(scene, data, kind):
         service_model = "Mug"
     elif kind in ("home", "hotel", "beauty"):
         furnish_home(scene, data)
+        if kind == "beauty":
+            prop(
+                "MakeupKit",
+                -5.2,
+                9.2,
+                0.86,
+                scale=(0.7, 0.7, 0.7),
+                interactive_message="Makeup kit inspected.",
+            )
+        east_limit = data["width_m"] / 2 - 0.11 - 0.01
+        stove_x = east_limit - scene.model_data["Stove"]["bounds_max_m"][1]
+        prop(
+            "SaucePan",
+            stove_x,
+            -4.3,
+            0.89,
+            yaw=-90,
+            scale=(0.85, 0.85, 0.85),
+            interactive_message="Sauce pan inspected.",
+        )
+        prop(
+            "BathroomTowel",
+            7.2,
+            8.2,
+            0.8,
+            scale=(0.8, 0.8, 0.8),
+            interactive_message="Bathroom towel inspected.",
+        )
+        prop(
+            "SofaCushion",
+            -6.4,
+            -7.2,
+            0.8,
+            yaw=180,
+            scale=(0.8, 0.8, 0.8),
+            interactive_message="Sofa cushion inspected.",
+        )
+        prop(
+            "ToyDoll",
+            -8.0,
+            6.4,
+            0.78,
+            scale=(0.65, 0.65, 0.65),
+            interactive_message="Toy doll inspected.",
+        )
+        if kind == "hotel":
+            prop(
+                "Laptop",
+                -5.2,
+                9.2,
+                0.88,
+                scale=(0.8, 0.8, 0.8),
+                interactive_message="Laptop inspected.",
+            )
     elif kind in ("cinema", "opera"):
         scene.box((x, y + 7.5, z + 0.3), (13, 4, 0.6), "Wood")
         scene.box((x, y + 9, z + 2.1), (12, 0.08, 2.8), "Glass", collision=False)

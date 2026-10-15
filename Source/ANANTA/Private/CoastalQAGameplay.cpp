@@ -99,6 +99,7 @@ void ACoastalQA::TestInteractions()
     Check(TEXT("23_npcs_scheduled"), ScheduledCitizens == 23);
     Check(TEXT("5_items_collect"), Items == 5);
     Check(TEXT("micro_props_respond"), SmallProps >= 5);
+    Check(TEXT("11_micro_props_present"), SmallProps >= 11);
     Check(TEXT("traffic_signals_present"), Signals >= 20 && SignalStates == Signals);
     if (FirstDoor)
     {

@@ -138,3 +138,13 @@ Docs của lượt này, rồi đối chiếu git rev-parse HEAD với git ls-re
 - Build Development đạt `Result: Succeeded`. BuildCoastalCity dùng absolute script path và ghi `COASTAL_MAP_OK 23 enterable buildings, 6834 instances / 892 HISM batches`, Python script executed successfully, 0 error(s), 2 warning(s). Cảnh báo là Slate startup và API save level deprecated.
 - QA r10 chạy `-game -CoastalQA -NullRHI -unattended -NoSound` exit 0. Các marker mới và hồi quy đều PASS: `traffic_signals_present`, `npc_schedule_moves`, `micro_props_respond`, cùng các check spawn/cửa/dịch vụ/NPC/item/biên biển/xe/xuồng; tổng kết `COASTAL_QA_COMPLETE failures=0 views=122` trong `Saved/Upgrade/runtime-r10-signal.log`.
 - Đây là proof logic bounded trong NullRHI; chưa chứng minh màu đèn/material trong headed player, cảm nhận va chạm, GPU/VRAM, frame-time percentile hay 60 FPS. Cần headed visual review và đo phần cứng trước khi tuyên bố đạt mục tiêu FPS.
+
+## Cập nhật 2026-10-15 — sáu prop nội thất mới
+
+- Bổ sung sáu model low-poly có pivot nền và hướng đọc `+X`: `MakeupKit`, `SaucePan`, `BathroomTowel`, `SofaCushion`, `ToyDoll` và `Laptop`. Các model dùng primitive hiện có, dưới giới hạn 20.000 tam giác/model và được generator xuất cùng bộ 3 LOD.
+- Generator Blender đạt `COASTAL_MODELS_OK 71 models; max triangles=9678`. Review đạt `MODEL_VIEW_COVERAGE_OK 71 models x 8 views` và `MODEL_REVIEWS_OK 71 models, 568 rendered views`.
+- Import Unreal đạt `COASTAL_IMPORT_OK 71 models with 3 LODs; dimensions verified`, Python script exit 0. Cảnh báo duy nhất là UE-MCP Slate startup.
+- `coastal_rooms.py` đặt prop tương tác bằng API `place_interactive_prop` trong nhóm home/hotel/beauty: vanity makeup, kitchen sauce pan, bathroom towel, sofa cushion, toy doll và hotel laptop. Các vị trí giữ khoảng hở lối đi/cửa; prop nhỏ dùng Kind=5 và không bật tick riêng.
+- Build map đạt `COASTAL_MAP_OK 23 enterable buildings, 6834 instances / 892 HISM batches`, MapCheck 0 Error/Warning; warning còn lại là Slate startup và `save_current_level` deprecated.
+- Build Development đạt `Result: Succeeded` trong 18,63 giây. QA r11 exit 0 với `11_micro_props_present PASS`, `micro_props_respond PASS`, `traffic_signals_present PASS`, `npc_schedule_moves PASS` và `COASTAL_QA_COMPLETE failures=0 views=122` trong `Saved/Upgrade/runtime-r11-microprops.log`.
+- Đây vẫn là bounded NullRHI proof; chưa thay thế headed visual review, kiểm tra va chạm cảm nhận, GPU/VRAM hoặc benchmark 60 FPS. Asset cũ bị generator/import ghi lại đã được phục hồi, chỉ giữ blend/manifest và sáu asset mới cho tranche này.
