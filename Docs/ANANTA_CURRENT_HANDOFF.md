@@ -435,3 +435,10 @@ physics/buoyancy and do not claim 60 FPS before F1. Keep AGENTS.md and unrelated
 Unreal dirty files untouched. Record fresh runtime/readback evidence before
 reclassifying W3 or P4A/P4B.
 ```
+## W2/W3 commit and push receipt
+
+- Implementation/docs commit: `6394e505a3438142fc3ef431efd9cc1d2962e7d`
+  (`feat: expand coastal water quick qa contract`).
+- Push: `git push origin main` exit 0; remote `refs/heads/main` matched
+  `6394e505a3438142fc3ef431efd9cc1d2962e7d`. No force-push was used.
+- `AGENTS.md` remains the only unrelated dirty file and is not staged.
