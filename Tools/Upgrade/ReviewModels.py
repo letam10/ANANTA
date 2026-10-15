@@ -19,7 +19,10 @@ def main():
     bpy.ops.wm.open_mainfile(filepath=str(source))
     models = sorted(list(bpy.context.scene.objects), key=lambda obj: obj.name)
     scene = bpy.context.scene
-    scene.render.engine = "BLENDER_EEVEE_NEXT"
+    try:
+        scene.render.engine = "BLENDER_EEVEE_NEXT"
+    except TypeError:
+        scene.render.engine = "BLENDER_EEVEE"
     scene.eevee.taa_render_samples = 8
     scene.render.resolution_x = 400
     scene.render.resolution_y = 400
