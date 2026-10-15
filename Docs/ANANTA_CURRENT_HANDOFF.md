@@ -102,7 +102,7 @@ chưa đạt gate. P1 sẽ bắt đầu bằng audit source/readback/review.
 
 ## Commit và push
 
-- Commit hash: **chưa tạo** — Docs P0 sẽ được commit riêng sau khi kiểm tra final diff.
+- P0 Docs commit: `927369f8bbc4fa5b0a1a5981fa1d927533e6bf3d` (`docs: establish ANANTA master roadmap and handoff`).
 - Push hash: **chưa chạy**; không push trong chat này do policy `AGENTS.md`.
 - P0 đã PASS về baseline/audit/docs; không claim headed visual/FPS.
 
