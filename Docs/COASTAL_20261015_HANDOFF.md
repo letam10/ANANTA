@@ -129,3 +129,12 @@ Docs của lượt này, rồi đối chiếu git rev-parse HEAD với git ls-re
   Đây vẫn là bounded NullRHI gameplay proof, chưa phải headed visual/FPS benchmark.
 - Một lần chạy commandlet dùng tên thuộc tính trực tiếp b_schedule_enabled đã lỗi
   AttributeError; lỗi đã được sửa bằng set_editor_property và lần chạy sau đạt.
+
+## Cập nhật 2026-10-15 — đèn giao thông runtime nhẹ
+
+- Đổi 72 đèn giao thông tại 36 giao lộ thành actor `ACoastalInteractable` Kind=6. Mỗi actor giữ mesh TrafficLight, không tạo collision riêng và được đặt theo cùng tọa độ hai phía đường.
+- `SignalPeriod` mặc định là 12 giây, tối thiểu 3 giây; `SignalState` chuyển Green (0), Yellow (1) rồi Red (2) theo tỷ lệ 55% / 10% / 35%. Pha ban đầu phụ thuộc tọa độ để các giao lộ không đồng bộ tuyệt đối.
+- Actor signal bật tick 0,1 giây; service, cửa, item, HISM và prop nhỏ không bị bật tick bởi thay đổi này. HUD/action message phản ánh trạng thái signal hiện tại.
+- Build Development đạt `Result: Succeeded`. BuildCoastalCity dùng absolute script path và ghi `COASTAL_MAP_OK 23 enterable buildings, 6834 instances / 892 HISM batches`, Python script executed successfully, 0 error(s), 2 warning(s). Cảnh báo là Slate startup và API save level deprecated.
+- QA r10 chạy `-game -CoastalQA -NullRHI -unattended -NoSound` exit 0. Các marker mới và hồi quy đều PASS: `traffic_signals_present`, `npc_schedule_moves`, `micro_props_respond`, cùng các check spawn/cửa/dịch vụ/NPC/item/biên biển/xe/xuồng; tổng kết `COASTAL_QA_COMPLETE failures=0 views=122` trong `Saved/Upgrade/runtime-r10-signal.log`.
+- Đây là proof logic bounded trong NullRHI; chưa chứng minh màu đèn/material trong headed player, cảm nhận va chạm, GPU/VRAM, frame-time percentile hay 60 FPS. Cần headed visual review và đo phần cứng trước khi tuyên bố đạt mục tiêu FPS.

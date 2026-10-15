@@ -118,7 +118,7 @@ class Scene:
             actor.set_editor_property("schedule_speed", 0.65)
         if kind == 1:
             actor.mesh.set_relative_location(unreal.Vector(0, 45, 0), False, False)
-        if kind == 4:
+        if kind in (4, 6):
             actor.mesh.set_collision_enabled(unreal.CollisionEnabled.NO_COLLISION)
         return actor
 

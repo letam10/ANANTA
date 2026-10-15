@@ -23,7 +23,7 @@ public:
     UPROPERTY(EditAnywhere, BlueprintReadWrite)
     FString Message = TEXT("Welcome to the coastal district.");
 
-    // 0: dịch vụ, 1: cửa, 2: NPC, 3: vật phẩm, 4: thang máy, 5: prop nhỏ.
+    // 0: dịch vụ, 1: cửa, 2: NPC, 3: vật phẩm, 4: thang máy, 5: prop nhỏ, 6: đèn giao thông.
     UPROPERTY(EditAnywhere, BlueprintReadWrite)
     int32 Kind = 0;
 
@@ -40,6 +40,12 @@ public:
     UPROPERTY(EditAnywhere, BlueprintReadWrite)
     FVector Destination = FVector::ZeroVector;
 
+    UPROPERTY(EditAnywhere, BlueprintReadWrite)
+    float SignalPeriod = 12.f;
+
+    UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly)
+    int32 SignalState = 0;
+
     UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly)
     bool bUsed = false;
 
@@ -50,6 +56,7 @@ private:
     FRotator ClosedRotation;
     FVector ScheduleOrigin;
     float SchedulePhase = 0.f;
+    float SignalPhase = 0.f;
     virtual void BeginPlay() override;
     virtual void Tick(float DeltaSeconds) override;
 };

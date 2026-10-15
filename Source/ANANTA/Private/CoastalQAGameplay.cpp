@@ -30,6 +30,8 @@ void ACoastalQA::TestInteractions()
     int32 Items = 0;
     int32 ScheduledCitizens = 0;
     int32 SmallProps = 0;
+    int32 Signals = 0;
+    int32 SignalStates = 0;
     ACoastalInteractable* FirstDoor = nullptr;
     for (TActorIterator<ACoastalInteractable> It(GetWorld()); It; ++It)
     {
@@ -73,6 +75,11 @@ void ACoastalQA::TestInteractions()
         {
             Services += !It->Use().IsEmpty() && It->bUsed ? 1 : 0;
         }
+        else if (It->Kind == 6)
+        {
+            ++Signals;
+            SignalStates += It->SignalState >= 0 && It->SignalState <= 2 ? 1 : 0;
+        }
         else if (It->Kind == 4)
         {
             FCollisionQueryParams Query(SCENE_QUERY_STAT(CoastalLiftQA), false, Player);
@@ -92,6 +99,7 @@ void ACoastalQA::TestInteractions()
     Check(TEXT("23_npcs_scheduled"), ScheduledCitizens == 23);
     Check(TEXT("5_items_collect"), Items == 5);
     Check(TEXT("micro_props_respond"), SmallProps >= 5);
+    Check(TEXT("traffic_signals_present"), Signals >= 20 && SignalStates == Signals);
     if (FirstDoor)
     {
         FVector Position = FirstDoor->Mesh->Bounds.Origin - FVector(0, 190, 0);

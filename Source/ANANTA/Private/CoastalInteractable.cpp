@@ -24,6 +24,11 @@ void ACoastalInteractable::BeginPlay()
         SchedulePhase = FMath::Fmod(FMath::Abs(ScheduleOrigin.X + ScheduleOrigin.Y), 628.0f) / 100.0f;
         SetActorTickEnabled(true);
     }
+    if (Kind == 6)
+    {
+        SignalPhase = FMath::Fmod(FMath::Abs(GetActorLocation().X + GetActorLocation().Y), 1200.0f) / 100.0f;
+        SetActorTickEnabled(true);
+    }
 }
 
 void ACoastalInteractable::Tick(float DeltaSeconds)
@@ -31,6 +36,20 @@ void ACoastalInteractable::Tick(float DeltaSeconds)
     Super::Tick(DeltaSeconds);
     if (Kind != 2 || !bScheduleEnabled)
     {
+        if (Kind != 6)
+        {
+            return;
+        }
+        const float Period = FMath::Max(3.0f, SignalPeriod);
+        SignalPhase += DeltaSeconds;
+        const float Phase = FMath::Fmod(SignalPhase, Period);
+        const float GreenEnd = Period * 0.55f;
+        const float YellowEnd = Period * 0.65f;
+        SignalState = Phase < GreenEnd ? 0 : Phase < YellowEnd ? 1 : 2;
+        const TCHAR* State = SignalState == 0 ? TEXT("Green")
+            : SignalState == 1 ? TEXT("Yellow") : TEXT("Red");
+        ActionName = FString::Printf(TEXT("Signal: %s"), State);
+        Message = FString::Printf(TEXT("Traffic signal is %s."), State);
         return;
     }
     SchedulePhase += DeltaSeconds * FMath::Max(0.05f, ScheduleSpeed);

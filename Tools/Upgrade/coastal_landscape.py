@@ -41,8 +41,14 @@ def streets(scene):
                 for stripe in range(10):
                     scene.box((x - 4.5 + stripe, y + side * 10.3, 2.045),
                               (0.5, 2.3, 0.01), "White", collision=False)
-                scene.model("TrafficLight", (x + side * 8.8, y - side * 8.8, 2.16),
-                            yaw=90 if side > 0 else -90)
+                scene.action(
+                    f"Signal_{x}_{y}_{side}",
+                    (x + side * 8.8, y - side * 8.8, 2.16),
+                    "Traffic signal state updates automatically.",
+                    kind=6,
+                    model="TrafficLight",
+                    yaw=90 if side > 0 else -90,
+                )
     for coordinate in ROADS[:-1]:
         scene.model("FireHydrant", (coordinate + 4.4, coordinate + 4.4, 2.16),
                     scale=(0.8, 0.8, 0.8), collision=False)

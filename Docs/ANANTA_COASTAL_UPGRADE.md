@@ -145,3 +145,12 @@ bố trí bằng người chơi ở đủ 5 góc.
   COASTAL_QA_COMPLETE failures=0 views=122.
 - Bằng chứng vẫn là NullRHI bounded QA, không thay thế headed material, visual,
   GPU, VRAM hoặc 60 FPS acceptance.
+
+## Cập nhật 2026-10-15 — đèn giao thông runtime nhẹ
+
+- 36 giao lộ có 72 actor `ACoastalInteractable` Kind=6 dùng mesh TrafficLight. Signal actor không sinh collision riêng, giúp giữ giao lộ thông thoáng và chuyển logic trạng thái ra runtime.
+- `SignalPeriod` mặc định 12 giây, tối thiểu 3 giây. `SignalState` tuần tự Green, Yellow, Red theo 55%, 10%, 35% chu kỳ; pha khởi tạo lấy từ tọa độ để tránh mọi giao lộ đổi đồng thời.
+- Tick 0,1 giây chỉ được bật cho resident schedule và signal; các actor tĩnh/HISM không bị chuyển thành tick actor.
+- Build Development thành công; map commandlet ghi `COASTAL_MAP_OK 23 enterable buildings, 6834 instances / 892 HISM batches`, Python script executed successfully và 0 error(s), 2 warning(s). Hai warning là Slate startup và API save level deprecated.
+- Quick gameplay QA r10 exit 0 với `traffic_signals_present PASS`, `npc_schedule_moves PASS`, `micro_props_respond PASS` và `COASTAL_QA_COMPLETE failures=0 views=122` trong `Saved/Upgrade/runtime-r10-signal.log`.
+- Kết quả này chỉ xác nhận logic bounded bằng NullRHI. Chưa có headed visual/material review, kiểm tra màu đèn, đo GPU/VRAM hoặc benchmark 60 FPS; các bước đó vẫn nằm trong kế hoạch hero slice.
