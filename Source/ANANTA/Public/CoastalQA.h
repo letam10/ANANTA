@@ -56,6 +56,7 @@ private:
     void Finish();
     void Check(const TCHAR* Name, bool Passed);
     void TestInteractions();
+    void TestTransit();
     bool AdvanceGameplayTests();
     void Key(const FKey& KeyName, bool Pressed);
 };

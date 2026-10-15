@@ -36,9 +36,23 @@ void ACoastalQA::TestInteractions()
     int32 Trains = 0;
     int32 EastboundTrains = 0;
     int32 WestboundTrains = 0;
+    int32 InteractionRecords = 0;
+    int32 NormalizedInteractions = 0;
+    bool bFailureResponse = false;
     ACoastalInteractable* FirstDoor = nullptr;
     for (TActorIterator<ACoastalInteractable> It(GetWorld()); It; ++It)
     {
+        ++InteractionRecords;
+        const bool bNormalized = !It->GetVenueId().IsNone()
+            && !It->GetPropId().IsNone()
+            && !It->GetInteractionSaveKey().IsNone()
+            && !It->GetInteractionPrompt().IsEmpty()
+            && !It->FailureMessage.IsEmpty();
+        NormalizedInteractions += bNormalized ? 1 : 0;
+        if (!bFailureResponse)
+        {
+            bFailureResponse = !It->ReportInteractionFailure(TEXT("QA bounded failure path")).IsEmpty();
+        }
         if (It->Kind == 1)
         {
             ++Doors;
@@ -112,6 +126,10 @@ void ACoastalQA::TestInteractions()
     Check(TEXT("11_micro_props_present"), SmallProps >= 11);
     Check(TEXT("traffic_signals_present"), Signals >= 20 && SignalStates == Signals);
     Check(TEXT("train_two_way_present"), Trains == 2 && EastboundTrains == 1 && WestboundTrains == 1);
+    Check(TEXT("interaction_data_normalized"), InteractionRecords > 0
+        && NormalizedInteractions == InteractionRecords);
+    Check(TEXT("interaction_failure_message"), bFailureResponse);
+    TestTransit();
     if (FirstDoor)
     {
         FVector Position = FirstDoor->Mesh->Bounds.Origin - FVector(0, 190, 0);
@@ -123,6 +141,51 @@ void ACoastalQA::TestInteractions()
     FHitResult Border;
     Check(TEXT("ocean_boundary_blocks"), GetWorld()->LineTraceSingleByChannel(Border,
         FVector(71500, 0, 1000), FVector(72500, 0, 1000), ECC_Visibility));
+}
+
+void ACoastalQA::TestTransit()
+{
+    int32 Aircraft = 0;
+    int32 Helicopters = 0;
+    int32 BoundedVehicles = 0;
+    for (TActorIterator<ACoastalVehicle> It(GetWorld()); It; ++It)
+    {
+        const ECoastalVehicleType Type = It->GetVehicleType();
+        Aircraft += Type == ECoastalVehicleType::Aircraft ? 1 : 0;
+        Helicopters += Type == ECoastalVehicleType::Helicopter ? 1 : 0;
+        BoundedVehicles += It->bRouteBounded ? 1 : 0;
+    }
+    Check(TEXT("aircraft_and_heli_control_states"), Aircraft >= 1 && Helicopters >= 1);
+    Check(TEXT("vehicle_route_bounds_authored"), BoundedVehicles >= 5);
+
+    int32 SignalStops = 0;
+    int32 SignalReleases = 0;
+    int32 DirectionMatches = 0;
+    int32 Boarded = 0;
+    int32 Alighted = 0;
+    for (TActorIterator<ACoastalTrain> It(GetWorld()); It; ++It)
+    {
+        const FVector Forward = It->GetActorForwardVector();
+        DirectionMatches += It->Direction * Forward.X > 0 ? 1 : 0;
+        It->SetSignalState(ECoastalTrainSignalState::Stop);
+        SignalStops += It->IsStopped() && It->GetTrainState() == ECoastalTrainState::Blocked ? 1 : 0;
+        It->SetSignalState(ECoastalTrainSignalState::Clear);
+        It->HoldAtStationForBoarding();
+        SignalReleases += It->IsStopped() ? 1 : 0;
+        if (Player)
+        {
+            Player->SetActorLocation(It->GetActorLocation() + It->GetActorRightVector() * 300);
+            const bool bBoarded = It->Board(Player);
+            Boarded += bBoarded ? 1 : 0;
+            const bool bAlighted = bBoarded && It->Alight();
+            Alighted += bAlighted ? 1 : 0;
+        }
+    }
+    Check(TEXT("train_signal_stop"), SignalStops == 2);
+    Check(TEXT("train_signal_release_and_station_stop"), SignalReleases == 2);
+    Check(TEXT("train_transform_direction"), DirectionMatches == 2);
+    Check(TEXT("train_boarding"), Boarded == 2);
+    Check(TEXT("train_alighting"), Alighted == Boarded);
 }
 
 bool ACoastalQA::AdvanceGameplayTests()
@@ -174,7 +237,8 @@ bool ACoastalQA::AdvanceGameplayTests()
         Check(TEXT("W_key_walks_character"), FVector::Dist2D(StartVehiclePosition, Player->GetActorLocation()) > 150);
         for (TActorIterator<ACoastalVehicle> It(GetWorld()); It; ++It)
         {
-            if (!It->bBoat)
+            if (!It->bBoat && (It->GetVehicleType() == ECoastalVehicleType::Road
+                || It->GetVehicleType() == ECoastalVehicleType::Emergency))
             {
                 TestVehicle = *It;
                 break;

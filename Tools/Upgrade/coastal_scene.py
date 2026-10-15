@@ -108,11 +108,39 @@ class Scene:
         model="FactoryControl",
         yaw=0,
         schedule=False,
+        venue_id=None,
+        prop_id=None,
+        save_key=None,
+        failure_message=None,
     ):
         actor = self.spawn(unreal.CoastalInteractable, name, position, yaw)
-        actor.action_name = name.replace("_", " ")
+        action_name = " ".join(str(name).replace("_", " ").split())
+        actor.action_name = action_name
         actor.message = message
         actor.kind = kind
+        actor.prompt = action_name
+        actor.response = message
+        actor.failure_message = failure_message or f"{action_name} is unavailable."
+        marker = next((value for value in (
+            "_Service", "_Resident", "_Door", "_RoofLift", "_GroundLift", "_Prop"
+        ) if value in name), None)
+        venue = venue_id or (name.split(marker, 1)[0] if marker else name)
+        if name.startswith("Collectible_"):
+            venue = venue_id or "coastal_collectibles"
+        if name.startswith("Station_Bridge"):
+            venue = venue_id or "nova_coast_station"
+        if name.startswith("Airfield_Control"):
+            venue = venue_id or "coast_airfield"
+        prop = prop_id or name
+        actor.venue_id = venue
+        actor.prop_id = prop
+        actor.save_key = save_key or f"{venue}_{prop}"
+        enum_type = getattr(unreal, "CoastalInteractionKind", None)
+        enum_names = ("SERVICE", "DOOR", "NPC", "ITEM", "ELEVATOR", "PROP", "SIGNAL")
+        if enum_type and 0 <= kind < len(enum_names):
+            enum_value = getattr(enum_type, enum_names[kind], None)
+            if enum_value is not None:
+                actor.set_editor_property("interaction_kind", enum_value)
         actor.mesh.set_static_mesh(unreal.load_asset(f"{ROOT}/Models/{model}"))
         actor.mesh.set_material(0, self.surface)
         if schedule and kind == 2:
@@ -131,6 +159,20 @@ class Scene:
         actor.mesh.set_material(0, self.surface)
         actor.vehicle_name = name
         actor.boat = boat
+        type_name = "ROWBOAT" if boat else "ROAD"
+        if name in ("PoliceCar", "FireEngine", "Ambulance"):
+            type_name = "EMERGENCY"
+        elif name == "CivilAirplane":
+            type_name = "AIRCRAFT"
+        elif name == "Helicopter":
+            type_name = "HELICOPTER"
+        enum_type = getattr(unreal, "CoastalVehicleType", None)
+        enum_value = getattr(enum_type, type_name, None) if enum_type else None
+        if enum_value is not None:
+            actor.set_editor_property("vehicle_type", enum_value)
+        actor.set_editor_property("route_bounded", True)
+        actor.set_editor_property("route_min_bounds", unreal.Vector(-24000, -30000, -1000))
+        actor.set_editor_property("route_max_bounds", unreal.Vector(74000, 30000, 12000))
         bounds = self.dimensions[name]
         if boat:
             actor.collision.set_box_extent(unreal.Vector(bounds[0] * 47, bounds[1] * 43, bounds[2] * 18))

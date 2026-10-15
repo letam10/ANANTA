@@ -45,13 +45,14 @@ def airfield(scene):
         scene.box((-199, y, 2.065), (0.2, 3, 0.01), "White", collision=False)
     for side in (-1, 1):
         scene.box((-199 + side * 7, -25, 2.065), (0.15, 176, 0.01), "White", collision=False)
-    scene.model("CivilAirplane", (-199, -22, 2.08), yaw=90)
+    scene.vehicle("CivilAirplane", (-199, -22, 2.08), yaw=90)
     for x in (-205, -193):
         scene.model("AirportCart", (x, 62, 2.08), yaw=90, scale=(0.8, 0.8, 0.8), collision=False)
     scene.box((-198, 76, 2.08), (18, 18, 0.16), "Road")
     for side in (-1, 1):
         scene.box((-198 + side * 1.4, 76, 2.17), (0.25, 4, 0.01), "White", collision=False)
     scene.box((-198, 76, 2.17), (3, 0.25, 0.01), "White", collision=False)
-    scene.model("Helicopter", (-198, 76, 2.2), yaw=90)
+    scene.vehicle("Helicopter", (-198, 76, 2.2), yaw=90)
     scene.text("Airfield", (-199, 87, 4.3), "COAST AIRFIELD", yaw=-90, size=0.7)
-    scene.action("Airfield_Control", (-191, 85, 2), "Airfield inspected. Aircraft are display models.")
+    scene.action("Airfield_Control", (-191, 85, 2),
+                 "Airfield controls ready. Board an aircraft to test bounded flight.")
