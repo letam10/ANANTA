@@ -156,3 +156,12 @@ Docs của lượt này, rồi đối chiếu git rev-parse HEAD với git ls-re
 - `CoastalQAGameplay.cpp` thêm gate `train_two_way_present`, đếm đúng hai train actor và kiểm tra một hướng đông, một hướng tây.
 - Build Development sau thay đổi đạt `Result: Succeeded` trong 11,15 giây. QA r12 exit 0 ghi `train_two_way_present PASS`, `11_micro_props_present PASS`, `traffic_signals_present PASS`, `npc_schedule_moves PASS` và `COASTAL_QA_COMPLETE failures=0 views=122` trong `Saved/Upgrade/runtime-r12-train.log`.
 - Gate này chứng minh actor và hướng tuyến trong runtime bounded NullRHI; chưa chứng minh headed visual, va chạm tàu với người chơi, tín hiệu đường ray điều khiển tàu, âm thanh, schedule giao thông hoặc FPS 60.
+
+## Cập nhật 2026-10-15 — dải bọt sóng nhẹ
+
+- Thêm model low-poly `OceanFoam` với pivot nền, dải bọt trắng mỏng và bốn gợn ellipsoid; model giữ dưới ngân sách hình học và không có tick/physics.
+- `coastal_landscape.py` đặt 8 instance `OceanFoam` thưa dọc mép cát tại x=210 m, collision=false. Vì dùng scene.model nên các instance được gom HISM, không tạo 8 actor runtime độc lập.
+- Generator đạt `COASTAL_MODELS_OK 72 models; max triangles=9678`; review đạt `MODEL_VIEW_COVERAGE_OK 72 models x 8 views` và compose đạt `MODEL_REVIEWS_OK 72 models, 576 rendered views`.
+- Import đạt `COASTAL_IMPORT_OK 72 models with 3 LODs; dimensions verified`, exit 0. BuildCoastalCity đạt `COASTAL_MAP_OK 23 enterable buildings, 6842 instances / 899 HISM batches`, MapCheck 0 Error/Warning và 0 error runtime.
+- QA r14 exit 0 đạt `ocean_boundary_blocks PASS`, `train_two_way_present PASS`, `traffic_signals_present PASS`, `11_micro_props_present PASS`, `npc_schedule_moves PASS`, các gate xe/xuồng và `COASTAL_QA_COMPLETE failures=0 views=122` trong `Saved/Upgrade/runtime-r14-foam.log`.
+- Đây là cải thiện thị giác nhẹ trên mặt nước opaque có normal động; chưa phải water simulation, buoyancy, foam interaction, headed visual acceptance hoặc proof 60 FPS GPU.

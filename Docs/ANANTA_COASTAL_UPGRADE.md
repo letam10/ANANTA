@@ -171,3 +171,11 @@ bố trí bằng người chơi ở đủ 5 góc.
 - QA bổ sung `train_two_way_present` để đếm hai actor và xác nhận đủ một hướng mỗi chiều. Build Development exit 0 trong 11,15 giây.
 - QA r12 exit 0 đạt `train_two_way_present PASS`, `11_micro_props_present PASS`, `traffic_signals_present PASS`, `npc_schedule_moves PASS` và `COASTAL_QA_COMPLETE failures=0 views=122` trong `Saved/Upgrade/runtime-r12-train.log`.
 - Đây là proof runtime bounded bằng NullRHI. Chưa có headed review tàu/ga, collision/player boarding, signal control, âm thanh tàu, schedule giao thông hoặc frame-time/GPU 60 FPS.
+
+## Cập nhật 2026-10-15 — dải bọt sóng nhẹ
+
+- Bộ model tăng từ 72 với `OceanFoam`: đế bọt mỏng và bốn gợn ellipsoid, pivot nền z=0, dùng cùng pipeline FBX/3 LOD. Dải foam được đặt 8 vị trí thưa dọc bờ bằng HISM và tắt collision.
+- Blender đạt `COASTAL_MODELS_OK 72 models; max triangles=9678`, 8-view coverage 72 model và compose 576 ảnh. Unreal import readback đạt 72 model với 3 LOD, dimensions verified.
+- Map đạt 23 building vào được, 6842 instances và 899 HISM batches; MapCheck 0 lỗi. Ocean vẫn là plane opaque với normal động nhẹ, foam chỉ là lớp thị giác rẻ.
+- QA r14 exit 0 đạt `ocean_boundary_blocks PASS`, `train_two_way_present PASS`, `traffic_signals_present PASS`, `11_micro_props_present PASS`, `npc_schedule_moves PASS`, vehicle/rowboat checks và `COASTAL_QA_COMPLETE failures=0 views=122`.
+- Chưa có headed capture, water simulation, foam collision/buoyancy hoặc GPU/VRAM frame-time proof; mục tiêu 60 FPS vẫn là ngân sách cấu hình chứ chưa phải benchmark.

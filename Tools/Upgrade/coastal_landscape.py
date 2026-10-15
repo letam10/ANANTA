@@ -70,6 +70,8 @@ def coast(scene):
     scene.box((195, -16, 0.9), (math.hypot(30, 2), 430, 0.2), "Sand", pitch=-slope)
     plane = unreal.load_asset("/Engine/BasicShapes/Plane")
     scene.instance(plane, ocean(), (1210, 0, 0), (2000, 2000, 1), collision=False)
+    for y in range(-200, 196, 50):
+        scene.model("OceanFoam", (210, y, 0.12), collision=False)
     scene.box((207, -115, 0.7), (14, 3.8, 0.22), "Wood")
     scene.box((187, -115, 1.4), (26, 3.8, 0.22), "Wood", pitch=-slope)
     scene.vehicle("Rowboat", (211, -117.5, 0.48), yaw=0, boat=True)

@@ -159,4 +159,16 @@ def build():
     rod((-0.18, -0.13, 0.08), (-0.18, 0.13, 0.08), 0.012, "metal")
     objects.append(finish("Laptop"))
 
+    # Dải bọt sóng mỏng chạy theo hướng +X, với mọi đáy chạm mặt nền z=0.
+    box((1.15, 0.22, 0.03), (0, 0, 0.015), "white", 0.008)
+    for x_position, y_position, x_radius, y_radius, z_radius in (
+        (-0.46, -0.045, 0.14, 0.065, 0.018),
+        (-0.18, 0.035, 0.17, 0.075, 0.022),
+        (0.12, -0.025, 0.18, 0.08, 0.026),
+        (0.40, 0.045, 0.13, 0.06, 0.019),
+    ):
+        ellipsoid((x_radius, y_radius, z_radius),
+                  (x_position, y_position, z_radius), "white")
+    objects.append(finish("OceanFoam"))
+
     return objects
