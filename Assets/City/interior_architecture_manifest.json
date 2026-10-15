@@ -1,0 +1,409 @@
+{
+  "schemaVersion": 1,
+  "units": "cm",
+  "upAxis": "Z",
+  "forwardAxis": "X",
+  "meshes": [
+    {
+      "id": "InteriorServiceDesk",
+      "file": "InteriorArchitecture/Meshes/InteriorServiceDesk.fbx",
+      "boundsCm": {
+        "min": [
+          -55.0,
+          -35.0,
+          0.0
+        ],
+        "max": [
+          55.0,
+          35.0,
+          85.0
+        ],
+        "size": [
+          110.0,
+          70.0,
+          85.0
+        ]
+      },
+      "materialSlots": [
+        "Arch_Graphite",
+        "Arch_Oak",
+        "Arch_Brass",
+        "Arch_Stone"
+      ],
+      "triangles": 2680,
+      "source": "Original ANANTA interior architecture geometry and art",
+      "license": "Original project asset",
+      "sha256": "63e6a9e25b9d4285f251724355042f365d338c1f3a2e15bd16c98b9cd52888f7",
+      "lodRecommendation": {
+        "screenSizes": [
+          1.0,
+          0.4,
+          0.15
+        ],
+        "triangleRatios": [
+          1,
+          0.5,
+          0.2
+        ]
+      },
+      "visibleFront": "-Y"
+    },
+    {
+      "id": "InteriorSlatPanel",
+      "file": "InteriorArchitecture/Meshes/InteriorSlatPanel.fbx",
+      "boundsCm": {
+        "min": [
+          -120.0,
+          -4.0,
+          0.0
+        ],
+        "max": [
+          120.0,
+          4.0,
+          220.0
+        ],
+        "size": [
+          240.0,
+          8.0,
+          220.0
+        ]
+      },
+      "materialSlots": [
+        "Arch_Graphite",
+        "Arch_Oak"
+      ],
+      "triangles": 3780,
+      "source": "Original ANANTA interior architecture geometry and art",
+      "license": "Original project asset",
+      "sha256": "39db1f7d95c5515550c69a7ab0cef4988e276f93ea6aa0b3172df945c5558bbe",
+      "lodRecommendation": {
+        "screenSizes": [
+          1.0,
+          0.4,
+          0.15
+        ],
+        "triangleRatios": [
+          1,
+          0.5,
+          0.2
+        ]
+      },
+      "visibleFront": "-Y"
+    },
+    {
+      "id": "InteriorGalleryFrame",
+      "file": "InteriorArchitecture/Meshes/InteriorGalleryFrame.fbx",
+      "boundsCm": {
+        "min": [
+          -70.0,
+          -3.0,
+          0.0
+        ],
+        "max": [
+          70.0,
+          3.0,
+          110.0
+        ],
+        "size": [
+          140.0,
+          6.0,
+          110.0
+        ]
+      },
+      "materialSlots": [
+        "Arch_Graphite",
+        "Arch_Brass",
+        "Arch_Matboard",
+        "Arch_Gallery"
+      ],
+      "triangles": 660,
+      "source": "Original ANANTA interior architecture geometry and art",
+      "license": "Original project asset",
+      "sha256": "c211eef38312da4f2060b9a6280f2953fa6289ad1c520436a96e1dc18d542c21",
+      "lodRecommendation": {
+        "screenSizes": [
+          1.0,
+          0.4,
+          0.15
+        ],
+        "triangleRatios": [
+          1,
+          0.5,
+          0.2
+        ]
+      },
+      "visibleFront": "-Y"
+    },
+    {
+      "id": "InteriorBotanicalFrame",
+      "file": "InteriorArchitecture/Meshes/InteriorBotanicalFrame.fbx",
+      "boundsCm": {
+        "min": [
+          -70.0,
+          -3.0,
+          0.0
+        ],
+        "max": [
+          70.0,
+          3.0,
+          110.0
+        ],
+        "size": [
+          140.0,
+          6.0,
+          110.0
+        ]
+      },
+      "materialSlots": [
+        "Arch_Graphite",
+        "Arch_Brass",
+        "Arch_Matboard",
+        "Arch_Botanical"
+      ],
+      "triangles": 660,
+      "source": "Original ANANTA interior architecture geometry and art",
+      "license": "Original project asset",
+      "sha256": "aba07d7f5d47d00ca25cbd565e78dbeb0f223a08782cfe21c22bb0f24bce3fa4",
+      "lodRecommendation": {
+        "screenSizes": [
+          1.0,
+          0.4,
+          0.15
+        ],
+        "triangleRatios": [
+          1,
+          0.5,
+          0.2
+        ]
+      },
+      "visibleFront": "-Y"
+    }
+  ],
+  "materials": [
+    {
+      "id": "Arch_Oak",
+      "baseColor": "InteriorArchitecture/Textures/Oak/color.png",
+      "normal": "InteriorArchitecture/Textures/Oak/normal.png",
+      "roughness": "InteriorArchitecture/Textures/Oak/roughness.png",
+      "ao": null,
+      "metallic": null,
+      "normalConvention": "OpenGL",
+      "baseColorFactor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "metallicFactor": 0,
+      "roughnessFactor": 0.65,
+      "source": "https://polyhaven.com/a/wood_floor",
+      "license": "CC0-1.0"
+    },
+    {
+      "id": "Arch_Graphite",
+      "baseColor": null,
+      "normal": null,
+      "roughness": null,
+      "ao": null,
+      "metallic": null,
+      "baseColorFactor": [
+        0.018,
+        0.024,
+        0.027,
+        1
+      ],
+      "metallicFactor": 0,
+      "roughnessFactor": 0.7,
+      "normalConvention": "OpenGL",
+      "source": "Original ANANTA interior architecture design",
+      "license": "Original project asset"
+    },
+    {
+      "id": "Arch_Brass",
+      "baseColor": null,
+      "normal": null,
+      "roughness": null,
+      "ao": null,
+      "metallic": null,
+      "baseColorFactor": [
+        0.61,
+        0.43,
+        0.2,
+        1
+      ],
+      "metallicFactor": 1,
+      "roughnessFactor": 0.3,
+      "normalConvention": "OpenGL",
+      "source": "Original ANANTA interior architecture design",
+      "license": "Original project asset"
+    },
+    {
+      "id": "Arch_Stone",
+      "baseColor": null,
+      "normal": null,
+      "roughness": null,
+      "ao": null,
+      "metallic": null,
+      "baseColorFactor": [
+        0.57,
+        0.55,
+        0.48,
+        1
+      ],
+      "metallicFactor": 0,
+      "roughnessFactor": 0.4,
+      "normalConvention": "OpenGL",
+      "source": "Original ANANTA interior architecture design",
+      "license": "Original project asset"
+    },
+    {
+      "id": "Arch_Matboard",
+      "baseColor": null,
+      "normal": null,
+      "roughness": null,
+      "ao": null,
+      "metallic": null,
+      "baseColorFactor": [
+        0.81,
+        0.78,
+        0.69,
+        1
+      ],
+      "metallicFactor": 0,
+      "roughnessFactor": 0.94,
+      "normalConvention": "OpenGL",
+      "source": "Original ANANTA interior architecture design",
+      "license": "Original project asset"
+    },
+    {
+      "id": "Arch_Gallery",
+      "baseColor": "InteriorArchitecture/Textures/GalleryOriginal.png",
+      "normal": null,
+      "roughness": null,
+      "ao": null,
+      "metallic": null,
+      "baseColorFactor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "metallicFactor": 0,
+      "roughnessFactor": 0.88,
+      "normalConvention": "OpenGL",
+      "source": "Original ANANTA interior architecture design",
+      "license": "Original project asset"
+    },
+    {
+      "id": "Arch_Botanical",
+      "baseColor": "InteriorArchitecture/Textures/BotanicalOriginal.png",
+      "normal": null,
+      "roughness": null,
+      "ao": null,
+      "metallic": null,
+      "baseColorFactor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "metallicFactor": 0,
+      "roughnessFactor": 0.88,
+      "normalConvention": "OpenGL",
+      "source": "Original ANANTA interior architecture design",
+      "license": "Original project asset"
+    }
+  ],
+  "sourceFiles": [
+    {
+      "file": "InteriorArchitecture/Sources/Generator/build_city_assets.py",
+      "sha256": "0bea25576944d0460719e59713b70b5f5eebb66b01c6f2f7aa0b36c7957608b8",
+      "source": "Original ANANTA architecture generator or print",
+      "license": "Original project asset"
+    },
+    {
+      "file": "InteriorArchitecture/Sources/Generator/finishing_materials.py",
+      "sha256": "0b0ee12b7f46d0f76d2f553fd675ac750379951ec21b7da08507062f7df73eef",
+      "source": "Original ANANTA architecture generator or print",
+      "license": "Original project asset"
+    },
+    {
+      "file": "InteriorArchitecture/Sources/Generator/geometry.py",
+      "sha256": "2879b80bc580d0d0a72a47fc5713097664eb3a8b5979e34db9181ebc6e227c54",
+      "source": "Original ANANTA architecture generator or print",
+      "license": "Original project asset"
+    },
+    {
+      "file": "InteriorArchitecture/Sources/Generator/interior_architecture_art.py",
+      "sha256": "9b0e76a0a6ba159016f545b47ce938088c6ecf5ed344fe8d8b50265ef0ffcc76",
+      "source": "Original ANANTA architecture generator or print",
+      "license": "Original project asset"
+    },
+    {
+      "file": "InteriorArchitecture/Sources/Generator/interior_architecture_audit.py",
+      "sha256": "373302f63c1d699eafd0f81372bb16b692573251f0d7b59c07d5867d78176288",
+      "source": "Original ANANTA architecture generator or print",
+      "license": "Original project asset"
+    },
+    {
+      "file": "InteriorArchitecture/Sources/Generator/interior_architecture_build.py",
+      "sha256": "1bd3729a99072a53ade0ae9a2957ef9fdb2185090392ff7d84833e047a54bb88",
+      "source": "Original ANANTA architecture generator or print",
+      "license": "Original project asset"
+    },
+    {
+      "file": "InteriorArchitecture/Sources/Generator/interior_architecture_geometry.py",
+      "sha256": "fe16c0856f1f78ec30ea2a51ea562cb8c8ce3b3c998a9b1005627b568c0cea02",
+      "source": "Original ANANTA architecture generator or print",
+      "license": "Original project asset"
+    },
+    {
+      "file": "InteriorArchitecture/Textures/BotanicalOriginal.png",
+      "sha256": "e1da0b0a90ef09a6a60a794588113e35275d4d78f7174e2e9c141893c8f8f32f",
+      "source": "Original ANANTA architecture generator or print",
+      "license": "Original project asset"
+    },
+    {
+      "file": "InteriorArchitecture/Textures/GalleryOriginal.png",
+      "sha256": "6f6b7cdc710da0a0aaeea29c874d48bc0f45baed86e9c5c76e790fe7e936d5c0",
+      "source": "Original ANANTA architecture generator or print",
+      "license": "Original project asset"
+    },
+    {
+      "file": "InteriorArchitecture/Textures/Oak/color.png",
+      "sha256": "b550d8685056c5810c3a73654aeed7d2bc80f8a2edeb47999a3e7c6ebec548b8",
+      "source": "https://polyhaven.com/a/wood_floor",
+      "license": "CC0-1.0"
+    },
+    {
+      "file": "InteriorArchitecture/Textures/Oak/normal.png",
+      "sha256": "c9c4a66d53a9078b5342c4b90ea426cbae868e394e2b6920ba342ed4af93ba54",
+      "source": "https://polyhaven.com/a/wood_floor",
+      "license": "CC0-1.0"
+    },
+    {
+      "file": "InteriorArchitecture/Textures/Oak/roughness.png",
+      "sha256": "cd4e5e10dae7b90100f0341f8720c83bffd725f6a3364f837f37c28f95830288",
+      "source": "https://polyhaven.com/a/wood_floor",
+      "license": "CC0-1.0"
+    },
+    {
+      "file": "Sources/HOUSE/textures/wood_floor/color.jpg",
+      "sha256": "2a1c07687b6dbb214c4b9213739c6d92d425f1f0fc8ab3ac157f105d78240789",
+      "source": "https://polyhaven.com/a/wood_floor",
+      "license": "CC0-1.0"
+    },
+    {
+      "file": "Sources/HOUSE/textures/wood_floor/normal.jpg",
+      "sha256": "452247f0d0d1b7fc7f8324ff3b6ed60bcc6de1405f4284eeb8d9bce90d4939c2",
+      "source": "https://polyhaven.com/a/wood_floor",
+      "license": "CC0-1.0"
+    },
+    {
+      "file": "Sources/HOUSE/textures/wood_floor/roughness.jpg",
+      "sha256": "061f1e1293251b2d28c76e3fac1ea9452b0e8648bb8f9b3728e09db386166e5c",
+      "source": "https://polyhaven.com/a/wood_floor",
+      "license": "CC0-1.0"
+    }
+  ]
+}

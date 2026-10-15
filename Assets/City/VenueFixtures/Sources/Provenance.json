@@ -1,0 +1,8 @@
+{
+  "geometry": "Original authored geometry; planar folded parts and applied micro bevels",
+  "artwork": "Original Pillow vector artwork; Windows Arial glyph rasterization",
+  "pbr": "Original constant coated enamel, matte print and brushed steel parameters",
+  "coordinateSource": "Tools/Editor/CityVenueDressing.py ROOMS",
+  "license": "Original project asset",
+  "thirdPartyTextures": []
+}

@@ -1,0 +1,112 @@
+{
+  "materials": [
+    {
+      "id": "City_Asphalt",
+      "baseColor": "Textures/asphalt_02/baseColor.jpg",
+      "normal": "Textures/asphalt_02/normal.jpg",
+      "roughness": "Textures/asphalt_02/roughness.jpg",
+      "ao": "Textures/asphalt_02/ao.jpg",
+      "metallic": null,
+      "normalConvention": "OpenGL",
+      "baseColorFactor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "metallicFactor": 0,
+      "roughnessFactor": 1
+    },
+    {
+      "id": "City_Paving",
+      "baseColor": "Textures/concrete_floor_02/baseColor.jpg",
+      "normal": "Textures/concrete_floor_02/normal.jpg",
+      "roughness": "Textures/concrete_floor_02/roughness.jpg",
+      "ao": "Textures/concrete_floor_02/ao.jpg",
+      "metallic": null,
+      "normalConvention": "OpenGL",
+      "baseColorFactor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "metallicFactor": 0,
+      "roughnessFactor": 1
+    }
+  ],
+  "sourceFiles": [
+    {
+      "file": "Sources/Street/asphalt_02/ao.jpg",
+      "sha256": "5fe1737cbbcd55f2fec3632d6170762e5733f24bbc7a7816afb22a23c710b11f",
+      "source": "https://polyhaven.com/a/asphalt_02",
+      "license": "CC0-1.0"
+    },
+    {
+      "file": "Sources/Street/asphalt_02/baseColor.jpg",
+      "sha256": "28f5ba8690553f192c0e5e1a5ff40f34765b4b93f4cc7059b1a3e9c795b6c28c",
+      "source": "https://polyhaven.com/a/asphalt_02",
+      "license": "CC0-1.0"
+    },
+    {
+      "file": "Sources/Street/asphalt_02/files.json",
+      "sha256": "1249520977b7ba990db96a9b4dea2d7d5b8ff6d70c61a7d348310e92f68130d2",
+      "source": "https://polyhaven.com/a/asphalt_02",
+      "license": "CC0-1.0"
+    },
+    {
+      "file": "Sources/Street/asphalt_02/info.json",
+      "sha256": "e5be283f9d85d7a533b961bed9c092d179e5318c4c777109448ba3ce28d4a47c",
+      "source": "https://polyhaven.com/a/asphalt_02",
+      "license": "CC0-1.0"
+    },
+    {
+      "file": "Sources/Street/asphalt_02/normal.jpg",
+      "sha256": "ffe49db71a0fd34c1e259625df66a302a237597d6ef655307987ec4e45bc6f21",
+      "source": "https://polyhaven.com/a/asphalt_02",
+      "license": "CC0-1.0"
+    },
+    {
+      "file": "Sources/Street/asphalt_02/roughness.jpg",
+      "sha256": "b9a516b61b7040a9245ac206642d5f767ad9589a0169c4a1668221429e8a998c",
+      "source": "https://polyhaven.com/a/asphalt_02",
+      "license": "CC0-1.0"
+    },
+    {
+      "file": "Sources/Street/concrete_floor_02/ao.jpg",
+      "sha256": "c224b43f7f6733f1f457ebb1c6bfe95f3bfa58f8a8d2425e2bd1a3bd110d0c06",
+      "source": "https://polyhaven.com/a/concrete_floor_02",
+      "license": "CC0-1.0"
+    },
+    {
+      "file": "Sources/Street/concrete_floor_02/baseColor.jpg",
+      "sha256": "b08a20dcb306d08ee7f4a05ec216b19b7fd37e95745998ec5f81ecedaac1f0e9",
+      "source": "https://polyhaven.com/a/concrete_floor_02",
+      "license": "CC0-1.0"
+    },
+    {
+      "file": "Sources/Street/concrete_floor_02/files.json",
+      "sha256": "a2abc0b46396c3141a7232354983e1c080cabe56af0dd2ecc1be1d3b3d366363",
+      "source": "https://polyhaven.com/a/concrete_floor_02",
+      "license": "CC0-1.0"
+    },
+    {
+      "file": "Sources/Street/concrete_floor_02/info.json",
+      "sha256": "c71c49b35e16c7d0ac9c7dbf981ac95e18495e3edfb0c7ec1e94e993e0da2d11",
+      "source": "https://polyhaven.com/a/concrete_floor_02",
+      "license": "CC0-1.0"
+    },
+    {
+      "file": "Sources/Street/concrete_floor_02/normal.jpg",
+      "sha256": "ce12d18f283f884f4be6f6c110f81582376049caada1e226958659d3d5fbaae1",
+      "source": "https://polyhaven.com/a/concrete_floor_02",
+      "license": "CC0-1.0"
+    },
+    {
+      "file": "Sources/Street/concrete_floor_02/roughness.jpg",
+      "sha256": "cb539b0f8fdc8c63241683e01c923eb040fa701ec4c60cff27b674294746ae67",
+      "source": "https://polyhaven.com/a/concrete_floor_02",
+      "license": "CC0-1.0"
+    }
+  ]
+}

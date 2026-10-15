@@ -19,3 +19,7 @@ Saved/
 # Python bytecode
 __pycache__/
 *.pyc
+
+# Generated cook ordering traces
+Build/Windows/FileOpenOrder/
+*.blend1

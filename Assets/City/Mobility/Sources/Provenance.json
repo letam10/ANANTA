@@ -1,0 +1,10 @@
+{
+  "geometry": "Original shaped profiles, multi-chine hulls, manufactured components and trim",
+  "textures": "Original deterministic NumPy enamel palette, rubber tread, steel grain, seat weave",
+  "license": "Original project asset",
+  "thirdPartyAssets": [],
+  "authoring": "Blender 5.2 metres; FBX vertices converted to centimetres with unit metadata",
+  "lods": "Recommendations only; engine mesh reduction generates lower LODs during import",
+  "glass": "opacity .23, twoSided true; visible upholstered passenger seating",
+  "typography": "Windows Arial outlines converted to mesh; font binary is not redistributed"
+}

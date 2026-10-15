@@ -1,0 +1,759 @@
+{
+  "schemaVersion": 1,
+  "units": "cm",
+  "upAxis": "Z",
+  "forwardAxis": "X",
+  "meshes": [
+    {
+      "id": "CeilingFan",
+      "file": "LivingDetails/Meshes/CeilingFan.fbx",
+      "boundsCm": {
+        "min": [
+          -60.2694,
+          -64.5475,
+          -69.75
+        ],
+        "max": [
+          69.8596,
+          68.4065,
+          0.0
+        ],
+        "size": [
+          130.129,
+          132.954,
+          69.75
+        ]
+      },
+      "triangles": 4492,
+      "materialSlots": [
+        "Living_Enamel",
+        "Living_Steel"
+      ],
+      "source": "Original ANANTA living detail authored geometry",
+      "license": "Original project asset",
+      "lodRecommendation": {
+        "screenSizes": [
+          1,
+          0.4,
+          0.16
+        ],
+        "triangleRatios": [
+          1,
+          0.5,
+          0.2
+        ]
+      },
+      "triangleBudget": 18000,
+      "forwardAxis": "X",
+      "origin": "ceiling mount",
+      "sha256": "a64592ebc0d509584281d6d23737b209a86158da7f729fc9cae5098bf1c13d09"
+    },
+    {
+      "id": "TableLamp",
+      "file": "LivingDetails/Meshes/TableLamp.fbx",
+      "boundsCm": {
+        "min": [
+          -30.22,
+          -20.6,
+          0.0
+        ],
+        "max": [
+          20.6,
+          20.6,
+          68.75
+        ],
+        "size": [
+          50.82,
+          41.2,
+          68.75
+        ]
+      },
+      "triangles": 3560,
+      "materialSlots": [
+        "Living_Enamel",
+        "Living_Steel",
+        "Living_Linen",
+        "Living_Dark"
+      ],
+      "source": "Original ANANTA living detail authored geometry",
+      "license": "Original project asset",
+      "lodRecommendation": {
+        "screenSizes": [
+          1,
+          0.4,
+          0.16
+        ],
+        "triangleRatios": [
+          1,
+          0.5,
+          0.2
+        ]
+      },
+      "triangleBudget": 18000,
+      "forwardAxis": "X",
+      "origin": "base",
+      "sha256": "eb5100e86299ef185b3108211ffea2916735be1fd4bd18e02ef47a98fed5c155"
+    },
+    {
+      "id": "WallAirConditioner",
+      "file": "LivingDetails/Meshes/WallAirConditioner.fbx",
+      "boundsCm": {
+        "min": [
+          -12.0,
+          -45.0,
+          0.0
+        ],
+        "max": [
+          14.8,
+          45.0,
+          32.0
+        ],
+        "size": [
+          26.8,
+          90.0,
+          32.0
+        ]
+      },
+      "triangles": 3948,
+      "materialSlots": [
+        "Living_Enamel"
+      ],
+      "source": "Original ANANTA living detail authored geometry",
+      "license": "Original project asset",
+      "lodRecommendation": {
+        "screenSizes": [
+          1,
+          0.4,
+          0.16
+        ],
+        "triangleRatios": [
+          1,
+          0.5,
+          0.2
+        ]
+      },
+      "triangleBudget": 18000,
+      "forwardAxis": "X",
+      "origin": "base",
+      "sha256": "bf1203c683dcb57b5e8e1c7d041387a323e75fe8bf6a6cd419260ae38314f93c"
+    },
+    {
+      "id": "Refrigerator",
+      "file": "LivingDetails/Meshes/Refrigerator.fbx",
+      "boundsCm": {
+        "min": [
+          -34.8,
+          -38.0,
+          0.0
+        ],
+        "max": [
+          47.75,
+          38.0,
+          176.0
+        ],
+        "size": [
+          82.55,
+          76.0,
+          176.0
+        ]
+      },
+      "triangles": 4984,
+      "materialSlots": [
+        "Living_Enamel",
+        "Living_Steel",
+        "Living_Dark"
+      ],
+      "source": "Original ANANTA living detail authored geometry",
+      "license": "Original project asset",
+      "lodRecommendation": {
+        "screenSizes": [
+          1,
+          0.4,
+          0.16
+        ],
+        "triangleRatios": [
+          1,
+          0.5,
+          0.2
+        ]
+      },
+      "triangleBudget": 18000,
+      "forwardAxis": "X",
+      "origin": "base",
+      "sha256": "282526f03b8cd73513031d86d0f3ce062a73699705e352ea67a4e19306e361ac"
+    },
+    {
+      "id": "Microwave",
+      "file": "LivingDetails/Meshes/Microwave.fbx",
+      "boundsCm": {
+        "min": [
+          -19.0,
+          -28.05,
+          0.0
+        ],
+        "max": [
+          27.2763,
+          27.5,
+          32.5
+        ],
+        "size": [
+          46.2763,
+          55.55,
+          32.5
+        ]
+      },
+      "triangles": 10816,
+      "materialSlots": [
+        "Living_Enamel",
+        "Living_Steel",
+        "Living_Dark"
+      ],
+      "source": "Original ANANTA living detail authored geometry",
+      "license": "Original project asset",
+      "lodRecommendation": {
+        "screenSizes": [
+          1,
+          0.4,
+          0.16
+        ],
+        "triangleRatios": [
+          1,
+          0.5,
+          0.2
+        ]
+      },
+      "triangleBudget": 18000,
+      "forwardAxis": "X",
+      "origin": "base",
+      "sha256": "612f90cf9678a9a1b2fb3556a92cf4d68302596ad2b812cfd91ead95313e28c9"
+    },
+    {
+      "id": "KitchenSink",
+      "file": "LivingDetails/Meshes/KitchenSink.fbx",
+      "boundsCm": {
+        "min": [
+          -30.0,
+          -35.5,
+          0.0
+        ],
+        "max": [
+          30.0,
+          35.5,
+          57.5694
+        ],
+        "size": [
+          60.0,
+          71.0,
+          57.5694
+        ]
+      },
+      "triangles": 3404,
+      "materialSlots": [
+        "Living_Steel",
+        "Living_Enamel"
+      ],
+      "source": "Original ANANTA living detail authored geometry",
+      "license": "Original project asset",
+      "lodRecommendation": {
+        "screenSizes": [
+          1,
+          0.4,
+          0.16
+        ],
+        "triangleRatios": [
+          1,
+          0.5,
+          0.2
+        ]
+      },
+      "triangleBudget": 18000,
+      "forwardAxis": "X",
+      "origin": "base",
+      "sha256": "0f8176ac7e1dcdcef75565ffd019a67298b8c4fb740485f4c8cd4da908a6f69a"
+    },
+    {
+      "id": "FireExtinguisher",
+      "file": "LivingDetails/Meshes/FireExtinguisher.fbx",
+      "boundsCm": {
+        "min": [
+          -9.8,
+          -9.8,
+          0.0
+        ],
+        "max": [
+          10.6,
+          15.08,
+          55.2
+        ],
+        "size": [
+          20.4,
+          24.88,
+          55.2
+        ]
+      },
+      "triangles": 3904,
+      "materialSlots": [
+        "Living_Enamel",
+        "Living_Steel",
+        "Living_Dark"
+      ],
+      "source": "Original ANANTA living detail authored geometry",
+      "license": "Original project asset",
+      "lodRecommendation": {
+        "screenSizes": [
+          1,
+          0.4,
+          0.16
+        ],
+        "triangleRatios": [
+          1,
+          0.5,
+          0.2
+        ]
+      },
+      "triangleBudget": 18000,
+      "forwardAxis": "X",
+      "origin": "base",
+      "sha256": "5f686caea7338bdac873abfbf8d1df70a0924ce9e24b43d5b25866b994f9f406"
+    },
+    {
+      "id": "CivicMonument",
+      "file": "LivingDetails/Meshes/CivicMonument.fbx",
+      "boundsCm": {
+        "min": [
+          -110.0,
+          -110.0,
+          0.0
+        ],
+        "max": [
+          110.0,
+          110.0,
+          419.5
+        ],
+        "size": [
+          220.0,
+          220.0,
+          419.5
+        ]
+      },
+      "triangles": 2652,
+      "materialSlots": [
+        "Living_Stone",
+        "Living_Enamel",
+        "Living_Steel"
+      ],
+      "source": "Original ANANTA living detail authored geometry",
+      "license": "Original project asset",
+      "lodRecommendation": {
+        "screenSizes": [
+          1,
+          0.4,
+          0.16
+        ],
+        "triangleRatios": [
+          1,
+          0.5,
+          0.2
+        ]
+      },
+      "triangleBudget": 30000,
+      "forwardAxis": "X",
+      "origin": "base",
+      "sha256": "ffc11e5cc0e9cc56cd10d7b737986b0f5fdf12189bcd2fa50a2e48102b3a4b48"
+    },
+    {
+      "id": "PlaygroundSlide",
+      "file": "LivingDetails/Meshes/PlaygroundSlide.fbx",
+      "boundsCm": {
+        "min": [
+          -198.0,
+          -55.5,
+          0.0
+        ],
+        "max": [
+          192.0778,
+          55.5,
+          221.0
+        ],
+        "size": [
+          390.0778,
+          111.0,
+          221.0
+        ]
+      },
+      "triangles": 8560,
+      "materialSlots": [
+        "Living_Enamel",
+        "Living_Steel"
+      ],
+      "source": "Original ANANTA living detail authored geometry",
+      "license": "Original project asset",
+      "lodRecommendation": {
+        "screenSizes": [
+          1,
+          0.4,
+          0.16
+        ],
+        "triangleRatios": [
+          1,
+          0.5,
+          0.2
+        ]
+      },
+      "triangleBudget": 30000,
+      "forwardAxis": "X",
+      "origin": "base",
+      "sha256": "0b3c7b075566be70ca4edab4e58306d4ab5b5159d5e9cbb3da8eed3945b0034b"
+    },
+    {
+      "id": "PlaygroundSwing",
+      "file": "LivingDetails/Meshes/PlaygroundSwing.fbx",
+      "boundsCm": {
+        "min": [
+          -114.0,
+          -154.0,
+          -0.0
+        ],
+        "max": [
+          114.0,
+          154.0,
+          251.0
+        ],
+        "size": [
+          228.0,
+          308.0,
+          251.0
+        ]
+      },
+      "triangles": 18580,
+      "materialSlots": [
+        "Living_Enamel",
+        "Living_Steel"
+      ],
+      "source": "Original ANANTA living detail authored geometry",
+      "license": "Original project asset",
+      "lodRecommendation": {
+        "screenSizes": [
+          1,
+          0.4,
+          0.16
+        ],
+        "triangleRatios": [
+          1,
+          0.5,
+          0.2
+        ]
+      },
+      "triangleBudget": 30000,
+      "forwardAxis": "X",
+      "origin": "base",
+      "sha256": "028320c985b9d4fe9da7fb75e8653bf83e35ebcb5c60c4f342011bdf95579b69"
+    },
+    {
+      "id": "ArcadeCabinet",
+      "file": "LivingDetails/Meshes/ArcadeCabinet.fbx",
+      "boundsCm": {
+        "min": [
+          -36.0,
+          -40.2,
+          0.0
+        ],
+        "max": [
+          48.0,
+          40.2,
+          191.0
+        ],
+        "size": [
+          84.0,
+          80.4,
+          191.0
+        ]
+      },
+      "triangles": 8944,
+      "materialSlots": [
+        "Living_Enamel",
+        "Living_Steel",
+        "Living_Dark"
+      ],
+      "source": "Original ANANTA living detail authored geometry",
+      "license": "Original project asset",
+      "lodRecommendation": {
+        "screenSizes": [
+          1,
+          0.4,
+          0.16
+        ],
+        "triangleRatios": [
+          1,
+          0.5,
+          0.2
+        ]
+      },
+      "triangleBudget": 18000,
+      "forwardAxis": "X",
+      "origin": "base",
+      "sha256": "24ab3f66da27a8c2c02eaa6c88ed7a40344d7edc8109f528edc449eb1fa509c9"
+    }
+  ],
+  "materials": [
+    {
+      "id": "Living_Enamel",
+      "baseColor": "LivingDetails/Textures/Enamel_baseColor.png",
+      "normal": "LivingDetails/Textures/Enamel_normal.png",
+      "roughness": "LivingDetails/Textures/Enamel_roughness.png",
+      "ao": null,
+      "metallic": null,
+      "baseColorFactor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "metallicFactor": 0,
+      "roughnessFactor": 0.5,
+      "normalConvention": "OpenGL",
+      "source": "Original deterministic ANANTA living surface authoring",
+      "license": "Original project asset"
+    },
+    {
+      "id": "Living_Steel",
+      "baseColor": "LivingDetails/Textures/Steel_baseColor.png",
+      "normal": "LivingDetails/Textures/Steel_normal.png",
+      "roughness": "LivingDetails/Textures/Steel_roughness.png",
+      "ao": null,
+      "metallic": null,
+      "baseColorFactor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "metallicFactor": 1,
+      "roughnessFactor": 0.5,
+      "normalConvention": "OpenGL",
+      "source": "Original deterministic ANANTA living surface authoring",
+      "license": "Original project asset"
+    },
+    {
+      "id": "Living_Dark",
+      "baseColor": "LivingDetails/Textures/Dark_baseColor.png",
+      "normal": "LivingDetails/Textures/Dark_normal.png",
+      "roughness": "LivingDetails/Textures/Dark_roughness.png",
+      "ao": null,
+      "metallic": null,
+      "baseColorFactor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "metallicFactor": 0,
+      "roughnessFactor": 0.5,
+      "normalConvention": "OpenGL",
+      "source": "Original deterministic ANANTA living surface authoring",
+      "license": "Original project asset"
+    },
+    {
+      "id": "Living_Stone",
+      "baseColor": "LivingDetails/Textures/Stone_baseColor.png",
+      "normal": "LivingDetails/Textures/Stone_normal.png",
+      "roughness": "LivingDetails/Textures/Stone_roughness.png",
+      "ao": null,
+      "metallic": null,
+      "baseColorFactor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "metallicFactor": 0,
+      "roughnessFactor": 0.5,
+      "normalConvention": "OpenGL",
+      "source": "Original deterministic ANANTA living surface authoring",
+      "license": "Original project asset"
+    },
+    {
+      "id": "Living_Linen",
+      "baseColor": "LivingDetails/Textures/Linen_baseColor.png",
+      "normal": "LivingDetails/Textures/Linen_normal.png",
+      "roughness": "LivingDetails/Textures/Linen_roughness.png",
+      "ao": null,
+      "metallic": null,
+      "baseColorFactor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "metallicFactor": 0,
+      "roughnessFactor": 0.5,
+      "normalConvention": "OpenGL",
+      "source": "Original deterministic ANANTA living surface authoring",
+      "license": "Original project asset"
+    }
+  ],
+  "sourceFiles": [
+    {
+      "file": "LivingDetails/LivingDetails.blend",
+      "sha256": "382b57329e5838be10dd59dddbc98a1ea4321937ac5bea75167677a144ae2e38",
+      "source": "Original ANANTA living detail source",
+      "license": "Original project asset"
+    },
+    {
+      "file": "LivingDetails/Sources/Generator/finishing_materials.py",
+      "sha256": "0b0ee12b7f46d0f76d2f553fd675ac750379951ec21b7da08507062f7df73eef",
+      "source": "Original ANANTA living detail source",
+      "license": "Original project asset"
+    },
+    {
+      "file": "LivingDetails/Sources/Generator/geometry.py",
+      "sha256": "2879b80bc580d0d0a72a47fc5713097664eb3a8b5979e34db9181ebc6e227c54",
+      "source": "Original ANANTA living detail source",
+      "license": "Original project asset"
+    },
+    {
+      "file": "LivingDetails/Sources/Generator/living_audit.py",
+      "sha256": "313995d8a138874ab74aed28f21bac0ff2811434b04db9b5f06df47b96a04635",
+      "source": "Original ANANTA living detail source",
+      "license": "Original project asset"
+    },
+    {
+      "file": "LivingDetails/Sources/Generator/living_build.py",
+      "sha256": "75c46a234301f418e511431127d136e6059141378d246855e077339370773a8e",
+      "source": "Original ANANTA living detail source",
+      "license": "Original project asset"
+    },
+    {
+      "file": "LivingDetails/Sources/Generator/living_civic.py",
+      "sha256": "e7b9cc616ba270f3fcd7ff1a28bf186333bc1bd4b108f126979adcdf5bd37100",
+      "source": "Original ANANTA living detail source",
+      "license": "Original project asset"
+    },
+    {
+      "file": "LivingDetails/Sources/Generator/living_contactsheet.py",
+      "sha256": "7dc925736a1d683c6f57771cbfa5398ac190e5141079d7d62af1d53a005311ba",
+      "source": "Original ANANTA living detail source",
+      "license": "Original project asset"
+    },
+    {
+      "file": "LivingDetails/Sources/Generator/living_geometry.py",
+      "sha256": "3c1d08be625147510e6556ec32825ad8ba3ce33e998708659195786b26853602",
+      "source": "Original ANANTA living detail source",
+      "license": "Original project asset"
+    },
+    {
+      "file": "LivingDetails/Sources/Generator/living_household.py",
+      "sha256": "928694615273715e530814efcad09cad2560d5d6dd51ff952dd4baf393e646d0",
+      "source": "Original ANANTA living detail source",
+      "license": "Original project asset"
+    },
+    {
+      "file": "LivingDetails/Sources/Generator/living_materials.py",
+      "sha256": "ef829b229c03481659c55c3576c9d938c0a6a5844254fe4d0d3d8e376bb90490",
+      "source": "Original ANANTA living detail source",
+      "license": "Original project asset"
+    },
+    {
+      "file": "LivingDetails/Sources/Generator/mobility_materials.py",
+      "sha256": "1f9b613e0c7941dfae165958d1f48047cb98f85726a85f01976776f5012135f5",
+      "source": "Original ANANTA living detail source",
+      "license": "Original project asset"
+    },
+    {
+      "file": "LivingDetails/Sources/Provenance.json",
+      "sha256": "fbfb12a35cec9c332979845b8434f4d3182f823ae46f6048aace51558f22f81e",
+      "source": "Original ANANTA living detail source",
+      "license": "Original project asset"
+    },
+    {
+      "file": "LivingDetails/Textures/Dark_baseColor.png",
+      "sha256": "7ebd2b78b6e88e80984d0feabbe7465a36059ecb2e9814b25db08b899832bdda",
+      "source": "Original ANANTA living detail source",
+      "license": "Original project asset"
+    },
+    {
+      "file": "LivingDetails/Textures/Dark_normal.png",
+      "sha256": "fe3e25bd1ce7078ab193a6282d47e8027fa4c3a58cb025dd4838551cd4b2446b",
+      "source": "Original ANANTA living detail source",
+      "license": "Original project asset"
+    },
+    {
+      "file": "LivingDetails/Textures/Dark_roughness.png",
+      "sha256": "07c6e095040f2e8fac40e4e4835e2550e8fcc5268d6937ba67f10d6ca1115820",
+      "source": "Original ANANTA living detail source",
+      "license": "Original project asset"
+    },
+    {
+      "file": "LivingDetails/Textures/Enamel_baseColor.png",
+      "sha256": "1a2d955e8076839dcede2d82db93972a90da39dbf0511dc101c35933ac3dd9ef",
+      "source": "Original ANANTA living detail source",
+      "license": "Original project asset"
+    },
+    {
+      "file": "LivingDetails/Textures/Enamel_normal.png",
+      "sha256": "f235bd90302dcee34d1617fef82eb6046c8a4a9e88f95717fbc2083fab4f479d",
+      "source": "Original ANANTA living detail source",
+      "license": "Original project asset"
+    },
+    {
+      "file": "LivingDetails/Textures/Enamel_roughness.png",
+      "sha256": "6150ec3b86834026cddc107ab280cf0a11cfd9066e3f2f19db695ed745680e05",
+      "source": "Original ANANTA living detail source",
+      "license": "Original project asset"
+    },
+    {
+      "file": "LivingDetails/Textures/Linen_baseColor.png",
+      "sha256": "4ec34b98ce32f11be50a20b1548e7928a53a0d7674f0fa8f64eac718c20123d1",
+      "source": "Original ANANTA living detail source",
+      "license": "Original project asset"
+    },
+    {
+      "file": "LivingDetails/Textures/Linen_normal.png",
+      "sha256": "72ce00b4bd158b812d0dd5a4df4092c1925ccf372c1333c8f369b7b6b5a4f5a3",
+      "source": "Original ANANTA living detail source",
+      "license": "Original project asset"
+    },
+    {
+      "file": "LivingDetails/Textures/Linen_roughness.png",
+      "sha256": "2173cc0d2322b039acacc1c314e72ec13b73271e8daf5306761daf4c317133de",
+      "source": "Original ANANTA living detail source",
+      "license": "Original project asset"
+    },
+    {
+      "file": "LivingDetails/Textures/Steel_baseColor.png",
+      "sha256": "0092f50d855a583eb70d1699616974af1f2f6d6a507ba9d5d551885637382b84",
+      "source": "Original ANANTA living detail source",
+      "license": "Original project asset"
+    },
+    {
+      "file": "LivingDetails/Textures/Steel_normal.png",
+      "sha256": "7924376840ec8db2204e93694f32fa56b1e19b1fb17b3d0cf85c6b8181cd9bee",
+      "source": "Original ANANTA living detail source",
+      "license": "Original project asset"
+    },
+    {
+      "file": "LivingDetails/Textures/Steel_roughness.png",
+      "sha256": "dcc1ff90924f0671d94b49337c0f64c472aa0b19818baf5cdebdc823fb55fcac",
+      "source": "Original ANANTA living detail source",
+      "license": "Original project asset"
+    },
+    {
+      "file": "LivingDetails/Textures/Stone_baseColor.png",
+      "sha256": "79445e309c911e3ac01ceb5fbc301ca7c0c8f83db6fbcc9208f49e2a9aa7ee32",
+      "source": "Original ANANTA living detail source",
+      "license": "Original project asset"
+    },
+    {
+      "file": "LivingDetails/Textures/Stone_normal.png",
+      "sha256": "8a465c6c73b33a80a899538d3eceb28c88447874f2734b248c70b8193a1fdabc",
+      "source": "Original ANANTA living detail source",
+      "license": "Original project asset"
+    },
+    {
+      "file": "LivingDetails/Textures/Stone_roughness.png",
+      "sha256": "cfb523b759d33a69ceb6e8e5103fb08933c97959cf854e27292da6fcf1d2ef96",
+      "source": "Original ANANTA living detail source",
+      "license": "Original project asset"
+    }
+  ]
+}

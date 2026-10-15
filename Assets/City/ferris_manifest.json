@@ -1,0 +1,286 @@
+{
+  "schemaVersion": 1,
+  "units": "cm",
+  "upAxis": "Z",
+  "forwardAxis": "X",
+  "meshes": [
+    {
+      "id": "FerrisWheel",
+      "file": "Ferris/Meshes/FerrisWheel.fbx",
+      "boundsCm": {
+        "min": [
+          -570.0,
+          -1626.6001,
+          0.0
+        ],
+        "max": [
+          570.0,
+          1626.6001,
+          3384.9998
+        ],
+        "size": [
+          1140.0,
+          3253.2002,
+          3384.9998
+        ]
+      },
+      "triangles": 40068,
+      "materialSlots": [
+        "Ferris_Ivory",
+        "Ferris_Steel",
+        "Ferris_Teal",
+        "Ferris_Coral",
+        "Ferris_Glass"
+      ],
+      "source": "Original ANANTA procedural Ferris wheel",
+      "license": "Original project asset",
+      "triangleBudget": 60000,
+      "origin": "Ground centre XY",
+      "hubHeightCm": 1835,
+      "outerRadiusCm": 1550,
+      "cabinCount": 8,
+      "lodRecommendation": {
+        "screenSizes": [
+          1,
+          0.4,
+          0.16
+        ],
+        "triangleRatios": [
+          1,
+          0.5,
+          0.22
+        ]
+      },
+      "sha256": "615e46acf43592b393e8a5690183b566fc568565539d447027721cf83d59042a"
+    }
+  ],
+  "materials": [
+    {
+      "id": "Ferris_Ivory",
+      "baseColorFactor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "metallicFactor": 0,
+      "roughnessFactor": 0.38,
+      "normalConvention": "OpenGL",
+      "source": "Original ANANTA deterministic procedural PBR",
+      "license": "Original project asset",
+      "baseColor": "Ferris/Textures/Ivory_baseColor.png",
+      "roughness": "Ferris/Textures/Ivory_roughness.png",
+      "normal": "Ferris/Textures/Ivory_normal.png"
+    },
+    {
+      "id": "Ferris_Teal",
+      "baseColorFactor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "metallicFactor": 0,
+      "roughnessFactor": 0.34,
+      "normalConvention": "OpenGL",
+      "source": "Original ANANTA deterministic procedural PBR",
+      "license": "Original project asset",
+      "baseColor": "Ferris/Textures/Teal_baseColor.png",
+      "roughness": "Ferris/Textures/Teal_roughness.png",
+      "normal": "Ferris/Textures/Teal_normal.png"
+    },
+    {
+      "id": "Ferris_Coral",
+      "baseColorFactor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "metallicFactor": 0,
+      "roughnessFactor": 0.35,
+      "normalConvention": "OpenGL",
+      "source": "Original ANANTA deterministic procedural PBR",
+      "license": "Original project asset",
+      "baseColor": "Ferris/Textures/Coral_baseColor.png",
+      "roughness": "Ferris/Textures/Coral_roughness.png",
+      "normal": "Ferris/Textures/Coral_normal.png"
+    },
+    {
+      "id": "Ferris_Steel",
+      "baseColorFactor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "metallicFactor": 1,
+      "roughnessFactor": 0.27,
+      "normalConvention": "OpenGL",
+      "source": "Original ANANTA deterministic procedural PBR",
+      "license": "Original project asset",
+      "baseColor": "Ferris/Textures/Steel_baseColor.png",
+      "roughness": "Ferris/Textures/Steel_roughness.png",
+      "normal": "Ferris/Textures/Steel_normal.png"
+    },
+    {
+      "id": "Ferris_Glass",
+      "baseColorFactor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "metallicFactor": 0,
+      "roughnessFactor": 0.14,
+      "normalConvention": "OpenGL",
+      "source": "Original ANANTA deterministic procedural PBR",
+      "license": "Original project asset",
+      "baseColor": "Ferris/Textures/Glass_baseColor.png",
+      "roughness": "Ferris/Textures/Glass_roughness.png",
+      "normal": "Ferris/Textures/Glass_normal.png",
+      "opacity": 0.4,
+      "twoSided": true
+    }
+  ],
+  "sourceFiles": [
+    {
+      "file": "Ferris/FerrisWheel.blend",
+      "sha256": "f57be617a918dbe502a7793a7e4cfb1e904215d7c7f135a9ad7ed59fb97308a7",
+      "source": "Original ANANTA Ferris wheel source",
+      "license": "Original project asset"
+    },
+    {
+      "file": "Ferris/Sources/Generator/ferris_audit.py",
+      "sha256": "3eb0d6ca1bc0fb8e7cfbf0f53eed95aef64f45eee58ba53567d52d51e408ea58",
+      "source": "Original ANANTA Ferris wheel source",
+      "license": "Original project asset"
+    },
+    {
+      "file": "Ferris/Sources/Generator/ferris_build.py",
+      "sha256": "2ef578cc03cfd3b77958e183ea40de161da52020f13cf9b28686f46b16e2c2f2",
+      "source": "Original ANANTA Ferris wheel source",
+      "license": "Original project asset"
+    },
+    {
+      "file": "Ferris/Sources/Generator/ferris_geometry.py",
+      "sha256": "855ef561e6906512e5ee273e61b94103c167eebd9f6fbaf509fe4200e48d0244",
+      "source": "Original ANANTA Ferris wheel source",
+      "license": "Original project asset"
+    },
+    {
+      "file": "Ferris/Sources/Generator/ferris_materials.py",
+      "sha256": "1caa91799a8a89c921abc73f88a1b90b56303d7e76cc23c017b4e16a1542f2ea",
+      "source": "Original ANANTA Ferris wheel source",
+      "license": "Original project asset"
+    },
+    {
+      "file": "Ferris/Sources/Generator/ferris_model.py",
+      "sha256": "b73cc4b8f4656419968e43a16914475b13f5a9709f6ce4bb03aec3a24baedea8",
+      "source": "Original ANANTA Ferris wheel source",
+      "license": "Original project asset"
+    },
+    {
+      "file": "Ferris/Sources/Generator/ferris_preview.py",
+      "sha256": "997a6abac4e66f7e8aa490299aac78ed90f89b0550712fa6aa4dbe8876c6794e",
+      "source": "Original ANANTA Ferris wheel source",
+      "license": "Original project asset"
+    },
+    {
+      "file": "Ferris/Sources/Provenance.json",
+      "sha256": "121090de6105c735e4e185462336ab50bdc7981e9bb36ee940c24fcec04782c6",
+      "source": "Original ANANTA Ferris wheel source",
+      "license": "Original project asset"
+    },
+    {
+      "file": "Ferris/Textures/Coral_baseColor.png",
+      "sha256": "6887957150ba5d72d9b874cb6f6e7f09b40ac841c34bb893e5eb98fbe8851fe8",
+      "source": "Original ANANTA Ferris wheel source",
+      "license": "Original project asset"
+    },
+    {
+      "file": "Ferris/Textures/Coral_normal.png",
+      "sha256": "b57bb9ca93141457ee72b243a535a888222ffd705cbfb4439bc23466633fb62b",
+      "source": "Original ANANTA Ferris wheel source",
+      "license": "Original project asset"
+    },
+    {
+      "file": "Ferris/Textures/Coral_roughness.png",
+      "sha256": "8039540f9b774b9057f7957f5ba23b9229dd77231e5dfb18a821220c2c6d2350",
+      "source": "Original ANANTA Ferris wheel source",
+      "license": "Original project asset"
+    },
+    {
+      "file": "Ferris/Textures/Glass_baseColor.png",
+      "sha256": "bc13fdde72e8da8603f90375eb2fcf873e9aa1cf36d2c6a8a543760a716cbcf1",
+      "source": "Original ANANTA Ferris wheel source",
+      "license": "Original project asset"
+    },
+    {
+      "file": "Ferris/Textures/Glass_normal.png",
+      "sha256": "b57bb9ca93141457ee72b243a535a888222ffd705cbfb4439bc23466633fb62b",
+      "source": "Original ANANTA Ferris wheel source",
+      "license": "Original project asset"
+    },
+    {
+      "file": "Ferris/Textures/Glass_roughness.png",
+      "sha256": "6ac30b3a398edf7c26e707eb4e2cfa809019401a69105e05658bdc5f9718ffe9",
+      "source": "Original ANANTA Ferris wheel source",
+      "license": "Original project asset"
+    },
+    {
+      "file": "Ferris/Textures/Ivory_baseColor.png",
+      "sha256": "d671d164626fb9e547000a99bbdccb117112f377db7b3dac6260077a38e35a3f",
+      "source": "Original ANANTA Ferris wheel source",
+      "license": "Original project asset"
+    },
+    {
+      "file": "Ferris/Textures/Ivory_normal.png",
+      "sha256": "b57bb9ca93141457ee72b243a535a888222ffd705cbfb4439bc23466633fb62b",
+      "source": "Original ANANTA Ferris wheel source",
+      "license": "Original project asset"
+    },
+    {
+      "file": "Ferris/Textures/Ivory_roughness.png",
+      "sha256": "0e9a6e020a08a24c5b9ba48fb807e0b9725b0606f83006bf30fe24644fb54c2d",
+      "source": "Original ANANTA Ferris wheel source",
+      "license": "Original project asset"
+    },
+    {
+      "file": "Ferris/Textures/Steel_baseColor.png",
+      "sha256": "f78aaecbfe9883a43a0d6fcf5122c38386b8663a3507897f114d3125ce246e71",
+      "source": "Original ANANTA Ferris wheel source",
+      "license": "Original project asset"
+    },
+    {
+      "file": "Ferris/Textures/Steel_normal.png",
+      "sha256": "7924376840ec8db2204e93694f32fa56b1e19b1fb17b3d0cf85c6b8181cd9bee",
+      "source": "Original ANANTA Ferris wheel source",
+      "license": "Original project asset"
+    },
+    {
+      "file": "Ferris/Textures/Steel_roughness.png",
+      "sha256": "59cdc94fb3b45d2ee66ed161773c75bbe1e9ce2765fb3a9a8e3d74520efebad0",
+      "source": "Original ANANTA Ferris wheel source",
+      "license": "Original project asset"
+    },
+    {
+      "file": "Ferris/Textures/Teal_baseColor.png",
+      "sha256": "612e7c77711b9cc535e276492afb2ae859c3c155d32b5a4ec1deec1f3dd601bd",
+      "source": "Original ANANTA Ferris wheel source",
+      "license": "Original project asset"
+    },
+    {
+      "file": "Ferris/Textures/Teal_normal.png",
+      "sha256": "b57bb9ca93141457ee72b243a535a888222ffd705cbfb4439bc23466633fb62b",
+      "source": "Original ANANTA Ferris wheel source",
+      "license": "Original project asset"
+    },
+    {
+      "file": "Ferris/Textures/Teal_roughness.png",
+      "sha256": "68ade3076ff906844cc29293deb813310ab80bf4c90248b04cfb43efeebd164c",
+      "source": "Original ANANTA Ferris wheel source",
+      "license": "Original project asset"
+    }
+  ]
+}

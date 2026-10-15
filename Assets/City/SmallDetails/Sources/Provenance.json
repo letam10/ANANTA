@@ -1,0 +1,9 @@
+{
+  "geometry": "Original simple low polygon hollow vessels and functional room silhouettes",
+  "textures": "Reused unchanged living_manifest.json 1K PBR channels; no duplicate textures",
+  "license": "Original project asset",
+  "thirdPartyAssets": [],
+  "authoring": "Blender 5.2 metres; FBX centimetres, +X front, +Z up, base centered origin",
+  "lods": "Recommendations only; engine reduction must generate lower LOD meshes",
+  "status": "Static room decorations; no interactive cooking or cosmetics gameplay"
+}

@@ -1,0 +1,624 @@
+{
+  "schemaVersion": 1,
+  "units": "cm",
+  "upAxis": "Z",
+  "forwardAxis": "X",
+  "meshes": [
+    {
+      "id": "FacadeBrickArch",
+      "file": "Expansion/Meshes/FacadeBrickArch.fbx",
+      "boundsCm": {
+        "min": [
+          -200.0,
+          -44.0,
+          0.0
+        ],
+        "max": [
+          200.0,
+          26.0,
+          320.0
+        ],
+        "size": [
+          400.0,
+          70.0,
+          320.0
+        ]
+      },
+      "materialSlots": [
+        "City_brick_wall_001",
+        "City_stone_wall_02",
+        "City_Glass",
+        "City_Dark"
+      ],
+      "triangles": 5432,
+      "source": "Original ANANTA expansion generator",
+      "license": "Original project asset",
+      "sha256": "13a5ad5816a2a4975872ba61ab779ed7e3584f47cea0235ee0cf6936fce60dba",
+      "lodRecommendation": {
+        "screenSizes": [
+          1.0,
+          0.4,
+          0.15
+        ],
+        "triangleRatios": [
+          1,
+          0.5,
+          0.2
+        ]
+      }
+    },
+    {
+      "id": "FacadeBay",
+      "file": "Expansion/Meshes/FacadeBay.fbx",
+      "boundsCm": {
+        "min": [
+          -200.0,
+          -91.0,
+          0.0
+        ],
+        "max": [
+          200.0,
+          26.0,
+          320.0
+        ],
+        "size": [
+          400.0,
+          117.0,
+          320.0
+        ]
+      },
+      "materialSlots": [
+        "City_white_plaster_rough_01",
+        "City_stone_wall_02",
+        "City_Glass",
+        "City_oak_veneer_01"
+      ],
+      "triangles": 3456,
+      "source": "Original ANANTA expansion generator",
+      "license": "Original project asset",
+      "sha256": "6675c68a7db051b646482fc421fc64bd195c5b77222cd71f8e26e55e68bf2d22",
+      "lodRecommendation": {
+        "screenSizes": [
+          1.0,
+          0.4,
+          0.15
+        ],
+        "triangleRatios": [
+          1,
+          0.5,
+          0.2
+        ]
+      }
+    },
+    {
+      "id": "FacadeArtDeco",
+      "file": "Expansion/Meshes/FacadeArtDeco.fbx",
+      "boundsCm": {
+        "min": [
+          -200.0,
+          -43.0,
+          0.0
+        ],
+        "max": [
+          200.0,
+          26.0,
+          320.0
+        ],
+        "size": [
+          400.0,
+          69.0,
+          320.0
+        ]
+      },
+      "materialSlots": [
+        "City_stone_wall_02",
+        "City_white_plaster_rough_01",
+        "City_Glass",
+        "City_Brass"
+      ],
+      "triangles": 3996,
+      "source": "Original ANANTA expansion generator",
+      "license": "Original project asset",
+      "sha256": "1b600a655aa34f840e00d858bd892260e295e56f177dde6f1652f9a6a9b54b91",
+      "lodRecommendation": {
+        "screenSizes": [
+          1.0,
+          0.4,
+          0.15
+        ],
+        "triangleRatios": [
+          1,
+          0.5,
+          0.2
+        ]
+      }
+    },
+    {
+      "id": "FacadeIndustrial",
+      "file": "Expansion/Meshes/FacadeIndustrial.fbx",
+      "boundsCm": {
+        "min": [
+          -200.0,
+          -67.5,
+          0.0
+        ],
+        "max": [
+          200.0,
+          26.0,
+          320.0
+        ],
+        "size": [
+          400.0,
+          93.5,
+          320.0
+        ]
+      },
+      "materialSlots": [
+        "City_brick_wall_001",
+        "City_stone_wall_02",
+        "City_Glass",
+        "City_Dark",
+        "City_Aluminium"
+      ],
+      "triangles": 2700,
+      "source": "Original ANANTA expansion generator",
+      "license": "Original project asset",
+      "sha256": "b77f6626695e7487a8bb2f341e2526bce34554f844d39c1f5aadc42cedce7378",
+      "lodRecommendation": {
+        "screenSizes": [
+          1.0,
+          0.4,
+          0.15
+        ],
+        "triangleRatios": [
+          1,
+          0.5,
+          0.2
+        ]
+      }
+    },
+    {
+      "id": "FacadeCivic",
+      "file": "Expansion/Meshes/FacadeCivic.fbx",
+      "boundsCm": {
+        "min": [
+          -200.0,
+          -92.0,
+          0.0
+        ],
+        "max": [
+          200.0,
+          27.0,
+          320.0
+        ],
+        "size": [
+          400.0,
+          119.0,
+          320.0
+        ]
+      },
+      "materialSlots": [
+        "City_stone_wall_02",
+        "City_Brass",
+        "City_Dark",
+        "City_Glass",
+        "City_Aluminium",
+        "City_Teal",
+        "City_Light"
+      ],
+      "triangles": 2088,
+      "source": "Original ANANTA expansion generator",
+      "license": "Original project asset",
+      "sha256": "b4e5293f6a7824d105cfb2040fee4c5426e7b3b2ad2bdde3f63cd4f90f202f41",
+      "lodRecommendation": {
+        "screenSizes": [
+          1.0,
+          0.4,
+          0.15
+        ],
+        "triangleRatios": [
+          1,
+          0.5,
+          0.2
+        ]
+      }
+    },
+    {
+      "id": "FacadeTransit",
+      "file": "Expansion/Meshes/FacadeTransit.fbx",
+      "boundsCm": {
+        "min": [
+          -200.0,
+          -85.0,
+          0.0
+        ],
+        "max": [
+          200.0,
+          26.0,
+          320.0
+        ],
+        "size": [
+          400.0,
+          111.0,
+          320.0
+        ]
+      },
+      "materialSlots": [
+        "City_stone_wall_02",
+        "City_Aluminium",
+        "City_Teal",
+        "City_Glass",
+        "City_Dark",
+        "City_Light"
+      ],
+      "triangles": 2304,
+      "source": "Original ANANTA expansion generator",
+      "license": "Original project asset",
+      "sha256": "08ccba6a322c9019dedf313779a406244f108e65fb7542ef2318fac8adca3ed8",
+      "lodRecommendation": {
+        "screenSizes": [
+          1.0,
+          0.4,
+          0.15
+        ],
+        "triangleRatios": [
+          1,
+          0.5,
+          0.2
+        ]
+      }
+    },
+    {
+      "id": "TreeBroadleaf",
+      "file": "Expansion/Meshes/TreeBroadleaf.fbx",
+      "boundsCm": {
+        "min": [
+          -219.5055,
+          -251.9747,
+          0.0
+        ],
+        "max": [
+          241.3326,
+          228.9603,
+          684.726
+        ],
+        "size": [
+          460.8381,
+          480.935,
+          684.726
+        ]
+      },
+      "materialSlots": [
+        "City_oak_veneer_01",
+        "City_Foliage"
+      ],
+      "triangles": 8724,
+      "source": "Original ANANTA expansion generator",
+      "license": "Original project asset",
+      "sha256": "33ec6f3e5c6b81d96a7c347fa849b5e306fc7e56a7d30368210b8791a6ee9568",
+      "lodRecommendation": {
+        "screenSizes": [
+          1.0,
+          0.4,
+          0.15
+        ],
+        "triangleRatios": [
+          1,
+          0.5,
+          0.2
+        ]
+      }
+    },
+    {
+      "id": "TreeColumnar",
+      "file": "Expansion/Meshes/TreeColumnar.fbx",
+      "boundsCm": {
+        "min": [
+          -167.5778,
+          -184.8513,
+          0.0
+        ],
+        "max": [
+          193.5673,
+          163.099,
+          833.4296
+        ],
+        "size": [
+          361.1451,
+          347.9503,
+          833.4296
+        ]
+      },
+      "materialSlots": [
+        "City_oak_veneer_01",
+        "City_Foliage"
+      ],
+      "triangles": 11124,
+      "source": "Original ANANTA expansion generator",
+      "license": "Original project asset",
+      "sha256": "d73f7c66ad3a6e86b4f254e50f39754a5fe5159653c518a5bd32a328e6ccc243",
+      "lodRecommendation": {
+        "screenSizes": [
+          1.0,
+          0.4,
+          0.15
+        ],
+        "triangleRatios": [
+          1,
+          0.5,
+          0.2
+        ]
+      }
+    },
+    {
+      "id": "BusShelter",
+      "file": "Expansion/Meshes/BusShelter.fbx",
+      "boundsCm": {
+        "min": [
+          -200.0,
+          -82.5,
+          0.0
+        ],
+        "max": [
+          200.0,
+          82.5,
+          255.0
+        ],
+        "size": [
+          400.0,
+          165.0,
+          255.0
+        ]
+      },
+      "materialSlots": [
+        "City_Dark",
+        "City_Aluminium",
+        "City_Teal",
+        "City_Glass",
+        "City_oak_veneer_01",
+        "City_Light"
+      ],
+      "triangles": 2856,
+      "source": "Original ANANTA expansion generator",
+      "license": "Original project asset",
+      "sha256": "5db15650e5cb4b6d1dbe281819e6e768054ccaca654f15bdafd7961502dbdfeb",
+      "lodRecommendation": {
+        "screenSizes": [
+          1.0,
+          0.4,
+          0.15
+        ],
+        "triangleRatios": [
+          1,
+          0.5,
+          0.2
+        ]
+      }
+    },
+    {
+      "id": "MarketStall",
+      "file": "Expansion/Meshes/MarketStall.fbx",
+      "boundsCm": {
+        "min": [
+          -135.0,
+          -81.75,
+          0.0
+        ],
+        "max": [
+          135.0,
+          81.75,
+          257.1487
+        ],
+        "size": [
+          270.0,
+          163.5,
+          257.1487
+        ]
+      },
+      "materialSlots": [
+        "City_oak_veneer_01",
+        "City_Teal",
+        "City_rough_linen",
+        "City_Red"
+      ],
+      "triangles": 4896,
+      "source": "Original ANANTA expansion generator",
+      "license": "Original project asset",
+      "sha256": "1de2a6e68eecab98740fa1b5fa5cd4c7985da452b8db5c4d8207d448a2eba41f",
+      "lodRecommendation": {
+        "screenSizes": [
+          1.0,
+          0.4,
+          0.15
+        ],
+        "triangleRatios": [
+          1,
+          0.5,
+          0.2
+        ]
+      }
+    },
+    {
+      "id": "TrashBin",
+      "file": "Expansion/Meshes/TrashBin.fbx",
+      "boundsCm": {
+        "min": [
+          -32.0,
+          -32.0,
+          0.0
+        ],
+        "max": [
+          32.0,
+          32.0,
+          100.0
+        ],
+        "size": [
+          64.0,
+          64.0,
+          100.0
+        ]
+      },
+      "materialSlots": [
+        "City_Dark",
+        "City_oak_veneer_01",
+        "City_Teal"
+      ],
+      "triangles": 2580,
+      "source": "Original ANANTA expansion generator",
+      "license": "Original project asset",
+      "sha256": "78c2bc994dd2ea5454de0fe7934e66d8b4648ca085d9f060e841556285aeb95c",
+      "lodRecommendation": {
+        "screenSizes": [
+          1.0,
+          0.4,
+          0.15
+        ],
+        "triangleRatios": [
+          1,
+          0.5,
+          0.2
+        ]
+      }
+    },
+    {
+      "id": "BikeRack",
+      "file": "Expansion/Meshes/BikeRack.fbx",
+      "boundsCm": {
+        "min": [
+          -71.5,
+          -61.5,
+          0.0
+        ],
+        "max": [
+          71.5,
+          61.5,
+          92.5
+        ],
+        "size": [
+          143.0,
+          123.0,
+          92.5
+        ]
+      },
+      "materialSlots": [
+        "City_Aluminium"
+      ],
+      "triangles": 2040,
+      "source": "Original ANANTA expansion generator",
+      "license": "Original project asset",
+      "sha256": "27a54c5abad0f6be40d36e922e64131e3a736dceff81a364a3e9693c06d99b51",
+      "lodRecommendation": {
+        "screenSizes": [
+          1.0,
+          0.4,
+          0.15
+        ],
+        "triangleRatios": [
+          1,
+          0.5,
+          0.2
+        ]
+      }
+    },
+    {
+      "id": "StreetSign",
+      "file": "Expansion/Meshes/StreetSign.fbx",
+      "boundsCm": {
+        "min": [
+          -53.0,
+          -15.0,
+          0.0
+        ],
+        "max": [
+          53.0,
+          15.0,
+          283.0
+        ],
+        "size": [
+          106.0,
+          30.0,
+          283.0
+        ]
+      },
+      "materialSlots": [
+        "City_Dark",
+        "City_Aluminium",
+        "City_Teal",
+        "City_Light"
+      ],
+      "triangles": 856,
+      "source": "Original ANANTA expansion generator",
+      "license": "Original project asset",
+      "sha256": "3ae24928a12747c1050970e92f3a1b2557b62898b8ccc977af7a4e95eceead37",
+      "lodRecommendation": {
+        "screenSizes": [
+          1.0,
+          0.4,
+          0.15
+        ],
+        "triangleRatios": [
+          1,
+          0.5,
+          0.2
+        ]
+      }
+    }
+  ],
+  "materials": [],
+  "sourceFiles": [
+    {
+      "file": "Expansion/Sources/build_city_assets.py",
+      "sha256": "0bea25576944d0460719e59713b70b5f5eebb66b01c6f2f7aa0b36c7957608b8",
+      "source": "Original project generator",
+      "license": "Original project asset"
+    },
+    {
+      "file": "Expansion/Sources/expansion_architecture.py",
+      "sha256": "7eae89de3117a66bff13ce9c6acbad77669531c2fb8f1c2320b7032de30d2e50",
+      "source": "Original project generator",
+      "license": "Original project asset"
+    },
+    {
+      "file": "Expansion/Sources/expansion_audit.py",
+      "sha256": "61f217d9debd79e7d04f154312f1fe6c3aa6fd71fd99eabd5c3afee27890a4d9",
+      "source": "Original project generator",
+      "license": "Original project asset"
+    },
+    {
+      "file": "Expansion/Sources/expansion_build.py",
+      "sha256": "922044c83ccf167d4165e9944e19499accb448eb64d8d777b99ee13fccca2c79",
+      "source": "Original project generator",
+      "license": "Original project asset"
+    },
+    {
+      "file": "Expansion/Sources/expansion_nature.py",
+      "sha256": "a7a88071d597aed3f4b89f553da955582b1f053d7278ca96b2196130346bb05e",
+      "source": "Original project generator",
+      "license": "Original project asset"
+    },
+    {
+      "file": "Expansion/Sources/expansion_props.py",
+      "sha256": "f8664f59e11d76c34b323d24fa6fc84d417a3de407a8662867699bb0f6a8e832",
+      "source": "Original project generator",
+      "license": "Original project asset"
+    },
+    {
+      "file": "Expansion/Sources/expansion_verify.py",
+      "sha256": "d9eb88c68cf0b6b8323346b7ab60602b0c6e4108dacbe84fedea1340f12972ca",
+      "source": "Original project generator",
+      "license": "Original project asset"
+    },
+    {
+      "file": "Expansion/Sources/geometry.py",
+      "sha256": "2879b80bc580d0d0a72a47fc5713097664eb3a8b5979e34db9181ebc6e227c54",
+      "source": "Original project generator",
+      "license": "Original project asset"
+    },
+    {
+      "file": "Expansion/Sources/materials.py",
+      "sha256": "ded8139d87eeafddeb02e471ee1bd8438874d56ebfcd3759f99803ec515cdef5",
+      "source": "Original project generator",
+      "license": "Original project asset"
+    }
+  ]
+}

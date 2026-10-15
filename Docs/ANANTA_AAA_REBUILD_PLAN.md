@@ -1,6 +1,11 @@
 # ANANTA / Nova City — kế hoạch dựng lại vertical slice đô thị
 
-Ngày cập nhật: 2026-09-28
+Ngày cập nhật: 2026-10-08
+
+> Kế hoạch hiện hành: xem CITY_EXECUTION_STATUS.md và CITY_EXPANSION_CONTRACT.md.
+> Đang mở rộng lên khoảng 1,70 x 1,70 km, 1.472 nhà nền và tám nội thất; giữ nguyên model nhân vật.
+> Phần cứng đã kiểm tra: RTX 4060 Laptop 8 GB, RAM 16 GB. Mục tiêu 1080p khoảng 60 FPS.
+> Các số liệu RTX 3050 và chẩn đoán bridge bên dưới là lịch sử ngày 28/09, không phải trạng thái hiện tại.
 
 > Trạng thái triển khai ngày 14/10/2026 nằm trong
 > [COASTAL_20261014_HANDOFF.md](COASTAL_20261014_HANDOFF.md).

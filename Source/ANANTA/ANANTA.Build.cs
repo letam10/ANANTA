@@ -6,6 +6,8 @@ public class ANANTA : ModuleRules
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 
+		PrivateDependencyModuleNames.Add("Json");
+
 		PublicDependencyModuleNames.AddRange(
 			new string[]
 			{
@@ -14,8 +16,14 @@ public class ANANTA : ModuleRules
 				"Engine",
 				"InputCore",
 				"Json",
+				"UMG",
+				"Slate",
+				"SlateCore",
+				"RenderCore",
 				"RHI",
-				"UMG"
+				"AIModule",
+				"NavigationSystem"
+
 			});
 	}
 }

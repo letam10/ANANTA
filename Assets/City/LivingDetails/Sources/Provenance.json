@@ -1,0 +1,11 @@
+{
+  "geometry": "Original dimensioned functional household, civic and playground components",
+  "textures": "Original deterministic NumPy enamel palette, metal grain, linen weave and granite",
+  "license": "Original project asset",
+  "thirdPartyAssets": [],
+  "houseCatalog": "D:/APP/HOUSE/assets/manifest.json checked: no matching requested model",
+  "houseNearMatch": "Hanging industrial lamp is a pendant, not the requested table lamp",
+  "authoring": "Blender 5.2 metres; FBX centimetres with unit metadata; front +X",
+  "lods": "Recommendations only; lower LODs require engine mesh reduction",
+  "status": "Static decorative equipment; no mechanical animation or gameplay implied"
+}
