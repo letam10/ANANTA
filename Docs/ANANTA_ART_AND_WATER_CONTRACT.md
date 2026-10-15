@@ -1,6 +1,6 @@
 # ANANTA Art and Water Contract
 
-Version: W2/W3, 2026-10-16
+Version: V1 + W2/W3, 2026-10-16
 
 ## Hình ảnh thành phố
 
@@ -114,3 +114,131 @@ toàn map hoặc Unreal runtime.
 - W3 hiện **PARTIAL/UNVERIFIED**: contract và validator đã có, nhưng chưa có
   Unreal material graph readback thật, boundary collision readback native hoặc
   ảnh so sánh Three.js/Unreal cùng camera. Không claim 60 FPS trước F1.
+## V1 — Visual bible: hiện đại + anime có kiểm soát
+
+Trạng thái: **CONTRACT DONE; hero sample UNVERIFIED**. Phần này khóa ngôn ngữ
+hình ảnh cho mẫu hero trước khi mở rộng toàn map.
+
+### Ranh giới phong cách
+
+- Kiến trúc, đường phố, xe, rail, ga, sân bay, biển, thuyền và props môi trường
+  dùng hiện đại, bán thực tế: hình khối có bevel hợp lý, PBR, vật liệu có scale
+  thật, ánh sáng và bóng tiếp xúc đọc được. Không dùng cel ramp hoặc outline anime
+  cho môi trường.
+- Character/NPC dùng anime có kiểm soát qua silhouette, tỉ lệ khuôn mặt, tóc và
+  màu accent. Bàn chân, chiều cao, bóng, exposure và mức roughness vẫn phải khớp
+  với mặt đường, nội thất, xe và ánh sáng của thế giới.
+- Anime là thuộc tính của character/NPC, không lan sang nhà, venue, rail, ga,
+  sân bay, phương tiện, biển hoặc props. Asset nào cố ý lệch chuẩn phải ghi rõ
+  lý do trong manifest và review package.
+
+### Palette cố định
+
+Palette là điểm bắt đầu chung cho hero review; texture và ánh sáng được phép tạo
+biến thiên trong cùng family, không được đổi sang phong cách phẳng hoặc neon ngoài
+accent đã ghi.
+
+| Nhóm | Màu tham chiếu | Quy tắc |
+| --- | --- | --- |
+| Asphalt/road | `#272C31` | Dark neutral, roughness cao, có variation nhẹ theo wear |
+| Concrete/sidewalk | `#A7ABA7` | Neutral lạnh, normal nhỏ, không đen viền |
+| Facade stone/plaster | `#D1C7B6` | Warm neutral, value trung bình để bắt bóng |
+| Dark metal/rail | `#34434A` | PBR metal, edge wear tiết chế |
+| Glass/water reflection | `#4B7480` | Blue-gray, phản xạ theo lighting reference |
+| Vegetation | `#43604A` | Green tự nhiên, không toon green |
+| Sand/coast | `#C6AA78` | Warm muted, nối với palette đường phố |
+| Wayfinding/safety | `#E05A47` | Accent có chủ đích cho biển báo, không phủ toàn scene |
+| Character accent | `#D77A6A`, `#6A8FD4`, `#E5B84B` | Chỉ dùng cho cloth, hair hoặc accessory của character/NPC |
+
+### Material rules
+
+- World materials dùng BaseColor, Normal, Roughness và metallic/specular theo
+  PBR. Asphalt, concrete và facade cần roughness/normal variation theo scale,
+  không dùng một màu phẳng cho cả block.
+- Character material phải có các nhóm riêng: `skin`, `hair`, `cloth`, `eye` và
+  `accessory`. Skin giữ highlight mềm và không wax; hair giữ hướng sợi hoặc
+  anisotropy khi pipeline hỗ trợ; cloth có weave/seam normal; eye tách cornea,
+  iris và highlight; accessory dùng vật liệu kim loại/nhựa PBR đúng loại.
+- Outline/rim chỉ là tùy chọn cho character/NPC khi giúp tách silhouette. Nó phải
+  cùng exposure với scene, mảnh và ổn định theo khoảng cách; không dùng outline
+  để che lỗi topology, thiếu shadow hoặc sai scale.
+- Character và NPC dùng cùng tone mapping, key/fill balance, contact shadow và
+  exposure với thế giới. Không tăng saturation/emissive để làm anime nổi bật một
+  cách tách rời khỏi ánh sáng chung.
+- Trước khi tạo texture mới, tìm material/texture hiện có theo material key,
+  kích thước, màu space, semantic và hash. Nếu texture tương đương, reuse asset
+  hiện có; nếu khác, ghi lý do và hash mới trong manifest.
+
+### Scale reference
+
+Mốc đo chuẩn là character rig cao `1.75 m`, với eye height review `1.60 m`. Các
+bounds dưới đây là reference để kiểm tra transform, không thay thế readback sau
+yaw/scale:
+
+- Cửa người: cao `2.10 m`, rộng `0.90 m`; bậc/cửa phải cho NPC 1.75 m đứng đúng
+  mặt đất và có clearance được ghi trong placement review.
+- Curb sidewalk: `0.15 m`; lane đường: `3.50 m`; vạch và bollard phải được đo
+  theo lane/curb, không scale bằng mắt.
+- Sedan hero: khoảng `4.60 x 1.80 x 1.50 m`; bus/xe tải ghi bounds riêng theo
+  model và collision, không copy scale sedan.
+- Rail dùng gauge reference `1.435 m`; platform height, gap và boarding marker
+  ghi theo readback của ga cụ thể.
+- Camera ngang tầm người đặt eye height `1.60 m` trước khi chụp street, coast,
+  traffic hoặc NPC. Camera trên cao chỉ là view bổ sung, không phải bằng chứng
+  hero duy nhất.
+
+### Lighting reference
+
+- Day street: sun/sky physically motivated, neutral white balance, shadow/contact
+  rõ ở curb, cửa, bánh xe và chân NPC; không dùng toon ramp cho world.
+- Interior: key light có nguồn trong phòng, fill mềm, bounce/occlusion vừa đủ;
+  exposure phải nối được với cửa ra street trong cùng review sequence.
+- Coast: key direction phải làm đọc được crest, normal và foam; nước giữ cùng
+  tone mapping với sand/seawall và không phát sáng giả.
+- Traffic: camera thấp ngang người/xe, headlight và phản xạ mặt đường chỉ là
+  accent theo nguồn sáng; không để emissive biến phương tiện thành biển màu.
+- NPC: key/fill/rim có thể hỗ trợ silhouette anime nhưng không được tách NPC khỏi
+  shadow/contact và color response của mặt đường, xe hoặc nội thất.
+- Mỗi capture ghi camera transform, lens/FOV, exposure, renderer, resolution và
+  lighting preset cùng asset manifest để review có thể tái lập.
+
+### Hero review cameras và danh sách asset
+
+Mỗi hero sample bắt buộc có camera ngang tầm người ở năm ngữ cảnh: `street`,
+`interior`, `coast`, `traffic`, `npc`. Mỗi model vẫn giữ review tám hướng; mỗi
+placement quan trọng giữ năm góc sinh từ transform và transformed bounds.
+
+| Asset ID | Vai trò | Phong cách | Camera hero | Interaction/dressing |
+| --- | --- | --- | --- | --- |
+| `Hero_Street_Block_Modern01` | block kiến trúc và mặt tiền | hiện đại bán thực tế | street | door/service prompt hoặc static dressing |
+| `Hero_Interior_Lobby01` | lobby, cửa và vật liệu nội thất | hiện đại bán thực tế | interior | enter/exit hoặc static dressing |
+| `Hero_Coast_Seawall01` | seawall, sand, foam edge | hiện đại bán thực tế | coast | boundary/shore dressing, collision ghi riêng |
+| `Hero_Traffic_Sedan01` | xe sedan và wheel/road contact | hiện đại bán thực tế | traffic | drive/board hoặc static dressing |
+| `Hero_Rail_Station01` | ga, platform, rail signal | hiện đại bán thực tế | traffic/street | signal/boarding hoặc static dressing |
+| `Hero_NPC_Civilian_A01` | character dân cư | anime có kiểm soát | npc/street | schedule/prompt hoặc static dressing |
+| `Hero_NPC_Transit_B01` | NPC nhà ga/sân bay | anime có kiểm soát | npc/traffic | schedule/boarding hoặc static dressing |
+| `Hero_Prop_StreetFurniture01` | sign, bench, bollard, lamp | hiện đại bán thực tế | street | interaction hoặc static dressing |
+
+Mỗi asset trong bảng phải có manifest gồm `AssetId`, provenance/source URI,
+licence, import revision, pivot, bounds trước và sau yaw/scale, LOD0/LOD1/LOD2,
+triangle budget, collision policy, material keys, texture SHA-256 và perceptual
+hash. Texture đã tương đương phải trỏ tới asset dùng chung thay vì tạo bản sao.
+Review package phải lưu camera transforms, ảnh tám hướng, năm placement views và
+kết quả đọc transformed bounds.
+
+### V1 gate trước khi mở rộng map
+
+V1 chỉ đạt khi hero sample có đủ:
+
+- palette và material rules ở trên được áp dụng nhất quán cho world và
+  character/NPC;
+- scale reference có human/NPC, door, curb, lane, vehicle và rail readback;
+- lighting reference có day street, interior, coast, traffic và NPC;
+- camera review có góc ngang tầm người, không chỉ camera trên cao;
+- hero asset list có provenance/licence, pivot, transformed bounds, LOD,
+  collision và texture hashes;
+- texture reuse audit không tạo texture trùng khi material tương đương đã tồn tại.
+
+Cho tới khi checklist này có ảnh/readback mới, không mở rộng toàn map hoặc gọi
+visual bible là visual AAA acceptance. Đây là contract V1; implementation review
+và chất lượng hero sample vẫn phải được ghi riêng trong handoff của pha sau.

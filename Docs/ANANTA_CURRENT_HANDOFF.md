@@ -442,3 +442,43 @@ reclassifying W3 or P4A/P4B.
 - Push: `git push origin main` exit 0; remote `refs/heads/main` matched
   `6394e505a3438142fc3ef431efd9cc1d2962e7d`. No force-push was used.
 - `AGENTS.md` remains the only unrelated dirty file and is not staged.
+## V1 Visual bible contract (2026-10-16)
+
+Phase ID: V1 — visual bible mới: hiện đại + anime có kiểm soát.
+
+### Ownership và scope
+
+- Pre-change dirty state chỉ có `AGENTS.md`; file này được giữ nguyên và không
+  stage. V1 chỉ sửa contract art/water và handoff, không sửa Unreal, map, asset,
+  generator hoặc toàn map.
+- World style được khóa hiện đại bán thực tế cho kiến trúc, đường phố, xe, rail,
+  ga, sân bay, biển và props. Character/NPC dùng anime có kiểm soát nhưng chung
+  scale, exposure, shadow và material response với thế giới.
+
+### Contract đã ghi
+
+- Palette cố định cho asphalt, concrete, facade, rail metal, glass/water,
+  vegetation, sand, wayfinding và character accent.
+- Material rules cho world PBR và character `skin`, `hair`, `cloth`, `eye`,
+  `accessory`, outline/rim tùy chọn; có texture reuse rule theo material key,
+  semantic, SHA-256 và perceptual hash.
+- Scale reference human rig 1.75 m, eye height 1.60 m, door, curb, lane, sedan
+  và rail gauge; review camera phải ở ngang tầm người.
+- Lighting reference cho day street, interior, coast, traffic và NPC.
+- Hero list gồm street block, interior lobby, seawall/coast, sedan, rail station,
+  civilian NPC, transit NPC và street furniture; mỗi asset yêu cầu provenance,
+  licence, pivot, transformed bounds, LOD, collision và texture hashes.
+- V1 gate cấm mở rộng toàn map trước khi hero sample có palette/material/scale/
+  lighting/readback và năm camera `street`, `interior`, `coast`, `traffic`, `npc`.
+
+### Evidence và phân loại
+
+- Python contract assertion — exit 0; `V1_CONTRACT_CHECK=PASS bytes=14582`.
+- `git diff --check -- Docs/ANANTA_ART_AND_WATER_CONTRACT.md` — exit 0; chỉ có
+  cảnh báo line-ending của Git.
+
+**DONE:** V1 visual bible contract và hero asset checklist.
+**PARTIAL:** chưa tạo hoặc sửa hero assets trong pha này.
+**UNVERIFIED:** hero captures/readback ở camera ngang tầm người, texture reuse
+audit thực tế và chất lượng visual AAA.
+**BLOCKED:** không mở rộng toàn map cho tới khi hero sample đạt V1 gate.
