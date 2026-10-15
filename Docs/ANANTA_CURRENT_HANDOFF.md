@@ -9,7 +9,7 @@ Trạng thái: PASS — bounded P2 material và headed hero gate đạt; GPU tie
 - Checkout: `D:\GAME\ANANTA`
 - Engine: Unreal Engine 5.8.3
 - Branch: `main`
-- Baseline remote sau sync: `479da5b044669c8a18f2f11084961791284db390`; current HEAD trước commit P2: `479da5b044669c8a18f2f11084961791284db390`
+- Baseline remote sau sync: `479da5b044669c8a18f2f11084961791284db390`; current HEAD sau commit P2: `25bee1260842c7ee5e74bedde5c22f740f010519`
 - Dirty file có sẵn: `AGENTS.md`; không sửa, stage, commit hoặc xóa.
 - P2 thay đổi: material helpers/readback, coastal map material assets, CoastalCity map, CoastalQA hero flags và hai Docs; chỉ `AGENTS.md` là dirty có sẵn.
 
@@ -147,8 +147,9 @@ railway signal control, save/economy và AAA quality toàn map.
 - P0 Docs commit: `927369f8bbc4fa5b0a1a5981fa1d927533e6bf3d` (`docs: establish ANANTA master roadmap and handoff`).
 - P1 implementation/docs commit: `c854fad796610e42c01f36cd7cff815be1181134` (`qa: refresh coastal model and placement reviews`).
 - P2 readback script/docs commit trước phiên: `8e63eb1d6adb05b1a98bc9f803e78e5b17aba76c`.
-- P2 commit/push: chờ commit sau khi kiểm tra `git status`, chỉ stage file in-scope trên
-  `main`; không stage `AGENTS.md`, không force-push.
+- P2 commit: `25bee1260842c7ee5e74bedde5c22f740f010519` (`qa: complete coastal hero material slice`).
+- Push: `git push origin main` exit 0; remote `refs/heads/main` =
+  `25bee1260842c7ee5e74bedde5c22f740f010519`; không force-push, `AGENTS.md` không stage.
 
 ## Prompt pha tiếp theo
 
