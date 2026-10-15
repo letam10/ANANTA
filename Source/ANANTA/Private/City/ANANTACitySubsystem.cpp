@@ -13,6 +13,7 @@ void UANANTACitySubsystem::Initialize(FSubsystemCollectionBase& Collection)
 {
     Super::Initialize(Collection);
     Progress = NewObject<UANANTACitySave>(this);
+    Progress->SchemaVersion = UANANTACitySave::GetCurrentSchemaVersion();
 #if !UE_BUILD_SHIPPING
     const bool bInputSmoke = FParse::Param(FCommandLine::Get(), TEXT("CityInputSmoke"));
     const bool bMissionCheck = FParse::Param(FCommandLine::Get(), TEXT("CityMissionCheck"));
@@ -22,15 +23,19 @@ void UANANTACitySubsystem::Initialize(FSubsystemCollectionBase& Collection)
     const bool bStreamingCheck = FParse::Param(FCommandLine::Get(), TEXT("CityStreamingCheck"));
     const bool bMobilityCheck = FParse::Param(FCommandLine::Get(), TEXT("CityCollisionCheck"))
         || FParse::Param(FCommandLine::Get(), TEXT("CityTransitCheck"));
+    const bool bPersistenceCheck = FParse::Param(FCommandLine::Get(), TEXT("CityPersistenceCheck"));
+    const bool bPersistenceReload = FParse::Param(FCommandLine::Get(), TEXT("CityPersistenceReload"));
     bUseQASlot = bInputSmoke || bMissionCheck || bMissionReload || bServiceCheck || bServiceReload
-        || bStreamingCheck || FParse::Param(FCommandLine::Get(), TEXT("CityQASlot"));
+        || bStreamingCheck || bMobilityCheck || bPersistenceCheck || bPersistenceReload
+        || FParse::Param(FCommandLine::Get(), TEXT("CityQASlot"));
     if (bUseQASlot)
     {
         SaveSlot = TEXT("ANANTA_City_QA");
         BackupSlot = TEXT("ANANTA_City_QA_Backup");
     }
     // Smoke luon bat dau moi; moi IO chi dung slot QA, khong nap hoac di chuyen save thuong.
-    if (bInputSmoke || bMissionCheck || bServiceCheck || bStreamingCheck || bMobilityCheck)
+    if (bInputSmoke || bMissionCheck || bServiceCheck || bStreamingCheck || bMobilityCheck
+        || bPersistenceCheck)
     {
         SaveStatus = TEXT("New isolated QA journey");
         return;
@@ -146,6 +151,177 @@ bool UANANTACitySubsystem::TryUseService(const FName Id, const ECityServiceKind 
     return true;
 }
 
+bool UANANTACitySubsystem::MarkDoorOpened(const FName Id)
+{
+    if (!Progress || Id.IsNone() || Progress->InteractionState.OpenedDoorIds.Contains(Id))
+    {
+        return false;
+    }
+    const FCityInteractionState Before = Progress->InteractionState;
+    Progress->InteractionState.OpenedDoorIds.Add(Id);
+    if (!SaveProgress())
+    {
+        Progress->InteractionState = Before;
+        return false;
+    }
+    return true;
+}
+
+bool UANANTACitySubsystem::MarkPropUsed(const FName Id)
+{
+    if (!Progress || Id.IsNone() || Progress->InteractionState.UsedPropIds.Contains(Id))
+    {
+        return false;
+    }
+    const FCityInteractionState Before = Progress->InteractionState;
+    Progress->InteractionState.UsedPropIds.Add(Id);
+    if (!SaveProgress())
+    {
+        Progress->InteractionState = Before;
+        return false;
+    }
+    return true;
+}
+
+bool UANANTACitySubsystem::MarkDistrictVisited(const FName Id)
+{
+    if (!Progress || Id.IsNone() || Progress->InteractionState.VisitedDistrictIds.Contains(Id))
+    {
+        return false;
+    }
+    const FCityInteractionState Before = Progress->InteractionState;
+    Progress->InteractionState.VisitedDistrictIds.Add(Id);
+    if (!SaveProgress())
+    {
+        Progress->InteractionState = Before;
+        return false;
+    }
+    return true;
+}
+
+bool UANANTACitySubsystem::UpdateNpcSchedule(const FName Id, const float Phase, const bool bActive)
+{
+    if (!Progress || Id.IsNone() || !FMath::IsFinite(Phase))
+    {
+        return false;
+    }
+    const FCityNpcScheduleState Before = Progress->NpcSchedule;
+    Progress->NpcSchedule.PhaseByNpcId.Add(Id, Phase);
+    if (bActive)
+    {
+        Progress->NpcSchedule.ActiveNpcIds.Add(Id);
+    }
+    else
+    {
+        Progress->NpcSchedule.ActiveNpcIds.Remove(Id);
+    }
+    if (!SaveProgress())
+    {
+        Progress->NpcSchedule = Before;
+        return false;
+    }
+    return true;
+}
+
+bool UANANTACitySubsystem::UpdateVehicleTransit(const FName Id, const FTransform& Transform,
+    const int32 RouteStop, const bool bBoarded)
+{
+    if (!Progress || Id.IsNone() || Transform.ContainsNaN() || RouteStop < 0)
+    {
+        return false;
+    }
+    const FCityVehicleTransitState Before = Progress->VehicleTransit;
+    Progress->VehicleTransit.VehicleTransforms.Add(Id, Transform);
+    Progress->VehicleTransit.RouteStopById.Add(Id, RouteStop);
+    if (bBoarded)
+    {
+        Progress->VehicleTransit.BoardedTransitIds.Add(Id);
+    }
+    else
+    {
+        Progress->VehicleTransit.BoardedTransitIds.Remove(Id);
+    }
+    if (!SaveProgress())
+    {
+        Progress->VehicleTransit = Before;
+        return false;
+    }
+    return true;
+}
+
+bool UANANTACitySubsystem::UpdateTransitSignal(const FName Id, const uint8 SignalState)
+{
+    if (!Progress || Id.IsNone() || SignalState > 2)
+    {
+        return false;
+    }
+    const FCityVehicleTransitState Before = Progress->VehicleTransit;
+    Progress->VehicleTransit.SignalStateById.Add(Id, SignalState);
+    if (!SaveProgress())
+    {
+        Progress->VehicleTransit = Before;
+        return false;
+    }
+    return true;
+}
+
+bool UANANTACitySubsystem::AddInventory(const FName Id, const int32 Amount)
+{
+    if (!Progress || Id.IsNone() || Amount <= 0)
+    {
+        return false;
+    }
+    const FCityEconomyState Before = Progress->Economy;
+    const int32 Existing = Progress->Economy.Inventory.FindRef(Id);
+    if (Existing > MAX_int32 - Amount)
+    {
+        return false;
+    }
+    Progress->Economy.Inventory.Add(Id, Existing + Amount);
+    if (!SaveProgress())
+    {
+        Progress->Economy = Before;
+        return false;
+    }
+    return true;
+}
+
+bool UANANTACitySubsystem::SetCityTokens(const int32 Amount)
+{
+    if (!Progress || Amount < 0)
+    {
+        return false;
+    }
+    const int32 Before = Progress->Economy.CityTokens;
+    Progress->Economy.CityTokens = Amount;
+    if (!SaveProgress())
+    {
+        Progress->Economy.CityTokens = Before;
+        return false;
+    }
+    return true;
+}
+
+bool UANANTACitySubsystem::SetDayNight(const int32 DayIndex, const float TimeHours,
+    const FName LightingLayer)
+{
+    if (!Progress || DayIndex < 0 || !FMath::IsFinite(TimeHours) || TimeHours < 0.f
+        || TimeHours >= 24.f || LightingLayer.IsNone())
+    {
+        return false;
+    }
+    const FCityDayNightState Before = Progress->DayNight;
+    Progress->DayNight.DayIndex = DayIndex;
+    Progress->DayNight.TimeHours = TimeHours;
+    Progress->DayNight.LightingLayer = LightingLayer;
+    if (!SaveProgress())
+    {
+        Progress->DayNight = Before;
+        return false;
+    }
+    return true;
+}
+
 FString UANANTACitySubsystem::GetServiceSummary() const
 {
     return FString::Printf(TEXT("%s %d  |  %s %d  |  %s"),
@@ -178,9 +354,9 @@ bool UANANTACitySubsystem::SaveProgress()
             }
         }
     }
-    if (!Progress->IsValidSave())
+    if (!Progress->MigrateToCurrentSchema())
     {
-        SaveStatus = TEXT("Save rejected: invalid state");
+        SaveStatus = TEXT("Save rejected: invalid or unsupported state");
         return false;
     }
     // Ghi ban du phong truoc; file chinh hong van nap duoc tien do da xac nhan.
@@ -190,7 +366,7 @@ bool UANANTACitySubsystem::SaveProgress()
         return false;
     }
     auto* Verified = Cast<UANANTACitySave>(UGameplayStatics::LoadGameFromSlot(BackupSlot, 0));
-    if (!Verified || !Verified->IsValidSave())
+    if (!Verified || !Verified->MigrateToCurrentSchema() || !Verified->IsValidSave())
     {
         SaveStatus = TEXT("Save verification failed");
         return false;
@@ -206,16 +382,29 @@ bool UANANTACitySubsystem::SaveProgress()
 
 bool UANANTACitySubsystem::LoadProgress()
 {
-    // Backup duoc ghi truoc va luon la ban moi nhat da commit.
+    bool bSawInvalidSlot = false;
     for (const FString& Slot : { BackupSlot, SaveSlot })
     {
-        auto* Loaded = Cast<UANANTACitySave>(UGameplayStatics::LoadGameFromSlot(Slot, 0));
-        if (Loaded && Loaded->IsValidSave())
+        if (!UGameplayStatics::DoesSaveGameExist(Slot, 0))
         {
-            Progress = Loaded;
-            SaveStatus = TEXT("Progress restored");
-            return true;
+            continue;
         }
+        auto* Loaded = Cast<UANANTACitySave>(UGameplayStatics::LoadGameFromSlot(Slot, 0));
+        if (!Loaded || !Loaded->IsValidSave() || !Loaded->MigrateToCurrentSchema())
+        {
+            bSawInvalidSlot = true;
+            continue;
+        }
+        Progress = Loaded;
+        SaveStatus = bSawInvalidSlot
+            ? TEXT("Progress restored from valid slot; invalid slot preserved")
+            : TEXT("Progress restored");
+        return true;
+    }
+    if (bSawInvalidSlot)
+    {
+        SaveStatus = TEXT("Save rejected: no valid slot; existing files preserved");
+        return false;
     }
     SaveStatus = TEXT("New city journey");
     return false;

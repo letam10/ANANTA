@@ -36,6 +36,15 @@ public:
     bool RegisterLegacyFragment(FName Id);
     bool HasLegacyFragment(FName Id) const;
     bool TryUseService(FName Id, ECityServiceKind Kind, const FString& Description);
+    bool MarkDoorOpened(FName Id);
+    bool MarkPropUsed(FName Id);
+    bool MarkDistrictVisited(FName Id);
+    bool UpdateNpcSchedule(FName Id, float Phase, bool bActive);
+    bool UpdateVehicleTransit(FName Id, const FTransform& Transform, int32 RouteStop, bool bBoarded);
+    bool UpdateTransitSignal(FName Id, uint8 SignalState);
+    bool AddInventory(FName Id, int32 Amount);
+    bool SetCityTokens(int32 Amount);
+    bool SetDayNight(int32 DayIndex, float TimeHours, FName LightingLayer);
     const FCityServiceState& GetServices() const { return Progress->Services; }
     FString GetServiceSummary() const;
     FString ServiceMessage;

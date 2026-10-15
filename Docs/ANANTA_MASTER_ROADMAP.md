@@ -180,3 +180,9 @@ shader/streaming, có log mới. Không dùng target cấu hình hoặc NullRHI 
 2. P1 đã đạt asset/geometry review gate; giữ 72 model và evidence mới.
 3. Chỉ chuyển P2, P3, P4, P5, P6 khi gate pha trước đạt.
 4. Mỗi chat cập nhật roadmap này và handoff hiện hành; không tạo roadmap cạnh tranh.
+
+## P4C — Persistence (2026-10-15)
+
+P4C đạt bounded PASS cho versioned save schema 2. Save cũ schema 1 được đọc và migrate; save thiếu trường dùng default hợp lệ; unknown schema, invalid IDs/counts/transforms và corrupted truncated payload bị reject mà không ghi đè slot. Quick Check/Reload trên `ANANTA_City` chứng minh snapshot interaction door/prop/district, NPC schedule, vehicle/transit, service/inventory/economy và day/night tồn tại sau process reload với `Saved/QA/CityPersistence/Report.txt` và `Reload.txt`.
+
+Giới hạn phải giữ: runtime này là fixture state API (`fixture_mode=true`), chưa phải native Coastal actor hook hoặc backend economy thật; không suy ra headed visual, GPU/VRAM hay FPS từ gate này. P5 performance vẫn chưa thực hiện.

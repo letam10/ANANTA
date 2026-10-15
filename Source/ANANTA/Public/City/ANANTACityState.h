@@ -50,6 +50,88 @@ struct ANANTA_API FCityMissionState
     static bool IsEnemy(FName Id);
 };
 
+USTRUCT(BlueprintType)
+struct ANANTA_API FCityInteractionState
+{
+    GENERATED_BODY()
+
+    UPROPERTY(SaveGame)
+    TSet<FName> OpenedDoorIds;
+
+    UPROPERTY(SaveGame)
+    TSet<FName> UsedPropIds;
+
+    UPROPERTY(SaveGame)
+    TSet<FName> VisitedDistrictIds;
+
+    bool IsValid() const;
+};
+
+USTRUCT(BlueprintType)
+struct ANANTA_API FCityNpcScheduleState
+{
+    GENERATED_BODY()
+
+    UPROPERTY(SaveGame)
+    TMap<FName, float> PhaseByNpcId;
+
+    UPROPERTY(SaveGame)
+    TSet<FName> ActiveNpcIds;
+
+    bool IsValid() const;
+};
+
+USTRUCT(BlueprintType)
+struct ANANTA_API FCityVehicleTransitState
+{
+    GENERATED_BODY()
+
+    UPROPERTY(SaveGame)
+    TMap<FName, FTransform> VehicleTransforms;
+
+    UPROPERTY(SaveGame)
+    TMap<FName, int32> RouteStopById;
+
+    UPROPERTY(SaveGame)
+    TSet<FName> BoardedTransitIds;
+
+    UPROPERTY(SaveGame)
+    TMap<FName, uint8> SignalStateById;
+
+    bool IsValid() const;
+};
+
+USTRUCT(BlueprintType)
+struct ANANTA_API FCityEconomyState
+{
+    GENERATED_BODY()
+
+    UPROPERTY(SaveGame)
+    TMap<FName, int32> Inventory;
+
+    UPROPERTY(SaveGame)
+    int32 CityTokens = 0;
+
+    bool IsValid() const;
+};
+
+USTRUCT(BlueprintType)
+struct ANANTA_API FCityDayNightState
+{
+    GENERATED_BODY()
+
+    UPROPERTY(SaveGame)
+    int32 DayIndex = 0;
+
+    UPROPERTY(SaveGame)
+    float TimeHours = 12.f;
+
+    UPROPERTY(SaveGame)
+    FName LightingLayer = TEXT("Day");
+
+    bool IsValid() const;
+};
+
 UCLASS()
 class ANANTA_API UANANTACitySave : public USaveGame
 {
@@ -80,5 +162,22 @@ public:
     UPROPERTY(SaveGame)
     TSet<FName> LegacyFragments;
 
+    UPROPERTY(SaveGame)
+    FCityInteractionState InteractionState;
+
+    UPROPERTY(SaveGame)
+    FCityNpcScheduleState NpcSchedule;
+
+    UPROPERTY(SaveGame)
+    FCityVehicleTransitState VehicleTransit;
+
+    UPROPERTY(SaveGame)
+    FCityEconomyState Economy;
+
+    UPROPERTY(SaveGame)
+    FCityDayNightState DayNight;
+
     bool IsValidSave() const;
+    bool MigrateToCurrentSchema();
+    static int32 GetCurrentSchemaVersion() { return 2; }
 };

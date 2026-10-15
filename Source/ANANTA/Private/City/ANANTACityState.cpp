@@ -90,6 +90,92 @@ bool FCityMissionState::IsValid() const
     }
 }
 
+namespace
+{
+    bool IsValidIdSet(const TSet<FName>& Ids)
+    {
+        for (const FName Id : Ids)
+        {
+            if (Id.IsNone())
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    bool IsValidTransform(const FTransform& Transform)
+    {
+        return !Transform.ContainsNaN();
+    }
+}
+
+bool FCityInteractionState::IsValid() const
+{
+    return IsValidIdSet(OpenedDoorIds) && IsValidIdSet(UsedPropIds)
+        && IsValidIdSet(VisitedDistrictIds);
+}
+
+bool FCityNpcScheduleState::IsValid() const
+{
+    for (const TPair<FName, float>& Entry : PhaseByNpcId)
+    {
+        if (Entry.Key.IsNone() || !FMath::IsFinite(Entry.Value) || Entry.Value < 0.f)
+        {
+            return false;
+        }
+    }
+    return IsValidIdSet(ActiveNpcIds);
+}
+
+bool FCityVehicleTransitState::IsValid() const
+{
+    for (const TPair<FName, FTransform>& Entry : VehicleTransforms)
+    {
+        if (Entry.Key.IsNone() || !IsValidTransform(Entry.Value))
+        {
+            return false;
+        }
+    }
+    for (const TPair<FName, int32>& Entry : RouteStopById)
+    {
+        if (Entry.Key.IsNone() || Entry.Value < 0)
+        {
+            return false;
+        }
+    }
+    for (const TPair<FName, uint8>& Entry : SignalStateById)
+    {
+        if (Entry.Key.IsNone() || Entry.Value > 2)
+        {
+            return false;
+        }
+    }
+    return IsValidIdSet(BoardedTransitIds);
+}
+
+bool FCityEconomyState::IsValid() const
+{
+    if (CityTokens < 0)
+    {
+        return false;
+    }
+    for (const TPair<FName, int32>& Entry : Inventory)
+    {
+        if (Entry.Key.IsNone() || Entry.Value < 0)
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
+bool FCityDayNightState::IsValid() const
+{
+    return DayIndex >= 0 && FMath::IsFinite(TimeHours) && TimeHours >= 0.f && TimeHours < 24.f
+        && !LightingLayer.IsNone();
+}
+
 bool UANANTACitySave::IsValidSave() const
 {
     const auto SafeTransform = [](const FTransform& Transform)
@@ -98,7 +184,40 @@ bool UANANTACitySave::IsValidSave() const
         return !Transform.ContainsNaN() && FMath::Abs(Position.X) <= CityWorldBounds::SaveExtent
             && FMath::Abs(Position.Y) <= CityWorldBounds::SaveExtent && Position.Z > -1000 && Position.Z < 30000;
     };
-    return SchemaVersion == 1 && Mission.IsValid() && Services.IsValid()
+    const bool bSupportedSchema = SchemaVersion == 1 || SchemaVersion == GetCurrentSchemaVersion();
+    const bool bCurrentStateValid = SchemaVersion != GetCurrentSchemaVersion()
+        || (InteractionState.IsValid() && NpcSchedule.IsValid() && VehicleTransit.IsValid()
+            && Economy.IsValid() && DayNight.IsValid());
+    return bSupportedSchema && bCurrentStateValid && Mission.IsValid() && Services.IsValid()
         && (!bHasPlayerTransform || SafeTransform(PlayerTransform))
-        && (!bHasCarTransform || SafeTransform(CarTransform));
+        && (!bHasCarTransform || SafeTransform(CarTransform))
+        && [&]()
+        {
+            if (SchemaVersion != GetCurrentSchemaVersion())
+            {
+                return true;
+            }
+            for (const TPair<FName, FTransform>& Entry : VehicleTransit.VehicleTransforms)
+            {
+                if (!SafeTransform(Entry.Value))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }();
+}
+
+bool UANANTACitySave::MigrateToCurrentSchema()
+{
+    if (SchemaVersion == GetCurrentSchemaVersion())
+    {
+        return IsValidSave();
+    }
+    if (SchemaVersion != 1 || !IsValidSave())
+    {
+        return false;
+    }
+    SchemaVersion = GetCurrentSchemaVersion();
+    return IsValidSave();
 }
