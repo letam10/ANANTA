@@ -93,7 +93,8 @@ không null; không dùng ảnh Blender/editor-only hoặc NullRHI làm visual a
 
 ## P2 checkpoint — 2026-10-15
 
-P2 hero slice is **PASS for the bounded visual gate**; GPU tier/FPS remains unverified:\n+
+P2 hero slice is **PASS for the bounded visual gate**; GPU tier/FPS remains unverified:
+
 - `Tools/Upgrade/coastal_materials.py` now guarantees connected BaseColor, Roughness,
   Normal and Emissive inputs for every generated material and the ocean material.
 - `Tools/Upgrade/coastal_detail.py`, `coastal_scene.py` and
@@ -206,3 +207,61 @@ Contract kỹ thuật nằm ở `Docs/ANANTA_ART_AND_WATER_CONTRACT.md`.
   chỉ headed frame-time mới trên tier GPU đã ghi mới có thể đóng P5.
 - W1 không sửa file Unreal, không claim native interaction/persistence, và
   không dùng config, build hoặc NullRHI để tuyên bố FPS.
+
+## W2 — Coastal water quick visual QA (2026-10-16)
+
+Phase ID: W2 — sóng ven bờ, foam, boundary và quick visual QA.
+Trạng thái: **DONE** cho source/spec/build/browser quick QA; chưa phải AAA art,
+Unreal native collision hoặc F1 performance acceptance.
+
+- Biển prototype dùng boundary rộng `[-700,700] x [-400,400]`, camera margin 14 m
+  và boat margin 8 m. `CoastBoundary` hỗ trợ box/polygon, contains, distance và
+  clamp; `ShoreFoam` dùng một mặt phẳng cố định với distance-to-edge shader.
+- `wave-spec.json` v2 ghi schema version, SHA-256
+  `f1023df3c0ca24d3f5afb8a18bb25d85b01c9cc32b3973c9c5923384f718621f`, units,
+  axes, bốn wave tuple, foam width 6 m, shoreline depth 16 m, boundary và ba
+  preset camera. Preset thấp đặt `cpuMeshRebuild=false`.
+- Auto sequence chạy `coast`, `beach_boat`, `offshore`, mỗi cảnh 10 giây. Browser
+  cache-bust run mới: coast `avg 17.67 / p95 18.60 / max 23.50 ms`, beach/boat
+  `17.72 / 18.40 / 19.20 ms`, offshore `17.73 / 18.50 / 19.40 ms`; cả ba
+  `outliers=0`, console error rỗng, overlay có boundary/foam và 4 waves.
+- `npm run check` exit 0; `npm run build` exit 0 (Vite chỉ cảnh báo chunk >500 kB);
+  `python Tools/QA/ValidateThreeWaterSpec.py` exit 0; `git diff --check` exit 0
+  ngoài cảnh báo line-ending; WaveField runtime smoke exit 0.
+
+**DONE:** W2 gate source/spec/browser quick QA.
+**PARTIAL:** visual chỉ là prototype water slice; chưa review AAA toàn thành phố,
+  interaction/static-dressing toàn map hoặc native Unreal collision.
+**UNVERIFIED:** F1 GPU/CPU/VRAM frame-time và 60 FPS.
+**BLOCKED:** không có blocker cho W2; Unreal port gate chuyển sang W3.
+
+## W3 — Unreal water contract (2026-10-16)
+
+Phase ID: W3 — port contract nước sang Unreal.
+Trạng thái: **PARTIAL/UNVERIFIED**.
+
+- Đã tạo `public/unreal-water-contract.json` và
+  `Docs/ANANTA_UNREAL_WATER_CONTRACT.md`, giữ nguyên bốn wave và mapping
+  `Three.X→UE.X`, `Three.Z→UE.Y`, `Three.Y→UE.Z`; material function contract là
+  opaque `BaseColor/Normal/Roughness/Emissive`, foam rẻ, boundary collision riêng.
+- Validator kiểm tra source hash, schema, units, axes, wave tuples, boundary,
+  scene labels và `fpsClaim=false`.
+- Chưa có Unreal material graph readback thật cho bốn output, native boundary
+  collision evidence hoặc ảnh Three.js/Unreal cùng camera. Không sửa Unreal trong
+  lượt này và không gọi W3 graph gate là PASS.
+
+**DONE:** contract artifact và validator.
+**PARTIAL:** tài liệu/parameter mapping đã sẵn sàng cho port.
+**UNVERIFIED:** graph readback, native boundary, camera comparison và visual
+  direction equivalence trong Unreal.
+**BLOCKED:** Unreal port acceptance đến khi có các evidence trên.
+
+## Current acceptance priority
+
+- P2 là bounded visual pass và chưa đạt chất lượng nghệ thuật AAA toàn map.
+- P4A/P4B tiếp tục ghi **PARTIAL** nếu chưa có fresh Unreal runtime log; build,
+  map commandlet và NullRHI không biến thành runtime PASS.
+- Three.js water W2/W3 là nhánh ưu tiên mới trước mọi shader/parameter port.
+- 60 FPS là mục tiêu chính với ngân sách `1000/60 = 16.667 ms`; ghi chú 90 FPS
+  cũ không tự động thay thế mục tiêu này. Chỉ F1 headed GPU/CPU/VRAM evidence
+  mới được dùng để kết luận.

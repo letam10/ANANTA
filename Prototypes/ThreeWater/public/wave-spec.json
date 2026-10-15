@@ -1,21 +1,158 @@
 {
-  "schema": "ananta.three-water.wave-spec.v1",
-  "coordinateSystem": {
-    "prototype": "Three.js Y-up; horizontal XZ; height is Y",
-    "unreal": "Unreal Z-up; prototype X maps to Unreal X, prototype Z maps to Unreal Y, prototype height maps to Unreal Z"
+  "schema": "ananta.three-water.wave-spec.v2",
+  "schemaVersion": "2.0.0",
+  "hash": {
+    "algorithm": "sha256",
+    "canonicalization": "sorted UTF-8 JSON with hash.value=PENDING_HASH",
+    "value": "f1023df3c0ca24d3f5afb8a18bb25d85b01c9cc32b3973c9c5923384f718621f"
   },
-  "formula": "phase = 2π * (dot(normalize(direction), horizontalPosition) / wavelength - speed * time / wavelength) + phaseOffset; height += amplitude * sin(phase)",
-  "normal": "derive tangent from dHeightDx and dHeightDz of the same wave field, then normalize(-dHeightDx, 1, -dHeightDz)",
-  "preset": "low",
-  "waveCount": 4,
+  "units": {
+    "distance": "meters",
+    "time": "seconds",
+    "amplitude": "meters",
+    "speed": "meters_per_second",
+    "phase": "radians"
+  },
+  "axes": {
+    "three": "Y-up; horizontal XZ; height Y",
+    "unreal": "Z-up; horizontal XY; height Z",
+    "mapping": "UE.X=Three.X, UE.Y=Three.Z, UE.Z=Three.Y"
+  },
+  "formula": "phase = 2π * (dot(normalize(direction), horizontalPosition) / wavelength - speed * time / wavelength) + phase; height += amplitude * sin(phase)",
+  "normal": "derive dHeightDx and dHeightDz from the same phase field, then normalize(-dHeightDx, 1, -dHeightDz)",
+  "presetQuality": {
+    "name": "low",
+    "maxWaves": 4,
+    "cpuMeshRebuild": false,
+    "renderPath": "single_fixed_mesh_shader",
+    "physics": false,
+    "buoyancy": false
+  },
   "waves": [
-    { "direction": [1, 0.25], "wavelength": 28, "amplitude": 0.2, "speed": 1.6, "phaseOffset": 0 },
-    { "direction": [-0.7, 1], "wavelength": 45, "amplitude": 0.12, "speed": 1.1, "phaseOffset": 1.4 },
-    { "direction": [0.35, 0.94], "wavelength": 72, "amplitude": 0.06, "speed": 0.75, "phaseOffset": 2.2 },
-    { "direction": [-1, -0.2], "wavelength": 120, "amplitude": 0.03, "speed": 0.45, "phaseOffset": 3.1 }
+    {
+      "direction": [
+        1,
+        0.25
+      ],
+      "wavelength": 28,
+      "amplitude": 0.2,
+      "speed": 1.6,
+      "phase": 0
+    },
+    {
+      "direction": [
+        -0.7,
+        1
+      ],
+      "wavelength": 45,
+      "amplitude": 0.12,
+      "speed": 1.1,
+      "phase": 1.4
+    },
+    {
+      "direction": [
+        0.35,
+        0.94
+      ],
+      "wavelength": 72,
+      "amplitude": 0.06,
+      "speed": 0.75,
+      "phase": 2.2
+    },
+    {
+      "direction": [
+        -1,
+        -0.2
+      ],
+      "wavelength": 120,
+      "amplitude": 0.03,
+      "speed": 0.45,
+      "phase": 3.1
+    }
   ],
-  "maxCrestHeightMeters": 0.41,
-  "boundaryMeters": { "minX": -120, "maxX": 120, "minZ": -80, "maxZ": 80 },
-  "shoreFoamBandMeters": 4,
-  "unrealPortGate": "Do not port shader parameters until browser smoke, visible waves, foam fade, boundary preview and overlay evidence pass."
+  "foam": {
+    "width": 6,
+    "shorelineDepth": 16,
+    "distanceField": "nearest_boundary_edge",
+    "falloff": "smoothstep",
+    "renderPath": "single_shader_band",
+    "instancing": "not_required"
+  },
+  "boundary": {
+    "type": "box",
+    "minX": -700,
+    "maxX": 700,
+    "minZ": -400,
+    "maxZ": 400,
+    "cameraMargin": 14,
+    "boatMargin": 8,
+    "polygon": [
+      [
+        -700,
+        -400
+      ],
+      [
+        700,
+        -400
+      ],
+      [
+        700,
+        400
+      ],
+      [
+        -700,
+        400
+      ]
+    ]
+  },
+  "scenes": [
+    {
+      "id": "coast",
+      "durationSeconds": 10,
+      "camera": [
+        560,
+        70,
+        300
+      ],
+      "target": [
+        640,
+        0,
+        120
+      ]
+    },
+    {
+      "id": "beach_boat",
+      "durationSeconds": 10,
+      "camera": [
+        -100,
+        36,
+        100
+      ],
+      "target": [
+        -42,
+        0,
+        -8
+      ]
+    },
+    {
+      "id": "offshore",
+      "durationSeconds": 10,
+      "camera": [
+        320,
+        180,
+        -280
+      ],
+      "target": [
+        0,
+        0,
+        0
+      ]
+    }
+  ],
+  "unrealPortGate": {
+    "shader": "opaque water with dynamic normal and cheap foam",
+    "boundaryCollision": "separate authored collision, never encoded in shader",
+    "comparison": "same named camera transforms in Three.js and Unreal",
+    "fpsClaim": false
+  }
 }

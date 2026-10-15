@@ -1,6 +1,6 @@
 # ANANTA Art and Water Contract
 
-Version: W1, 2026-10-16
+Version: W2/W3, 2026-10-16
 
 ## Hình ảnh thành phố
 
@@ -84,3 +84,33 @@ thấy sóng rõ, không seam khi camera di chuyển, orbit/free camera, foam/sh
 fade, boundary preview, overlay frame-time/render-info và console sạch. Browser
 smoke chỉ chứng minh prototype chạy; không tự chứng minh 60 FPS, GPU tier, AAA
 toàn map hoặc Unreal runtime.
+
+## W2 coastal water extension
+
+- Biển prototype là một vùng rộng theo box boundary `minX=-700`, `maxX=700`,
+  `minZ=-400`, `maxZ=400`; camera và boat bị clamp bằng margin lần lượt 14 m và
+  8 m. Boundary preview là visual QA, còn collision gameplay native vẫn là gate
+  riêng.
+- `public/wave-spec.json` schema `ananta.three-water.wave-spec.v2` có SHA-256
+  `f1023df3c0ca24d3f5afb8a18bb25d85b01c9cc32b3973c9c5923384f718621f`, bốn wave,
+  units/axes, foam width 6 m, shoreline depth 16 m và ba cảnh cố định.
+- Foam dùng một geometry cố định và fragment shader tính distance tới cạnh bờ;
+  preset thấp không rebuild CPU mesh. Auto quick QA chạy `coast`, `beach_boat`
+  và `offshore`, mỗi cảnh 10 giây.
+- Browser run cache-bust mới kết thúc đủ ba report: coast `avg 17.67 ms,
+  p95 18.60 ms, max 23.50 ms, outliers 0`; beach/boat `17.72/18.40/19.20 ms,
+  0`; offshore `17.73/18.50/19.40 ms, 0`. Console error rỗng; đây là quick QA
+  frame-time, chưa phải chứng nhận 60 FPS GPU.
+
+## W3 Unreal water handoff
+
+- `public/unreal-water-contract.json` giữ nguyên direction, wavelength,
+  amplitude, speed và phase từ wave spec; mapping là `Three.X → UE.X`,
+  `Three.Z → UE.Y`, `Three.Y → UE.Z`.
+- Material Function `MF_AnantaWater` dự kiến trả `BaseColor`, `Normal`,
+  `Roughness`, `Emissive` cho opaque water, normal động và foam rẻ. Boundary
+  collision là actor/component riêng, không nằm trong shader; không có physics
+  hoặc buoyancy trong pha này.
+- W3 hiện **PARTIAL/UNVERIFIED**: contract và validator đã có, nhưng chưa có
+  Unreal material graph readback thật, boundary collision readback native hoặc
+  ảnh so sánh Three.js/Unreal cùng camera. Không claim 60 FPS trước F1.

@@ -1,0 +1,132 @@
+{
+  "schemaVersion": "ananta.three-water.unreal-water-contract.v2",
+  "contractId": "W3.unreal-water-contract",
+  "sourceWaveSpec": {
+    "path": "public/wave-spec.json",
+    "schema": "ananta.three-water.wave-spec.v2",
+    "hashAlgorithm": "sha256",
+    "sha256": "f1023df3c0ca24d3f5afb8a18bb25d85b01c9cc32b3973c9c5923384f718621f",
+    "canonicalization": "sorted UTF-8 JSON with hash.value=PENDING_HASH"
+  },
+  "units": {
+    "length": "meters",
+    "time": "seconds",
+    "angle": "radians",
+    "amplitude": "meters",
+    "speed": "meters_per_second"
+  },
+  "axes": {
+    "Three.X": "UE.X",
+    "Three.Z": "UE.Y",
+    "Three.Y": "UE.Z"
+  },
+  "waveField": {
+    "preset": "low",
+    "waveCount": 4,
+    "parameters": [
+      "direction",
+      "wavelength",
+      "amplitude",
+      "speed",
+      "phase"
+    ],
+    "phaseSourceField": "phase",
+    "waves": [
+      {
+        "direction": [
+          1,
+          0.25
+        ],
+        "wavelength": 28,
+        "amplitude": 0.2,
+        "speed": 1.6,
+        "phase": 0
+      },
+      {
+        "direction": [
+          -0.7,
+          1
+        ],
+        "wavelength": 45,
+        "amplitude": 0.12,
+        "speed": 1.1,
+        "phase": 1.4
+      },
+      {
+        "direction": [
+          0.35,
+          0.94
+        ],
+        "wavelength": 72,
+        "amplitude": 0.06,
+        "speed": 0.75,
+        "phase": 2.2
+      },
+      {
+        "direction": [
+          -1,
+          -0.2
+        ],
+        "wavelength": 120,
+        "amplitude": 0.03,
+        "speed": 0.45,
+        "phase": 3.1
+      }
+    ]
+  },
+  "materialFunction": {
+    "name": "MF_AnantaWater",
+    "signature": "MF_AnantaWater(WorldPosition, Time, Wave[]) -> {BaseColor, Normal, Roughness, Emissive}",
+    "inputs": [
+      "WorldPosition",
+      "Time",
+      "Wave[]"
+    ],
+    "waveParameterTypes": {
+      "direction": "float2",
+      "wavelength": "float",
+      "amplitude": "float",
+      "speed": "float",
+      "phase": "float"
+    },
+    "outputs": [
+      "BaseColor",
+      "Normal",
+      "Roughness",
+      "Emissive"
+    ],
+    "readbackRequired": true
+  },
+  "surface": {
+    "blendMode": "opaque",
+    "normalMode": "dynamic",
+    "foamMode": "cheap",
+    "foamWidth": 6,
+    "shorelineDepth": 16
+  },
+  "boundaryCollision": {
+    "shaderIndependent": true,
+    "type": "box",
+    "boundsMeters": {
+      "minX": -700,
+      "maxX": 700,
+      "minZ": -400,
+      "maxZ": 400
+    },
+    "cameraMargin": 14,
+    "boatMargin": 8
+  },
+  "cameraComparisonLabels": [
+    "coast",
+    "beach_boat",
+    "offshore"
+  ],
+  "physics": {
+    "noPhysics": true,
+    "noBuoyancy": true
+  },
+  "acceptance": {
+    "fpsClaim": false,
+    "requiresF1ForFrameRate": true
+  }
+}

@@ -7,6 +7,7 @@ export class PerformanceOverlay {
     this.frames = 0;
     this.lastSecond = 0;
     this.fps = 0;
+    this.lastMetrics = null;
     if (this.documentRef && this.parent) {
       this.element = this.documentRef.createElement("pre");
       this.element.dataset.qa = "performance-overlay";
@@ -20,9 +21,21 @@ export class PerformanceOverlay {
     }
   }
 
-  update(renderer, { frameMs = 0, waveCount = 0, cameraMode = "orbit", boundaryVisible = true, foamVisible = true } = {}) {
+  update(renderer, {
+    frameMs = 0,
+    waveCount = 0,
+    cameraMode = "orbit",
+    boundaryVisible = true,
+    foamVisible = true,
+    sceneId = "unknown",
+    sceneElapsed = 0,
+    sceneDuration = 0,
+    sceneReports = [],
+  } = {}) {
     const safeFrameMs = Number.isFinite(frameMs) ? Math.max(0, frameMs) : 0;
-    this.frameMs = this.frameMs === 0 ? safeFrameMs : this.frameMs * 0.9 + safeFrameMs * 0.1;
+    this.frameMs = this.frameMs === 0
+      ? safeFrameMs
+      : this.frameMs * 0.9 + safeFrameMs * 0.1;
     this.frames += 1;
     const now = performance.now();
     if (this.lastSecond === 0) {
@@ -33,18 +46,37 @@ export class PerformanceOverlay {
       this.frames = 0;
       this.lastSecond = now;
     }
+    const info = renderer?.info?.render || {};
+    const memory = renderer?.info?.memory || {};
+    this.lastMetrics = {
+      frameMs: this.frameMs,
+      fps: this.fps,
+      drawCalls: info.calls ?? 0,
+      triangles: info.triangles ?? 0,
+      geometries: memory.geometries ?? 0,
+      textures: memory.textures ?? 0,
+      sceneId,
+      sceneElapsed,
+      sceneDuration,
+    };
     if (!this.element) {
       return;
     }
-    const info = renderer?.info?.render || {};
-    const memory = renderer?.info?.memory || {};
+    const reportText = sceneReports.length > 0
+      ? sceneReports.map((report) => (
+        `${report.sceneId} avg ${report.steadyAverageFrameMs.toFixed(2)} p95 ${report.p95FrameMs.toFixed(2)}`
+        + ` max ${report.maxFrameMs.toFixed(2)} outliers ${report.outlierFrameCount}`
+      )).join(" | ")
+      : "reports 0 completed";
     this.element.textContent = [
-      "W1 THREE WATER QA",
+      "W2 THREE WATER QA",
+      `scene ${sceneId} ${sceneElapsed.toFixed(1)}s/${sceneDuration.toFixed(1)}s`,
       `frame ${this.frameMs.toFixed(2)} ms  fps ${this.fps.toFixed(1)}`,
       `drawCalls ${info.calls ?? 0}  triangles ${info.triangles ?? 0}`,
       `geometries ${memory.geometries ?? 0}  textures ${memory.textures ?? 0}`,
       `waves ${waveCount}  camera ${cameraMode}`,
       `boundary ${boundaryVisible ? "on" : "off"}  foam ${foamVisible ? "on" : "off"}`,
+      `sceneStats ${reportText}`,
       "60 FPS is a target; this overlay reports measurements only",
     ].join("\n");
   }

@@ -96,7 +96,8 @@ local đã đồng bộ remote. Không cần reset hoặc force-push.
   19 package SHA-256 không null, `errors=[]`, `packagesUnchanged=true`.
 - `CoastalQA` hỗ trợ `-CoastalHeroOnly` với năm camera cố định `hero_day`,
   `hero_blue_hour`, `hero_street`, `hero_interior`, `hero_coast`; `-CoastalBlueHour`
-  đổi profile directional/sky light. Capture headed 1280x720 đã chạy hai lần:\n+  Day folder `Saved/Upgrade/Runtime/2026.10.15-12.58.16` và BlueHour folder
+  đổi profile directional/sky light. Capture headed 1280x720 đã chạy hai lần:
+  Day folder `Saved/Upgrade/Runtime/2026.10.15-12.58.16` và BlueHour folder
   `Saved/Upgrade/Runtime/2026.10.15-13.00.11`; mỗi log có
   `COASTAL_QA_COMPLETE failures=0 views=5`, 5 PNG mới và checks gameplay PASS.
 - Đã mở kiểm tra trực quan `hero_day.png` và `hero_coast.png` từ hai folder; không thấy
@@ -350,3 +351,87 @@ prototype evidence is reviewed as the source gate. No Unreal file was modified.
 to Unreal. Keep AGENTS.md and all unrelated dirty files untouched; do not claim
 60 FPS, native persistence or AAA quality from build, config or NullRHI. Add fresh
 headed/runtime evidence before changing P4A/P4B classifications.`
+
+## W2/W3 Coastal water continuation (2026-10-16)
+
+Phase ID: W2 — coastal waves, foam, boundary and quick visual QA; W3 — Unreal
+water contract handoff.
+
+### Dirty ownership before W2 changes
+
+- Pre-change `git status --short --branch` was `main...origin/main` with only
+  pre-existing ` M AGENTS.md`. `AGENTS.md` was preserved and is still not staged.
+- No Unreal file was edited in this turn. Existing interaction/transit work is
+  historical and has no fresh Unreal runtime log in this W2 turn, so P4A/P4B
+  remain **PARTIAL** for current handoff classification; build or old map logs
+  are not converted to runtime PASS.
+- W2 files are limited to `Prototypes/ThreeWater/`, `Tools/QA/ValidateThreeWaterSpec.py`
+  and the water/roadmap/handoff contract documents. No old asset or map file was
+  overwritten.
+
+### W2 implementation
+
+- Expanded the water extent to box boundary `minX=-700`, `maxX=700`, `minZ=-400`,
+  `maxZ=400`, with camera margin 14 m and boat margin 8 m. `CoastBoundary`
+  supports box/polygon preview, containment, distance-to-shore and clamp.
+- `ShoreFoam` uses one fixed plane and shader distance to the nearest boundary
+  edge with `foamWidth=6 m` and `shorelineDepth=16 m`. The low preset keeps one
+  fixed water mesh and `cpuMeshRebuild=false`.
+- Added fixed `coast`, `beach_boat` and `offshore` presets. Auto QA runs each for
+  10 seconds, then freezes and reports average, p95, max and outlier count.
+- `wave-spec.json` v2 and the Unreal contract use SHA-256
+  `f1023df3c0ca24d3f5afb8a18bb25d85b01c9cc32b3973c9c5923384f718621f`; validator
+  enforces schema, units, axes, four exact wave tuples, foam, boundary, scenes,
+  Unreal mapping and `fpsClaim=false`.
+
+### Evidence mới và exit code
+
+- `npm run check` — exit 0; JavaScript syntax checks passed.
+- `npm run build` — exit 0; Vite transformed 12 modules and emitted the known
+  chunk-size warning for a 731 kB minified asset.
+- `python Tools/QA/ValidateThreeWaterSpec.py` — exit 0;
+  `THREE_WATER_SPEC_OK sha256=f1023df3c0ca24d3f5afb8a18bb25d85b01c9cc32b3973c9c5923384f718621f waves=4 scenes=3 duration=10s`.
+- WaveField runtime smoke — exit 0;
+  `WAVE_RUNTIME_CHECK=PASS waves=4 height=0.198274 normalY=0.999875`.
+- `git diff --check` — exit 0; only Git LF-to-CRLF advisories for dirty text
+  files, no whitespace error.
+- Browser cache-bust run at `http://127.0.0.1:4178/?qa=1792089950750` completed
+  all three 10-second scenes. Overlay reports coast `avg 17.67 ms, p95 18.60,
+  max 23.50, outliers 0`; beach/boat `17.72, 18.40, 19.20, 0`; offshore
+  `17.73, 18.50, 19.40, 0`. Final frame showed visible broad water and shore
+  foam/boundary edge; overlay had 4 waves, boundary on and foam on. Console error
+  log was empty; browser logs contained only Vite connect/debug entries.
+
+- `& .\Tools\Build\Build-ANANTA.ps1 -MaxParallelActions 2` — exit 0; target up to date, Unreal build completed successfully. This build is a build receipt only and does not prove runtime, visual or FPS acceptance.
+
+### Current classification
+
+**DONE:** W2 fixed-mesh source changes, broad sea boundary, foam fade, camera/boat
+clamp, three 10-second scene reports, contract hash/schema validator, check/build
+and browser smoke.
+
+**PARTIAL:** W2 visual evidence is a prototype water slice. It does not accept
+AAA quality for the full city or interaction/static-dressing coverage for every
+house, NPC, prop, vehicle, rail, station, airport, boat or venue.
+
+**UNVERIFIED:** F1 headed GPU/CPU/VRAM frame-time percentile, 60 FPS on target
+RTX tiers, native Unreal collision, Unreal visual direction comparison and full
+map visual quality. The browser overlay is measurement evidence, not a 60 FPS
+claim.
+
+**BLOCKED:** W3 Unreal acceptance is blocked until a real Unreal material graph
+readback proves BaseColor/Normal/Roughness/Emissive, native boundary collision is
+read back at the authored edge, and the three named cameras are compared between
+Three.js and Unreal. No Unreal file was modified in W2.
+
+### Prompt pha tiếp theo
+
+```text
+W3 — Port the accepted wave-spec.json values into Unreal only after reviewing
+Docs/ANANTA_UNREAL_WATER_CONTRACT.md. Create/read back MF_AnantaWater outputs
+BaseColor, Normal, Roughness and Emissive; keep boundary collision separate from
+the shader; compare coast, beach_boat and offshore cameras. Do not add water
+physics/buoyancy and do not claim 60 FPS before F1. Keep AGENTS.md and unrelated
+Unreal dirty files untouched. Record fresh runtime/readback evidence before
+reclassifying W3 or P4A/P4B.
+```

@@ -5,58 +5,51 @@ import { WaterSurface } from "./water/WaterSurface.js";
 import { ShoreFoam } from "./water/ShoreFoam.js";
 import { CoastBoundary } from "./water/CoastBoundary.js";
 import { PerformanceOverlay } from "./qa/PerformanceOverlay.js";
+import { SCENE_PRESETS, applyScenePreset, getScenePreset } from "./qa/ScenePresets.js";
 
 const canvas = document.querySelector("#water-canvas");
 const status = document.querySelector("#status");
-const state = {
-  paused: false,
-  cameraMode: "orbit",
-  boundaryVisible: true,
-  foamVisible: true,
-};
 
-const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: false });
-renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.75));
-renderer.setSize(window.innerWidth, window.innerHeight, false);
-renderer.outputColorSpace = THREE.SRGBColorSpace;
-renderer.toneMapping = THREE.ACESFilmicToneMapping;
-renderer.toneMappingExposure = 1.05;
+function setStatus(message) {
+  if (status) {
+    status.textContent = message;
+  }
+}
 
-const scene = new THREE.Scene();
-scene.background = new THREE.Color(0x8db8cb);
-scene.fog = new THREE.Fog(0x8db8cb, 180, 420);
+function finiteNumber(value, fallback) {
+  return Number.isFinite(value) ? value : fallback;
+}
 
-const camera = new THREE.PerspectiveCamera(48, window.innerWidth / window.innerHeight, 0.1, 600);
-camera.position.set(135, 78, 130);
-camera.lookAt(0, 0, 0);
-const controls = new OrbitControls(camera, canvas);
-controls.target.set(0, 0, 0);
-controls.enableDamping = true;
-controls.dampingFactor = 0.06;
-controls.minDistance = 24;
-controls.maxDistance = 340;
+async function loadWaveSpec() {
+  const response = await fetch("/wave-spec.json", { cache: "no-store" });
+  if (!response.ok) {
+    throw new Error(`wave-spec.json HTTP ${response.status}`);
+  }
+  return response.json();
+}
 
-scene.add(new THREE.HemisphereLight(0xbfeaff, 0x24475c, 1.9));
-const sun = new THREE.DirectionalLight(0xffe7bd, 2.8);
-sun.position.set(-80, 140, 60);
-scene.add(sun);
+function createWaveField(spec) {
+  const waves = spec.waves.map((wave) => ({
+    direction: wave.direction,
+    wavelength: wave.wavelength,
+    amplitude: wave.amplitude,
+    speed: wave.speed,
+    phaseOffset: finiteNumber(wave.phase, finiteNumber(wave.phaseOffset, 0)),
+  }));
+  return new WaveField(waves);
+}
 
-const boundary = new CoastBoundary({ minX: -120, maxX: 120, minZ: -80, maxZ: 80 });
-const waveField = new WaveField();
-const water = new WaterSurface({ THREE, waveField, width: 240, depth: 160, boundary });
-const foam = new ShoreFoam({ THREE, boundary, width: 240, depth: 160 });
-const boundaryPreview = boundary.createPreview(THREE);
-scene.add(water.object3D, foam.object3D, boundaryPreview);
+function createBoundary(spec) {
+  return new CoastBoundary({
+    minX: spec.minX,
+    maxX: spec.maxX,
+    minZ: spec.minZ,
+    maxZ: spec.maxZ,
+    polygon: spec.polygon,
+  });
+}
 
-const ground = new THREE.Mesh(
-  new THREE.PlaneGeometry(320, 220),
-  new THREE.MeshStandardMaterial({ color: 0xd6bd8e, roughness: 0.9, metalness: 0 }),
-);
-ground.rotation.x = -Math.PI / 2;
-ground.position.y = -0.75;
-scene.add(ground);
-
-function createBoat() {
+function createBoat(scene) {
   const boat = new THREE.Group();
   const hull = new THREE.Mesh(
     new THREE.BoxGeometry(7, 1.1, 2.6),
@@ -83,120 +76,314 @@ function createBoat() {
   return boat;
 }
 
-const boat = createBoat();
-const overlay = new PerformanceOverlay();
-const keys = new Set();
-const freeForward = new THREE.Vector3();
-const freeRight = new THREE.Vector3();
-const freeMove = new THREE.Vector3();
-const up = new THREE.Vector3(0, 1, 0);
-const clock = new THREE.Clock();
-let elapsed = 0;
-let lastFrame = performance.now();
-
-function setStatus(message) {
-  if (status) {
-    status.textContent = message;
-  }
+function createSceneAccumulator(sceneId) {
+  return {
+    sceneId,
+    frameCount: 0,
+    totalFrameMs: 0,
+    minFrameMs: Number.POSITIVE_INFINITY,
+    maxFrameMs: 0,
+    frameTimes: [],
+  };
 }
 
-function toggleCamera() {
-  state.cameraMode = state.cameraMode === "orbit" ? "free" : "orbit";
-  controls.enabled = state.cameraMode === "orbit";
-  setStatus(`Ready · ${state.cameraMode} camera · ${waveField.waves.length} waves`);
+function finalizeSceneAccumulator(accumulator, durationSeconds) {
+  const averageFrameMs = accumulator.frameCount > 0
+    ? accumulator.totalFrameMs / accumulator.frameCount
+    : 0;
+  const steadyFrameTimes = accumulator.frameTimes.filter((frameMs) => frameMs <= 50);
+  const steadyAverageFrameMs = steadyFrameTimes.length > 0
+    ? steadyFrameTimes.reduce((sum, frameMs) => sum + frameMs, 0) / steadyFrameTimes.length
+    : 0;
+  const sortedFrameTimes = [...accumulator.frameTimes].sort((first, second) => first - second);
+  const p95Index = sortedFrameTimes.length > 0
+    ? Math.floor((sortedFrameTimes.length - 1) * 0.95)
+    : 0;
+  return {
+    sceneId: accumulator.sceneId,
+    durationSeconds,
+    frameCount: accumulator.frameCount,
+    averageFrameMs: Number(averageFrameMs.toFixed(4)),
+    steadyAverageFrameMs: Number(steadyAverageFrameMs.toFixed(4)),
+    p95FrameMs: Number((sortedFrameTimes[p95Index] || 0).toFixed(4)),
+    outlierFrameCount: accumulator.frameTimes.length - steadyFrameTimes.length,
+    minFrameMs: Number((Number.isFinite(accumulator.minFrameMs)
+      ? accumulator.minFrameMs
+      : 0).toFixed(4)),
+    maxFrameMs: Number(accumulator.maxFrameMs.toFixed(4)),
+  };
 }
 
-function moveFreeCamera(deltaSeconds) {
-  if (state.cameraMode !== "free") {
-    return;
-  }
-  camera.getWorldDirection(freeForward);
-  freeForward.y = 0;
-  freeForward.normalize();
-  freeRight.crossVectors(freeForward, up).normalize();
-  freeMove.set(0, 0, 0);
-  if (keys.has("KeyW")) freeMove.add(freeForward);
-  if (keys.has("KeyS")) freeMove.sub(freeForward);
-  if (keys.has("KeyD")) freeMove.add(freeRight);
-  if (keys.has("KeyA")) freeMove.sub(freeRight);
-  if (keys.has("KeyR")) freeMove.y += 1;
-  if (keys.has("KeyF")) freeMove.y -= 1;
-  if (freeMove.lengthSq() > 0) {
-    freeMove.normalize().multiplyScalar(deltaSeconds * 42);
-    camera.position.add(freeMove);
-  }
-}
-
-function updateBoat() {
-  const sample = waveField.sampleHeightAndNormal(boat.position.x, boat.position.z, elapsed);
-  boat.position.y = sample.height + 1.15;
-  const normal = new THREE.Vector3(sample.normal.x, sample.normal.y, sample.normal.z);
-  boat.quaternion.setFromUnitVectors(up, normal);
-}
-
-function handleKeyDown(event) {
-  keys.add(event.code);
-  if (event.code === "KeyC" && !event.repeat) toggleCamera();
-  if (event.code === "KeyB" && !event.repeat) {
-    state.boundaryVisible = !state.boundaryVisible;
-    boundaryPreview.visible = state.boundaryVisible;
-  }
-  if (event.code === "KeyF" && state.cameraMode !== "free" && !event.repeat) {
-    state.foamVisible = !state.foamVisible;
-    foam.setVisible(state.foamVisible);
-  }
-  if (event.code === "Space" && !event.repeat) state.paused = !state.paused;
-}
-
-function handleKeyUp(event) {
-  keys.delete(event.code);
-}
-
-function resize() {
-  camera.aspect = window.innerWidth / window.innerHeight;
-  camera.updateProjectionMatrix();
+async function bootstrap(spec) {
+  const scenePresets = Object.values(SCENE_PRESETS);
+  const boundarySpec = spec.boundary;
+  const boundary = createBoundary(boundarySpec);
+  const waveField = createWaveField(spec);
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: false });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.75));
   renderer.setSize(window.innerWidth, window.innerHeight, false);
-}
+  renderer.outputColorSpace = THREE.SRGBColorSpace;
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.05;
 
-window.addEventListener("keydown", handleKeyDown);
-window.addEventListener("keyup", handleKeyUp);
-window.addEventListener("resize", resize);
+  const scene = new THREE.Scene();
+  scene.background = new THREE.Color(0x8db8cb);
+  scene.fog = new THREE.Fog(0x8db8cb, 260, 920);
+  const camera = new THREE.PerspectiveCamera(
+    48,
+    window.innerWidth / window.innerHeight,
+    0.1,
+    1400,
+  );
+  const controls = new OrbitControls(camera, canvas);
+  controls.enableDamping = true;
+  controls.dampingFactor = 0.06;
+  controls.minDistance = 24;
+  controls.maxDistance = 760;
 
-window.__ANANTA_WATER_QA__ = {
-  sceneReady: true,
-  waveCount: waveField.waves.length,
-  boundary: boundary.toJSON(),
-  sample: waveField.sampleHeightAndNormal(0, 0, 0),
-  renderer,
-  water,
-  foam,
-  boundaryPreview,
-};
-document.body.dataset.qaReady = "true";
-setStatus(`Ready · orbit camera · ${waveField.waves.length} waves`);
+  scene.add(new THREE.HemisphereLight(0xbfeaff, 0x24475c, 1.9));
+  const sun = new THREE.DirectionalLight(0xffe7bd, 2.8);
+  sun.position.set(-180, 240, 120);
+  scene.add(sun);
 
-function animate() {
-  requestAnimationFrame(animate);
-  const deltaSeconds = Math.min(clock.getDelta(), 0.05);
-  if (!state.paused) elapsed += deltaSeconds;
-  moveFreeCamera(deltaSeconds);
-  if (!state.paused) {
-    water.update(elapsed);
-    foam.update(elapsed);
-    updateBoat();
-  }
-  controls.update();
-  const now = performance.now();
-  const frameMs = now - lastFrame;
-  lastFrame = now;
-  renderer.render(scene, camera);
-  overlay.update(renderer, {
-    frameMs,
-    waveCount: waveField.waves.length,
-    cameraMode: state.cameraMode,
-    boundaryVisible: state.boundaryVisible,
-    foamVisible: state.foamVisible,
+  const width = boundary.maxX - boundary.minX;
+  const depth = boundary.maxZ - boundary.minZ;
+  const water = new WaterSurface({ THREE, waveField, width, depth, boundary });
+  const foam = new ShoreFoam({
+    THREE,
+    boundary,
+    width,
+    depth,
+    foamWidth: spec.foam.width,
+    shorelineDepth: spec.foam.shorelineDepth,
   });
+  const boundaryPreview = boundary.createPreview(THREE);
+  scene.add(water.object3D, foam.object3D, boundaryPreview);
+
+  const ground = new THREE.Mesh(
+    new THREE.PlaneGeometry(width + 180, depth + 140),
+    new THREE.MeshStandardMaterial({ color: 0xd6bd8e, roughness: 0.9, metalness: 0 }),
+  );
+  ground.rotation.x = -Math.PI / 2;
+  ground.position.y = -0.75;
+  scene.add(ground);
+
+  const boat = createBoat(scene);
+  const overlay = new PerformanceOverlay();
+  const keys = new Set();
+  const freeForward = new THREE.Vector3();
+  const freeRight = new THREE.Vector3();
+  const freeMove = new THREE.Vector3();
+  const up = new THREE.Vector3(0, 1, 0);
+  const clock = new THREE.Clock();
+  const state = {
+    paused: false,
+    cameraMode: "orbit",
+    boundaryVisible: true,
+    foamVisible: true,
+    activeSceneId: "coast",
+    sceneElapsed: 0,
+    autoAdvance: true,
+    sceneReports: [],
+    sceneAccumulator: createSceneAccumulator("coast"),
+    quickQaComplete: false,
+  };
+  let elapsed = 0;
+  let lastFrame = performance.now();
+
+  function clampCameraAndTarget() {
+    const cameraPoint = boundary.clamp(
+      camera.position.x,
+      camera.position.z,
+      finiteNumber(boundarySpec.cameraMargin, 14),
+    );
+    camera.position.x = cameraPoint.x;
+    camera.position.z = cameraPoint.z;
+    const targetPoint = boundary.clamp(
+      controls.target.x,
+      controls.target.z,
+      finiteNumber(boundarySpec.cameraMargin, 14),
+    );
+    controls.target.x = targetPoint.x;
+    controls.target.z = targetPoint.z;
+  }
+
+  function applyScene(sceneId, manual = false) {
+    const preset = getScenePreset(sceneId);
+    if (!preset) {
+      return;
+    }
+    if (manual) {
+      state.sceneReports = [];
+      state.quickQaComplete = false;
+    }
+    state.activeSceneId = preset.id;
+    state.sceneElapsed = 0;
+    state.sceneAccumulator = createSceneAccumulator(preset.id);
+    state.paused = false;
+    applyScenePreset(camera, controls, preset);
+    clampCameraAndTarget();
+    boat.visible = preset.id !== "offshore";
+    setStatus(`Ready · ${preset.id} · ${preset.durationSeconds}s quick QA · 4 waves`);
+  }
+
+  function recordSceneFrame(frameMs) {
+    const accumulator = state.sceneAccumulator;
+    accumulator.frameCount += 1;
+    accumulator.totalFrameMs += frameMs;
+    accumulator.frameTimes.push(frameMs);
+    accumulator.minFrameMs = Math.min(accumulator.minFrameMs, frameMs);
+    accumulator.maxFrameMs = Math.max(accumulator.maxFrameMs, frameMs);
+  }
+
+  function advanceSceneIfReady() {
+    const preset = getScenePreset(state.activeSceneId);
+    if (!state.autoAdvance || state.sceneElapsed < preset.durationSeconds) {
+      return;
+    }
+    state.sceneReports.push(
+      finalizeSceneAccumulator(state.sceneAccumulator, preset.durationSeconds),
+    );
+    const currentIndex = scenePresets.findIndex((item) => item.id === preset.id);
+    const next = scenePresets[currentIndex + 1];
+    if (!next) {
+      state.autoAdvance = false;
+      state.quickQaComplete = true;
+      state.paused = true;
+      setStatus("W2 quick QA complete · coast/beach_boat/offshore reports ready");
+      return;
+    }
+    applyScene(next.id);
+  }
+
+  function moveFreeCamera(deltaSeconds) {
+    if (state.cameraMode !== "free") {
+      return;
+    }
+    camera.getWorldDirection(freeForward);
+    freeForward.y = 0;
+    freeForward.normalize();
+    freeRight.crossVectors(freeForward, up).normalize();
+    freeMove.set(0, 0, 0);
+    if (keys.has("KeyW")) freeMove.add(freeForward);
+    if (keys.has("KeyS")) freeMove.sub(freeForward);
+    if (keys.has("KeyD")) freeMove.add(freeRight);
+    if (keys.has("KeyA")) freeMove.sub(freeRight);
+    if (keys.has("KeyR")) freeMove.y += 1;
+    if (keys.has("KeyF")) freeMove.y -= 1;
+    if (freeMove.lengthSq() > 0) {
+      freeMove.normalize().multiplyScalar(deltaSeconds * 42);
+      camera.position.add(freeMove);
+    }
+    clampCameraAndTarget();
+  }
+
+  function updateBoat() {
+    const point = boundary.clamp(
+      boat.position.x,
+      boat.position.z,
+      finiteNumber(boundarySpec.boatMargin, 8),
+    );
+    boat.position.x = point.x;
+    boat.position.z = point.z;
+    const sample = waveField.sampleHeightAndNormal(boat.position.x, boat.position.z, elapsed);
+    boat.position.y = sample.height + 1.15;
+    const normal = new THREE.Vector3(sample.normal.x, sample.normal.y, sample.normal.z);
+    boat.quaternion.setFromUnitVectors(up, normal);
+  }
+
+  function handleKeyDown(event) {
+    keys.add(event.code);
+    if (event.code === "KeyC" && !event.repeat) {
+      state.cameraMode = state.cameraMode === "orbit" ? "free" : "orbit";
+      controls.enabled = state.cameraMode === "orbit";
+      setStatus(`Ready · ${state.cameraMode} camera · ${state.activeSceneId}`);
+    }
+    if (event.code === "Digit1" && !event.repeat) applyScene("coast", true);
+    if (event.code === "Digit2" && !event.repeat) applyScene("beach_boat", true);
+    if (event.code === "Digit3" && !event.repeat) applyScene("offshore", true);
+    if (event.code === "KeyB" && !event.repeat) {
+      state.boundaryVisible = !state.boundaryVisible;
+      boundaryPreview.visible = state.boundaryVisible;
+    }
+    if (event.code === "KeyF" && state.cameraMode !== "free" && !event.repeat) {
+      state.foamVisible = !state.foamVisible;
+      foam.setVisible(state.foamVisible);
+    }
+    if (event.code === "Space" && !event.repeat) state.paused = !state.paused;
+  }
+
+  function handleKeyUp(event) {
+    keys.delete(event.code);
+  }
+
+  function resize() {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight, false);
+  }
+
+  window.addEventListener("keydown", handleKeyDown);
+  window.addEventListener("keyup", handleKeyUp);
+  window.addEventListener("resize", resize);
+
+  applyScene("coast");
+  window.__ANANTA_WATER_QA__ = {
+    sceneReady: true,
+    schema: spec.schema,
+    waveCount: waveField.waves.length,
+    boundary: boundary.toJSON(),
+    foam: spec.foam,
+    scenes: scenePresets.map((item) => item.id),
+    sceneReports: state.sceneReports,
+    renderer,
+    water,
+    foamObject: foam,
+    boundaryPreview,
+    quickQa: state,
+  };
+  document.body.dataset.qaReady = "true";
+
+  function animate() {
+    requestAnimationFrame(animate);
+    const deltaSeconds = Math.min(clock.getDelta(), 0.05);
+    if (!state.paused) {
+      elapsed += deltaSeconds;
+      state.sceneElapsed += deltaSeconds;
+    }
+    moveFreeCamera(deltaSeconds);
+    if (!state.paused) {
+      water.update(elapsed);
+      foam.update(elapsed);
+      updateBoat();
+    }
+    controls.update();
+    clampCameraAndTarget();
+    const now = performance.now();
+    const frameMs = now - lastFrame;
+    lastFrame = now;
+    renderer.render(scene, camera);
+    recordSceneFrame(frameMs);
+    advanceSceneIfReady();
+    overlay.update(renderer, {
+      frameMs,
+      waveCount: waveField.waves.length,
+      cameraMode: state.cameraMode,
+      boundaryVisible: state.boundaryVisible,
+      foamVisible: state.foamVisible,
+      sceneId: state.activeSceneId,
+      sceneElapsed: state.sceneElapsed,
+      sceneDuration: getScenePreset(state.activeSceneId).durationSeconds,
+      sceneReports: state.sceneReports,
+    });
+    window.__ANANTA_WATER_QA__.sceneReports = state.sceneReports;
+  }
+
+  animate();
 }
 
-animate();
+loadWaveSpec().then((spec) => bootstrap(spec)).catch((error) => {
+  document.body.dataset.qaReady = "false";
+  setStatus(`Water prototype error: ${error.message}`);
+  console.error("ANANTA_WATER_BOOTSTRAP_ERROR", error);
+});

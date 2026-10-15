@@ -1,7 +1,7 @@
-# ANANTA Three.js Water Prototype (W1)
+# ANANTA Three.js Coastal Water Prototype
 
-Prototype nước biển độc lập cho ANANTA. Đây là gate trước khi port shader và
-parameters sang Unreal; không có file Unreal nào thuộc prototype này.
+Prototype nước biển độc lập cho W2. Đây là gate trước khi port shader và tham số
+sang Unreal; không có file Unreal nào thuộc prototype này.
 
 ## Chạy
 
@@ -12,53 +12,55 @@ npm run build
 npm run dev -- --host 127.0.0.1 --port 4178
 ```
 
-Mở `http://127.0.0.1:4178/` trong browser. `package-lock.json` được tạo bởi
-`npm install` và giữ đúng các phiên bản trong `package.json`.
+Mở `http://127.0.0.1:4178/` trong browser. `package-lock.json` pin dependency
+Three.js/Vite. Validator contract chạy từ repository root:
 
-## Điều khiển và gate
+```powershell
+python Tools/QA/ValidateThreeWaterSpec.py
+```
 
-- Kéo chuột để orbit camera; nhấn `C` để chuyển free camera.
+## Điều khiển và W2 quick QA
+
+- Orbit bằng kéo chuột; nhấn `C` để chuyển free camera.
 - Free camera dùng `WASD` và `R/F`; `B` bật/tắt boundary preview.
-- `F` bật/tắt foam khi đang ở orbit; `Space` pause/resume thời gian sóng.
-- Overlay góc trên trái hiển thị frame time đo được, draw calls, triangles,
-  camera mode, số wave và trạng thái boundary/foam. Mục tiêu 60 FPS tương ứng
-  ngân sách 16.667 ms; overlay không tự chứng minh một tier GPU đạt mục tiêu.
-- Browser smoke phải thấy `document.body.dataset.qaReady=true`, hook
-  `window.__ANANTA_WATER_QA__`, bốn wave, boundary preview, foam và không có
-  console error.
+- `F` bật/tắt foam khi orbit; `Space` pause/resume thời gian sóng.
+- `1`, `2`, `3` chọn lần lượt `coast`, `beach_boat`, `offshore`.
+- Auto QA chạy đúng ba cảnh, mỗi cảnh 10 giây, rồi dừng và hiển thị report.
+- Overlay hiển thị frame time, p95, max, outlier, draw calls, triangles,
+  geometries, textures, wave count và trạng thái boundary/foam.
+- Overlay là số đo browser quick QA; mục tiêu 60 FPS chỉ được kết luận trong F1.
+
+W2 dùng biển rộng từ `boundary` trong `public/wave-spec.json`, không dùng hồ
+nhỏ. Camera và boat được clamp theo margin riêng. Foam là một mặt phẳng cố định,
+fragment shader tính khoảng cách tới cạnh boundary; không rebuild CPU mesh trong
+animation loop.
 
 ## Contract kỹ thuật
 
 - Three.js ES modules dùng Y-up; mặt phẳng nước nằm trên XZ và dùng một
-  `PlaneGeometry` cố định. Không rebuild geometry trong animation loop.
+  `PlaneGeometry` cố định.
 - Preset thấp có tối đa bốn sine/Gerstner-like waves. Trường sóng dùng:
   `phase = 2π * (dot(normalize(direction), horizontalPosition) / wavelength`
-  `        - speed * time / wavelength) + phaseOffset`
+  `        - speed * time / wavelength) + phase` và
+  `height += amplitude * sin(phase)`. Normal lấy từ đạo hàm của cùng phase.
+- `WaveField` chỉ làm nguồn CPU để bob chiếc boat QA. Không có FFT, fluid
+  simulation nặng, physics hoặc buoyancy gameplay.
+- `CoastBoundary` có box/polygon preview, containment, distance và clamp.
+- `public/wave-spec.json` ghi schema version, hash SHA-256, units, axes, wave
+  tuples, foam width/depth, boundary và ba camera preset.
 
-  `height += amplitude * sin(phase)`. Normal lấy từ đạo hàm không gian của
-  cùng phase, không dùng normal độc lập.
-- `WaveField` là nguồn CPU để bob chiếc boat QA. Boat chỉ là visual fixture;
-  nó bám height/normal để kiểm tra mắt, không phải buoyancy gameplay.
-- Foam là lớp shader mỏng ở dải boundary. `CoastBoundary` cung cấp rectangle
-  preview, containment và clamp để chặn rìa map trong prototype.
-- Chưa làm FFT, mô phỏng chất lỏng nặng, collision vật lý hoặc gameplay boat.
+## W3 Unreal handoff
 
-## Quy đổi Unreal
-
-Prototype giữ tọa độ ngang Three.js `(X, Z)` và chiều cao `Y`. Khi port sang
-Unreal Z-up, mapping mặc định của contract là:
-
-`X_unreal = X_three`, `Y_unreal = Z_three`, `Z_unreal = Y_three`.
-
-Direction Three `[dx, dz]` trở thành Unreal `[dx, dy]`; wavelength, amplitude,
-speed và phaseOffset giữ nguyên theo cùng đơn vị. Kiểm tra handedness và dấu
-heading trong scene Unreal trước khi chép shader.
+`public/unreal-water-contract.json` và `Docs/ANANTA_UNREAL_WATER_CONTRACT.md`
+ghi cùng direction, wavelength, amplitude, speed và phase. Mapping là
+`Three.X → UE.X`, `Three.Z → UE.Y`, `Three.Y → UE.Z`. Material function dự kiến
+`MF_AnantaWater` trả `BaseColor`, `Normal`, `Roughness`, `Emissive`; boundary
+collision nằm ngoài shader. Unreal graph readback và ảnh so sánh cùng camera
+vẫn là gate W3 riêng, chưa được prototype này tự nhận là PASS.
 
 ## Giới hạn acceptance
 
-Gate W1 chỉ xác nhận module/build/browser prototype: sóng nhìn thấy được, camera
-orbit/free hoạt động, foam và boundary preview hiện diện, không seam khi camera
-di chuyển, overlay có frame-time/render-info và console sạch. Gate này chưa
-chứng minh chất lượng AAA toàn thành phố, native Unreal persistence, interaction
-gameplay hoặc 60 FPS trên RTX 3050/4060. Chỉ sau gate này mới xem xét port
-shader/parameters sang Unreal trong pha riêng.
+W2 chỉ xác nhận module/build/browser quick QA: sóng nhìn thấy ở gần và xa,
+foam fade, boundary preview/clamp, ba scene report và console sạch. Gate này
+chưa chứng minh chất lượng AAA toàn thành phố, native Unreal persistence,
+interaction gameplay, collision native hoặc 60 FPS trên phần cứng mục tiêu.
