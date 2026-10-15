@@ -276,3 +276,77 @@ Chỉ stage file P4A/P4B và handoff này; giữ `AGENTS.md` untouched. Generate
 
 Commit hash: `8f0889168cfe169d1f0b309526afceea7341aa66`
 Push hash: `8f0889168cfe169d1f0b309526afceea7341aa66` (`refs/heads/main`)
+
+## W1 Three.js water prototype — 2026-10-16
+
+Phase ID: W1 — Three.js water prototype gate before Unreal port.
+
+### Dirty ownership and scope
+
+- Pre-change `git status --short --branch` showed `main...origin/main` and only
+  pre-existing ` M AGENTS.md`. That file was not edited, staged or overwritten.
+- No Unreal file was changed in W1. Historical P4A/P4B commit `8f088916...` and
+  its bounded evidence remain historical; this turn has no fresh Unreal runtime
+  log, so P4A/P4B are **PARTIAL** for the current handoff and are not reclassified
+  as a new runtime PASS.
+- New scope is limited to `Prototypes/ThreeWater/`, the art/water contract and
+  these roadmap/handoff notes. Generated `node_modules` and `dist` are temporary
+  and are not part of the phase deliverable.
+
+### W1 implementation
+
+- `WaveField` has four sanitized low-preset waves and samples height plus a normal
+  derived from the same phase field.
+- `WaterSurface` uses one fixed plane and shader uniforms; it does not rebuild
+  geometry in the animation loop. The shader carries wavelength, speed and
+  phaseOffset using the contract formula.
+- `ShoreFoam` provides a fixed translucent shore band. `CoastBoundary` provides
+  XZ containment/clamp and a visible rectangle preview.
+- `main.js` provides orbit/free camera, keyboard toggles, a bobbing boat visual
+  fixture and `PerformanceOverlay` frame-time/render information.
+- `wave-spec.json`, `README.md` and `Docs/ANANTA_ART_AND_WATER_CONTRACT.md` record
+  Three.js Y-up to Unreal Z-up mapping, interaction/static-dressing boundaries,
+  review requirements and the no-FPS-inference rule.
+
+### Evidence mới
+
+- `npm install` — exit 0; lockfile created. npm reported two audit advisories and
+  an install-script approval warning; neither blocked the prototype gate.
+- `npm run check` — exit 0; all six JavaScript modules passed `node --check`.
+- `npm run build` — exit 0; Vite produced `dist/index.html` and a bundled asset.
+  Vite emitted only the known chunk-size warning (>500 kB).
+- `node --input-type=module` WaveField runtime check — exit 0; printed
+  `WAVE_RUNTIME_CHECK=PASS waves=4 height=0.169722 normalY=0.999316` after the
+  preset was synchronized with `wave-spec.json`.
+- Browser smoke at `http://127.0.0.1:4178/` — Vite server ready; body
+  `data-qa-ready=true`; visible status `Ready · orbit camera · 4 waves`; console
+  error log empty. A fresh screenshot showed visible wave bands, shore foam,
+  boundary edges and the boat fixture. The synchronized run reported
+  `frame 17.62 ms`, `drawCalls 7`, `triangles 51268`, `waves 4`, `boundary on`,
+  `foam on`; these measurements are observation only, not a 60 FPS claim.
+- Input smoke toggled orbit to free camera and toggled boundary/foam visibility;
+  a second orbit camera frame remained continuous without a visible seam.
+
+### Phân loại W1
+
+**DONE:** W1 source contract, four-wave fixed-mesh shader prototype, foam/boundary
+preview, orbit/free camera, overlay, dependency lock, syntax/build gate and
+browser smoke gate.
+
+**PARTIAL:** P2 remains a bounded visual pass and is not AAA art acceptance;
+P4A/P4B have no fresh Unreal runtime log in this W1 turn; the prototype boat is
+only a visual/static-dressing fixture.
+
+**UNVERIFIED:** headed Unreal water port, native Coastal persistence/interaction,
+full-city anime character/NPC audit, GPU/VRAM frame-time percentile, 60 FPS on
+RTX tiers, soak/benchmark, and seam behavior beyond the browser smoke views.
+
+**BLOCKED:** Unreal shader/parameter port is intentionally blocked until W1
+prototype evidence is reviewed as the source gate. No Unreal file was modified.
+
+### Prompt pha tiếp theo
+
+`W2 — Review W1 browser evidence and port only the accepted water shader/parameters
+to Unreal. Keep AGENTS.md and all unrelated dirty files untouched; do not claim
+60 FPS, native persistence or AAA quality from build, config or NullRHI. Add fresh
+headed/runtime evidence before changing P4A/P4B classifications.`

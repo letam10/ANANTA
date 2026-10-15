@@ -1,0 +1,21 @@
+{
+  "schema": "ananta.three-water.wave-spec.v1",
+  "coordinateSystem": {
+    "prototype": "Three.js Y-up; horizontal XZ; height is Y",
+    "unreal": "Unreal Z-up; prototype X maps to Unreal X, prototype Z maps to Unreal Y, prototype height maps to Unreal Z"
+  },
+  "formula": "phase = 2π * (dot(normalize(direction), horizontalPosition) / wavelength - speed * time / wavelength) + phaseOffset; height += amplitude * sin(phase)",
+  "normal": "derive tangent from dHeightDx and dHeightDz of the same wave field, then normalize(-dHeightDx, 1, -dHeightDz)",
+  "preset": "low",
+  "waveCount": 4,
+  "waves": [
+    { "direction": [1, 0.25], "wavelength": 28, "amplitude": 0.2, "speed": 1.6, "phaseOffset": 0 },
+    { "direction": [-0.7, 1], "wavelength": 45, "amplitude": 0.12, "speed": 1.1, "phaseOffset": 1.4 },
+    { "direction": [0.35, 0.94], "wavelength": 72, "amplitude": 0.06, "speed": 0.75, "phaseOffset": 2.2 },
+    { "direction": [-1, -0.2], "wavelength": 120, "amplitude": 0.03, "speed": 0.45, "phaseOffset": 3.1 }
+  ],
+  "maxCrestHeightMeters": 0.41,
+  "boundaryMeters": { "minX": -120, "maxX": 120, "minZ": -80, "maxZ": 80 },
+  "shoreFoamBandMeters": 4,
+  "unrealPortGate": "Do not port shader parameters until browser smoke, visible waves, foam fade, boundary preview and overlay evidence pass."
+}

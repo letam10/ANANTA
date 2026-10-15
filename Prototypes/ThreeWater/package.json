@@ -1,0 +1,17 @@
+{
+  "name": "ananta-three-water-prototype",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "build": "vite build",
+    "check": "node --check src/main.js && node --check src/water/WaveField.js && node --check src/water/WaterSurface.js && node --check src/water/ShoreFoam.js && node --check src/water/CoastBoundary.js && node --check src/qa/PerformanceOverlay.js"
+  },
+  "dependencies": {
+    "three": "0.170.0"
+  },
+  "devDependencies": {
+    "vite": "6.1.0"
+  }
+}

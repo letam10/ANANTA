@@ -186,3 +186,23 @@ shader/streaming, có log mới. Không dùng target cấu hình hoặc NullRHI 
 P4C đạt bounded PASS cho versioned save schema 2. Save cũ schema 1 được đọc và migrate; save thiếu trường dùng default hợp lệ; unknown schema, invalid IDs/counts/transforms và corrupted truncated payload bị reject mà không ghi đè slot. Quick Check/Reload trên `ANANTA_City` chứng minh snapshot interaction door/prop/district, NPC schedule, vehicle/transit, service/inventory/economy và day/night tồn tại sau process reload với `Saved/QA/CityPersistence/Report.txt` và `Reload.txt`.
 
 Giới hạn phải giữ: runtime này là fixture state API (`fixture_mode=true`), chưa phải native Coastal actor hook hoặc backend economy thật; không suy ra headed visual, GPU/VRAM hay FPS từ gate này. P5 performance vẫn chưa thực hiện.
+
+## W1 — Three.js water prototype priority (2026-10-16)
+
+W1 là nhánh ưu tiên trước mọi port shader/parameters nước sang Unreal. Prototype
+nằm riêng tại `Prototypes/ThreeWater/`, dùng Three.js ES modules, một mặt lưới
+cố định, tối đa bốn wave ở preset thấp, foam/shore fade và boundary preview.
+Contract kỹ thuật nằm ở `Docs/ANANTA_ART_AND_WATER_CONTRACT.md`.
+
+- P2 là bounded visual pass; nó chưa đạt chất lượng nghệ thuật AAA toàn map.
+- P4A/P4B trong lượt W1 này là **PARTIAL** cho mục đích handoff: không có fresh
+  Unreal runtime log mới trong lượt này và không được biến build/map evidence cũ
+  thành runtime PASS.
+- W1 gate cần `npm run check`, `npm run build` và browser smoke có camera
+  orbit/free, sóng không seam khi di chuyển camera, foam/shore fade, boundary
+  preview, overlay frame-time/render-info và console sạch.
+- 60 FPS là mục tiêu chính, ngân sách `1000/60 = 16.667 ms`. Ghi chú 90 FPS
+  cũ (nếu xuất hiện trong evidence lịch sử) không tự động thay thế mục tiêu này;
+  chỉ headed frame-time mới trên tier GPU đã ghi mới có thể đóng P5.
+- W1 không sửa file Unreal, không claim native interaction/persistence, và
+  không dùng config, build hoặc NullRHI để tuyên bố FPS.
