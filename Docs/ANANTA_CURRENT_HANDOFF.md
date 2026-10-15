@@ -1,8 +1,8 @@
 # ANANTA Current Handoff
 
 Ngày cập nhật: 2026-10-15
-Phase ID: P1 — Asset, prop nhỏ và geometry pipeline
-Trạng thái: PASS cho P0 và P1 source/geometry review; P2 chưa bắt đầu
+Phase ID: P2 — Material graph và hero slice
+Trạng thái: PARTIAL — material readback có evidence; emissive/headed hero visual chưa đạt
 
 ## Checkout và dirty-state
 
@@ -11,7 +11,7 @@ Trạng thái: PASS cho P0 và P1 source/geometry review; P2 chưa bắt đầu
 - Branch: `codex/coastal-interiors-20261014`
 - Baseline remote sau sync: `9057c9beecd2ef1e1cc433eb4f672b9130343e79`; current local HEAD sau P1 commit: `c854fad796610e42c01f36cd7cff815be1181134`
 - Dirty file có sẵn: `AGENTS.md`; không sửa, stage, commit hoặc xóa.
-- Hai Docs P0 là file do chat này tạo; P1 chỉ sửa fallback Blender trong `Tools/Upgrade/ReviewModels.py` và `Tools/Upgrade/ReviewRoomGeometry.py`; không sửa asset, map hoặc C++.
+- Docs P0/P1 do chat này tạo; P2 thêm read-only `Tools/Upgrade/InspectCoastalMaterials.py`; không sửa asset, map hoặc C++.
 
 ## Git đối chiếu và baseline sync
 
@@ -81,6 +81,20 @@ local đã đồng bộ remote. Không cần reset hoặc force-push.
   layout_review_views=195, room_coverage_files=4, errors=0, warnings=0.
 - AST parse 130 Python scripts exit 0. Evidence này chỉ xác nhận source/geometry; không claim
   headed visual, material graph, GPU/VRAM hoặc FPS.
+## P2 material graph readback evidence
+
+- Thêm `Tools/Upgrade/InspectCoastalMaterials.py`; commandlet đọc node đầu vào
+  BaseColor/Roughness/Normal/Emissive và hash package trước/sau, không save asset.
+- Lần chạy đầu exit 1 do Development binary thiếu `/Script/ANANTA.ANANTAGraphicsSettings`.
+  `& .\\Tools\\Build\\Build-ANANTA.ps1 -MaxParallelActions 2` exit 0, chỉ còn
+  warning compiler deprecation/Visual Studio version.
+- Rerun commandlet với project/script path tuyệt đối exit 0; log có
+  `Python script executed successfully`, Success 0 error(s), 3 startup warnings.
+- `Saved/Upgrade/coastal-material-readback.json`: 18 materials,
+  BaseColor=18/18, Roughness=18/18, Normal=9/18, Emissive=0/18,
+  errors=0, packagesUnchanged=True.
+- P2 giữ PARTIAL: cần quyết định/fix emissive theo material policy và headed hero
+  visual/material capture; không claim GPU/VRAM/FPS từ commandlet NullRHI.
 ## Phân loại
 
 **DONE ở baseline/P1:** fast-forward baseline; foundation validation; 72 model
@@ -118,8 +132,9 @@ chưa đạt gate. P2 sẽ bắt đầu bằng material graph/output readback v�
 
 - P0 Docs commit: `927369f8bbc4fa5b0a1a5981fa1d927533e6bf3d` (`docs: establish ANANTA master roadmap and handoff`).
 - P1 implementation/docs commit: `c854fad796610e42c01f36cd7cff815be1181134` (`qa: refresh coastal model and placement reviews`).
+- P2 readback script/docs commit: **chưa tạo**.
 - Push hash: **chưa chạy**; không push trong chat này do policy `AGENTS.md`.
-- P0 và P1 đã PASS về baseline/source/geometry; không claim headed visual/FPS.
+- P0/P1 PASS; P2 PARTIAL vì emissive/headed hero visual chưa đạt; không claim FPS.
 
 ## Prompt pha tiếp theo
 

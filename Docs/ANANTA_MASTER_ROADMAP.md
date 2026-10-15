@@ -91,6 +91,20 @@ P1 source/review gate đạt trên baseline `9057c9...`:
 **Gate:** ảnh day/blue-hour đọc được chất liệu, bóng, phản xạ, scale người; graph output
 không null; không dùng ảnh Blender/editor-only hoặc NullRHI làm visual acceptance.
 
+## P2 checkpoint — 2026-10-15
+
+P2 material graph readback is **PARTIAL**:
+
+- Added read-only `Tools/Upgrade/InspectCoastalMaterials.py`; it records four material
+  output nodes and hashes each `.uasset` before/after without saving packages.
+- First commandlet run exposed stale Development binaries
+  (`/Script/ANANTA.ANANTAGraphicsSettings` missing) and exited 1. Headless
+  `Build-ANANTA.ps1 -MaxParallelActions 2` then exited 0.
+- Rerun commandlet exited 0 with 3 startup warnings; report has 18 materials,
+  BaseColor 18/18, Roughness 18/18, Normal 9/18, Emissive 0/18,
+  `packagesUnchanged=True`.
+- Emissive graph coverage and headed hero visual/material acceptance remain open.
+  This evidence does not prove visual quality, GPU/VRAM or FPS.
 ## P3 — Streaming và mở rộng thành phố
 
 **Phạm vi:** chỉ sau P2.
