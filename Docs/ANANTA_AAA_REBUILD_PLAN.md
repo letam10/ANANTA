@@ -7,6 +7,12 @@ Ngày cập nhật: 2026-10-08
 > Phần cứng đã kiểm tra: RTX 4060 Laptop 8 GB, RAM 16 GB. Mục tiêu 1080p khoảng 60 FPS.
 > Các số liệu RTX 3050 và chẩn đoán bridge bên dưới là lịch sử ngày 28/09, không phải trạng thái hiện tại.
 
+> Trạng thái triển khai ngày 14/10/2026 nằm trong
+> [COASTAL_20261014_HANDOFF.md](COASTAL_20261014_HANDOFF.md).
+> Kế hoạch dưới đây là lịch sử định hướng. CoastalCity hiện có 55 model, 23 venue,
+> 36 phòng được phân khu; chưa có World Partition/HLOD và chưa xác nhận 60 FPS.
+> Người dùng yêu cầu không chạy game thật; build/package không chứng minh gameplay.
+
 Tài liệu này là kế hoạch thực thi sau khi kiểm tra ảnh chụp và trạng thái UE hiện tại. Mục tiêu là một vertical slice nguyên bản có chất lượng hình ảnh và mật độ đô thị thuyết phục trên RTX 3050; không gọi blockout hiện tại là AAA.
 
 ## Bằng chứng và chẩn đoán hiện tại

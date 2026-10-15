@@ -1,0 +1,42 @@
+{
+  "Concrete": {
+    "tile_span_m": [
+      2.4,
+      2.4
+    ],
+    "size": 1024,
+    "normal_source": "physical height gradient, metres"
+  },
+  "Brick": {
+    "tile_span_m": [
+      2.4,
+      1.2
+    ],
+    "size": 1024,
+    "normal_source": "physical height gradient, metres"
+  },
+  "Asphalt": {
+    "tile_span_m": [
+      2.4,
+      2.4
+    ],
+    "size": 1024,
+    "normal_source": "physical height gradient, metres"
+  },
+  "Tile": {
+    "tile_span_m": [
+      2.4,
+      2.4
+    ],
+    "size": 1024,
+    "normal_source": "physical height gradient, metres"
+  },
+  "Sand": {
+    "tile_span_m": [
+      2.4,
+      2.4
+    ],
+    "size": 1024,
+    "normal_source": "physical height gradient, metres"
+  }
+}

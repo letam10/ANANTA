@@ -15,6 +15,7 @@ public class ANANTA : ModuleRules
 				"CoreUObject",
 				"Engine",
 				"InputCore",
+				"Json",
 				"UMG",
 				"Slate",
 				"SlateCore",
@@ -22,6 +23,7 @@ public class ANANTA : ModuleRules
 				"RHI",
 				"AIModule",
 				"NavigationSystem"
+
 			});
 	}
 }

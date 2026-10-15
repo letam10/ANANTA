@@ -1,0 +1,607 @@
+[
+  {
+    "name": "PoliceCar",
+    "dimensions_cm": [
+      478.50001525878906,
+      207.99999237060547,
+      193.5
+    ],
+    "lod_count": 3,
+    "collision_shapes": 1,
+    "materials": 1
+  },
+  {
+    "name": "FireEngine",
+    "dimensions_cm": [
+      653.5000305175781,
+      258.0,
+      269.5000305175781
+    ],
+    "lod_count": 3,
+    "collision_shapes": 1,
+    "materials": 1
+  },
+  {
+    "name": "Ambulance",
+    "dimensions_cm": [
+      563.5,
+      230.99999237060547,
+      257.5
+    ],
+    "lod_count": 3,
+    "collision_shapes": 1,
+    "materials": 1
+  },
+  {
+    "name": "Rowboat",
+    "dimensions_cm": [
+      384.8328094482422,
+      296.91664123535156,
+      60.67212677001953
+    ],
+    "lod_count": 3,
+    "collision_shapes": 1,
+    "materials": 1
+  },
+  {
+    "name": "Helicopter",
+    "dimensions_cm": [
+      905.0000305175781,
+      850.0,
+      301.0000305175781
+    ],
+    "lod_count": 3,
+    "collision_shapes": 1,
+    "materials": 1
+  },
+  {
+    "name": "CivilAirplane",
+    "dimensions_cm": [
+      1600.00048828125,
+      1700.0000610351562,
+      515.0
+    ],
+    "lod_count": 3,
+    "collision_shapes": 1,
+    "materials": 1
+  },
+  {
+    "name": "Train",
+    "dimensions_cm": [
+      1650.0,
+      280.0000915527344,
+      328.0
+    ],
+    "lod_count": 3,
+    "collision_shapes": 1,
+    "materials": 1
+  },
+  {
+    "name": "Sofa",
+    "dimensions_cm": [
+      230.0,
+      98.50001525878906,
+      78.0
+    ],
+    "lod_count": 3,
+    "collision_shapes": 1,
+    "materials": 1
+  },
+  {
+    "name": "Table",
+    "dimensions_cm": [
+      150.0,
+      80.00001525878906,
+      77.00000762939453
+    ],
+    "lod_count": 3,
+    "collision_shapes": 1,
+    "materials": 1
+  },
+  {
+    "name": "Chair",
+    "dimensions_cm": [
+      48.000003814697266,
+      50.50000190734863,
+      97.21614074707031
+    ],
+    "lod_count": 3,
+    "collision_shapes": 1,
+    "materials": 1
+  },
+  {
+    "name": "Bed",
+    "dimensions_cm": [
+      221.5000228881836,
+      165.0,
+      95.00000762939453
+    ],
+    "lod_count": 3,
+    "collision_shapes": 1,
+    "materials": 1
+  },
+  {
+    "name": "KitchenCounter",
+    "dimensions_cm": [
+      155.0,
+      71.50001525878906,
+      88.5
+    ],
+    "lod_count": 3,
+    "collision_shapes": 1,
+    "materials": 1
+  },
+  {
+    "name": "Stove",
+    "dimensions_cm": [
+      60.00000762939453,
+      64.00000190734863,
+      88.5
+    ],
+    "lod_count": 3,
+    "collision_shapes": 1,
+    "materials": 1
+  },
+  {
+    "name": "Fridge",
+    "dimensions_cm": [
+      70.0,
+      67.10000228881836,
+      178.0
+    ],
+    "lod_count": 3,
+    "collision_shapes": 1,
+    "materials": 1
+  },
+  {
+    "name": "CookingPan",
+    "dimensions_cm": [
+      89.0,
+      46.0,
+      7.900001049041748
+    ],
+    "lod_count": 3,
+    "collision_shapes": 1,
+    "materials": 1
+  },
+  {
+    "name": "CookingPot",
+    "dimensions_cm": [
+      50.0,
+      35.0,
+      28.750001907348633
+    ],
+    "lod_count": 3,
+    "collision_shapes": 1,
+    "materials": 1
+  },
+  {
+    "name": "Mug",
+    "dimensions_cm": [
+      14.199999809265137,
+      10.0,
+      9.5
+    ],
+    "lod_count": 3,
+    "collision_shapes": 1,
+    "materials": 1
+  },
+  {
+    "name": "Perfume",
+    "dimensions_cm": [
+      12.999999046325684,
+      12.999999046325684,
+      21.5
+    ],
+    "lod_count": 3,
+    "collision_shapes": 1,
+    "materials": 1
+  },
+  {
+    "name": "Lipstick",
+    "dimensions_cm": [
+      2.6000001430511475,
+      2.6000001430511475,
+      10.449999809265137
+    ],
+    "lod_count": 3,
+    "collision_shapes": 1,
+    "materials": 1
+  },
+  {
+    "name": "TeddyToy",
+    "dimensions_cm": [
+      52.000003814697266,
+      20.500001907348633,
+      66.0
+    ],
+    "lod_count": 3,
+    "collision_shapes": 1,
+    "materials": 1
+  },
+  {
+    "name": "Book",
+    "dimensions_cm": [
+      22.000001907348633,
+      30.000003814697266,
+      3.0
+    ],
+    "lod_count": 3,
+    "collision_shapes": 1,
+    "materials": 1
+  },
+  {
+    "name": "Toilet",
+    "dimensions_cm": [
+      43.99999809265137,
+      74.70000076293945,
+      77.0
+    ],
+    "lod_count": 3,
+    "collision_shapes": 1,
+    "materials": 1
+  },
+  {
+    "name": "Washbasin",
+    "dimensions_cm": [
+      65.50000762939453,
+      47.000003814697266,
+      101.0
+    ],
+    "lod_count": 3,
+    "collision_shapes": 1,
+    "materials": 1
+  },
+  {
+    "name": "PotPlant",
+    "dimensions_cm": [
+      72.0000114440918,
+      36.0,
+      91.00000762939453
+    ],
+    "lod_count": 3,
+    "collision_shapes": 1,
+    "materials": 1
+  },
+  {
+    "name": "TrafficLight",
+    "dimensions_cm": [
+      53.0,
+      40.00000190734863,
+      355.0
+    ],
+    "lod_count": 3,
+    "collision_shapes": 1,
+    "materials": 1
+  },
+  {
+    "name": "StreetLamp",
+    "dimensions_cm": [
+      189.00001525878906,
+      30.000006675720215,
+      566.4630126953125
+    ],
+    "lod_count": 3,
+    "collision_shapes": 1,
+    "materials": 1
+  },
+  {
+    "name": "StreetSign",
+    "dimensions_cm": [
+      11.0,
+      104.99999237060547,
+      271.5
+    ],
+    "lod_count": 3,
+    "collision_shapes": 1,
+    "materials": 1
+  },
+  {
+    "name": "Railing",
+    "dimensions_cm": [
+      250.0,
+      9.000020980834961,
+      110.0
+    ],
+    "lod_count": 3,
+    "collision_shapes": 1,
+    "materials": 1
+  },
+  {
+    "name": "ParkBench",
+    "dimensions_cm": [
+      180.0,
+      55.000017166137695,
+      86.5
+    ],
+    "lod_count": 3,
+    "collision_shapes": 1,
+    "materials": 1
+  },
+  {
+    "name": "StreetBin",
+    "dimensions_cm": [
+      48.0,
+      48.0,
+      86.5
+    ],
+    "lod_count": 3,
+    "collision_shapes": 1,
+    "materials": 1
+  },
+  {
+    "name": "FactoryBarrel",
+    "dimensions_cm": [
+      58.39999771118164,
+      58.39999771118164,
+      83.0
+    ],
+    "lod_count": 3,
+    "collision_shapes": 1,
+    "materials": 1
+  },
+  {
+    "name": "FactoryCrate",
+    "dimensions_cm": [
+      120.00001525878906,
+      100.00000762939453,
+      94.0
+    ],
+    "lod_count": 3,
+    "collision_shapes": 1,
+    "materials": 1
+  },
+  {
+    "name": "FactoryConveyor",
+    "dimensions_cm": [
+      230.0,
+      95.00001525878906,
+      97.5
+    ],
+    "lod_count": 3,
+    "collision_shapes": 1,
+    "materials": 1
+  },
+  {
+    "name": "FactoryControl",
+    "dimensions_cm": [
+      106.25000381469727,
+      65.00000762939453,
+      180.0
+    ],
+    "lod_count": 3,
+    "collision_shapes": 1,
+    "materials": 1
+  },
+  {
+    "name": "ArcadeCabinet",
+    "dimensions_cm": [
+      71.0,
+      65.15068054199219,
+      178.00001525878906
+    ],
+    "lod_count": 3,
+    "collision_shapes": 1,
+    "materials": 1
+  },
+  {
+    "name": "Monument",
+    "dimensions_cm": [
+      340.0,
+      340.0,
+      332.0
+    ],
+    "lod_count": 3,
+    "collision_shapes": 1,
+    "materials": 1
+  },
+  {
+    "name": "Door",
+    "dimensions_cm": [
+      17.00000762939453,
+      90.0,
+      234.99998474121094
+    ],
+    "lod_count": 3,
+    "collision_shapes": 1,
+    "materials": 1
+  },
+  {
+    "name": "FerrisWheel",
+    "dimensions_cm": [
+      1030.0000610351562,
+      244.29682540893555,
+      1117.574462890625
+    ],
+    "lod_count": 3,
+    "collision_shapes": 1,
+    "materials": 1
+  },
+  {
+    "name": "Citizen",
+    "dimensions_cm": [
+      33.50000762939453,
+      76.81463241577148,
+      190.0
+    ],
+    "lod_count": 3,
+    "collision_shapes": 1,
+    "materials": 1
+  },
+  {
+    "name": "ParkTree",
+    "dimensions_cm": [
+      430.0000762939453,
+      312.0000305175781,
+      786.0
+    ],
+    "lod_count": 3,
+    "collision_shapes": 1,
+    "materials": 1
+  },
+  {
+    "name": "DinnerPlate",
+    "dimensions_cm": [
+      29.0,
+      29.0,
+      3.200000047683716
+    ],
+    "lod_count": 3,
+    "collision_shapes": 1,
+    "materials": 1
+  },
+  {
+    "name": "Cutlery",
+    "dimensions_cm": [
+      7.6000001430511475,
+      21.5,
+      0.7000000476837158
+    ],
+    "lod_count": 3,
+    "collision_shapes": 1,
+    "materials": 1
+  },
+  {
+    "name": "Kettle",
+    "dimensions_cm": [
+      41.6920280456543,
+      25.999998092651367,
+      26.44999885559082
+    ],
+    "lod_count": 3,
+    "collision_shapes": 1,
+    "materials": 1
+  },
+  {
+    "name": "SoapDispenser",
+    "dimensions_cm": [
+      9.800000429153442,
+      6.000000476837158,
+      18.450000762939453
+    ],
+    "lod_count": 3,
+    "collision_shapes": 1,
+    "materials": 1
+  },
+  {
+    "name": "TowelStack",
+    "dimensions_cm": [
+      42.0,
+      29.400002479553223,
+      16.900001525878906
+    ],
+    "lod_count": 3,
+    "collision_shapes": 1,
+    "materials": 1
+  },
+  {
+    "name": "WallMirror",
+    "dimensions_cm": [
+      70.0,
+      7.100005626678467,
+      92.0
+    ],
+    "lod_count": 3,
+    "collision_shapes": 1,
+    "materials": 1
+  },
+  {
+    "name": "CoastalPicture",
+    "dimensions_cm": [
+      104.99999237060547,
+      6.450003385543823,
+      68.0
+    ],
+    "lod_count": 3,
+    "collision_shapes": 1,
+    "materials": 1
+  },
+  {
+    "name": "Bookshelf",
+    "dimensions_cm": [
+      102.0,
+      42.5000057220459,
+      191.5
+    ],
+    "lod_count": 3,
+    "collision_shapes": 1,
+    "materials": 1
+  },
+  {
+    "name": "FloorLamp",
+    "dimensions_cm": [
+      58.0,
+      58.0,
+      164.9499969482422
+    ],
+    "lod_count": 3,
+    "collision_shapes": 1,
+    "materials": 1
+  },
+  {
+    "name": "SideTable",
+    "dimensions_cm": [
+      55.000003814697266,
+      48.000003814697266,
+      55.749996185302734
+    ],
+    "lod_count": 3,
+    "collision_shapes": 1,
+    "materials": 1
+  },
+  {
+    "name": "TVConsole",
+    "dimensions_cm": [
+      155.0,
+      47.2500114440918,
+      146.5
+    ],
+    "lod_count": 3,
+    "collision_shapes": 1,
+    "materials": 1
+  },
+  {
+    "name": "ShowerTray",
+    "dimensions_cm": [
+      112.10000610351562,
+      112.0999984741211,
+      205.8000030517578
+    ],
+    "lod_count": 3,
+    "collision_shapes": 1,
+    "materials": 1
+  },
+  {
+    "name": "ChoppingBoard",
+    "dimensions_cm": [
+      36.000003814697266,
+      26.000001907348633,
+      4.450000286102295
+    ],
+    "lod_count": 3,
+    "collision_shapes": 1,
+    "materials": 1
+  },
+  {
+    "name": "BottleTray",
+    "dimensions_cm": [
+      70.0,
+      23.0000057220459,
+      30.950000762939453
+    ],
+    "lod_count": 3,
+    "collision_shapes": 1,
+    "materials": 1
+  },
+  {
+    "name": "OperaShells",
+    "dimensions_cm": [
+      1779.9998779296875,
+      1400.6246337890625,
+      861.274169921875
+    ],
+    "lod_count": 3,
+    "collision_shapes": 1,
+    "materials": 1
+  }
+]
