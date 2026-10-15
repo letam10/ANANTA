@@ -42,6 +42,32 @@ def constant(mat, value, property_name, y=0):
     node.r = value
     unreal.MaterialEditingLibrary.connect_material_property(node, "", property_name)
 
+def constant3(mat, value, property_name, x=-200, y=0):
+    node = unreal.MaterialEditingLibrary.create_material_expression(
+        mat, unreal.MaterialExpressionConstant3Vector, x, y
+    )
+    node.constant = unreal.LinearColor(*value, 1)
+    unreal.MaterialEditingLibrary.connect_material_property(node, "", property_name)
+    return node
+
+def ensure_graph_outputs(
+    mat,
+    base_color=(0.18, 0.22, 0.24),
+    roughness=0.7,
+    emissive=(0.0, 0.0, 0.0),
+):
+    editing = unreal.MaterialEditingLibrary
+    if not editing.get_material_property_input_node(mat, unreal.MaterialProperty.MP_BASE_COLOR):
+        constant3(mat, base_color, unreal.MaterialProperty.MP_BASE_COLOR, -200, -120)
+    if not editing.get_material_property_input_node(mat, unreal.MaterialProperty.MP_ROUGHNESS):
+        constant(mat, roughness, unreal.MaterialProperty.MP_ROUGHNESS, -200)
+    if not editing.get_material_property_input_node(mat, unreal.MaterialProperty.MP_NORMAL):
+        constant3(mat, (0.0, 0.0, 1.0), unreal.MaterialProperty.MP_NORMAL, -200, 120)
+    if not editing.get_material_property_input_node(
+        mat, unreal.MaterialProperty.MP_EMISSIVE_COLOR
+    ):
+        constant3(mat, emissive, unreal.MaterialProperty.MP_EMISSIVE_COLOR, -200, 240)
+
 
 def palette():
     result = {}
@@ -57,6 +83,8 @@ def palette():
             editing.connect_material_property(node, "", unreal.MaterialProperty.MP_BASE_COLOR)
             constant(mat, rgba[3], unreal.MaterialProperty.MP_ROUGHNESS)
             constant(mat, 0.55 if name == "Metal" else 0, unreal.MaterialProperty.MP_METALLIC, 120)
+        emissive = (0.015, 0.035, 0.05) if name in ("Glass", "WindowGlass") else (0, 0, 0)
+        ensure_graph_outputs(mat, emissive=emissive)
         editing.set_base_material_usage(mat, unreal.MaterialUsage.MATUSAGE_INSTANCED_STATIC_MESHES)
         editing.recompile_material(mat)
         unreal.EditorAssetLibrary.save_loaded_asset(mat)
@@ -67,6 +95,7 @@ def palette():
 def ocean():
     mat, created = material("Ocean")
     if not created:
+        ensure_graph_outputs(mat)
         unreal.MaterialEditingLibrary.set_base_material_usage(
             mat, unreal.MaterialUsage.MATUSAGE_INSTANCED_STATIC_MESHES
         )
@@ -95,6 +124,7 @@ def ocean():
     editing.connect_material_property(color, "", unreal.MaterialProperty.MP_BASE_COLOR)
     constant(mat, 0.15, unreal.MaterialProperty.MP_ROUGHNESS, 250)
     constant(mat, 0.65, unreal.MaterialProperty.MP_SPECULAR, 350)
+    ensure_graph_outputs(mat)
     editing.set_base_material_usage(mat, unreal.MaterialUsage.MATUSAGE_INSTANCED_STATIC_MESHES)
     editing.recompile_material(mat)
     unreal.EditorAssetLibrary.save_loaded_asset(mat)

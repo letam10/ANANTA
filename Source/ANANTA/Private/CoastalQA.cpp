@@ -5,14 +5,21 @@
 #include "CoastalCharacter.h"
 #include "Dom/JsonObject.h"
 #include "DynamicRHI.h"
+#include "Engine/DirectionalLight.h"
 #include "Engine/Engine.h"
+#include "Engine/ExponentialHeightFog.h"
+#include "Engine/SkyLight.h"
 #include "GameFramework/HUD.h"
 #include "GameFramework/PlayerController.h"
 #include "Kismet/GameplayStatics.h"
+#include "Components/LightComponent.h"
+#include "Components/SkyLightComponent.h"
 #include "Misc/FileHelper.h"
+#include "Misc/Parse.h"
 #include "Misc/Paths.h"
 #include "Serialization/JsonReader.h"
 #include "Serialization/JsonSerializer.h"
+#include "EngineUtils.h"
 
 ACoastalQA::ACoastalQA()
 {
@@ -29,11 +36,25 @@ void ACoastalQA::BeginPlay()
     Check(TEXT("coastal_player_spawned"), Player != nullptr);
     ReviewCamera = GetWorld()->SpawnActor<ACameraActor>();
     ReviewCamera->GetCameraComponent()->FieldOfView = 90;
+    const bool bBlueHour = FParse::Param(FCommandLine::Get(), TEXT("CoastalBlueHour"));
+    if (bBlueHour)
+    {
+        for (TActorIterator<ADirectionalLight> It(GetWorld()); It; ++It)
+        {
+            It->GetLightComponent()->SetIntensity(12000.0f);
+            It->GetLightComponent()->SetLightColor(FLinearColor(0.22f, 0.31f, 0.62f));
+        }
+        for (TActorIterator<ASkyLight> It(GetWorld()); It; ++It)
+        {
+            It->GetLightComponent()->SetIntensity(0.35f);
+        }
+    }
     ReadViews();
     PhaseStarted = GetWorld()->GetTimeSeconds();
     PreviousFrame = FPlatformTime::Seconds();
-    FString Metadata = FString::Printf(TEXT("utc=%s\nresolution=1920x1080\nprofile=High TSR 900p\n"),
-        *FDateTime::UtcNow().ToIso8601());
+    const FString Profile = bBlueHour ? TEXT("BlueHour") : TEXT("Day");
+    FString Metadata = FString::Printf(TEXT("utc=%s\nresolution=1920x1080\nprofile=%s\n"),
+        *FDateTime::UtcNow().ToIso8601(), *Profile);
     FFileHelper::SaveStringToFile(Metadata, *(Folder / TEXT("metadata.txt")));
 }
 
@@ -46,6 +67,16 @@ void ACoastalQA::ReadViews()
     if (!FJsonSerializer::Deserialize(Reader, Layout) || !Layout)
     {
         Check(TEXT("layout_read"), false);
+        return;
+    }
+    if (FParse::Param(FCommandLine::Get(), TEXT("CoastalHeroOnly")))
+    {
+        Views.Add({TEXT("hero_day"), FVector(-5200, -5200, 1450), FVector(-1200, -1200, 220), false});
+        Views.Add({TEXT("hero_blue_hour"), FVector(-4200, 3600, 1250), FVector(-1200, -600, 240), false});
+        Views.Add({TEXT("hero_street"), FVector(-9000, -1800, 310), FVector(-1500, -1600, 250), false});
+        Views.Add({TEXT("hero_interior"), FVector(-14400, -14700, 360), FVector(-14400, -14300, 360), false});
+        Views.Add({TEXT("hero_coast"), FVector(22400, -15100, 850), FVector(19600, -11500, 120), false});
+        UE_LOG(LogTemp, Display, TEXT("COASTAL_HERO_VIEWS=5"));
         return;
     }
     for (const auto& Value : Layout->GetArrayField(TEXT("buildings")))

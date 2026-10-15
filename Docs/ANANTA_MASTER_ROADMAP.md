@@ -93,18 +93,22 @@ không null; không dùng ảnh Blender/editor-only hoặc NullRHI làm visual a
 
 ## P2 checkpoint — 2026-10-15
 
-P2 material graph readback is **PARTIAL**:
-
-- Added read-only `Tools/Upgrade/InspectCoastalMaterials.py`; it records four material
-  output nodes and hashes each `.uasset` before/after without saving packages.
-- First commandlet run exposed stale Development binaries
-  (`/Script/ANANTA.ANANTAGraphicsSettings` missing) and exited 1. Headless
-  `Build-ANANTA.ps1 -MaxParallelActions 2` then exited 0.
-- Rerun commandlet exited 0 with 3 startup warnings; report has 18 materials,
-  BaseColor 18/18, Roughness 18/18, Normal 9/18, Emissive 0/18,
-  `packagesUnchanged=True`.
-- Emissive graph coverage and headed hero visual/material acceptance remain open.
-  This evidence does not prove visual quality, GPU/VRAM or FPS.
+P2 hero slice is **PASS for the bounded visual gate**; GPU tier/FPS remains unverified:\n+
+- `Tools/Upgrade/coastal_materials.py` now guarantees connected BaseColor, Roughness,
+  Normal and Emissive inputs for every generated material and the ocean material.
+- `Tools/Upgrade/coastal_detail.py`, `coastal_scene.py` and
+  `InspectCoastalMaterials.py` use the same four-output contract. Readback exit 0 reports
+  19 materials with BaseColor 19/19, Roughness 19/19, Normal 19/19 and Emissive 19/19,
+  non-null package SHA-256 values and `packagesUnchanged=True`.
+- `BuildCoastalCity.py` exit 0 recorded `MapCheck` 0 errors/0 warnings and
+  `COASTAL_MAP_OK 23 enterable buildings, 6745 instances / 816 HISM batches`.
+- `CoastalQA` now supports `-CoastalHeroOnly` and `-CoastalBlueHour`. Five fixed cameras
+  (`hero_day`, `hero_blue_hour`, `hero_street`, `hero_interior`, `hero_coast`) were captured
+  headed at 1280x720. Day and BlueHour runs each ended `COASTAL_QA_COMPLETE failures=0 views=5`;
+  fresh PNGs and metadata are under `Saved/Upgrade/Runtime/2026.10.15-12.58.16` and
+  `Saved/Upgrade/Runtime/2026.10.15-13.00.11`.
+- The capture proves the bounded headed visual gate only. RTX 3050/4060 frame-time,
+  VRAM and 60 FPS acceptance were not run, and no benchmark or soak was performed.
 ## P3 — Streaming và mở rộng thành phố
 
 **Phạm vi:** chỉ sau P2.

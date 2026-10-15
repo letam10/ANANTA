@@ -10,6 +10,7 @@ import unreal
 
 
 MATERIAL_ROOT = "/Game/ANANTA/CoastalUpgrade/Materials"
+SURFACE_ASSET = "/Game/ANANTA/CoastalUpgrade/M_CoastalSurface"
 PROPERTIES = {
     "baseColor": unreal.MaterialProperty.MP_BASE_COLOR,
     "roughness": unreal.MaterialProperty.MP_ROUGHNESS,
@@ -19,7 +20,8 @@ PROPERTIES = {
 
 
 def package_path(project: Path, asset_path: str) -> Path:
-    relative = asset_path.removeprefix("/Game/").replace("/", "\\") + ".uasset"
+    package_asset = asset_path.split(".", 1)[0]
+    relative = package_asset.removeprefix("/Game/").replace("/", "\\") + ".uasset"
     return project / "Content" / relative
 
 
@@ -40,10 +42,11 @@ def main() -> None:
         recursive=True,
         include_folder=False,
     )
+    paths.append(SURFACE_ASSET)
     rows = []
     errors = []
 
-    for asset_path in sorted(paths):
+    for asset_path in sorted(set(paths)):
         material = unreal.load_asset(asset_path)
         if not isinstance(material, unreal.Material):
             continue
@@ -76,6 +79,19 @@ def main() -> None:
             }
         )
 
+    connected = {
+        name: sum(item["outputs"][name]["connected"] for item in rows)
+        for name in PROPERTIES
+    }
+    missing = [
+        f"{item['asset']}:{name}"
+        for item in rows
+        for name, output in item["outputs"].items()
+        if not output["connected"]
+    ]
+    if missing:
+        errors.append("missing graph outputs: " + ", ".join(missing))
+
     if not rows:
         errors.append(f"no materials found under {MATERIAL_ROOT}")
 
@@ -83,6 +99,7 @@ def main() -> None:
         "materialRoot": MATERIAL_ROOT,
         "materialCount": len(rows),
         "materials": rows,
+        "connectedOutputs": connected,
         "errors": errors,
         "packagesUnchanged": not errors,
         "headedVisualVerified": False,
@@ -94,10 +111,6 @@ def main() -> None:
     if errors:
         raise RuntimeError("\n".join(errors))
 
-    connected = {
-        name: sum(item["outputs"][name]["connected"] for item in rows)
-        for name in PROPERTIES
-    }
     unreal.log(
         "COASTAL_MATERIAL_READBACK_OK "
         f"materials={len(rows)} connected={json.dumps(connected, sort_keys=True)} "

@@ -6,6 +6,8 @@ from pathlib import Path
 
 import unreal
 
+from coastal_materials import ensure_graph_outputs
+
 
 ROOT = "/Game/ANANTA/CoastalUpgrade"
 
@@ -25,6 +27,7 @@ class Scene:
         self.cylinder = unreal.load_asset("/Engine/BasicShapes/Cylinder")
         self.sphere = unreal.load_asset("/Engine/BasicShapes/Sphere")
         self.surface = unreal.load_asset(f"{ROOT}/M_CoastalSurface")
+        ensure_graph_outputs(self.surface)
         unreal.MaterialEditingLibrary.set_base_material_usage(
             self.surface, unreal.MaterialUsage.MATUSAGE_INSTANCED_STATIC_MESHES
         )

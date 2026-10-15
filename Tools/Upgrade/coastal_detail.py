@@ -5,7 +5,7 @@ from pathlib import Path
 
 import unreal
 
-from coastal_materials import COLORS
+from coastal_materials import COLORS, ensure_graph_outputs
 
 
 SOURCE = Path(unreal.Paths.project_dir()) / "Assets" / "CoastalUpgrade" / "Textures"
@@ -77,6 +77,7 @@ def apply_texture_detail(palette):
         editing.connect_material_property(multiply, "", unreal.MaterialProperty.MP_BASE_COLOR)
         editing.connect_material_property(nodes["Normal"], "RGB", unreal.MaterialProperty.MP_NORMAL)
         editing.connect_material_property(nodes["Rough"], "R", unreal.MaterialProperty.MP_ROUGHNESS)
+        ensure_graph_outputs(mat)
         editing.set_base_material_usage(mat, unreal.MaterialUsage.MATUSAGE_INSTANCED_STATIC_MESHES)
         editing.recompile_material(mat)
         unreal.EditorAssetLibrary.save_loaded_asset(mat)

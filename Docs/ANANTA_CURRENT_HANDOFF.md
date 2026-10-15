@@ -2,16 +2,16 @@
 
 Ngày cập nhật: 2026-10-15
 Phase ID: P2 — Material graph và hero slice
-Trạng thái: PARTIAL — material readback có evidence; emissive/headed hero visual chưa đạt
+Trạng thái: PASS — bounded P2 material và headed hero gate đạt; GPU tier/FPS chưa kiểm
 
 ## Checkout và dirty-state
 
 - Checkout: `D:\GAME\ANANTA`
 - Engine: Unreal Engine 5.8.3
-- Branch: `codex/coastal-interiors-20261014`
-- Baseline remote sau sync: `9057c9beecd2ef1e1cc433eb4f672b9130343e79`; current local HEAD sau P1 commit: `c854fad796610e42c01f36cd7cff815be1181134`
+- Branch: `main`
+- Baseline remote sau sync: `479da5b044669c8a18f2f11084961791284db390`; current HEAD trước commit P2: `479da5b044669c8a18f2f11084961791284db390`
 - Dirty file có sẵn: `AGENTS.md`; không sửa, stage, commit hoặc xóa.
-- Docs P0/P1 do chat này tạo; P2 thêm read-only `Tools/Upgrade/InspectCoastalMaterials.py`; không sửa asset, map hoặc C++.
+- P2 thay đổi: material helpers/readback, coastal map material assets, CoastalCity map, CoastalQA hero flags và hai Docs; chỉ `AGENTS.md` là dirty có sẵn.
 
 ## Git đối chiếu và baseline sync
 
@@ -81,35 +81,42 @@ local đã đồng bộ remote. Không cần reset hoặc force-push.
   layout_review_views=195, room_coverage_files=4, errors=0, warnings=0.
 - AST parse 130 Python scripts exit 0. Evidence này chỉ xác nhận source/geometry; không claim
   headed visual, material graph, GPU/VRAM hoặc FPS.
-## P2 material graph readback evidence
+## P2 material, lighting và headed hero evidence
 
-- Thêm `Tools/Upgrade/InspectCoastalMaterials.py`; commandlet đọc node đầu vào
-  BaseColor/Roughness/Normal/Emissive và hash package trước/sau, không save asset.
-- Lần chạy đầu exit 1 do Development binary thiếu `/Script/ANANTA.ANANTAGraphicsSettings`.
-  `& .\\Tools\\Build\\Build-ANANTA.ps1 -MaxParallelActions 2` exit 0, chỉ còn
-  warning compiler deprecation/Visual Studio version.
-- Rerun commandlet với project/script path tuyệt đối exit 0; log có
-  `Python script executed successfully`, Success 0 error(s), 3 startup warnings.
-- `Saved/Upgrade/coastal-material-readback.json`: 18 materials,
-  BaseColor=18/18, Roughness=18/18, Normal=9/18, Emissive=0/18,
-  errors=0, packagesUnchanged=True.
-- P2 giữ PARTIAL: cần quyết định/fix emissive theo material policy và headed hero
-  visual/material capture; không claim GPU/VRAM/FPS từ commandlet NullRHI.
+- `Tools/Upgrade/coastal_materials.py` thêm fallback graph thật cho BaseColor,
+  Roughness, Normal và Emissive; `coastal_detail.py` và `coastal_scene.py` áp dụng
+  cùng contract trước compile/save. Ocean giữ opaque surface, normal/foam nhẹ và
+  collision boundary trong scene generator.
+- `& .\\Tools\\Build\\Build-ANANTA.ps1 -MaxParallelActions 2` exit 0 sau khi thêm
+  `CoastalQA` hero flags; warning còn lại chỉ là compiler deprecation và VS version.
+- `BuildCoastalCity.py` headless exit 0; log mới có `MapCheck: 0 Error(s), 0 Warning(s)`
+  và `COASTAL_MAP_OK 23 enterable buildings, 6745 instances / 816 HISM batches`.
+- `InspectCoastalMaterials.py` readback exit 0; `Saved/Upgrade/coastal-material-readback.json`
+  có 19 materials, BaseColor=19/19, Roughness=19/19, Normal=19/19, Emissive=19/19,
+  19 package SHA-256 không null, `errors=[]`, `packagesUnchanged=true`.
+- `CoastalQA` hỗ trợ `-CoastalHeroOnly` với năm camera cố định `hero_day`,
+  `hero_blue_hour`, `hero_street`, `hero_interior`, `hero_coast`; `-CoastalBlueHour`
+  đổi profile directional/sky light. Capture headed 1280x720 đã chạy hai lần:\n+  Day folder `Saved/Upgrade/Runtime/2026.10.15-12.58.16` và BlueHour folder
+  `Saved/Upgrade/Runtime/2026.10.15-13.00.11`; mỗi log có
+  `COASTAL_QA_COMPLETE failures=0 views=5`, 5 PNG mới và checks gameplay PASS.
+- Đã mở kiểm tra trực quan `hero_day.png` và `hero_coast.png` từ hai folder; không thấy
+  gap nền trong overview/coast, biển và boundary hiện diện. Đây là bounded headed visual
+  proof, không phải FPS/VRAM proof.
 ## Phân loại
 
 **DONE ở baseline/P1:** fast-forward baseline; foundation validation; 72 model
 source/manifest và 8-view coverage; 36 unit/180 room geometry review; 23 building;
 r15 bounded NullRHI logic; roadmap/handoff P0.
 
-**PARTIAL:** material graph/output readback; visual headed; provenance/LOD/collision
-được ghi ở tranche nhưng chưa có visual acceptance mới; evidence JSON chưa đồng nhất.
+**PASS ở P2 bounded gate:** material graph bốn output, map check, lighting metadata,
+  năm camera hero và hai headed captures đã có evidence mới.
 
 **UNVERIFIED:** headed visual/material, GPU/VRAM/frame-time percentile, 60 FPS,
 World Partition, HLOD, Data Layers, PCG, aircraft control, rowing animation,
 railway signal control, save/economy và AAA quality toàn map.
 
-**BLOCKED:** không còn blocker baseline P0; headed visual/FPS và các pha nội dung vẫn
-chưa đạt gate. P2 sẽ bắt đầu bằng material graph/output readback và hero slice.
+**BLOCKED:** không có blocker P2. P3 World Partition/HLOD/Data Layers/PCG và các gate
+  toàn map vẫn chưa thực hiện; không mở rộng phạm vi trong chat này.
 
 ## Evidence stale cần giữ nguyên
 
@@ -123,7 +130,14 @@ chưa đạt gate. P2 sẽ bắt đầu bằng material graph/output readback v�
 
 - Đã tạo [ANANTA_MASTER_ROADMAP.md](ANANTA_MASTER_ROADMAP.md).
 - Đã tạo [ANANTA_CURRENT_HANDOFF.md](ANANTA_CURRENT_HANDOFF.md).
-- Không sửa `AGENTS.md`, map, ExternalActors, asset, C++ hoặc generator.
+- Không sửa `AGENTS.md`, ExternalActors hoặc report cũ. P2 đã sửa CoastalCity map/material
+  packages do generator tạo, bốn helper/readback script, `CoastalQA.cpp` và hai Docs.
+- Lệnh và exit code mới: `python -m py_compile` exit 0; `Build-ANANTA.ps1` exit 0;
+  `BuildCoastalCity.py` exit 0; material readback exit 0; headed Day/BlueHour đều
+  `COASTAL_QA_COMPLETE failures=0 views=5`. Warnings còn lại: Lumen scalability
+  priority, UE-MCP Slate startup, deprecated `save_current_level`, environment DLL/SDK
+  notices; không có content error trong các gate trên.
+- Chưa kiểm: RTX 3050/4060 frame-time, VRAM, 60 FPS, soak/benchmark, P3 streaming.
 - Sau baseline sync đã chạy `& .\Tools\Build\Validate-ANANTA.ps1` (exit 0),
   `git diff --check` (exit 0, chỉ warning line-ending của `AGENTS.md`) và
   `git status --short --branch`.
@@ -132,9 +146,9 @@ chưa đạt gate. P2 sẽ bắt đầu bằng material graph/output readback v�
 
 - P0 Docs commit: `927369f8bbc4fa5b0a1a5981fa1d927533e6bf3d` (`docs: establish ANANTA master roadmap and handoff`).
 - P1 implementation/docs commit: `c854fad796610e42c01f36cd7cff815be1181134` (`qa: refresh coastal model and placement reviews`).
-- P2 readback script/docs commit: `8e63eb1d6adb05b1a98bc9f803e78e5b17aba76c` (`qa: add coastal material graph readback`).
-- Push: đã chạy `git push origin codex/coastal-interiors-20261014`, remote cập nhật tới `a08041994b0fefccfd1658d0cee5d09bc0c4212a`; `AGENTS.md` không stage.
-- P0/P1 PASS; P2 PARTIAL vì emissive/headed hero visual chưa đạt; không claim FPS.
+- P2 readback script/docs commit trước phiên: `8e63eb1d6adb05b1a98bc9f803e78e5b17aba76c`.
+- P2 commit/push: chờ commit sau khi kiểm tra `git status`, chỉ stage file in-scope trên
+  `main`; không stage `AGENTS.md`, không force-push.
 
 ## Prompt pha tiếp theo
 
