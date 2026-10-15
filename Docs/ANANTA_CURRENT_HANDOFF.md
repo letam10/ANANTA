@@ -9,7 +9,7 @@ Trạng thái: PASS cho P0 và P1 source/geometry review; P2 chưa bắt đầu
 - Checkout: `D:\GAME\ANANTA`
 - Engine: Unreal Engine 5.8.3
 - Branch: `codex/coastal-interiors-20261014`
-- Local HEAD sau baseline sync: `9057c9beecd2ef1e1cc433eb4f672b9130343e79`
+- Baseline remote sau sync: `9057c9beecd2ef1e1cc433eb4f672b9130343e79`; current local HEAD sau P1 commit: `c854fad796610e42c01f36cd7cff815be1181134`
 - Dirty file có sẵn: `AGENTS.md`; không sửa, stage, commit hoặc xóa.
 - Hai Docs P0 là file do chat này tạo; P1 chỉ sửa fallback Blender trong `Tools/Upgrade/ReviewModels.py` và `Tools/Upgrade/ReviewRoomGeometry.py`; không sửa asset, map hoặc C++.
 
@@ -117,7 +117,7 @@ chưa đạt gate. P2 sẽ bắt đầu bằng material graph/output readback v�
 ## Commit và push
 
 - P0 Docs commit: `927369f8bbc4fa5b0a1a5981fa1d927533e6bf3d` (`docs: establish ANANTA master roadmap and handoff`).
-- P1 implementation/docs commit: **chưa tạo**.
+- P1 implementation/docs commit: `c854fad796610e42c01f36cd7cff815be1181134` (`qa: refresh coastal model and placement reviews`).
 - Push hash: **chưa chạy**; không push trong chat này do policy `AGENTS.md`.
 - P0 và P1 đã PASS về baseline/source/geometry; không claim headed visual/FPS.
 
