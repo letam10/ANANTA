@@ -132,7 +132,7 @@ chưa đạt gate. P2 sẽ bắt đầu bằng material graph/output readback v�
 
 - P0 Docs commit: `927369f8bbc4fa5b0a1a5981fa1d927533e6bf3d` (`docs: establish ANANTA master roadmap and handoff`).
 - P1 implementation/docs commit: `c854fad796610e42c01f36cd7cff815be1181134` (`qa: refresh coastal model and placement reviews`).
-- P2 readback script/docs commit: **chưa tạo**.
+- P2 readback script/docs commit: `8e63eb1d6adb05b1a98bc9f803e78e5b17aba76c` (`qa: add coastal material graph readback`).
 - Push hash: **chưa chạy**; không push trong chat này do policy `AGENTS.md`.
 - P0/P1 PASS; P2 PARTIAL vì emissive/headed hero visual chưa đạt; không claim FPS.
 
