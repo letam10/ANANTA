@@ -1,0 +1,130 @@
+﻿{
+    "schema":  "ananta.full-build.receipt.v1",
+    "generatedUtc":  "2026-10-17T11:22:33.4651597Z",
+    "root":  "D:\\GAME\\ANANTA",
+    "taskDirectory":  "D:\\GAME\\ANANTA\\Tools\\FullBuild_20261017",
+    "requiredGatesPass":  true,
+    "lfsFsckExitCode":  1,
+    "fpsClaim":  false,
+    "nativeUnrealAcceptance":  "UNVERIFIED",
+    "headedPerformanceAcceptance":  "UNVERIFIED",
+    "results":  [
+                    {
+                        "id":  "inventory",
+                        "command":  "git status and remote",
+                        "exitCode":  0,
+                        "log":  "D:\\GAME\\ANANTA\\Tools\\FullBuild_20261017\\logs\\inventory.log",
+                        "marker":  ""
+                    },
+                    {
+                        "id":  "ast_sources",
+                        "command":  "AST parse without bytecode",
+                        "exitCode":  0,
+                        "log":  "D:\\GAME\\ANANTA\\Tools\\FullBuild_20261017\\logs\\ast_sources.log",
+                        "marker":  "AST_PARSE_OK files=18"
+                    },
+                    {
+                        "id":  "water_spec",
+                        "command":  "ThreeWater check build and spec",
+                        "exitCode":  0,
+                        "log":  "D:\\GAME\\ANANTA\\Tools\\FullBuild_20261017\\logs\\water_spec.log",
+                        "marker":  "THREE_WATER_SPEC_OK sha256=f1023df3c0ca24d3f5afb8a18bb25d85b01c9cc32b3973c9c5923384f718621f waves=4 scenes=3 duration=10s"
+                    },
+                    {
+                        "id":  "a3c_validation",
+                        "command":  "A3C validator",
+                        "exitCode":  0,
+                        "log":  "D:\\GAME\\ANANTA\\Tools\\FullBuild_20261017\\logs\\a3c_validation.log",
+                        "marker":  "A3C_VALIDATION_OK {\"objects\": 5, \"modelViews\": 40, \"placementViews\": 25}"
+                    },
+                    {
+                        "id":  "a3d_validation",
+                        "command":  "A3D validator",
+                        "exitCode":  0,
+                        "log":  "D:\\GAME\\ANANTA\\Tools\\FullBuild_20261017\\logs\\a3d_validation.log",
+                        "marker":  "A3D_VALIDATION_OK {\"objects\": 8, \"modelViews\": 64, \"placementViews\": 40}"
+                    },
+                    {
+                        "id":  "a4_validation",
+                        "command":  "A4 validator",
+                        "exitCode":  0,
+                        "log":  "D:\\GAME\\ANANTA\\Tools\\FullBuild_20261017\\logs\\a4_validation.log",
+                        "marker":  "A4_VALIDATION_OK {\"objects\": 11, \"modelViews\": 88, \"placementViews\": 55}"
+                    },
+                    {
+                        "id":  "a5_validation",
+                        "command":  "A5 validator",
+                        "exitCode":  0,
+                        "log":  "D:\\GAME\\ANANTA\\Tools\\FullBuild_20261017\\logs\\a5_validation.log",
+                        "marker":  "A5_VALIDATION_OK {\"objects\": 12, \"modelViews\": 96, \"placementViews\": 60}"
+                    },
+                    {
+                        "id":  "a6_validation",
+                        "command":  "A6 validator",
+                        "exitCode":  0,
+                        "log":  "D:\\GAME\\ANANTA\\Tools\\FullBuild_20261017\\logs\\a6_validation.log",
+                        "marker":  "A6_VALIDATION_OK {\"objects\": 1, \"modelViews\": 8, \"placementViews\": 5, \"materialGroups\": [\"A6_Accessory_Brass\", \"A6_Cloth_Indigo\", \"A6_Eye_Iris\", \"A6_Hair_Indigo\", \"A6_Skin_Soft\"]}"
+                    },
+                    {
+                        "id":  "w3_validation",
+                        "command":  "W3 readback validator",
+                        "exitCode":  0,
+                        "log":  "D:\\GAME\\ANANTA\\Tools\\FullBuild_20261017\\logs\\w3_validation.log",
+                        "marker":  "W3_READBACK_OK canonicalSha256=f1023df3c0ca24d3f5afb8a18bb25d85b01c9cc32b3973c9c5923384f718621f materials=2 opaqueWater=true dynamicNormal=true exactWaveTupleMapping=false nativeBoundaryCollisionReadback=false sameCameraComparison=false"
+                    },
+                    {
+                        "id":  "unreal_foundation",
+                        "command":  "Validate-ANANTA.ps1",
+                        "exitCode":  0,
+                        "log":  "D:\\GAME\\ANANTA\\Tools\\FullBuild_20261017\\logs\\unreal_foundation.log",
+                        "marker":  "ANANTA foundation validation passed."
+                    },
+                    {
+                        "id":  "unreal_build",
+                        "command":  "Build-ANANTA.ps1 -MaxParallelActions 2",
+                        "exitCode":  0,
+                        "log":  "D:\\GAME\\ANANTA\\Tools\\FullBuild_20261017\\logs\\unreal_build.log",
+                        "marker":  "ANANTA build completed."
+                    },
+                    {
+                        "id":  "diff_check",
+                        "command":  "git diff --check",
+                        "exitCode":  0,
+                        "log":  "D:\\GAME\\ANANTA\\Tools\\FullBuild_20261017\\logs\\diff_check.log",
+                        "marker":  ""
+                    },
+                    {
+                        "id":  "lfs_check",
+                        "command":  "git lfs fsck",
+                        "exitCode":  1,
+                        "log":  "D:\\GAME\\ANANTA\\Tools\\FullBuild_20261017\\logs\\lfs_check.log",
+                        "marker":  "pointer: unexpectedGitObject: \"Assets/CoastalUpgrade/CookingPot.fbx\" (treeish 5268d9a15649fd5ad59e5bc5d6878131834ddacf) should have been a pointer but was not | pointer: unexpectedGitObject: \"Assets/CoastalUpgrade/CookingPan.fbx\" (treeish 5268d9a15649fd5ad59e5bc5d6878131834ddacf) should have been a pointer but was not | pointer: unexpectedGitObject: \"Assets/CoastalUpgrade/Book.fbx\" (treeish 5268d9a15649fd5ad59e5bc5d6878131834ddacf) should have been a pointer but was not"
+                    }
+                ],
+    "classification":  {
+                           "DONE":  [
+                                        "source_ast_parse",
+                                        "three_water_source_spec_build",
+                                        "a3c_a3d_a4_a5_a6_fixture_validators",
+                                        "w3_readback_validator",
+                                        "unreal_foundation_validation",
+                                        "unreal_source_build",
+                                        "diff_check"
+                                    ],
+                           "PARTIAL":  [
+                                           "full-build integration receipt"
+                                       ],
+                           "UNVERIFIED":  [
+                                              "native import/readback",
+                                              "interaction persistence",
+                                              "W3 native material port",
+                                              "headed F1 CPU GPU VRAM frame-time",
+                                              "60 FPS",
+                                              "full-map AAA visual acceptance"
+                                          ],
+                           "BLOCKED":  [
+                                           "native Unreal edits outside task ownership",
+                                           "pre-existing Git LFS unexpectedGitObject entries"
+                                       ]
+                       }
+}

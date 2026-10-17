@@ -1,0 +1,50 @@
+{
+  "schema": "ananta.full-build.gate-matrix.v1",
+  "taskDirectory": "Tools/FullBuild_20261017",
+  "date": "2026-10-17",
+  "requiredGates": [
+    {
+      "id": "source",
+      "command": "python -B AST parse Tools/A3C/*.py Tools/A3D/*.py Tools/A4/*.py Tools/A5/*.py Tools/A6/*.py Tools/W3/*.py",
+      "evidence": "AST parse exit 0 without writing __pycache__"
+    },
+    {
+      "id": "water_spec",
+      "command": "npm run check && npm run build && python Tools/QA/ValidateThreeWaterSpec.py",
+      "evidence": "ThreeWater source/build/spec markers"
+    },
+    {
+      "id": "art_review",
+      "command": "A3C/A3D/A4/A5/A6 validators",
+      "evidence": "8 model directions and 5 transformed-bounds placement views"
+    },
+    {
+      "id": "unreal_foundation",
+      "command": "Tools/Build/Validate-ANANTA.ps1",
+      "evidence": "foundation validation passed"
+    },
+    {
+      "id": "unreal_build",
+      "command": "Tools/Build/Build-ANANTA.ps1 -MaxParallelActions 2",
+      "evidence": "ANANTA build completed"
+    },
+    {
+      "id": "repository",
+      "command": "git diff --check and git lfs fsck",
+      "evidence": "diff check exit 0; LFS result recorded without repair"
+    }
+  ],
+  "nonClaimableGates": [
+    "native Unreal material function MF_AnantaWater",
+    "native water boundary collision and same-camera Three/Unreal comparison",
+    "headed import/readback and interaction/static-dressing audit",
+    "headed F1 CPU/GPU/VRAM frame-time and 60 FPS",
+    "full-map AAA visual acceptance"
+  ],
+  "statusPolicy": {
+    "DONE": "evidence directly satisfies the gate",
+    "PARTIAL": "bounded source or fixture evidence exists but scope is narrower",
+    "UNVERIFIED": "required runtime/native/headed evidence is missing",
+    "BLOCKED": "same external or ownership blocker prevents the next authorized step"
+  }
+}
