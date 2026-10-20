@@ -151,6 +151,23 @@ export function runWaterContractChecks(spec) {
             assert(sample.position.x !== 19.25 || sample.position.z !== -37.5,
                 "Gerstner sample did not provide lateral displacement");
         });
+        check("waves.storm-profile-synchronizes", () => {
+            const calm = waveField.sampleGerstnerPositionAndNormal(19.25, -37.5, 0.75);
+            const storm = waveField.sampleGerstnerPositionAndNormal(19.25, -37.5, 0.75, {
+                amplitudeScale: 3.4,
+                steepnessScale: 1.18,
+            });
+            [storm.position.x, storm.position.y, storm.position.z,
+                storm.normal.x, storm.normal.y, storm.normal.z].forEach((value) => {
+                assert(Number.isFinite(value), `storm Gerstner sample is non-finite: ${value}`);
+            });
+            assert(Math.abs(storm.position.y - calm.position.y) > DIFFERENCE_EPSILON,
+                "storm profile did not change vertical displacement");
+            assert(storm.position.x !== calm.position.x || storm.position.z !== calm.position.z,
+                "storm profile did not preserve synchronized lateral displacement");
+            near(Math.hypot(storm.normal.x, storm.normal.y, storm.normal.z), 1,
+                NORMAL_TOLERANCE, "storm Gerstner normal length");
+        });
     }
 
     check("scenes.identity", () => {

@@ -1,19 +1,12 @@
 import * as THREE from "three";
 import { GEOMETRIC_STEEPNESS } from "./WaveField.js";
+import { getWaterProfile, WATER_PROFILES } from "./WaterProfiles.js";
 
 const MAX_WAVES = 4;
 const PLANE_SEGMENTS = 160;
 const DEFAULT_WAVE = [0, 1, 0, 12, 0.35, 0.2];
 
-export const VISUAL_WATER_PRESET = Object.freeze({
-  geometricSteepness: Object.freeze([...GEOMETRIC_STEEPNESS]),
-  detailStrength: 0.22,
-  detailScale: 0.075,
-  detailSpeed: 0.32,
-  fresnelPower: 5.0,
-  reflectionStrength: 0.58,
-  specularStrength: 0.34,
-});
+export const VISUAL_WATER_PRESET = WATER_PROFILES.low;
 
 const vertexShader = `
 uniform float time;
@@ -22,6 +15,8 @@ uniform float waveSpeeds[4];
 uniform float wavePhaseOffsets[4];
 uniform float waveSteepness[4];
 uniform float waveCount;
+uniform float amplitudeScale;
+uniform float steepnessScale;
 uniform vec4 shoreFade;
 
 varying vec3 vWorldPosition;
@@ -29,6 +24,7 @@ varying vec3 vNormal;
 varying float vShoreDistance;
 varying float vCrest;
 varying float vSlope;
+varying float vFolding;
 
 void main() {
   vec3 displacedPosition = position;
@@ -36,6 +32,7 @@ void main() {
   vec3 tangentZ = vec3(0.0, 0.0, 1.0);
   float crest = 0.0;
   float slope = 0.0;
+  float folding = 0.0;
   int activeWaves = int(clamp(waveCount + 0.5, 0.0, 4.0));
   bool hasBoundary = shoreFade.y > shoreFade.x && shoreFade.w > shoreFade.z;
 
@@ -46,7 +43,7 @@ void main() {
 
     vec4 wave = waves[index];
     vec2 direction = normalize(wave.xy);
-    float amplitude = wave.z;
+    float amplitude = wave.z * amplitudeScale;
     float wavelength = max(wave.w, 0.0001);
     float frequency = 6.28318530718 / wavelength;
     float phase = 6.28318530718 * (
@@ -55,7 +52,7 @@ void main() {
     ) + wavePhaseOffsets[index];
     float sine = sin(phase);
     float cosine = cos(phase);
-    float steepness = clamp(waveSteepness[index], 0.0, 0.95);
+    float steepness = clamp(waveSteepness[index] * steepnessScale, 0.0, 0.95);
     float q = steepness / max(
       frequency * max(abs(amplitude), 0.0001) * max(float(activeWaves), 1.0),
       0.0001
@@ -78,8 +75,9 @@ void main() {
       direction.y * slopeTerm,
       -direction.y * direction.y * crestTerm
     );
-    crest += max(cosine, 0.0);
+    crest += max(sine, 0.0);
     slope += abs(slopeTerm);
+    folding += max(crestTerm, 0.0);
   }
 
   vec3 normal = normalize(cross(tangentZ, tangentX));
@@ -107,6 +105,7 @@ void main() {
   vShoreDistance = shoreDistance;
   vCrest = crest / max(float(activeWaves), 1.0);
   vSlope = clamp(slope * 2.6, 0.0, 1.0);
+  vFolding = clamp(folding * 1.35, 0.0, 1.0);
   gl_Position = projectionMatrix * viewMatrix * worldPosition;
 }
 `;
@@ -124,12 +123,18 @@ uniform float detailSpeed;
 uniform float fresnelPower;
 uniform float reflectionStrength;
 uniform float specularStrength;
+uniform float horizonStrength;
+uniform float subsurfaceStrength;
+uniform float crestFoamStrength;
+uniform float foldingFoamStrength;
+uniform float foamScale;
 
 varying vec3 vWorldPosition;
 varying vec3 vNormal;
 varying float vShoreDistance;
 varying float vCrest;
 varying float vSlope;
+varying float vFolding;
 
 void main() {
   vec3 viewDirection = normalize(cameraPosition - vWorldPosition);
@@ -158,14 +163,25 @@ void main() {
   float shore = 1.0 - smoothstep(0.04, 0.98, vShoreDistance);
   vec3 baseWater = mix(shallowColor, deepColor, smoothstep(0.08, 0.9, vShoreDistance));
   vec3 color = baseWater * (0.62 + 0.38 * diffuse);
-  color += reflectionColor * fresnel * reflectionStrength;
+  float skyGradient = clamp(viewDirection.y * 0.5 + 0.5, 0.0, 1.0);
+  vec3 skyReflection = mix(reflectionColor * 0.58, vec3(0.82, 0.95, 1.0), skyGradient);
+  color += skyReflection * fresnel * reflectionStrength;
+  color += shallowColor * pow(max(dot(-lightDirection, viewDirection), 0.0), 3.0)
+    * subsurfaceStrength * (0.35 + shore * 0.65);
+  color += skyReflection * pow(1.0 - ndv, 2.0) * horizonStrength;
   color += vec3(1.0) * specular * specularStrength;
 
-  float crestFoam = smoothstep(0.66, 0.98, vCrest) * (0.08 + vSlope * 0.18);
+  float crestFoam = smoothstep(0.52, 0.92, vCrest) * crestFoamStrength * foamScale;
+  float foldingFoam = smoothstep(0.08, 0.62, vFolding) * foldingFoamStrength * foamScale;
   float foamNoise = 0.72 + 0.28 * sin(
     dot(vWorldPosition.xz, vec2(0.16, -0.11)) + time * 1.4
   );
-  float foamMask = clamp(shore * (0.42 + foamNoise * 0.34) + crestFoam, 0.0, 0.78);
+  float foamLace = 0.5 + 0.5 * sin(
+    dot(vWorldPosition.xz, vec2(0.33, -0.22)) - time * 1.9 + vCrest * 3.0
+  );
+  float shoreFoam = shore * (0.34 + foamNoise * 0.38);
+  float foamMask = shoreFoam + (crestFoam + foldingFoam) * (0.78 + foamLace * 0.22);
+  foamMask = clamp(foamMask, 0.0, 0.9);
   color = mix(color, foamColor, foamMask);
   gl_FragColor = vec4(color, 1.0);
 }
@@ -262,6 +278,7 @@ export class WaterSurface {
     width = 1,
     depth = 1,
     boundary,
+    visualProfile = VISUAL_WATER_PRESET,
   } = {}) {
     const safeWidth = Math.max(finiteNumber(width, 1), 0.001);
     const safeDepth = Math.max(finiteNumber(depth, 1), 0.001);
@@ -287,6 +304,8 @@ export class WaterSurface {
         wavePhaseOffsets: { value: waveData.phaseOffsets },
         waveSteepness: { value: waveData.steepness },
         waveCount: { value: waveData.count },
+        amplitudeScale: { value: 1 },
+        steepnessScale: { value: 1 },
         sunDirection: { value: sunDirection },
         deepColor: { value: new three.Color(0.018, 0.13, 0.29) },
         shallowColor: { value: new three.Color(0.055, 0.39, 0.52) },
@@ -298,6 +317,11 @@ export class WaterSurface {
         fresnelPower: { value: VISUAL_WATER_PRESET.fresnelPower },
         reflectionStrength: { value: VISUAL_WATER_PRESET.reflectionStrength },
         specularStrength: { value: VISUAL_WATER_PRESET.specularStrength },
+        horizonStrength: { value: VISUAL_WATER_PRESET.horizonStrength },
+        subsurfaceStrength: { value: VISUAL_WATER_PRESET.subsurfaceStrength },
+        crestFoamStrength: { value: VISUAL_WATER_PRESET.crestFoamStrength },
+        foldingFoamStrength: { value: VISUAL_WATER_PRESET.foldingFoamStrength },
+        foamScale: { value: 1 },
         shoreFade: { value: vector4FromValues(three, boundaryData) },
       },
       vertexShader,
@@ -312,7 +336,33 @@ export class WaterSurface {
     this.geometry = geometry;
     this.material = material;
     this.uniforms = material.uniforms;
+    this.profile = VISUAL_WATER_PRESET;
     this._disposed = false;
+    this.setVisualProfile(visualProfile);
+  }
+
+  setVisualProfile(profile) {
+    const profileId = typeof profile === "string" ? profile : profile?.id;
+    const resolved = getWaterProfile(profileId);
+    this.profile = resolved;
+    this.uniforms.amplitudeScale.value = resolved.amplitudeScale;
+    this.uniforms.steepnessScale.value = resolved.steepnessScale;
+    this.uniforms.foamScale.value = resolved.foamScale;
+    this.uniforms.detailStrength.value = resolved.detailStrength;
+    this.uniforms.detailScale.value = resolved.detailScale;
+    this.uniforms.detailSpeed.value = resolved.detailSpeed;
+    this.uniforms.fresnelPower.value = resolved.fresnelPower;
+    this.uniforms.reflectionStrength.value = resolved.reflectionStrength;
+    this.uniforms.specularStrength.value = resolved.specularStrength;
+    this.uniforms.horizonStrength.value = resolved.horizonStrength;
+    this.uniforms.subsurfaceStrength.value = resolved.subsurfaceStrength;
+    this.uniforms.crestFoamStrength.value = resolved.crestFoamStrength;
+    this.uniforms.foldingFoamStrength.value = resolved.foldingFoamStrength;
+    return this.profile;
+  }
+
+  getVisualProfile() {
+    return this.profile || VISUAL_WATER_PRESET;
   }
 
   update(timeSeconds) {

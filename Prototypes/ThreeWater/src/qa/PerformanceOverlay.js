@@ -24,6 +24,7 @@ export class PerformanceOverlay {
   update(renderer, {
     frameMs = 0,
     waveCount = 0,
+    waterProfile = "low",
     cameraMode = "orbit",
     boundaryVisible = true,
     foamVisible = true,
@@ -74,7 +75,7 @@ export class PerformanceOverlay {
       `frame ${this.frameMs.toFixed(2)} ms  fps ${this.fps.toFixed(1)}`,
       `drawCalls ${info.calls ?? 0}  triangles ${info.triangles ?? 0}`,
       `geometries ${memory.geometries ?? 0}  textures ${memory.textures ?? 0}`,
-      `waves ${waveCount}  camera ${cameraMode}`,
+      `waves ${waveCount}  water ${waterProfile}  camera ${cameraMode}`,
       `boundary ${boundaryVisible ? "on" : "off"}  foam ${foamVisible ? "on" : "off"}`,
       `sceneStats ${reportText}`,
       "60 FPS is a target; this overlay reports measurements only",

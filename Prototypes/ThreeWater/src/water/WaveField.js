@@ -158,10 +158,14 @@ export class WaveField {
         };
     }
 
-    sampleGerstnerPositionAndNormal(horizontalX, horizontalZ, timeSeconds) {
+    sampleGerstnerPositionAndNormal(horizontalX, horizontalZ, timeSeconds, profile = {}) {
         const x = finiteOr(horizontalX, 0);
         const z = finiteOr(horizontalZ, 0);
         const time = finiteOr(timeSeconds, 0);
+        const visualProfile = profile && typeof profile === "object" ? profile : {};
+        const amplitudeScale = Math.max(finiteOr(visualProfile.amplitudeScale, 1), 0);
+        const speedScale = Math.max(finiteOr(visualProfile.speedScale, 1), 0);
+        const steepnessScale = Math.max(finiteOr(visualProfile.steepnessScale, 1), 0);
         let positionX = x;
         let positionZ = z;
         let height = 0;
@@ -172,16 +176,18 @@ export class WaveField {
         for (const wave of this._waves) {
             const directionX = wave.direction[0];
             const directionZ = wave.direction[1];
-            const amplitude = wave.amplitude;
+            const amplitude = wave.amplitude * amplitudeScale;
             const wavelength = Math.max(wave.wavelength, MIN_WAVELENGTH);
             const frequency = TAU / wavelength;
+            const speed = wave.speed * speedScale;
+            const steepness = Math.min(0.95, wave.steepness * steepnessScale);
             const phase = TAU * (
                 (directionX * x + directionZ * z) / wavelength
-                - wave.speed * time / wavelength
+                - speed * time / wavelength
             ) + wave.phaseOffset;
             const sine = Math.sin(phase);
             const cosine = Math.cos(phase);
-            const q = wave.steepness / Math.max(
+            const q = steepness / Math.max(
                 frequency * Math.max(Math.abs(amplitude), MIN_WAVELENGTH) * waveCount,
                 MIN_WAVELENGTH,
             );

@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite --host 127.0.0.1",
     "build": "vite build",
-    "check": "node --check src/main.js && node --check src/water/WaveField.js && node --check src/water/WaterSurface.js && node --check src/water/ShoreFoam.js && node --check src/water/CoastBoundary.js && node --check src/qa/PerformanceOverlay.js && node --check src/qa/ScenePresets.js && node --check src/qa/WaterContractChecks.js",
+    "check": "node --check src/main.js && node --check src/water/WaveField.js && node --check src/water/WaterProfiles.js && node --check src/water/WaterSurface.js && node --check src/water/ShoreFoam.js && node --check src/water/CoastBoundary.js && node --check src/qa/PerformanceOverlay.js && node --check src/qa/ScenePresets.js && node --check src/qa/WaterContractChecks.js",
     "test:contract": "node scripts/check-water-contract.mjs"
   },
   "dependencies": {

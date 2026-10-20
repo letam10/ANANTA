@@ -2,6 +2,7 @@ import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { WaveField } from "./water/WaveField.js";
 import { WaterSurface } from "./water/WaterSurface.js";
+import { getWaterProfile, WATER_PROFILES } from "./water/WaterProfiles.js";
 import { ShoreFoam } from "./water/ShoreFoam.js";
 import { CoastBoundary } from "./water/CoastBoundary.js";
 import { PerformanceOverlay } from "./qa/PerformanceOverlay.js";
@@ -150,7 +151,14 @@ async function bootstrap(spec) {
 
   const width = boundary.maxX - boundary.minX;
   const depth = boundary.maxZ - boundary.minZ;
-  const water = new WaterSurface({ THREE, waveField, width, depth, boundary });
+  const water = new WaterSurface({
+    THREE,
+    waveField,
+    width,
+    depth,
+    boundary,
+    visualProfile: WATER_PROFILES.low,
+  });
   const foam = new ShoreFoam({
     THREE,
     boundary,
@@ -190,6 +198,7 @@ async function bootstrap(spec) {
     sceneReports: [],
     sceneAccumulator: createSceneAccumulator("coast"),
     quickQaComplete: false,
+    waterProfileId: WATER_PROFILES.low.id,
   };
   let elapsed = 0;
   let lastFrame = performance.now();
@@ -227,7 +236,15 @@ async function bootstrap(spec) {
     applyScenePreset(camera, controls, preset);
     clampCameraAndTarget();
     boat.visible = preset.id !== "offshore";
-    setStatus(`Ready · ${preset.id} · ${preset.durationSeconds}s quick QA · 4 waves`);
+    const waterProfile = getWaterProfile(state.waterProfileId);
+    setStatus(`Ready · ${preset.id} · ${waterProfile.label} · ${preset.durationSeconds}s quick QA · G storm`);
+  }
+
+  function applyWaterProfile(profileId) {
+    const profile = getWaterProfile(profileId);
+    state.waterProfileId = profile.id;
+    water.setVisualProfile(profile);
+    setStatus(`Ready · ${profile.label} · ${state.activeSceneId} · G toggles storm`);
   }
 
   function recordSceneFrame(frameMs) {
@@ -291,6 +308,7 @@ async function bootstrap(spec) {
       basePoint.x,
       basePoint.z,
       elapsed,
+      water.getVisualProfile(),
     );
     const displacedPoint = boundary.clamp(
       sample.position.x,
@@ -322,6 +340,9 @@ async function bootstrap(spec) {
       state.foamVisible = !state.foamVisible;
       foam.setVisible(state.foamVisible);
     }
+    if (event.code === "KeyG" && !event.repeat) {
+      applyWaterProfile(state.waterProfileId === "storm" ? "low" : "storm");
+    }
     if (event.code === "Space" && !event.repeat) state.paused = !state.paused;
   }
 
@@ -339,6 +360,7 @@ async function bootstrap(spec) {
   window.addEventListener("keyup", handleKeyUp);
   window.addEventListener("resize", resize);
 
+  applyWaterProfile(state.waterProfileId);
   applyScene("coast");
   window.__ANANTA_WATER_QA__ = {
     sceneReady: true,
@@ -353,6 +375,7 @@ async function bootstrap(spec) {
     foamObject: foam,
     boundaryPreview,
     quickQa: state,
+    waterProfile: state.waterProfileId,
   };
   document.body.dataset.qaReady = "true";
 
@@ -380,6 +403,7 @@ async function bootstrap(spec) {
     overlay.update(renderer, {
       frameMs,
       waveCount: waveField.waves.length,
+      waterProfile: state.waterProfileId,
       cameraMode: state.cameraMode,
       boundaryVisible: state.boundaryVisible,
       foamVisible: state.foamVisible,
@@ -389,6 +413,7 @@ async function bootstrap(spec) {
       sceneReports: state.sceneReports,
     });
     window.__ANANTA_WATER_QA__.sceneReports = state.sceneReports;
+    window.__ANANTA_WATER_QA__.waterProfile = state.waterProfileId;
   }
 
   animate();

@@ -39,6 +39,9 @@ không chứng minh Unreal runtime/FPS.
 - Orbit bằng kéo chuột; nhấn `C` để chuyển free camera.
 - Free camera dùng `WASD` và `R/F`; `B` bật/tắt boundary preview.
 - `F` bật/tắt foam khi orbit; `Space` pause/resume thời gian sóng.
+- `G` chuyển giữa profile `calm swell` mặc định và `storm swell`; profile storm
+  tăng biên độ/lateral displacement, steepness và crest/folding foam, đồng thời
+  dùng cùng hệ số khi lấy mẫu boat trên CPU.
 - `1`, `2`, `3` chọn lần lượt `coast`, `beach_boat`, `offshore`.
 - Auto QA chạy đúng ba cảnh, mỗi cảnh 10 giây, rồi dừng và hiển thị report.
 - Overlay hiển thị frame time, p95, max, outlier, draw calls, triangles,
@@ -63,6 +66,9 @@ Sau khi đối chiếu chương GPU Gems về mô phỏng nước theo mô hình
 - Fragment shader thêm hai lớp detail slope, Fresnel view-angle, specular nhỏ,
   màu shallow/deep và foam crest/shore. Mặt nước vẫn opaque và chỉ dùng một
   `PlaneGeometry` cố định.
+- `src/water/WaterProfiles.js` tách hai profile visual: `low` giữ nguyên bốn
+  wave tuple/hashing của spec, còn `storm` chỉ scale chuyển vị và foam trong
+  shader/boat fixture; không thêm wave tuple, không thêm physics/buoyancy.
 - Không đưa reflection/refraction render targets hoặc flow-map pipeline của
   `Water2` vào low preset; đó là nhánh chất lượng cao cần gate riêng vì tăng
   pass và chi phí render.
