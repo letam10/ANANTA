@@ -968,3 +968,36 @@ Default confirmation run `20261020_160437937_79b72ca6` passed without the
 zero console errors and the same `actors=4 components=4` assignment marker.
 Wall/render/GPU p95 is 11.675/7.739/4.464 ms; maxima
 647.794/3551.460/30.457 ms remain recorded and no FPS claim is made.
+
+## W3 — Native Coastal water boundary runtime receipt (2026-10-20)
+
+The integration now creates four transient, hidden `UBoxComponent` boundary
+actors at the exact wave-spec limits in UE centimetres: West/East at X
+`-70000/70000`, South/North at Y `-40000/40000`. Their extents are
+`(500,41000,5000)` for West/East and `(71000,500,5000)` for South/North,
+with `BlockAll` query-and-physics collision. The actors are runtime-only and
+tagged `ANANTA_CoastalW3Boundary`; no map package is saved.
+
+The first probe exposed a root-component transform issue: the components were
+attached after actor spawn and therefore stayed at the world origin. That
+receipt is intentionally rejected. After setting the actor location again
+after `SetRootComponent`, the second build passed and the fresh non-NullRHI
+run `Saved/QA/CoastalInteractive/20261020-162723371/runtime.log` recorded:
+
+- four rays with `blocked=1` and `boundary=1`;
+- West impact `(-70000,0,100)` on `ANANTA_CoastalW3Boundary_West`;
+- East impact `(70000,0,100)` on `ANANTA_CoastalW3Boundary_East`;
+- South impact `(0,-40000,100)` on `ANANTA_CoastalW3Boundary_South`;
+- North impact `(0,40000,100)` on `ANANTA_CoastalW3Boundary_North`;
+- `COASTAL_W3_BOUNDARY_APPLIED ... count=4 probe=1`;
+- `COASTAL_W3_WATER_APPLIED ... actors=4 components=4 boundaries=4`;
+- `COASTAL_QA_COMPLETE failures=0 views=122`.
+
+**DONE:** default Coastal runtime material assignment and native boundary
+collision smoke now have fresh evidence with correct world-space impacts.
+**PARTIAL:** this proves collision/routing infrastructure and material
+assignment; it does not close same-camera Three.js/Unreal image parity, human
+headed visual review, dynamic foam authoring, Shipping behavior or final 60 FPS.
+The repeated `COASTAL_TRAIN_BLOCK` messages in the same QA log are existing
+train-route diagnostics and are not reclassified as boundary failures because
+the authoritative CoastalQA marker reports `failures=0`.

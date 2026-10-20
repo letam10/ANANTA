@@ -16,9 +16,13 @@ public:
 
 private:
     bool ApplyToLoadedWaterActors();
+    bool CreateBoundaryActors();
+    bool VerifyBoundaryRays() const;
 
     float RetryElapsed = 0.0f;
     float TotalElapsed = 0.0f;
     bool bApplied = false;
+    bool bBoundariesApplied = false;
     bool bLoggedFailure = false;
+    TArray<TObjectPtr<AActor>> BoundaryActors;
 };

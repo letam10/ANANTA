@@ -1457,3 +1457,42 @@ Default confirmation receipt:
 reported `COASTAL_QA_COMPLETE failures=0 views=5`. Wall/render/GPU p95 is
 11.675/7.739/4.464 ms; maxima 647.794/3551.460/30.457 ms remain recorded.
 This is not a final FPS claim.
+
+## W3 Coastal native boundary runtime receipt — 2026-10-20
+
+The default map-specific `UCoastalW3WaterIntegration` now creates four
+transient hidden `UBoxComponent` actors tagged `ANANTA_CoastalW3Boundary`.
+The collision boxes follow `public/wave-spec.json` exactly after the
+Three-to-Unreal axis mapping: West/East are centred at X `-70500/70500` with
+extent `(500,41000,5000)`, and South/North are centred at Y `-40500/40500`
+with extent `(71000,500,5000)`. They use `BlockAll` query-and-physics
+collision and are never saved into the map.
+
+The first runtime attempt was rejected during review. Although its common tag
+made the probe report `boundary=1`, attaching a new root component after actor
+spawn left every box at the world origin; the hit actor names and impact at
+the ray start proved that geometry was wrong. The source now reapplies the
+actor location after `SetRootComponent`.
+
+Build receipt: `Tools/Build/Build-ANANTA.ps1 -Target ANANTAEditor
+-MaxParallelActions 2` exited `0` after the fix. Fresh runtime receipt:
+`Saved/QA/CoastalInteractive/20261020-162723371/runtime.log`, produced by
+`Tools/Build/Test-CoastalInteractive.ps1` without a water opt-in flag. The log
+contains all of the following:
+
+```text
+COASTAL_W3_BOUNDARY_RAY edge=West blocked=1 boundary=1 impact=(-70000.0,0.0,100.0) actor=ANANTA_CoastalW3Boundary_West
+COASTAL_W3_BOUNDARY_RAY edge=East blocked=1 boundary=1 impact=(70000.0,0.0,100.0) actor=ANANTA_CoastalW3Boundary_East
+COASTAL_W3_BOUNDARY_RAY edge=South blocked=1 boundary=1 impact=(0.0,-40000.0,100.0) actor=ANANTA_CoastalW3Boundary_South
+COASTAL_W3_BOUNDARY_RAY edge=North blocked=1 boundary=1 impact=(0.0,40000.0,100.0) actor=ANANTA_CoastalW3Boundary_North
+COASTAL_W3_BOUNDARY_APPLIED map=ANANTA_CoastalCity count=4 probe=1
+COASTAL_W3_WATER_APPLIED map=ANANTA_CoastalCity actors=4 components=4 ... boundaries=4
+COASTAL_QA_COMPLETE failures=0 views=122
+```
+
+This closes the native boundary smoke and default runtime material assignment
+sub-gates. It does not close same-camera Three.js/Unreal comparison, dynamic
+foam authoring, human headed visual review, Shipping behavior, or final
+60-FPS acceptance. Repeated `COASTAL_TRAIN_BLOCK` diagnostics in the same
+runtime log belong to the existing train-route QA path; the authoritative
+CoastalQA completion marker still reports zero failures.
