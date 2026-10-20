@@ -898,3 +898,35 @@ full headed visual acceptance.
 `unexpectedGitObject` entries under `Assets/CoastalUpgrade`; the full objective
 also remains open for W3 city integration, V1/A1/A2 native hero gates, S1
 streaming readback and G1 native gameplay/persistence.
+
+## W3 — Coastal water actor ownership audit (2026-10-20)
+
+A read-only Unreal Python commandlet loaded `/Game/ANANTA/Maps/ANANTA_CoastalCity`
+with `-NullRHI` and wrote `Tools/Continuation_20261020/W3_coastal_water_audit.json`.
+The commandlet exited `0`; `MapCheck` reported zero errors and zero warnings,
+and the script did not save the map or any asset. The audit is committed in
+`560804603dd610fd94859d3fcf3296e5a141fd63` and pushed to `origin/main`.
+
+The map contains 1,290 actors and 11 keyword-matched water/foam candidates.
+The water candidates use `/Game/ANANTA/CoastalUpgrade/Materials/M_Ocean` on
+`/Engine/BasicShapes/Plane`, while the six OceanFoam batches use
+`/Game/ANANTA/CoastalUpgrade/M_CoastalSurface`. The four plane batches include
+`Coast_Batch_269`, `Coast_Batch_465`, `Coast_Batch_716` and `Coast_Batch_808`;
+all audited candidates report no collision. Foam remains static dressing.
+
+**DONE:** current Coastal water actor/material/bounds/collision ownership is
+recorded from the loaded map without modifying it.
+
+**PARTIAL:** the isolated W3 function already has exact wave tuples, four output
+connections and a separate boundary map, but no Coastal actor currently points
+at `/Game/ANANTA/WaterW3_20261020/M_WaveSpec_Opaque`.
+
+**UNVERIFIED:** Coastal runtime use of the W3 material, visible wave motion in
+the city map, same-camera Three.js/Coastal images and native boundary traversal.
+The `-NullRHI` audit is source/ownership evidence only and carries no FPS claim.
+
+**NEXT SAFE TRANCHE:** create an explicitly owned Coastal integration fixture or
+material instance, apply it only after an allowlisted actor/material target is
+confirmed, then read back the changed actor, render the same three cameras and
+run a non-NullRHI runtime smoke. Do not overwrite the existing Coastal material
+or map blindly and do not promote the isolated W3 gate to city acceptance.

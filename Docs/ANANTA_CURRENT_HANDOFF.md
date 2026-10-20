@@ -1394,3 +1394,28 @@ The full objective is still open for W3 city material integration and same-camer
 comparison, V1/A1/A2 native hero gates, S1 runtime streaming identity/cell
 readback, G1 Coastal actor schedules/aircraft/rowing/rail/persistence, F1
 optimization, and C1's pre-existing LFS `unexpectedGitObject` errors.
+
+## W3 Coastal water ownership audit — 2026-10-20
+
+The read-only commandlet `Tools/Continuation_20261020/AuditCoastalWater.py`
+loaded `/Game/ANANTA/Maps/ANANTA_CoastalCity` with `-NullRHI` and produced
+`Tools/Continuation_20261020/W3_coastal_water_audit.json`. It exited `0`, the
+map check reported 0 errors and 0 warnings, and `savedMap=false` is recorded in
+the artifact. The audit/script pair is commit
+`560804603dd610fd94859d3fcf3296e5a141fd63`, already pushed to `origin/main`.
+
+Readback found 1,290 actors and 11 water/foam candidates. `Coast_Batch_269`,
+`Coast_Batch_465`, `Coast_Batch_716` and `Coast_Batch_808` use
+`/Engine/BasicShapes/Plane` with `/Game/ANANTA/CoastalUpgrade/Materials/M_Ocean`;
+the OceanFoam batches use `/Game/ANANTA/CoastalUpgrade/M_CoastalSurface`.
+All candidate components reported no collision. The isolated W3 material
+`/Game/ANANTA/WaterW3_20261020/M_WaveSpec_Opaque` is not referenced by these
+Coastal candidates.
+
+This is **DONE** as ownership/source evidence and **PARTIAL** for W3: it gives
+the exact actor/material allowlist needed for a future integration, but it does
+not modify the map, prove visible Coastal wave motion, prove same-camera image
+parity, or prove runtime boundary traversal. Because the audit uses NullRHI, it
+also carries no performance or FPS claim. The next integration must use an
+explicit allowlist and a fresh non-NullRHI runtime capture; existing Coastal
+materials and map packages must not be overwritten blindly.
