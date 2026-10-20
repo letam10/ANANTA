@@ -6,7 +6,6 @@
 #include "EngineUtils.h"
 #include "Materials/MaterialInterface.h"
 #include "Misc/CommandLine.h"
-#include "Misc/Parse.h"
 
 namespace
 {
@@ -36,16 +35,10 @@ namespace
 
 bool UCoastalW3WaterIntegration::ShouldCreateSubsystem(UObject* Outer) const
 {
-#if UE_BUILD_SHIPPING
-    return false;
-#else
     const UWorld* World = Cast<UWorld>(Outer);
-    const FString CommandLine = FCommandLine::Get();
     const FString MapName = World ? World->GetMapName() : FString();
     return World && World->IsGameWorld()
-        && MapName.Contains(TEXT("ANANTA_CoastalCity"))
-        && FParse::Param(*CommandLine, TEXT("CoastalW3Water"));
-#endif
+        && MapName.Contains(TEXT("ANANTA_CoastalCity"));
 }
 
 TStatId UCoastalW3WaterIntegration::GetStatId() const

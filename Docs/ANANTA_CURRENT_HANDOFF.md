@@ -1422,8 +1422,8 @@ materials and map packages must not be overwritten blindly.
 
 ## W3 Coastal runtime material integration — 2026-10-20
 
-`UCoastalW3WaterIntegration` is an opt-in world subsystem enabled by
-`-CoastalW3Water` only on `ANANTA_CoastalCity`. It loads the existing
+`UCoastalW3WaterIntegration` is a map-specific world subsystem enabled by
+default for `ANANTA_CoastalCity` game worlds. It loads the existing
 `/Game/ANANTA/WaterW3_20261020/M_WaveSpec_Opaque` asset and applies it only to
 the four actor names confirmed by the read-only audit:
 `CoastalBatch_269`, `CoastalBatch_465`, `CoastalBatch_716` and
@@ -1441,11 +1441,19 @@ zero console errors, and `COASTAL_W3_WATER_APPLIED actors=4 components=4`
 followed by `COASTAL_QA_COMPLETE failures=0 views=5`. Wall/render/GPU p95 is
 11.165/7.219/4.419 ms; maxima 640.257/3456.764/29.323 ms are retained.
 
-Classification: **DONE** for opt-in runtime material assignment and live
-allowlist confirmation; **PARTIAL** for W3 because the default Coastal startup
-does not yet enable the flag, foam is still static dressing, and no same-camera
-Three.js/Coastal image pair was captured in this tranche. **UNVERIFIED** remain
-default startup behavior, native boundary traversal with the integrated
-material, human headed visual review and final 60 FPS acceptance. The
-`UnrealEditor-Cmd.exe` receipt is runtime counter evidence and is not a saved-map
-or final visual acceptance claim.
+Classification: **DONE** for default runtime material assignment and live
+allowlist confirmation; **PARTIAL** for W3 because foam is still static dressing
+and no same-camera Three.js/Coastal image pair was captured in this tranche.
+**UNVERIFIED** remain native boundary traversal with the integrated material,
+human headed visual review, Shipping package behavior and final 60 FPS
+acceptance. The `UnrealEditor-Cmd.exe` receipt is runtime counter evidence and
+is not a saved-map or final visual acceptance claim.
+
+Default confirmation receipt:
+`Saved/QA/F1/20261020_160437937_79b72ca6/metadata.json` passed without the
+`-CoastalW3Water` argument. It recorded 1,439 fresh CPU/render/GPU rows, VRAM
+7,956 MB, zero console errors and
+`COASTAL_W3_WATER_APPLIED actors=4 components=4`; the Coastal QA path then
+reported `COASTAL_QA_COMPLETE failures=0 views=5`. Wall/render/GPU p95 is
+11.675/7.739/4.464 ms; maxima 647.794/3551.460/30.457 ms remain recorded.
+This is not a final FPS claim.

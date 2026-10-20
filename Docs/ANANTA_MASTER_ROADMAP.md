@@ -931,10 +931,10 @@ confirmed, then read back the changed actor, render the same three cameras and
 run a non-NullRHI runtime smoke. Do not overwrite the existing Coastal material
 or map blindly and do not promote the isolated W3 gate to city acceptance.
 
-## W3 — Opt-in Coastal runtime material integration (2026-10-20)
+## W3 — Default Coastal runtime material integration (2026-10-20)
 
-`UCoastalW3WaterIntegration` is an opt-in `UTickableWorldSubsystem` enabled only
-by `-CoastalW3Water` on `ANANTA_CoastalCity`. It loads the already-read-back
+`UCoastalW3WaterIntegration` is a map-specific `UTickableWorldSubsystem` enabled
+by default for `ANANTA_CoastalCity` game worlds. It loads the already-read-back
 `/Game/ANANTA/WaterW3_20261020/M_WaveSpec_Opaque` material and applies it only to
 the four audited plane actors `CoastalBatch_269`, `CoastalBatch_465`,
 `CoastalBatch_716` and `CoastalBatch_808`. It verifies the mesh is
@@ -949,16 +949,22 @@ Fresh non-NullRHI DX12 Coastal runtime run
 and `COASTAL_QA_COMPLETE failures=0 views=5`. Its wall/render/GPU p95 values are
 11.165/7.219/4.419 ms; maxima are retained as 640.257/3456.764/29.323 ms.
 
-**DONE:** the exact W3 material now has an opt-in runtime path in Coastal and
-the four allowlisted plane actors were confirmed to receive it in a live DX12
-run. Assignment is runtime-only and does not claim saved-map integration.
+**DONE:** the exact W3 material now has a default Coastal runtime path and the
+four allowlisted plane actors were confirmed to receive it in a live DX12 run
+without `-CoastalW3Water`. Assignment is runtime-only and does not claim
+saved-map integration.
 
-**PARTIAL:** visible animated water is now wired to the Coastal runtime when the
-flag is supplied, but the default game path is unchanged, foam remains static
-dressing, and no same-camera Three.js/Coastal image comparison was captured in
-this tranche.
+**PARTIAL:** visible animated water is now wired to the default Coastal runtime,
+but foam remains static dressing and no same-camera Three.js/Coastal image
+comparison was captured in this tranche.
 
-**UNVERIFIED:** default Coastal startup without `-CoastalW3Water`, native
-boundary traversal with the integrated material, human headed visual review,
-and final 60 FPS acceptance. The runtime observer is `UnrealEditor-Cmd.exe`
-evidence and retains large startup/streaming maxima.
+**UNVERIFIED:** native boundary traversal with the integrated material, human
+headed visual review, Shipping package behavior, and final 60 FPS acceptance.
+The runtime observer is `UnrealEditor-Cmd.exe` evidence and retains large
+startup/streaming maxima.
+
+Default confirmation run `20261020_160437937_79b72ca6` passed without the
+`-CoastalW3Water` argument with 1,439 fresh CPU/render/GPU rows, VRAM 7,956 MB,
+zero console errors and the same `actors=4 components=4` assignment marker.
+Wall/render/GPU p95 is 11.675/7.739/4.464 ms; maxima
+647.794/3551.460/30.457 ms remain recorded and no FPS claim is made.
