@@ -1,5 +1,10 @@
 # ANANTA Current Handoff
 
+> Active continuation 2026-10-20: R0 DONE; W1/W2 fresh verification in progress.
+> Work only on main; incremental phase commit/push authorized by current user.
+> P2 bounded historical visual pass is not art acceptance; P4A/P4B PARTIAL until
+> a fresh runtime log. Primary FPS target is 60; no current FPS claim.
+
 Ngày cập nhật: 2026-10-15
 Phase ID: P2 — Material graph và hero slice
 Trạng thái: PASS — bounded P2 material và headed hero gate đạt; GPU tier/FPS chưa kiểm
@@ -194,6 +199,21 @@ Trạng thái: PARTIAL — source build and coastal map commandlet pass; bounded
 - CoastalQA launch attempts exited 1 or were stopped by a watchdog before a fresh abslog was created. The latest failed launch produced no current `COASTAL_CHECK` or `COASTAL_QA_COMPLETE` marker, so P4A/P4B runtime gate is not PASS.
 - Headed visual and collision capture was not run. GPU FPS and VRAM were not measured. Save persistence remains outside this phase.
 - Generated map and material packages are dirty from the successful commandlet and need review before staging. No commit or push was made in this partial turn.
+
+### W3 fresh Unreal readback continuation (2026-10-16)
+
+- Đã khởi động editor Unreal riêng cho W3 qua UE-MCP; project `D:/GAME/ANANTA/ANANTA.uproject`, engine 5.8, bridge kết nối ở port `60765`, thời gian sẵn sàng khoảng 52.9 giây. Đây là phiên read-only và không sửa asset Unreal.
+- Readback mới ghi vào `Tools/W3/ReadbackEvidence.json` cho `/Game/ANANTA/CoastalUpgrade/Materials/M_Ocean` và `/Game/ANANTA/City/Materials/M_DistrictWater`. Cả hai đang opaque và có custom normal động; các output BaseColor/Normal/Roughness/Emissive được ghi nhận theo graph hiện tại.
+- Custom expression readback cho thấy hai material chưa giữ được tuple direction/wavelength/amplitude/speed/phase của `wave-spec.json`; chưa có `MF_AnantaWater`, foam output hoặc parameter contract đầy đủ. Validator `Tools/W3/ValidateReadback.py` kiểm tra source hash `f1023df3c0ca24d3f5afb8a18bb25d85b01c9cc32b3973c9c5923384f718621f` và giữ các cờ chưa đạt ở `false`.
+- Native boundary collision và ảnh so sánh cùng camera coast/beach_boat/offshore chưa có readback mới. Không dùng material readback này để claim 60 FPS.
+
+**DONE:** read-only graph evidence và validator contract.
+**PARTIAL:** material hiện có opaque water + dynamic normal nhưng chưa phải `MF_AnantaWater` theo wave-spec.
+**UNVERIFIED:** native boundary collision, same-camera Three.js/Unreal comparison, visual direction equivalence và headed performance.
+**BLOCKED:** exact graph port cần tạo/sửa Unreal asset trong khi các file Unreal dirty phải giữ nguyên; chưa thực hiện trong lượt này.
+
+- Kiểm tra sau cùng: `python Tools/W3/ValidateReadback.py` exit `0`; `Tools/Build/Validate-ANANTA.ps1` exit `0`; `Tools/Build/Build-ANANTA.ps1 -MaxParallelActions 2` exit `0` sau khi đóng editor W3. `git diff --check` exit `0` (chỉ cảnh báo chuyển LF/CRLF).
+- `git lfs fsck` exit `1` với nhiều `unexpectedGitObject` trong `Assets/CoastalUpgrade/*` của tree remote `5268d9a15649fd5ad59e5bc5d6878131834ddacf`; đây là lỗi LFS tồn tại trước pha W3, không sửa hoặc xóa object.
 
 ### Prompt pha tiếp theo
 Fix the Unreal commandlet launch or provide a supported bounded QA entrypoint that writes a fresh log, then run CoastalQA checks for normalized interaction metadata, failure messages, NPC schedule, aircraft and helicopter control state, train signal stop, boarding, alighting, route bounds and rowboat input. Run the short headed visual collision capture only after the runtime gate has a fresh exit and marker. Review generated map and material diffs, stage only P4 files plus the handoff, commit on main and push after all gates pass. Keep AGENTS.md untouched and do not claim FPS or persistence.
@@ -424,6 +444,28 @@ readback proves BaseColor/Normal/Roughness/Emissive, native boundary collision i
 read back at the authored edge, and the three named cameras are compared between
 Three.js and Unreal. No Unreal file was modified in W2.
 
+### W2 fresh browser smoke continuation (2026-10-16)
+
+- `npm ci --ignore-scripts` trong `Prototypes/ThreeWater` — exit `0`; npm báo
+  2 advisory vulnerabilities (1 moderate, 1 high), không tự chạy `npm audit fix`.
+- `npm run check` — exit `0`; `npm run build` — exit `0`; Vite build transform
+  12 modules và giữ warning chunk 731 kB.
+- `python Tools/QA/ValidateThreeWaterSpec.py` từ repository root — exit `0`;
+  hash `f1023df3c0ca24d3f5afb8a18bb25d85b01c9cc32b3973c9c5923384f718621f`,
+  4 waves, 3 scenes, 10 giây mỗi scene.
+- Browser `http://127.0.0.1:4178/` đạt `qaReady=true`; DOM hiển thị
+  `W2 quick QA complete · coast/beach_boat/offshore reports ready`. Browser quick
+  QA mới ghi coast `avg 7.60 ms, p95 8.20, max 96.30, outliers 1`; beach_boat
+  `avg 7.60 ms, p95 8.20, max 11.10, outliers 0`; offshore `avg 7.64 ms,
+  p95 8.20, max 16.50, outliers 0`. Overlay cuối ghi 4 waves, boundary on,
+  foam on, drawCalls 4 và triangles 51204.
+- Key smoke mới xác nhận `1/2/3` đổi đúng coast/beach_boat/offshore; `B` đổi
+  boundary on/off và drawCalls `4→3`; `F` đổi foam on/off và drawCalls `3→2`.
+  Browser console `warn/error` không có entry.
+- Đây là prototype/browser evidence; không chuyển các frame-time này thành
+  claim 60 FPS hoặc native Unreal acceptance. W3 vẫn **BLOCKED** chờ graph
+  readback, boundary collision readback và ảnh so sánh cùng camera.
+
 ### Prompt pha tiếp theo
 
 ```text
@@ -482,3 +524,719 @@ Phase ID: V1 — visual bible mới: hiện đại + anime có kiểm soát.
 **UNVERIFIED:** hero captures/readback ở camera ngang tầm người, texture reuse
 audit thực tế và chất lượng visual AAA.
 **BLOCKED:** không mở rộng toàn map cho tới khi hero sample đạt V1 gate.
+
+## A1 — Model và texture pipeline chất lượng (2026-10-16)
+
+Phase ID: A1 — Blender headless shading, texture channels và bounded review.
+
+### Dirty ownership và phạm vi
+
+- Pre-change `git status --short --branch` là `main...origin/main` với duy nhất
+  ` M AGENTS.md` có sẵn. `AGENTS.md` được giữ nguyên, không stage và không ghi đè.
+- A1 chỉ thêm bốn script trong `Tools/Upgrade/`: `ApplyA1Shading.py`,
+  `GenerateA1Textures.py`, `ReviewA1Coverage.py` và `RenderA1Reviews.py`.
+  Không sửa Unreal, map, ExternalActors, asset source hoặc file dirty cũ.
+- Blender cài đặt được kiểm tra là `4.5.1 LTS`. API readback ghi
+  `HAS_AUTO_SMOOTH=False`, `GeometryNodeSetShadeSmooth=True`,
+  `modifier_add_node_group=True` và `WeightedNormalModifier=True`.
+  Vì Blender 4.1+ đã bỏ `Mesh.use_auto_smooth`, script không dùng property đó ở
+  nhánh mới; asset Smooth by Angle được thử bằng operator đúng API.
+
+### Texture evidence mới
+
+- `GenerateA1Textures.py` chạy thật với
+  `--size 2048 --hero-key Concrete --hero-key Asphalt` — exit `0`, marker
+  `A1_TEXTURES_OK`, 35 PNG, 20 map sinh và 15 map reuse/hardlink.
+- `Saved/QA/A1Shading/Textures/manifest.json` có 5 key (`Concrete`, `Brick`,
+  `Asphalt`, `Tile`, `Sand`) × 7 channel (`BaseColor`, `Normal`, `Roughness`,
+  `AO`, `Metallic`, `Emissive`, `Foam`). Mỗi channel có path và SHA-256; Concrete
+  và Asphalt yêu cầu 2K, các key còn lại 1K. Các map source 1K được reuse khi đã
+  tồn tại, vì vậy requested 2K không được ghi thành actual 2K cho map reuse.
+- Channel parser sau fix nested manifest — exit `0`: `recordCount=5`,
+  `channelsPerKey=[7]`, `availablePerKey=[7]`, `hashMissing=0`.
+
+### Shading và review evidence mới
+
+- `ApplyA1Shading.py` chạy bằng Blender 4.5.1 trên source blend và ghi mới
+  `Saved/QA/A1ShadingFixed2/CoastalModels_A1.blend` cùng manifest. Blender bị
+  API RC watchdog giữ sau bước save nên session được dừng có chủ đích sau khi
+  output tồn tại; process exit do Ctrl+C là `1`, không được gọi là runtime PASS.
+- Manifest shading mới ghi `blendOpened=true`, `objectsProcessed=72`,
+  `materialsProcessed=1`, 24 object curved dùng
+  `geometry_nodes_set_shade_smooth_fallback`, 15 bevel và 15 weighted normals.
+  Smooth by Angle Essentials asset trả `{'CANCELLED'}` với thông báo asset
+  loading unfinished; fallback `GeometryNodeSetShadeSmooth` được ghi rõ và
+  không được tuyên bố là angle threshold native. Texture records đã đọc đủ
+  5×7 channel/hash, nhưng material nguồn duy nhất là `CoastalSurface` và không
+  có `a1_surface_key` tương ứng; script không tự đoán gán Concrete/Asphalt.
+- `ReviewA1Coverage.py --dry-run` exit `0`, tính đầy đủ 72 model × 8 hướng và
+  6,743 placement × 5 góc. Bounds dùng đủ 8 local corners theo thứ tự
+  `scale -> yaw -> translation`; report là coverage/bounds evidence, không phải
+  native visual acceptance.
+- `RenderA1Reviews.py` dry-run exit `0`: 2 model = 16 view và 3 placement = 15
+  view. Render thật bounded trên blend A1 exit sau Ctrl+C `1` sau khi save; output
+  mới `Saved/QA/A1Reviews/20261016-A1` có 64 model PNG (8 model × 8 azimuth),
+  40 placement PNG (8 placement × 5 góc) và hai coverage JSON. Placement đầu
+  tiên của layout cũ là `Cube` placeholder nên được ghi là visual fallback; một
+  review riêng chọn placement mesh thật (`StreetLamp`, `StreetBin`,
+  `ParkingMeter`) tại source index 77–84, ghi 40 view và mọi entry `status=rendered`.
+  `visualAcceptance` vẫn là `pending_headless_render_only`.
+
+### Phân loại A1
+
+**DONE:** source/headless pipeline, Blender 4.5 API branching, fixed-mesh-safe
+  texture generation/reuse, 7 channel manifest/hash, 72-object shading report,
+  full transformed-bounds coverage calculation và bounded fresh 8-direction /
+  5-angle render evidence.
+
+**PARTIAL:** visual review mới là headless Blender với neutral light; material
+  nguồn `CoastalSurface` chưa có mapping explicit tới 5 surface texture keys;
+  Smooth by Angle asset không load được trong Blender 4.5 và fallback không áp
+  angle threshold. Chưa đạt visual AAA hoặc hero acceptance camera ngang tầm người.
+
+**UNVERIFIED:** full fresh 72×8 model render, toàn bộ 6,743×5 placement render,
+  texture readback trên từng Unreal/native material, provenance/licence audit,
+  all priority groups, GPU/VRAM frame-time và 60 FPS. Build, config, headless
+  render và NullRHI không được dùng để kết luận FPS.
+
+**BLOCKED:** không có blocker cho bounded A1 source evidence; native Unreal
+  material/runtime port, full-map AAA acceptance và F1 performance gate vẫn
+  blocked bởi thiếu headed/native evidence. Không có file Unreal nào được sửa.
+
+### Prompt pha tiếp theo
+
+```text
+A2 — Gán surface keys explicit cho hero material và review headed ở camera
+ngang tầm người. Giữ nguyên A1 report, không đoán mapping CoastalSurface,
+không sửa Unreal dirty files và không claim AAA hoặc 60 FPS từ headless output.
+```
+
+## A2 — Hero district và venue thật (2026-10-16)
+
+Phase ID: A2 — tranche `street_civic`, chỉ làm street kit và civic block. Không
+đụng toàn map, Unreal source, map/ExternalActors hoặc các file dirty có sẵn.
+
+### Dirty ownership và phạm vi
+
+- Trước A2, `AGENTS.md`, các tài liệu A1 và bốn script A1 đã dirty; các file đó
+  được giữ nguyên. A2 chỉ thêm `Tools/A2/VerifyVenueStates.py`,
+  `Tools/A2/BuildStreetCivicHero.py` và `Tools/A2/ReviewStreetCivic.py`, cùng
+  hai manifest QA ignored trong `Saved/QA/A2/`.
+- Street kit lấy signal từ `Generate_Nova_ModularKit.py` và props source; civic
+  block lấy `CityCivicDistrict.py` và `expansion_architecture.py`. Manifest chỉ
+  mô tả bounded tranche, không tuyên bố đã sửa hoặc mở rộng toàn map.
+
+### Venue state contract
+
+`VerifyVenueStates.py` phân loại bằng entry/room source, khai báo service đầy đủ,
+`FCityServiceState::IsServiceId` nhận đúng id/kind và `Interact` gọi
+`TryUseService`. Actor tồn tại một mình không bao giờ là bằng chứng interaction.
+Report source-only có 18 venue: `enterable_interactive=10`,
+`enterable_static_dressing=7`, `shell_only=1`.
+
+- Civic `Police`, `Fire`, `Bar`, `Arcade`: `enterable + interactive` theo source
+  và service runtime contract; fixture mới xác nhận bốn id này.
+- Civic `AmusementPark`: `shell-only` vì không có entry/service contract.
+- Expansion `Bookshop`, `Clinic`, `Market`, `Gallery`, `Workshop`, `Transit`:
+  source-classified `enterable + interactive`, nhưng chưa có runtime pass riêng.
+- Expansion `ToyShop`, `Salon`, `Bakery`, `Library`, `Restaurant`, `Cinema`,
+  `Hotel`: `enterable + static dressing`; service id hiện chưa được
+  `CityServiceState` nhận diện. Không ghi các venue này là interactive chỉ vì
+  actor hoặc helper đã tồn tại.
+
+### Evidence mới
+
+- `python Tools/A2/VerifyVenueStates.py --dry-run` — exit `0`, deterministic,
+  schema `A2.venue-state-report.v1`, summary 10/7/1.
+- `python Tools/A2/BuildStreetCivicHero.py --output
+  Saved/QA/A2/street-civic-hero.json` — exit `0`, source gate PASS; street kit
+  được ghi `static_dressing`, civic có 5 site và 5 camera review (bốn camera
+  ngang tầm mắt 1.60 m, một camera upper 4.50 m).
+- Fresh `Tools/Build/Test-CityCivic.ps1` — exit `0`, marker
+  `CITY_CIVIC_CHECK_OK services=4 legs=8`, report
+  `Saved/QA/CityCivicCheck/Report.json`; scope là authored-map physics/input
+  fixture, `collisionBypass=false`, bốn service và tám doorway legs đều PASS.
+- `python Tools/A2/ReviewStreetCivic.py --output
+  Saved/QA/A2/street-civic-review.json` — exit `0`; source hashes còn khớp,
+  runtime interaction gate PASS, 5 placement transformed bounds dùng đủ 8 local
+  corners theo thứ tự `scale -> yaw -> translation`.
+
+### Phân loại A2
+
+**DONE:** state classifier có rule chống false-positive; bounded street/civic
+manifest; review 5 camera và transformed bounds; fresh civic interaction
+fixture cho Police/Fire/Bar/Arcade; không sửa Unreal hoặc full map.
+
+**PARTIAL:** street kit mới là static dressing; review visual hiện có trạng thái
+`visualPass=false`, các camera chỉ là `planned_headed_capture`; sáu expansion
+venue interactive mới là source classification, chưa có runtime actor/import
+readback riêng.
+
+**UNVERIFIED:** headed 5-camera visual review, native map placement/bounds,
+interaction cho expansion venues, shell/static quality, provenance/material,
+GPU/VRAM/frame-time, 60 FPS và chất lượng AAA toàn district. Runtime fixture
+`NullRHI` chỉ chứng minh logic/input/collision bounded, không chứng minh FPS.
+
+**BLOCKED:** tranche tiếp theo (rail/transit và các venue còn lại) chờ street /
+civic headed visual gate; không mở rộng toàn map hoặc commit/push A2 khi gate
+visual chưa đạt.
+
+### Prompt pha tiếp theo
+
+```text
+A2 tiếp theo — headed capture street/civic ở 5 camera và native placement
+readback. Giữ classification interactive/static/shell, không sửa Unreal dirty
+files, không mở rộng toàn map, không claim AAA hoặc 60 FPS từ build/NullRHI.
+```
+
+## F1 — Đo nhanh và tối ưu khoảng 60 FPS (2026-10-16)
+
+Phase ID: F1. Phạm vi lượt này chỉ thêm contract/runner/parser dưới `Tools/F1/`; không sửa Unreal Source, map, ExternalActors hoặc asset dirty có sẵn.
+
+### Dirty ownership và thay đổi
+
+- Dirty có sẵn trước F1: `AGENTS.md`, `Docs/ANANTA_CURRENT_HANDOFF.md`, `Docs/ANANTA_MASTER_ROADMAP.md`, bốn script A1 dưới `Tools/Upgrade/` và `Tools/A2/`.
+- F1 tạo mới: `Tools/F1/HeadedF1Probe.ps1` và `Tools/F1/SummarizeF1Evidence.py`. Ba thư mục run thật dưới `Saved/QA/F1/` được giữ làm evidence; hai fixture kiểm thử do lượt này tạo đã xóa.
+- Runner nhận đúng ba scene `downtown_traffic`, `interior_alley`, `coast_streaming`, ép `-windowed`, resolution/internal scale và yêu cầu stat `fps`, `unit`, `gpu`, `sceneRendering`, `initviews`, `levels`, `memory`. Runner fail-closed nếu không có scene selector template chứa `{scene}`, không dùng NullRHI/offscreen.
+- Parser yêu cầu headed evidence, renderer/scalability, CPU/GPU samples, VRAM, stat lines và streaming markers cho đủ ba scene; ngưỡng tham chiếu là `1000/60 = 16.667 ms`. Không có sample thì không tạo `fpsClaim`.
+
+### Headed evidence mới
+
+- `HeadedF1Probe.ps1 -Scene downtown_traffic -Width 1280 -Height 720` — exit `3`, run `20261016_003233521_aa7ef274`.
+- `HeadedF1Probe.ps1 -Scene interior_alley -Width 1280 -Height 720` — exit `3`, run `20261016_003234682_94f08879`.
+- `HeadedF1Probe.ps1 -Scene coast_streaming -Width 1280 -Height 720` — exit `3`, run `20261016_003235746_ba3a508c`.
+- Cả ba metadata ghi `headed=true`, `nullRhi=false`, `offscreen=false`, `resolution=1280x720`, `internalScale=1`, nhưng `sceneSelector.provided=false`, `process.launched=false`, renderer/scalability/GPU/VRAM/stats đều thiếu. Lý do giống nhau: `UNVERIFIED: no scene selector template containing {scene}; refusing to launch an unselectable scene.`
+- Không có headed CPU/GPU/VRAM frame-time, `stat unit`, `stat gpu`, `stat sceneRendering`, `stat initviews`, `stat levels`, VRAM hoặc streaming sample để tối ưu theo bằng chứng. Không claim 60 FPS.
+
+### Gate nguồn/build mới
+
+- PowerShell AST parse `Tools/F1/HeadedF1Probe.ps1` — PASS.
+- `python -m py_compile Tools/F1/SummarizeF1Evidence.py` — exit `0`.
+- Parser negative fixture sau khi bắt buộc VRAM — exit `1`, report `F1 UNVERIFIED`, thiếu `vram`; fixture đã xóa sau kiểm tra.
+- `Validate-ANANTA.ps1` — exit `0`, `BridgeDescriptor=True`, `WorkflowConfig=True`, không thiếu plugin/file.
+- `VerifyCityPerformanceBudget.py` — exit `0`, `status=PASS`, `sourceOnly=true`, `runtimeFpsVerified=false`, `groupCount=90415`, `instanceCount=1667907`, `uniqueSignatures=148`, `reusableFraction=0.999911`, manifest `95` mesh, không thiếu/invalid LOD.
+- `VerifyCityInstanceReuse.py` — exit `0`, `uniqueSignatures=148`, `reusableInstances=1667759`, `verificationLevel=group-signature`.
+- `Build-ANANTA.ps1 -MaxParallelActions 2` — exit `0`, `ANANTAEditor Development` up to date. Build không phải runtime/FPS evidence.
+
+### Phân loại F1
+
+**DONE:** F1 runner/parser fail-closed; ba scene labels và stat contract; source HISM/LOD/reuse audit; build/source checks mới; cleanup fixture do chat tạo.
+
+**PARTIAL:** bằng chứng tối ưu hiện chỉ là source/static (`HISM`, reuse, LOD manifest). Chưa có bằng chứng để thay đổi HLOD/LOD/Nanite, culling/streaming, material complexity, shadow overlap, texture pool, foliage/Niagara hoặc water draw cost.
+
+**UNVERIFIED:** renderer/scalability, resolution/internal scale readback từ game, CPU/GPU frame-time, VRAM, `stat unit/gpu/sceneRendering/initviews/levels`, frame-time giữa ba cảnh và headed 60 FPS.
+
+**BLOCKED:** không có executable/scene selector được hỗ trợ để chạy ba cảnh headed; F1 không đạt FPS gate. Không sửa Unreal để né blocker.
+
+## C1 — Closure và bàn giao (2026-10-16)
+
+- `git diff --check` — exit `0` (chỉ cảnh báo LF→CRLF trên hai docs).
+- `git ls-remote origin refs/heads/main` — exit `0`, remote `5268d9a15649fd5ad59e5bc5d6878131834ddacf`, trùng HEAD trước F1.
+- `git lfs fsck` — exit `1`, nhiều `pointer: unexpectedGitObject` ở `Assets/CoastalUpgrade/*` trong tree `5268d9a...`; đây là lỗi repository/LFS có sẵn, không do F1 và không được tự sửa/xóa.
+- Do F1 headed gate chưa đạt và LFS gate đang đỏ, **không stage, commit hoặc push** trong lượt này. Evidence cũ và dirty ngoài pha được giữ nguyên.
+
+**DONE:** source/import/build checks, F1 contract, fail-closed metadata và handoff evidence.
+
+**PARTIAL:** source-level instance/LOD evidence; chưa có tối ưu runtime theo CPU/GPU.
+
+**UNVERIFIED:** runtime/import readback, ba cảnh headed, renderer/scalability, stat/VRAM/frame-time và 60 FPS.
+
+**BLOCKED:** scene selector/headed entrypoint còn thiếu; `git lfs fsck` exit `1` chặn C1 delivery.
+
+### Prompt pha tiếp theo
+
+```text
+F1 follow-up — cung cấp headed scene selector hoặc entrypoint hỗ trợ {scene} cho
+ downtown_traffic, interior_alley và coast_streaming. Chạy lại mỗi cảnh khoảng
+ 10 giây, thu resolution/internal scale, renderer/scalability, stat unit, stat gpu,
+ stat sceneRendering, stat initviews, stat levels, CPU/GPU frame-time và VRAM.
+ Giữ nguyên runner fail-closed, không NullRHI/offscreen, không sửa Unreal dirty files,
+ chỉ claim 60 FPS khi có fresh headed frame-time. Sau đó xử lý LFS pointer errors
+ riêng bằng owner repo, không rewrite hoặc xóa Assets/CoastalUpgrade.
+```
+
+## F1 — Fresh headed evidence continuation (2026-10-16)
+
+This continuation supersedes the earlier fail-closed selector-only note while
+preserving all previous evidence. The new runs stayed within `Tools/F1/` and
+`Saved/QA/F1/`; no Unreal Source, map, ExternalActors, or pre-existing dirty
+file was changed.
+
+### Ownership and runner correction
+
+- The parser in `Tools/F1/SummarizeF1Evidence.py` was corrected so a document
+  containing a `scenes` mapping is not also counted as a second scene record.
+  The sanitized combined input now counts the exact fresh CSV rows instead of
+  duplicating downtown samples.
+- `Saved/QA/F1/20261016_0137_combined_sanitized/Summary.json` is the current
+  combined report. `python Tools/F1/SummarizeF1Evidence.py
+  Saved/QA/F1/20261016_0137_combined_sanitized` exited `1`, with
+  `status=FAIL` and `fpsClaim=false`.
+- The runner's `statUnit`, `statGpu`, `sceneRendering`, `initviews` and
+  `levels` booleans record requested/log marker evidence. The fresh logs do not
+  contain numeric stat panel readback; these fields are therefore not a
+  numeric-stat PASS and remain UNVERIFIED for the requested readback gate.
+
+### Fresh headed runs
+
+| Scene | Selector and mode | Exit | Fresh samples | CPU ms mean/p95/max | GPU ms mean/p95/max | VRAM |
+|---|---|---:|---:|---:|---:|---:|
+| downtown_traffic | `ANANTA_City`, `CityObserveGraphics`, bounded close | 0 | 3615 | 5.606 / 7.505 / 70.758 | 5.812 / 6.305 / 12.487 | 7956 MB |
+| interior_alley | `ANANTA_City`, `CityServiceCheck` proxy plus observer | 0 | 3281 | 5.247 / 7.867 / 70.194 | 6.337 / 7.084 / 18.705 | 7956 MB |
+| coast_streaming | `ANANTA_CoastalCity`, `CoastalQA`, `CoastalHeroOnly` | 1 | 0 | unavailable | unavailable | 7956 MB |
+
+All three requested `1280x720`, `ScreenPercentage=100`, DX12 and High
+scalability. Downtown used a 75 second bounded headed observation and closed
+gracefully after `CITY_GRAPHICS_OBSERVATION_WRITTEN samples=3615`. Interior
+completed the service journey before the deadline and wrote
+`CITY_GRAPHICS_OBSERVATION_WRITTEN samples=3281`; it is a service-journey map
+proxy, not proof of a fixed interior/alley camera. Coast loaded headed with
+D3D12 and completed its hero QA path, but `CoastalGameMode` does not create the
+city graphics observer and `CoastalHeroOnly` excludes the measure views, so no
+fresh CPU/render/GPU sample exists.
+
+The fresh frame CSVs also record render-thread values: downtown
+`8.675/10.529/43.476 ms` mean/p95/max and interior `7.585/10.120/95.608 ms`.
+The combined report has no console error entries. The logs confirm the chosen
+NVIDIA RTX 4060 Laptop GPU, 7956 MB dedicated memory, WorldPartition and
+ContentStreaming markers, and a texture pool that starts at 4528 MB and is
+reported at 3000 MB after content streaming. The `ExecCmds` line requested
+`stat unit`, `stat gpu`, `stat sceneRendering`, `stat initviews` and
+`stat levels`, but the log only shows the stat command help (`Empty stat
+command!`); no numeric panel readback is claimed.
+
+### Evidence classification
+
+**DONE:** fresh headed downtown and interior CPU/render/GPU capture; truthful
+resolution, internal scale, renderer, scalability and VRAM metadata; corrected
+scene-record parser; source HISM/reuse/LOD checks; build and foundation checks;
+preservation of existing dirty files and old evidence.
+
+**PARTIAL:** downtown GPU distribution is within 16.667 ms at p95 and max, but
+interior has a fresh 18.705 ms GPU max. CPU startup spikes reach about 70 ms
+and render-thread spikes reach 43.476 ms downtown and 95.608 ms interior. The
+source audit supports keeping existing HISM/reuse/LOD choices; it does not
+provide enough evidence to change HLOD/Nanite, culling, material complexity,
+shadow overlap, texture pool, foliage/Niagara or water draw cost.
+
+**UNVERIFIED:** coast headed frame-time, numeric stat readback for all five
+requested stat groups, equal fixed cameras across all scenes, native coastal
+observer integration, and a three-scene 60 FPS gate. No FPS claim is made.
+
+**BLOCKED:** F1 acceptance and C1 delivery remain blocked by the missing
+coastal measure-only headed observer and the repository's pre-existing
+`git lfs fsck` exit `1` (`unexpectedGitObject` under `Assets/CoastalUpgrade/`).
+No stage, commit or push was performed.
+
+### New verification evidence
+
+- PowerShell AST parse of `Tools/F1/HeadedF1Probe.ps1`: exit `0`.
+- `python -m py_compile Tools/F1/SummarizeF1Evidence.py`: exit `0`.
+- `Validate-ANANTA.ps1`: exit `0`.
+- `VerifyCityPerformanceBudget.py`: exit `0`, `status=PASS`,
+  `sourceOnly=true`, `runtimeFpsVerified=false`, 90,415 groups,
+  1,667,907 instances, 148 signatures, reusable fraction `0.999911`,
+  95 mesh manifest entries, no invalid LOD recommendations.
+- `VerifyCityInstanceReuse.py`: exit `0`, 1,667,759 reusable instances.
+- `Build-ANANTA.ps1 -MaxParallelActions 2`: exit `0`, target up to date.
+- `git diff --check`: exit `0` with only existing line-ending warnings.
+- `git lfs fsck`: exit `1`, pre-existing pointer errors listed above.
+- `git ls-remote origin refs/heads/main`: exit `0`, remote remains
+  `5268d9a15649fd5ad59e5bc5d6878131834ddacf`.
+
+### Prompt W1/F1 follow-up
+
+```text
+F1 follow-up — add a bounded headed coastal measure-only entrypoint or observer
+for coast_streaming, then rerun downtown_traffic, interior_alley and
+coast_streaming with the same camera contract. Capture numeric stat unit, stat
+gpu, stat sceneRendering, stat initviews and stat levels readback. Keep DX12,
+headed mode and fresh CPU/GPU/VRAM samples; do not use NullRHI, config, build or
+source-only evidence for an FPS claim. Keep Unreal dirty files untouched and
+handle the pre-existing LFS pointer errors with the repository owner.
+```
+
+## A3 — Hero art repair và visual QA (2026-10-16)
+
+### Phạm vi và ownership
+
+Lượt A3 xử lý một tranche hero giới hạn gồm 17 asset: tám phương tiện/transit,
+năm hạ tầng đường phố, một cây, một monument, một factory prop và một venue
+shell. Chỉ các file mới dưới `Tools/A3/` và evidence dưới
+`Saved/QA/A3ArtRepair/` được tạo hoặc sửa trong pha này. `Assets/CoastalUpgrade`
+được đọc làm nguồn nhưng không ghi đè; không sửa Unreal Source, map,
+ExternalActors hay các file dirty có sẵn.
+
+`Tools/A3/RepairConfig.py` giữ anime/stylized identity của Citizen và toy assets
+ngoài tranche. `Tools/A3/RepairArtAssets.py` áp dụng smooth shading, bevel có
+giới hạn theo góc, normals recalculation cho OperaShells, material Principled PBR
+và texture reuse theo SHA-256. Base color blend đã được chỉnh để map A1 chỉ tạo
+biến thiên bề mặt, không làm mất màu nhận diện xe và hạ tầng.
+
+### Evidence mới
+
+- `python -m py_compile Tools/A3/RepairConfig.py Tools/A3/RepairArtAssets.py
+  Tools/A3/ReviewArtRepair.py Tools/A3/ValidateArtRepair.py` — exit `0`.
+- Blender 4.5.1 repair command với `--factory-startup --python-exit-code 1`,
+  output `Saved/QA/A3ArtRepair/CoastalModels_A3_Hero_v5.blend` và manifest
+  `a3-art-repair-v5.json` — exit `0`; marker
+  `A3_ART_REPAIR_OK {"objects":17,"missing":[],"materials":17}`.
+- Blender 4.5.1 review command trên v5 blend, output `ReviewsV6` và
+  `a3-art-review-v6.json` — exit `0`; marker
+  `A3_ART_REVIEW_OK {"objects":17,"modelViews":136,"placementViews":85,"missing":[]}`.
+- Render review ghi tám azimuth cho mỗi object và năm placement labels từ
+  transformed bounds (`matrix_world`, scale → yaw → translation). Đã mở kiểm tra
+  ảnh mới của PoliceCar, FireEngine, TrafficLight, StreetSign, ParkTree và
+  OperaShells; chữ debug không còn dính vào xe/đèn. FireEngine có màu đỏ nhận
+  diện, TrafficLight có bulb đỏ/vàng/xanh phát sáng, StreetSign có nhãn ANANTA.
+- `python Tools/A3/ValidateArtRepair.py
+  Saved/QA/A3ArtRepair/a3-art-repair-v5.json
+  Saved/QA/A3ArtRepair/a3-art-review-v6.json` — exit `0`; marker
+  `A3_ART_VALIDATION_OK {"objects":17,"modelViews":136,"placementViews":85}`.
+
+### Phân loại gate
+
+**DONE:** tạo tranche A3 có kế hoạch riêng; material/texture repair có hash và
+reuse record; 17 object không thiếu; 136 ảnh review 8 hướng; 85 mục review
+placement 5 góc; validator mới exit `0`; source blend không bị ghi đè.
+
+**PARTIAL:** đây là hero tranche, chưa phải sửa toàn bộ 72 mesh hoặc toàn map.
+ParkTree, Monument và OperaShells đã có silhouette/material repair nhưng vẫn
+còn low-poly hoặc cần authored detail để đạt visual AAA; PoliceCar/other
+vehicles đã có màu PBR và bevel nhưng chưa có native wheel/window/light-bar
+readback. Texture licence trong source chưa khai báo nên provenance chỉ ghi
+`not declared in source repository`.
+
+**UNVERIFIED:** import/readback và placement trong Unreal; interaction/persistence
+của venue; camera ngang tầm người trong map; 60 FPS hoặc GPU cost; chất lượng
+AAA của các asset còn lại; native collision/LOD sau import. Render headless không
+được dùng để claim runtime PASS.
+
+**BLOCKED:** không có blocker cho artifact A3. Gate delivery vẫn bị chặn bởi
+F1 chưa có coast frame-time/stat readback và `git lfs fsck` exit `1` với
+`unexpectedGitObject` có sẵn dưới `Assets/CoastalUpgrade`; không stage, commit
+hoặc push A3 trong trạng thái này.
+
+### Prompt pha tiếp theo
+
+```text
+A3 tranche tiếp theo — review headed street/civic và native import/readback cho
+hero assets v5. Giữ source/Unreal dirty nguyên trạng; mở rộng lần lượt buildings,
+station/airport, waterfront rồi interiors. Mỗi venue phải ghi enterable +
+interactive, enterable + static dressing hoặc shell-only. Giữ review 8 hướng,
+placement 5 góc từ transformed bounds, provenance/licence/LOD/collision và không
+claim AAA, interaction native hoặc 60 FPS khi chưa có evidence tương ứng.
+```
+
+### Cross-phase checks after A3
+
+- `Validate-ANANTA.ps1` — exit `0`.
+- `VerifyCityPerformanceBudget.py` — exit `0`, `status=PASS`,
+  `sourceOnly=true`, `runtimeFpsVerified=false`, 90,415 groups,
+  1,667,907 instances, 148 signatures, reusable fraction `0.999911`.
+- `VerifyCityInstanceReuse.py` — exit `0`, 1,667,759 reusable instances.
+- `Build-ANANTA.ps1 -MaxParallelActions 2` — exit `0`, target up to date.
+- `git diff --check` — exit `0`, only existing LF→CRLF warnings on docs.
+- `git ls-remote origin refs/heads/main` — exit `0`, remote remains
+  `5268d9a15649fd5ad59e5bc5d6878131834ddacf`.
+- `git lfs fsck` — exit `1` with pre-existing `unexpectedGitObject` entries
+  under `Assets/CoastalUpgrade`; no LFS repair or asset deletion was attempted.
+- No stage, commit or push was performed because F1/C1 delivery gates remain
+  red; dirty Unreal/source files were preserved.
+
+## A3B — Hero fidelity detail pass (2026-10-16)
+
+### Ownership and scope
+
+A3B tạo trong `Tools/A3B/` và `Saved/QA/A3BArtRepair/`, đọc A3 v5 làm nguồn
+nhưng không ghi đè `Assets/CoastalUpgrade`, Unreal Source, map hoặc
+ExternalActors. Các chi tiết mới nằm trong collection `A3B_DetailParts` và có
+tag `a3b_owned` để rerun/cleanup chỉ chạm dữ liệu do pha này tạo.
+
+### Fresh evidence
+
+- `python -m py_compile Tools/A3B/*.py` — exit `0`.
+- Builder Blender 4.5.1 với `--factory-startup --python-exit-code 1`, output
+  `CoastalModels_A3B_HeroDetail_v4.blend` — exit `0`; marker
+  `A3B_HERO_DETAIL_OK {"objects":13,"parts":70,"missing":[]}`.
+- Review Blender V4 — exit `0`; marker
+  `A3B_ART_REVIEW_OK {"objects":13,"modelViews":104,"placementViews":65,"missing":[]}`.
+- `ValidateHeroDetail.py` trên manifest v4 — exit `0`; marker
+  `A3B_VALIDATION_OK {"objects":13,"modelViews":104,"placementViews":65}`.
+- `Tools/Build/Validate-ANANTA.ps1` chạy qua PowerShell process — exit `0`;
+  bridge/workflow/plugin/file foundation checks đều pass.
+- `Tools/Build/Build-ANANTA.ps1 -MaxParallelActions 2` — process exit `0`,
+  `ANANTAEditor Development` up to date. Đây là source/build evidence, không
+  phải runtime visual hoặc FPS evidence.
+- `git diff --check` — exit `0`; `git ls-remote origin refs/heads/main` — exit
+  `0`, remote vẫn ở `5268d9a15649fd5ad59e5bc5d6878131834ddacf`.
+- `git lfs fsck` — exit `1`, lặp lại các `pointer: unexpectedGitObject` có sẵn
+  trong `Assets/CoastalUpgrade/*`; không sửa, xóa hoặc rewrite LFS.
+- Đã mở ảnh mới của PoliceCar, FireEngine, TrafficLight, StreetSign,
+  CivilAirplane, ParkTree, Monument và OperaShells trong ReviewsV4. Bánh/kính/
+  lightbar/visor/plaque đã xuất hiện; CivilAirplane không còn stripe nổi ngoài
+  model. ParkTree có sáu foliage cluster và nhánh, OperaShells có facade glass/
+  ribs ở phía trước nhưng vẫn còn phẳng/tối.
+
+### Classification
+
+**DONE:** A3B detail builder, collection ownership, 70 chi tiết hình học,
+104 review 8 hướng, 65 review placement 5 góc từ bounds target + children,
+manifest/validator và plan/contract.
+
+**PARTIAL:** ParkTree vẫn còn silhouette tròn; OperaShells và Monument vẫn
+cần authored geometry/material detail để đạt visual AAA; review là headless
+fixture, chưa phải camera ngang tầm người trong map.
+
+**UNVERIFIED:** native Unreal import/readback, collision/LOD sau import,
+venue interaction/persistence, toàn bộ models/areas còn lại và 60 FPS.
+
+**BLOCKED:** A3B artifact không bị block. Delivery vẫn bị chặn bởi F1 coast
+measure/stat evidence còn thiếu và `git lfs fsck` pre-existing exit `1` dưới
+`Assets/CoastalUpgrade`; không stage, commit hoặc push.
+
+### Prompt pha tiếp theo
+
+```text
+A3C — authored foliage/venue geometry và fixture street/transit/waterfront.
+Giữ A3B v4 làm evidence, review 8 hướng + 5 placement góc, kiểm tra camera
+ngang tầm người. Ghi rõ venue enterable + interactive, enterable + static
+dressing hoặc shell-only; không claim native/AAA/60 FPS thiếu headed evidence.
+```
+
+## A3C — Authored foliage, venue và street-detail pass (2026-10-16)
+
+### Ownership và phạm vi
+
+A3C nằm riêng trong `Tools/A3C/`, đọc `CoastalModels_A3B_HeroDetail_v4.blend`
+nhưng không ghi đè A3B, `Assets/`, Unreal Source, map hoặc ExternalActors. Output
+blend, manifest và 65 ảnh review nằm trong `Tools/A3C/output/`. Detail mới có tag
+`a3c_owned` và collection `A3C_AuthoredDetail`.
+
+### Fresh evidence
+
+- `python -m py_compile Tools/A3C/*.py` — exit `0`.
+- Blender 4.5.1 builder — exit `0`; marker
+  `A3C_AUTHORED_DETAIL_OK {"objects":5,"parts":45,"missing":[]}`.
+- Blender review — exit `0`; marker
+  `A3C_ART_REVIEW_OK {"objects":5,"modelViews":40,"placementViews":25,"missing":[]}`.
+- `ValidateAuthoredDetail.py` — exit `0`; marker
+  `A3C_VALIDATION_OK {"objects":5,"modelViews":40,"placementViews":25}`.
+- `Validate-ANANTA.ps1` — exit `0`; `Build-ANANTA.ps1 -MaxParallelActions 2`
+  — exit `0`; `git diff --check` — exit `0`.
+- Visual readback mới: ParkTree đã dùng cụm tán bất đối xứng; Monument có bệ,
+  cột và vật liệu stone; OperaShells có facade hai trục, cửa kính và chữ OPERA;
+  TrafficLight có LED lens; StreetSign có reflective edge.
+
+### Classification
+
+**DONE:** kế hoạch A3C, authored geometry cho 5 asset, material surface riêng
+trong artifact, review đủ 8 hướng và 5 góc transformed bounds, validator và
+fresh source/build gates.
+
+**PARTIAL:** ParkTree vẫn là foliage fixture có stylization; OperaShells còn
+phụ thuộc shell gốc và neutral-light review hơi tối; Monument chưa đạt hero AAA.
+Chưa mở rộng toàn map hoặc toàn bộ nhóm phương tiện/venue.
+
+**UNVERIFIED:** native Unreal import/readback, LOD/collision, camera ngang tầm
+người trong map, venue interaction/persistence, headed GPU/VRAM/frame-time và
+60 FPS. Headless Blender không thay thế các gate này.
+
+**BLOCKED:** broader delivery vẫn chờ F1 headed evidence và lỗi `git lfs fsck`
+  pre-existing dưới `Assets/CoastalUpgrade/*`; không stage, commit hoặc push.
+
+## A3D — Vehicle và transit fidelity pass (2026-10-16)
+
+### Ownership và phạm vi
+
+A3D nằm riêng trong `Tools/A3D/`, đọc artifact A3C nhưng không ghi đè A3C,
+`Assets/`, Unreal Source, map hoặc ExternalActors. Output blend, manifest và
+ảnh review nằm trong `Tools/A3D/output/`; detail mới có tag `a3d_owned` và
+collection `A3D_VehicleDetail`.
+
+### Fresh evidence
+
+- `python -m py_compile Tools/A3D/*.py` — exit `0`.
+- Blender 4.5.1 builder — exit `0`; marker
+  `A3D_VEHICLE_DETAIL_OK {"objects":8,"parts":65,"missing":[]}`.
+- Blender review — exit `0`; marker
+  `A3D_ART_REVIEW_OK {"objects":8,"modelViews":64,"placementViews":40,"missing":[]}`.
+- `ValidateVehicleDetail.py` — exit `0`; marker
+  `A3D_VALIDATION_OK {"objects":8,"modelViews":64,"placementViews":40}`.
+- `Validate-ANANTA.ps1` — exit `0`; `Build-ANANTA.ps1 -MaxParallelActions 2`
+  — exit `0`; `git diff --check` — exit `0`.
+- Visual readback mới: xe cứu hộ có grille/headlamp/tail lamp/mirror/door seam;
+  Train có door/bogie/front lamp; CivilAirplane có cabin windows/engines/tail;
+  Helicopter có mast/blades/skids/tail rotor; AirportCart có seats/canopy/
+  steering wheel; Rowboat có gunwale/oars/oarlocks/bow cleat.
+
+### Classification
+
+**DONE:** vehicle/transit authored detail tranche, material surface riêng,
+review đủ 8 hướng và 5 góc transformed bounds, validator và fresh build/source
+evidence.
+
+**PARTIAL:** CivilAirplane và Helicopter vẫn là bounded headless fixture; neutral
+review không thay thế authored cockpit/interior hoặc Unreal lighting; chưa xử lý
+toàn bộ phương tiện và khu vực trong city.
+
+**UNVERIFIED:** native Unreal import/readback, collision/LOD, traffic behavior,
+vehicle interaction, camera ngang tầm người, headed GPU/VRAM/frame-time và 60
+FPS. Không dùng build/config/NullRHI để kết luận performance.
+
+**BLOCKED:** F1 vẫn thiếu headed stat/frame-time và `git lfs fsck` pre-existing
+exit `1` dưới `Assets/CoastalUpgrade/*`; không stage, commit hoặc push A3D.
+
+
+## A4 — Street, civic và industrial fidelity tranche (2026-10-16)
+
+### Ownership và phạm vi
+
+A4 nằm riêng trong `Tools/A4/`, đọc artifact A3D và không ghi đè source FBX,
+`Assets/`, Unreal Source, map, ExternalActors hoặc file dirty có sẵn. Tranche xử lý
+`StreetLamp`, `Railing`, `ParkBench`, `StreetBin`, `ParkingMeter`, `TrafficCone`,
+`FireHydrant`, `FactoryBarrel`, `FactoryCrate`, `FactoryConveyor` và
+`FactoryControl`. Output blend, manifest và review nằm trong `Tools/A4/output/`;
+object detail có tag `a4_owned` và collection `A4_StreetCivicDetail`.
+
+### Fresh evidence
+
+- `python -m py_compile Tools/A4/BuildStreetCivic.py Tools/A4/ReviewStreetCivic.py
+  Tools/A4/ValidateStreetCivic.py` — exit `0`.
+- Blender 4.5.1 builder — exit `0`; marker
+  `A4_STREET_CIVIC_BUILD_OK {"objects":11,"parts":59,"missing":[]}`.
+- Blender review — exit `0`; marker
+  `A4_ART_REVIEW_OK {"objects":11,"modelViews":88,"placementViews":55,"missing":[]}`.
+- `ValidateStreetCivic.py` — exit `0`; schema, target list, material reuse policy,
+  transformed-bounds order và toàn bộ render paths đạt.
+- Save/reopen readback — exit `0`; marker
+  `A4_REOPEN_OK {collection:true,ownedParts:59,targets:11,materialKeys:11}`.
+- Visual check mới đã mở các ảnh StreetLamp, ParkBench, FactoryConveyor,
+  FactoryControl, TrafficCone, FireHydrant, FactoryBarrel, FactoryCrate,
+  ParkingMeter và Railing sau material pass. Authored detail đọc được; cone/hydrant
+  vẫn là safety-painted low-poly fixture, chưa gọi là AAA.
+- Material family A4 dùng shared procedural PBR, không sinh raster texture trùng;
+  target material được gán lại trong artifact A4 để loại màu toy-like của source.
+
+### Classification
+
+**DONE:** bounded A4 authored geometry, shared material family, ownership sau
+save/reopen, review đủ 8 hướng + 5 placement views và validator.
+
+**PARTIAL:** headless neutral render đã cải thiện readability nhưng chưa phải
+AAA visual acceptance; cone/hydrant/barrel/crate còn cần review trong lighting
+ngang tầm người và context đường phố/factory.
+
+**UNVERIFIED:** native Unreal import/readback, LOD, collision, interaction hoặc
+static-dressing classification trong map, camera hero ngang tầm người, headed
+GPU/VRAM/frame-time và 60 FPS.
+
+**BLOCKED:** không có blocker cho A4 source tranche; native apply vẫn giữ ngoài
+phạm vi vì dirty Unreal boundary và F1 headed evidence chưa đạt. Không stage,
+commit hoặc push A4 khi gate native/performance chưa đạt.
+
+
+### A4 fresh repository checks (2026-10-16)
+
+- `Tools/Build/Validate-ANANTA.ps1` — exit `0`; foundation validation passed,
+  BridgeDescriptor/WorkflowConfig true và không thiếu plugin/file.
+- `Tools/Build/Build-ANANTA.ps1 -MaxParallelActions 2` — exit `0`; ANANTA build
+  completed, target up to date. Warning chỉ là compiler version mới hơn preferred.
+- `git diff --check` — exit `0`; chỉ cảnh báo line-ending LF/CRLF của hai Docs.
+- `git lfs fsck` — exit `1`; lặp lại `unexpectedGitObject` pre-existing trong
+  `Assets/CoastalUpgrade/*` của tree `5268d9a15649fd5ad59e5bc5d6878131834ddacf`.
+  Không sửa, fetch lại, rewrite hoặc xóa object.
+- Vì A4 chưa có native Unreal import/interaction/performance gate và LFS fsck vẫn
+  lỗi sẵn, không stage/commit/push ở lượt này.
+
+
+## A5 — Interior và venue prop fidelity tranche (2026-10-16)
+
+### Ownership và phạm vi
+
+A5 nằm riêng trong `Tools/A5/`, đọc artifact A4 và không ghi đè source FBX,
+`Assets/`, Unreal Source, map, ExternalActors hoặc file dirty có sẵn. Tranche xử lý
+`Sofa`, `Table`, `Chair`, `Bed`, `KitchenCounter`, `Stove`, `Fridge`,
+`ArcadeCabinet`, `Door`, `Bookshelf`, `FloorLamp` và `TVConsole`. Output blend,
+manifest và ảnh review nằm trong `Tools/A5/output/`; detail có tag `a5_owned` và
+collection `A5_InteriorVenueDetail`.
+
+### Fresh evidence
+
+- `python -m py_compile Tools/A5/BuildInteriorVenue.py Tools/A5/ReviewInteriorVenue.py
+  Tools/A5/ValidateInteriorVenue.py` — exit `0`.
+- Blender 4.5.1 builder — exit `0`; marker
+  `A5_INTERIOR_VENUE_BUILD_OK {"objects":12,"parts":61,"missing":[]}`.
+- Blender review — exit `0`; marker
+  `A5_ART_REVIEW_OK {"objects":12,"modelViews":96,"placementViews":60,"missing":[]}`.
+- `ValidateInteriorVenue.py` — exit `0`; schema, material reuse, interaction
+  classification, transformed-bounds order và toàn bộ render paths đạt.
+- Save/reopen readback — exit `0`; marker
+  `A5_REOPEN_OK {collection:true,ownedParts:61,targets:12,materialKeys:12,staticDressing:12}`.
+- Visual check mới đã mở sofa cushions/arms/legs, kitchen backsplash/sink/faucet,
+  arcade screen/control deck, door panels/handle, bookshelf shelves/books và
+  floor lamp stem/shade/bulb.
+- Mọi asset trong fixture ghi rõ `static dressing (native interaction pending)`;
+  không gọi actor tồn tại là interactive.
+
+### Classification
+
+**DONE:** bounded A5 authored geometry, shared procedural PBR material family,
+ownership sau save/reopen, review đủ 8 hướng + 5 placement views và validator.
+
+**PARTIAL:** neutral headless review đã cải thiện readability nhưng chưa chứng minh
+AAA interior/venue lighting; kitchen/door/TV cần camera ngang tầm người trong map.
+
+**UNVERIFIED:** native Unreal import/readback, LOD, collision, enterable venue state,
+interaction/persistence, camera hero, headed GPU/VRAM/frame-time và 60 FPS.
+
+**BLOCKED:** native apply vẫn ngoài dirty Unreal boundary; không stage, commit hoặc
+push A5 cho tới khi native interaction/performance gate đạt.
+
+
+### A5 fresh repository checks (2026-10-16)
+
+- `Tools/Build/Validate-ANANTA.ps1` — exit `0`; foundation validation passed,
+  BridgeDescriptor/WorkflowConfig true và không thiếu plugin/file.
+- `Tools/Build/Build-ANANTA.ps1 -MaxParallelActions 2` — exit `0`; ANANTA build
+  completed, target up to date. Đây là source/build receipt, không phải FPS proof.
+- `git diff --check` — exit `0`; chỉ warning line-ending LF/CRLF của Docs.
+- `git lfs fsck` — exit `1`; lặp lại `unexpectedGitObject` pre-existing trong
+  `Assets/CoastalUpgrade/*` của tree `5268d9a15649fd5ad59e5bc5d6878131834ddacf`;
+  không sửa, rewrite hoặc xóa object.
+- A5 vẫn không stage/commit/push vì native import/interaction/performance chưa đạt.
+
+## R0 — Rebaseline current checkout, 2026-10-20
+
+Baseline: main `9b295109e280752bd3d1ff7640be3bad02f6dc1e`, remote main equal.
+Required documents were read before implementation. AGENTS, roadmap and handoff
+hashes match the earlier full reads; other required art/coastal/rebuild documents
+were read again. `git diff -- Source Content Config ANANTA.uproject` is empty.
+No current Unreal dirty file was edited, reset, saved or staged. Committed
+Coastal interaction/transit code is not a pending worktree diff and not fresh
+runtime proof. P4A/P4B are PARTIAL for the current continuation.
+
+Ownership was written to `Tools/Continuation_20261020/ownership.json` before
+implementation. AGENTS.md and previous untracked A1–A6/F1/W3/ArchitectureAudit
+remain outside this phase commit. Two existing Docs diffs were reviewed as
+historical notes and are preserved with current R0 additions. No old runtime,
+Blender or build result is relabeled a new PASS.
+
+R0 decisions: P2 remains bounded visual/history, not AAA art; W1/W2 browser water
+is the next priority; target 60 FPS = 16.667 ms supersedes legacy 90 FPS UI/config
+notes as acceptance target. Runtime and short headed F1 measurements requested
+now are authorized; no long benchmark/soak. Source/build/NullRHI are narrower.
+
+### W1 continuation prompt
+
+Use the existing Prototypes/ThreeWater checkout and pinned dependency lockfile.
+Fix camera/spec parity, verify same-wave analytic normals and boundary margins,
+run check/build/spec gates, then HTTP browser smoke with fresh t0/t1 views,
+orbit/free controls, foam/boundary toggles and coast/beach_boat/offshore reports
+at 10 seconds each. Save fresh evidence before W3. Keep Unreal unchanged during
+W1/W2. Only after their browser gate may the exact wave contract be ported to an
+owned Unreal material-function asset, with separate boundary/readback/camera gates.
+Do not expand the map before hero art acceptance or claim 60 FPS before F1.
+
+Current execution contract: `Tools/Continuation_20261020/CONTRACT.md`.
+R0 commit/push receipt will be captured by Git and the next phase handoff entry.

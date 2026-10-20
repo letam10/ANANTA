@@ -1,0 +1,798 @@
+{
+  "schema": "ananta.continuation.ownership.v1",
+  "date": "2026-10-20",
+  "branch": "main",
+  "baselineHead": "9b295109e280752bd3d1ff7640be3bad02f6dc1e",
+  "remoteMain": "9b295109e280752bd3d1ff7640be3bad02f6dc1e\trefs/heads/main",
+  "initialTrackedDirty": [
+    "AGENTS.md",
+    "Docs/ANANTA_CURRENT_HANDOFF.md",
+    "Docs/ANANTA_MASTER_ROADMAP.md"
+  ],
+  "initialUnrealDirty": [],
+  "preserveUntracked": [
+    "Docs/ArchitectureAudit_20261020/",
+    "Tools/A2/",
+    "Tools/A3/",
+    "Tools/A3B/",
+    "Tools/A3C/",
+    "Tools/A3D/",
+    "Tools/A4/",
+    "Tools/A5/",
+    "Tools/A6/",
+    "Tools/F1/",
+    "Tools/W3/",
+    "Tools/Upgrade/ApplyA1Shading.py",
+    "Tools/Upgrade/GenerateA1Textures.py",
+    "Tools/Upgrade/RenderA1Reviews.py",
+    "Tools/Upgrade/ReviewA1Coverage.py"
+  ],
+  "currentStatus": [
+    " M AGENTS.md",
+    " M Docs/ANANTA_CURRENT_HANDOFF.md",
+    " M Docs/ANANTA_MASTER_ROADMAP.md",
+    " M Prototypes/ThreeWater/src/qa/ScenePresets.js",
+    "?? Docs/ArchitectureAudit_20261020/",
+    "?? Tools/A2/",
+    "?? Tools/A3/",
+    "?? Tools/A3B/",
+    "?? Tools/A3C/",
+    "?? Tools/A3D/",
+    "?? Tools/A4/",
+    "?? Tools/A5/",
+    "?? Tools/A6/",
+    "?? Tools/Continuation_20261020/",
+    "?? Tools/F1/",
+    "?? Tools/Upgrade/ApplyA1Shading.py",
+    "?? Tools/Upgrade/GenerateA1Textures.py",
+    "?? Tools/Upgrade/RenderA1Reviews.py",
+    "?? Tools/Upgrade/ReviewA1Coverage.py",
+    "?? Tools/W3/"
+  ],
+  "sourceConfigHashes": [
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA.Target.cs",
+      "Hash": "2C2E25EFBC3DFE8C69E7044444DF0FA651D2D2892066D2FEC361932B3417E040"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTAEditor.Target.cs",
+      "Hash": "40ECA9A5CAF20D2BA25AA6EF46F02DA9ED041893BA5D5399A5E1439D6A88F8AE"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\ANANTA.Build.cs",
+      "Hash": "B6B9234D08B3A6C1840D2300B37541771746FEA785F195C43808D13C3314AFC2"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\ANANTA.cpp",
+      "Hash": "7F7740151094EE836603D36D6931E7B6ABD9F2D90462D9B1EF8F99A04F536086"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\ANANTACharacter.cpp",
+      "Hash": "B73F6E79E6C4E6949D55117DFCDF01BDF7C93672155020816A8F03A272FB3D08"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\ANANTAFragmentPickup.cpp",
+      "Hash": "C7FAA768574DE1B4877CE99505E09458E5A93570D39A2589B0622532F7A2374B"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\ANANTAGameInstance.cpp",
+      "Hash": "AFAA7156AFA0BCCF325782C6C1BC16D2743C5E17378DA6CDE032989EEED1BF57"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\ANANTAHUD.cpp",
+      "Hash": "7E8DC9745F4D5AE6430CB913D7D9F3F28CC0E4BBEDCE32F9294C1EC113C5CDF1"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\CoastalBatch.cpp",
+      "Hash": "8C8B8F5AEF6C85C7C038F8457C77A6250230177B0AFBEB0877B6619C23E7C64F"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\CoastalCharacter.cpp",
+      "Hash": "9B05762F289ACEF3D1587FA3E49E3E36B889047006F6C2D7FB819270CF0DFB1F"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\CoastalGameMode.cpp",
+      "Hash": "3A39C266BABF40EBDDBC9B97794B14A543B9CA7D1640E78F074C9D579DB0D825"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\CoastalHUD.cpp",
+      "Hash": "0B231ACB1F9500D2651AD7FEF51CDB91873BE39E9E6D0AAEE7FD08905635191B"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\CoastalInteractable.cpp",
+      "Hash": "F66ECF41A9C38D7BA5023772433E1914E7142A1D386DA6CB16F29E9164D89A59"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\CoastalQA.cpp",
+      "Hash": "99FB01AC6942C3EDD8509B748CB308D3FA4BAB3C21A122069BA525E77B766635"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\CoastalQAGameplay.cpp",
+      "Hash": "93F23E6C0D4ED979E49823F3F68A33F2AC02EA57FB596B32BB4F92637ED7B1FA"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\CoastalTrain.cpp",
+      "Hash": "8D42F0406E520959FA68E05832FBBB17C51BF39CFB93BC0E215884B678D38427"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\CoastalVehicle.cpp",
+      "Hash": "0CC0A45FD38D0A3B3D19A6D5B893642C531463CA0C0A87DB9085EF4964B90123"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\City\\ANANTACityCharacter.cpp",
+      "Hash": "A106FDE9E1393019A7E6F21C9AC94FD7C403D3C65658AE5D89E1123288448FE2"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\City\\ANANTACityController.cpp",
+      "Hash": "1CE2702402C98819924874D8D84AC8D3C35BD2A55884F0B076EAC462F591E43E"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\City\\ANANTACityControllerSettings.cpp",
+      "Hash": "89428420011D1069CDDC1EC6C10807C50B3607DEEA738635896A5CA93306871E"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\City\\ANANTACityCrowd.cpp",
+      "Hash": "47712AA897D0D6A9F14F4C144257DB919F182D7E4A28FD3FA8128FCC49140FB9"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\City\\ANANTACityEnemy.cpp",
+      "Hash": "476B4229CEAD4F28FC0CD938D36334606F4249418EEBEFBC80C4F0DF28526505"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\City\\ANANTACityGameMode.cpp",
+      "Hash": "C071D3F316E309EFBC568E8E7EE98E6861E3D444F58F448930563D1BD32C6D03"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\City\\ANANTACityHUD.cpp",
+      "Hash": "4BA42BA8D6B2C4D7284A65708CB93FF7170F2192E8C70C3A67D382F4F9A89F03"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\City\\ANANTACityInteractable.cpp",
+      "Hash": "64FE45FA7C7ECB34DB4B518C171B0BE2FC42BAC17E49F6032A098CBABC0583AB"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\City\\ANANTACityPedestrian.cpp",
+      "Hash": "36B61B197F5E96743EF06606826CC841C118A33C99FCF2ECD1171AEDEA7C0D40"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\City\\ANANTACityRestore.cpp",
+      "Hash": "A566F76363805270CE491BADB96DC1EC446F0F2F452F7D51CBC555EF8D7D296F"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\City\\ANANTACitySettingsOverlay.cpp",
+      "Hash": "9696F701E18ACB617282D834FD7CCD0AF99E27B920094D43B568D8CE8AC67C60"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\City\\ANANTACityState.cpp",
+      "Hash": "F6186FEE29953AC7E72086644A695A6E79DD5990012A027D624FB607C3204414"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\City\\ANANTACitySubsystem.cpp",
+      "Hash": "EE9C7B6C96B97D4C343E025C305B16AA6D0F03350CB7BA01A7CB6B8B14735806"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\City\\ANANTACityVehicle.cpp",
+      "Hash": "915C12CAE47BB73E314AA3F595D19A7156E17C7C381AF025736708AC4941ADA6"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\City\\CityServiceInteractable.cpp",
+      "Hash": "1572DB7442185E608B525BFE1815FA6FD02120541F1C1C4EF6BB44F62E7D3F88"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\City\\CityServiceState.cpp",
+      "Hash": "BD92AF2F33761949DF5B81E1F546E9D18300AB789FEF5C53E6FCA11177F2EEA0"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\City\\CityStreetLighting.cpp",
+      "Hash": "08F9E1774C6B9DF3645F948BA4401E4EE9D41B196534DBF85F9FE4123DA10FC3"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\City\\Mobility\\CityMobilityData.cpp",
+      "Hash": "F36308717126BDAD3A52A6A602DDFE01250D6DC55D6B4A8EEC8F23A622E50BAC"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\City\\Mobility\\CityMobilityRegionalRoutes.cpp",
+      "Hash": "4F74FF0778D7409B5EF41DB742E2B7F8A7442D352BF8CCE122C64C904BE5DA57"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\City\\Mobility\\CityRailShuttle.cpp",
+      "Hash": "21ECDA57C7AF761750E98EC9CDFF49CBEAD85F72A1AEAD8F0E22125411750A09"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\City\\Mobility\\CityRouteVehicle.cpp",
+      "Hash": "86DE6A27BA00401CFB182A9F3648681C8236BE09A9BBEE876971962DE4848F9A"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\City\\Mobility\\CityRouteVehicleStops.cpp",
+      "Hash": "968672D203FB48CF7E558B0BCD3849E0DB37361E07650943D63055D9646D7667"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\City\\Mobility\\CityRowboat.cpp",
+      "Hash": "614955D9189B3A859C103F9AA39630FF307E271DDD858888E33442691C361CDB"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\City\\Mobility\\CityTransitPassenger.cpp",
+      "Hash": "50CEC55DC2EC8A3C65BCE44FB780AAB7CD469E55874ABF4B4BF1D8C7DC896FD1"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\City\\Mobility\\CityTransportManager.cpp",
+      "Hash": "3E775BB4FE5FA7A14C3A660BA6769CB8B6BF4B8AD321DFA2F4DFB66C23CE55A3"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\Components\\CombatComponent.cpp",
+      "Hash": "0E7F2B3886544E9FC642FAE959A438B04B4498DDE5F9555AAC711484F078EAC2"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\Components\\TraversalComponent.cpp",
+      "Hash": "4212143FDF4F43E9112FBBF46BE3A93C735E645A533457E907C7A08FEEB9370C"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\QA\\CityCaptureLighting.cpp",
+      "Hash": "98AB0BD8C42A49A6B9DE128CC0FAE8EA8FF434A1AF59F75A461750B688AED7B6"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\QA\\CityCaptureSubsystem.cpp",
+      "Hash": "D3810B2C1D8C52E409BEE6E7CCA791E0E12326428653A36E3A88FC9A660D4A1F"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\QA\\CityCivicCheck.cpp",
+      "Hash": "DF2B2B6074E519A607D3A68290D8765339FB89C35AF55BB5F98ABFE6B27B5577"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\QA\\CityCivicCheckFixture.cpp",
+      "Hash": "F0623C30757CDBB352A04A60EFD95B26F2B6D937C1D86B06948EFB623FF2C502"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\QA\\CityCivicCheckMovement.cpp",
+      "Hash": "36875013AB6A8B0D32C064509204A9FBF05FB3BDEC1E672CAC4A1FF6DD2C2E72"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\QA\\CityCivicCheckReport.cpp",
+      "Hash": "72C6AFD713CA182941F43456E77AF5D404F7565C8A5D0F0E414577602DC813DA"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\QA\\CityCollisionCheck.cpp",
+      "Hash": "476DF9F0A5765578D5CD6828A9590995C212878000E03218D6FCA90A8269BFEE"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\QA\\CityEditorBoundaryAudit.cpp",
+      "Hash": "1807A7BB0E94B285023ACAFA7A52F3DAF851485CE4E138D4883C63F9F0E60C74"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\QA\\CityEditorCollisionAudit.cpp",
+      "Hash": "773D86322171458FE674BC8DD7CDB24ACA788DC5D6031932EF21192C91EDDB6F"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\QA\\CityEditorHLODReferences.cpp",
+      "Hash": "E22A90E63C86A3F86D21059EDF589F3282A94D8559A29298CD743E4DE819DB2F"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\QA\\CityEditorInstanceCollision.cpp",
+      "Hash": "883BEEB593F2D3B08FD021A6E5F8ABDA62612FFFE4738167736380D8C14A33C9"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\QA\\CityEditorTools.cpp",
+      "Hash": "7DC23AF77DA9DDD53EE2361BBA9E9DC09812907691E8EA2B1197F1F1425A9E0C"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\QA\\CityFleetCheck.cpp",
+      "Hash": "54E4A1844339F790EF35061592A8A789EE75B638E2840B8C0899E007A700325B"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\QA\\CityFleetCheckFixtures.cpp",
+      "Hash": "4F40DDC5FD125ADABAA384E0A473B73911BA231351D4EFDF5E5E23802B884ED7"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\QA\\CityFleetCheckObserve.cpp",
+      "Hash": "0C8437A7620F0130E49B04F6DDAD2F66C7063F86769121D82A7AB22533BCD4A1"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\QA\\CityGraphicsObservation.cpp",
+      "Hash": "BC87079731D57940AE8316B1BCF2872B59E7A5DBC12A5B7FE3712C0F6C73FA3F"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\QA\\CityHarborCheck.cpp",
+      "Hash": "40847D670DCAD9FBFD715F61B5A4AFF1BFA648FF40DEE313428C9B3C62A9886E"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\QA\\CityHarborCheckFixture.cpp",
+      "Hash": "56E359E59E20525BDA6BA9EE7A342374552F1A9A2EF6571BCB7DC0A6DCCFB587"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\QA\\CityHarborCheckReport.cpp",
+      "Hash": "5DE8033449FA9B54C1E9361AE9217B88FAD9A84FB4322D5061268A53DD162C7F"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\QA\\CityInputSmokeActions.cpp",
+      "Hash": "BBA2B6816959A50DCC0D2D18F5C999F1962F8693E230E3A042F8334DA17C1866"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\QA\\CityInputSmokeEvidence.cpp",
+      "Hash": "C97890C0C2F79BC9B10D68E573E110D847E69D09E80D212449AA67F6C9748BEA"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\QA\\CityInputSmokeSubsystem.cpp",
+      "Hash": "B551E4926AD712254265E7DA5D49C4F85C8B84ED9BD204EB9A64763D3074E461"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\QA\\CityMissionCheckActions.cpp",
+      "Hash": "9ADD35D42FD1874B1837552C663ABE1588A1B1D7C7C650B1D93064C0A87E4E43"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\QA\\CityMissionCheckEvidence.cpp",
+      "Hash": "973C135BA82138D44B5A3833D4932A7175D8A0F516EBCAFB54EFAE2727B113FC"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\QA\\CityMissionCheckPersistence.cpp",
+      "Hash": "3C62C188D129110C4715D8EDA94754E939D9FCA994CE4FDDB17B553B55B926A9"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\QA\\CityMissionCheckSubsystem.cpp",
+      "Hash": "3556A743B13FAE8171678B0914D8A3DE8EF3E65BBEEE7E3176EAA4543A049EF4"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\QA\\CityNavigationCheck.cpp",
+      "Hash": "49367226A2E6754DBF09113EFE3F280236B1CF793978CCC86F1BB9AA0A7F7D6E"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\QA\\CityPersistenceCheckSubsystem.cpp",
+      "Hash": "0CCDC367C72B6ECDE1D7AAC1196B0C5EB7F203513D91AF7DFBAE5EF02AAC3EB0"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\QA\\CityPlacementCapture.cpp",
+      "Hash": "199F76F14C4BD967953AD6230610E609F4EE7B1B780B0746B1CACCC32F78C98D"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\QA\\CityRailCheck.cpp",
+      "Hash": "13E01F4088568D638EAD473422EEB4CE8DAB673A12ADBE85FF2FF89377FA743C"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\QA\\CityRoadRoutesCheck.cpp",
+      "Hash": "8C93DB4D1BACC2F7ABAF19C24DBBE3A1396EEF07AB7751B6065ABBC7FD4A44C4"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\QA\\CityRoadRoutesCheckFixture.cpp",
+      "Hash": "F74D1EB4CBF89C060953153B6B9B86ACEFF037CA417A1E1C59340843E0403002"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\QA\\CityRoadRoutesCheckObserve.cpp",
+      "Hash": "5E3A780394624DC9306B5DA09433E2BEA44D6AD2AE7CE28D32125239F1925E47"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\QA\\CityRoadRoutesCheckRegional.cpp",
+      "Hash": "B1083408E0936E3542E32965D508EDE168A4462EF9D59D06D0B3A234268864B4"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\QA\\CityRoadRoutesCheckReport.cpp",
+      "Hash": "FBB2A535D2C73B9528C4DFCD257538899D0BCE0520FCBF2C602299D1E731EF72"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\QA\\CityRoofPoolCheck.cpp",
+      "Hash": "BD4CC437EA512BE490CD20DDEEB79A7A6F5FEDC49F0D8EB9578880628A68EC6F"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\QA\\CityRoofPoolCheckFixture.cpp",
+      "Hash": "21DBF5FDC0AA2E7A59DFEA43D7A637A847DDD842A9A0BF71B7E0AFA5FDC8F2D7"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\QA\\CityRoofPoolCheckMovement.cpp",
+      "Hash": "13DC30C8C755BBA166A8B7DFB88AFA0C64C52D2FC9E841614067B31F6D1EAFAE"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\QA\\CityRoofPoolCheckReport.cpp",
+      "Hash": "10C775F26D78B9CF405888A0C1680DDA3032C4A778F7D0A2E014B4FF8624E81C"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\QA\\CityRowboatCheck.cpp",
+      "Hash": "2F27B15D2830DC9C4EA8C0E38F0448D85CD1D39119C7BF2B021E0BEC70E8121E"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\QA\\CityRowboatCheckActions.cpp",
+      "Hash": "68D79F7E64932AA0785FBE3CB68C9BF9493514B874B864FCAB0C0E87749EEF16"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\QA\\CityRowboatCheckFixture.cpp",
+      "Hash": "F2F118B99882FE27D662F66DA0DEDA2527EA8F63A9E053714E0EEA59E86265D4"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\QA\\CityRowboatCheckReport.cpp",
+      "Hash": "627363DFE7D66099D10EFE9C2333806B4AF308C6D318EEE2E6C1797EBCED7A79"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\QA\\CityServiceJourney.cpp",
+      "Hash": "6DCFDA8E6DB329FE2BEFB419D9FBB9F49818EB6C94FCCEE286C6DEA729334E35"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\QA\\CityServiceJourneyActions.cpp",
+      "Hash": "FA721414FFE3103026BA7FE6078F0A08CF43A0BBA2517A76A38E4777A0C9721B"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\QA\\CityServiceJourneyEvidence.cpp",
+      "Hash": "9C68B8E5B03954ED13768712C9F6503A6FF5CF85B6DFC02418297F858660B101"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\QA\\CityServiceJourneyPersistence.cpp",
+      "Hash": "69B8F2C63EDD4BCD57722C31F059FF0B858C0E7F6D1DC34751EB9CC874E724F5"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\QA\\CityServiceJourneyRoute.cpp",
+      "Hash": "309FF2F7E23B1DD870F1B10EAC03E6CD361E3AFA6B6614DE7E1BD4FD242DB3EA"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\QA\\CitySettingsCheck.cpp",
+      "Hash": "2540707BD16BD87F2696126F53E2A822191BBEC17969C59A59354EE4E178F475"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\QA\\CitySettingsCheckEvidence.cpp",
+      "Hash": "635FD46A846357FB862A243DE983A565DBE417BBC768C1709422E81DD71E8EF7"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\QA\\CityStreamingJourney.cpp",
+      "Hash": "02B0E1FD3C79926C7BF67BEA687D6E9F7C3516073C36DBBF115D075C7393BADB"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\QA\\CityStreamingJourneyEvidence.cpp",
+      "Hash": "51D366C7EE3686E5D1E9C9256C36ABD92657C3E9FF6278E59E7350435E1600C7"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\QA\\CityStreamingJourneyRoute.cpp",
+      "Hash": "A987A106110963C5CB638546CD4E2F6700DF38B09796A6D1A922FE28E3CB43D1"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\QA\\CityTransitCheck.cpp",
+      "Hash": "58A0413FEE18639B7C8F21A46BD497D9E9E38D6A1709EBA5EF8C4268C36A100D"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\Settings\\ANANTAGraphicsSettings.cpp",
+      "Hash": "CF31785F4E70F629A6BBEB1AF7696432DDB84EA8BF93AFDF7A88660C90B268AF"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\Settings\\ANANTAGraphicsSettingsLoad.cpp",
+      "Hash": "F1FC8329502DC168739188287057FD4292EE4E523A5B7D99B9982D96C9D1E81A"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\Settings\\CityText.cpp",
+      "Hash": "75E2D504CDCC820F743896273C81A5D839BD522644F18D2EBBED3E3D6044224F"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\Settings\\SCitySettingsPanel.cpp",
+      "Hash": "18D7E81333C632006170D75E57F15DBEC8823BDFC1488FBD5C3AE40D0757C8EB"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\Settings\\SCitySettingsPanelControls.cpp",
+      "Hash": "0A1E892ACBF35017E2EA38D9655E773123393939F0D3C24D579FD54F4A3D5387"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\Settings\\SCitySettingsPanelLayout.cpp",
+      "Hash": "684F1A433D49D78E03582513671AE382508A94A7EEFCCD2975BF4B123BDB52E0"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\Tests\\ANANTACityMissionTests.cpp",
+      "Hash": "91AF28933A88DACD0E1ADB7C6434CFF43D3219962C0E717A5708580BD5F2A70E"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\Tests\\CityCollisionTests.cpp",
+      "Hash": "887E29F6A129379ECEF9535F84362300EA886A2C12DD8B03EEBF97CDDCCBBAFA"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\Tests\\CityFleetTests.cpp",
+      "Hash": "6C1B79BB3CA87DE923F26C58C336A045A71C4EB3533F9B8C8D3802C170D39906"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\Tests\\CityFrameRateChoiceTests.cpp",
+      "Hash": "1E6DB55E74A986D3256756F1AFA699CACEB377DB4562EF75FE15847B4E59240A"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\Tests\\CityGraphicsSettingsTests.cpp",
+      "Hash": "466A2309435E45200A826353D605A6D9E83FE4AF799540518974A5F3575D91EF"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\Tests\\CityLegacySaveTests.cpp",
+      "Hash": "926B931E1BA5F27DBD0EEB9FE88A72D9BA3309C3BACC71DD7663417091FB97F0"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\Tests\\CityMobilityTests.cpp",
+      "Hash": "F2CDB4468164D04A812811F2CDC9F9F6AD999D1B8943151D897A31DB25C495E1"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\Tests\\CityPedestrianRouteTests.cpp",
+      "Hash": "F10F66DC23B75B17E6AC16FD57FE4561ECC95D390EE7DB01B386A7522CE0D5FF"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\Tests\\CityPersistenceTests.cpp",
+      "Hash": "2E5B28A3E7727ABB88EB143C570448DBB9136B613E4836C00DF6F61A44E6749F"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\Tests\\CityRailCanopyTests.cpp",
+      "Hash": "45560CB97A51682FA113F25311B720C8E313B9C91930DE3E8E48C2E14E08045D"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\Tests\\CityRegionalRouteTests.cpp",
+      "Hash": "4AEE0BCA57E4CA7EE355FE3AC9F0C2FC8DE631C005745C783A9B5E02F04AC8FB"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\Tests\\CityRouteTurnTests.cpp",
+      "Hash": "51D1D45948484CE155446247669EC6617AD193C353E6DF6EA2BEF841D00F3906"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\Tests\\CityRowboatTests.cpp",
+      "Hash": "A6159F12DE11657D50FEC9248C41A2E1A52E2CF4FD659243B95C551EC0BCB0D0"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Private\\Tests\\CityServiceTests.cpp",
+      "Hash": "6E22F7C6A582830562309F294ECE2B7912F831A3BD1D3DF6FB355B5BF7A81B55"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Public\\ANANTA.h",
+      "Hash": "021D1E841155967AE887365541994A3C2C18CB0FA19921D0346794D6BF323187"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Public\\ANANTACharacter.h",
+      "Hash": "DCDEB999A72B03233175AE6CF4ECDB309F10C3692987892FF68470D7184A8BDA"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Public\\ANANTAFragmentPickup.h",
+      "Hash": "E77304F3A3264AE8A73203A7DCA6A542E422FD205FE79068A27C37C5F9BE92A1"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Public\\ANANTAGameInstance.h",
+      "Hash": "09C7E822D5DD82EFAF3C4E9E63168AF7C979C6EB3728A8490869C065B0B47323"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Public\\ANANTAHUD.h",
+      "Hash": "0AED6D215CAB9F9EFB981EF52B3458CD32ED221C0C672AA1805C8F9B4182A235"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Public\\CoastalBatch.h",
+      "Hash": "8441565E9E78EBDD585290DA8959E1A310A2899A0C88308567BABAC14B1F11B7"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Public\\CoastalCharacter.h",
+      "Hash": "2B6E4D5CC299F6597A44FD8C0241F62D3AAD5F9FC3591B4814273F9C9351F3AA"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Public\\CoastalGameMode.h",
+      "Hash": "0C6DC0BFFFAD4F2687EB7343CF718545E6A56E44CA9DB403BCA5E3108275A08D"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Public\\CoastalHUD.h",
+      "Hash": "0093B56FA65DF1A664025ECE0D7B2BE70D1A173B0C90A38EEFADDBCDA95E5570"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Public\\CoastalInteractable.h",
+      "Hash": "80A2C643E2C2453265E5B75E0A83D8FD84B1565B1A9F6643A8F7BA973058418F"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Public\\CoastalQA.h",
+      "Hash": "83F550FA05501C7BDC4C959778465E945EB26B7B17737A245B7AF506317CACE4"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Public\\CoastalTrain.h",
+      "Hash": "B3E2802772E722768C75D184B0AC00AF8998A19143C9D24960C514F2312EBE53"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Public\\CoastalTransitTypes.h",
+      "Hash": "F43D3987D6105A657A0C5BCDE61C858A5A420B71D1B09418CF65868F89CBFAE3"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Public\\CoastalVehicle.h",
+      "Hash": "3EC29F7FFEC99E3196B939E688404549E2D3510571ADDEC4C976614F575DDC28"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Public\\City\\ANANTACityCharacter.h",
+      "Hash": "179C2405AE55378E8237FF65386A0B90E9F1C6E2BA501BFC7F74F5AD48A582DB"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Public\\City\\ANANTACityController.h",
+      "Hash": "74166844F652724F35938BC2ADDCBDADBF94676E39AB0F5B2DC20D744C782CE0"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Public\\City\\ANANTACityCrowd.h",
+      "Hash": "BDDD64508298E3B838F7DC04FB5EDB533EBE66021BD78040AE68E23A5146806D"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Public\\City\\ANANTACityEnemy.h",
+      "Hash": "8D97AE8DC3B6905FE5B8599322194A56DD52AFCCE0C50CF3AB2890F2737CC313"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Public\\City\\ANANTACityGameMode.h",
+      "Hash": "D4EB4C4505D7E2E57368A8E1F1F0D96B63313D6B503E5755938CAA0835C642F2"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Public\\City\\ANANTACityHUD.h",
+      "Hash": "D632ABA3CB227BCAA90B7F83D40CC58B713B8744943D707822BB7E96CFBBEDC6"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Public\\City\\ANANTACityInteractable.h",
+      "Hash": "413188D4202F49F2911B556299866FDC5E3E1997CD30F49139484C4CEE3006AF"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Public\\City\\ANANTACityPedestrian.h",
+      "Hash": "5CEDFAED77C6805C8C180521B3261E86CAEA5A9F9354E651AD50C50972254515"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Public\\City\\ANANTACityState.h",
+      "Hash": "1CF1DD49BF4353DE89CB72DF3FD533B31BEBD38D70C8FDE0F56975B0B0D2FED0"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Public\\City\\ANANTACitySubsystem.h",
+      "Hash": "979D3846530350888677ECF7BCF3D06F31CF78047F1A48442D4F0F06D9FD79CD"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Public\\City\\ANANTACityVehicle.h",
+      "Hash": "26F4388F26EDCE38A54746EBAEC1A969C75723982ACFCE36DC29AB011A673668"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Public\\City\\CityServiceInteractable.h",
+      "Hash": "D89675A8AE2081B6C83C9CE1451F1FD202D3923F7E8D1E26240423175625E080"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Public\\City\\CityServiceState.h",
+      "Hash": "7C48907EBBEDF653D074448B9489B45BBF1F91F195794C22EB71D43C80884357"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Public\\City\\CityStreetLighting.h",
+      "Hash": "65581463D4EDD38A6E33B3D43C56C2BEDD3CFB7CFEC0533BF51CD5ED8661EDB5"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Public\\City\\CityWorldBounds.h",
+      "Hash": "F34CB5E51EF4259ADCCB40C2956943C8AC7F6D96819E13089337B8A39CFF86D7"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Public\\City\\Mobility\\CityMobilityData.h",
+      "Hash": "CF0CA954FDAB53AD85FDB92C4C246E98F8AB2865F62C0169BBBB6DAE98DED30F"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Public\\City\\Mobility\\CityRailShuttle.h",
+      "Hash": "92F0911A36D2AAAB9DF9121FB8037E12ED597CF9830272F6691B0602738A1E1F"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Public\\City\\Mobility\\CityRouteVehicle.h",
+      "Hash": "58CEE50E34A592E1A237574A67810C7EED8FD69434E60313DE4BD6B2654F0D90"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Public\\City\\Mobility\\CityRowboat.h",
+      "Hash": "5B385FD00E42A6C8ACFDC2FF91D96CF57A263A4BF7650F29B14316FC5BADCB64"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Public\\City\\Mobility\\CityTransitPassenger.h",
+      "Hash": "7C15A77A6E9CA942F52D0ACFACD0D2C1FBF628C6547C0AAFD29289FEFDDD1406"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Public\\City\\Mobility\\CityTransportManager.h",
+      "Hash": "5E131A0E823E1CC85167C25F9087ACC338C3287C50917BD2E43E3D8F537BA2A0"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Public\\Components\\CombatComponent.h",
+      "Hash": "37C4AB8691FAB17C190C9A79196C01F11E454B20C0CF6A8E888CBA983E6288F8"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Public\\Components\\TraversalComponent.h",
+      "Hash": "BA69FB4D31E15225EC1220CCD4D8CA775B053BCEEBD99AD365ABB1054D6FAE32"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Public\\QA\\CityCaptureSubsystem.h",
+      "Hash": "8748248AF6285E4AF16F458A750F4F536A9DF5405CB9924FC303195B344256FD"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Public\\QA\\CityCivicCheck.h",
+      "Hash": "97946FEC3E44971014A677318C4AA0BAF48DDFFBD8E9FB9D8E8AB2939C36E9A6"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Public\\QA\\CityCollisionCheck.h",
+      "Hash": "F9B1BD48592E9F7FAC67C1CD7B147C85C573042ACEF504CFAAE691ECBA094AB2"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Public\\QA\\CityEditorTools.h",
+      "Hash": "51D5A088D09AFE507B3864DAD4C232E3DA887BBEE249D00A9AAA382661067825"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Public\\QA\\CityFleetCheck.h",
+      "Hash": "31051BE4B7D2AF189C6153D26351E783625F54BB5C32067E370B77247F370B7C"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Public\\QA\\CityGraphicsObservation.h",
+      "Hash": "0E17913950643400333A19F2C1F62831BDEEB4ACC903776D4017655AC9EC2F49"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Public\\QA\\CityHarborCheck.h",
+      "Hash": "EE1CC1E21527C591CDE2B304551CBC404572B397121EB5C74E7B896F596CD920"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Public\\QA\\CityInputSmokeSubsystem.h",
+      "Hash": "A3A9592F38DA031B186DAC3B292811E3F364A3AB80391096942E4CFA06FE7E5F"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Public\\QA\\CityMissionCheckSubsystem.h",
+      "Hash": "C4AA69155F26609B3F22757B64EE3B55FDA111712E1A8A16884B67668786947B"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Public\\QA\\CityNavigationCheck.h",
+      "Hash": "E3C89E657EA191B00CF9BAEBEF68AEBCB91E72F4ED8935997AFFB3AA9139F6A6"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Public\\QA\\CityPersistenceCheckSubsystem.h",
+      "Hash": "EFEADD7A00401E9C49FB78D68DB5D1500ADB1612E031A6777FDFE28839E1B831"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Public\\QA\\CityRailCheck.h",
+      "Hash": "633F36D0F4462981DE69C4BC0CBE356A376EEEF22242A1A6408B91E9F74F2050"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Public\\QA\\CityRoadRoutesCheck.h",
+      "Hash": "E08109F4C758F31000757568529305D8C3F32A6E10B14FC68072A6E1C15DFF31"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Public\\QA\\CityRoofPoolCheck.h",
+      "Hash": "6B18AFC3C20AF478B66FDF601955D2C7D7D827698D1338E4729AA9A4621A4FA6"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Public\\QA\\CityRowboatCheck.h",
+      "Hash": "7BE60B03A283B1B3EAE9D495100F4CC10F2489CA96DD0E6F207DDE69498C4DFB"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Public\\QA\\CityServiceJourney.h",
+      "Hash": "A66DDC8460DE7A28E6ACA399356BFDFFF2E30B7B291B5FCE4898E94D2F05170D"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Public\\QA\\CitySettingsCheck.h",
+      "Hash": "5DE37F7FE50992062BE3FA703159DEE115182885DB7C0A245F66335262ED9BE9"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Public\\QA\\CityStreamingJourney.h",
+      "Hash": "B364C1B969EDB806CDD21A639066706DED7DE42C68401CDDD82EF555467933E0"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Public\\QA\\CityTransitCheck.h",
+      "Hash": "ED853A7515290B954C2AB39D27EAFCD32F7388E1B0DDAEE252C8B3EC6CAFDBC9"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Public\\Settings\\ANANTAGraphicsSettings.h",
+      "Hash": "85439CBA0392927CD6B61A6D2AFC385B74AB9A916EBAC1D08142F80E7C35A75D"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Public\\Settings\\CityText.h",
+      "Hash": "F3F744E52DF98A20566B73A3A72F2C311A1083FD041563D7D2AF50089D4B4F98"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Source\\ANANTA\\Public\\Settings\\SCitySettingsPanel.h",
+      "Hash": "6C7BA68B1C947BB0AB3C0B9B19EFB187B50E460603DC0B10B8D519C984E4251A"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Config\\DefaultEditor.ini",
+      "Hash": "F7FA0669877EB782E14BF0F7EE63298A10B92C0F38E215AE41A478A70F018D81"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Config\\DefaultEditorPerProjectUserSettings.ini",
+      "Hash": "8EC6963909AE5BBBB6F024029C007522F351B071C78495AB8F075BDA5EE4C42C"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Config\\DefaultEngine.ini",
+      "Hash": "A996FAC66BA61831F8F2016BB887AAE632C0BD516A9B7C4FA9C44358CF5E6ED8"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Config\\DefaultGame.ini",
+      "Hash": "8290AE16A162619228576C2785E9341A4C8D3D7BC789F08746EFBC376B9ADA41"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Config\\DefaultGameplayTags.ini",
+      "Hash": "38765BED1C48274FC4E02AB5DC5726E6B124B212CF76C2277962CFFB61631F17"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Config\\DefaultGameUserSettings.ini",
+      "Hash": "F662B2F5E0B621776EB5C465CEFC5860D8F916129EDC2C1EB4B6A010FDD685A2"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Config\\DefaultInput.ini",
+      "Hash": "0E3FF7F7A074E29869CDBE583D37E2BA3E7CA99D7811510BF5D028D4B0182AFD"
+    },
+    {
+      "Path": "D:\\GAME\\ANANTA\\Config\\DefaultScalability.ini",
+      "Hash": "FF62B97CAE1952D5DA89F8C14DE5EC3CC76A42E6517190259D57E25FA5CACA4F"
+    }
+  ],
+  "p4Classification": "PARTIAL fresh runtime pending; committed source is not runtime acceptance",
+  "p2Classification": "bounded visual historical pass, art acceptance pending",
+  "fpsClaim": false,
+  "nextPhase": "W1/W2 refresh before any native water port"
+}
