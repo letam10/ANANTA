@@ -41,11 +41,13 @@ function createWaveField(spec) {
 
 function createBoundary(spec) {
   return new CoastBoundary({
+    type: spec.type,
     minX: spec.minX,
     maxX: spec.maxX,
     minZ: spec.minZ,
     maxZ: spec.maxZ,
     polygon: spec.polygon,
+    boatMargin: spec.boatMargin,
   });
 }
 

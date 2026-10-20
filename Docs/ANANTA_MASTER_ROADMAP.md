@@ -1,6 +1,7 @@
 # ANANTA Master Roadmap
 
-> Current continuation 2026-10-20: R0 complete; W1/W2 fresh browser gate next.
+> Current continuation 2026-10-20: R0 and W1/W2 bounded prototype gates complete;
+> W3 native function/readback and same-camera gates are next.
 > Main only, incremental phase commits/pushes authorized. P2 is a historical bounded
 > visual pass, not AAA art acceptance. P4A/P4B remain PARTIAL until fresh runtime.
 > Primary acceptance target is 60 FPS (16.667 ms); legacy 90 FPS UI/config notes
@@ -783,3 +784,27 @@ trước native interaction/performance gate.
 - Delivery: stage phase-owned allowlists only, commit/push on main, compare
   git ls-remote after each push. An incomplete later gate is reported PARTIAL,
   rather than preventing delivery of an independently verified earlier phase.
+
+## W1/W2 fresh gate — 2026-10-20
+
+- R0 committed/pushed on main as `2a481d89b4222cafa965821d7c3ec41180fc1f71`;
+  git ls-remote matched local HEAD.
+- Fixed verified beach_boat camera/spec target mismatch (-34 -> -42) and box
+  boundary precedence. Previously eight corner/margin checks failed; after the
+  fix all 68 checks pass, including seven height/analytic-normal comparisons.
+- `npm run check`, `npm run test:contract`, `npm run build` and the canonical
+  ThreeWater spec validator exit 0; a deliberately wrong camera is rejected.
+- Fresh HTTP browser run completed coast/beach_boat/offshore for 10 seconds each.
+  Console warn/error empty. Scene avg/p95/max ms: coast 6.06/7.30/135.50 (one
+  startup outlier), beach_boat 6.08/6.90/15.80, offshore 6.06/6.20/7.20.
+- Orbit drag, free camera, scene keys and foam/boundary toggles verified; two
+  fresh local images saved. No visible seam in reviewed views. Seven geometries
+  remain fixed. Browser measurements are observations, not Unreal FPS proof.
+- Receipt: `Tools/Continuation_20261020/W2_browser.json`; math checks and coast/
+  orbit PNGs in the same folder. No Unreal source/content/config change in W1/W2.
+- W3 may now consume the pinned spec. Native material function/readback, separate
+  collision boundary and same-camera image comparison remain required; no W3
+  PASS is inferred from this prototype. V1/A1/A2/S1/G1/F1/C1 broader gates remain.
+- R0 foundation validation and diff check exit 0. Full LFS fsck exits 1 with 88
+  pre-existing unexpectedGitObject pointer records under Assets/CoastalUpgrade;
+  no object rewritten/deleted. Receipt `Tools/Continuation_20261020/R0_gates.json`.

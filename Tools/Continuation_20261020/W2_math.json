@@ -1,0 +1,278 @@
+{
+  "passed": true,
+  "checks": [
+    {
+      "name": "spec.structure",
+      "passed": true
+    },
+    {
+      "name": "waves.input-tuples",
+      "passed": true
+    },
+    {
+      "name": "waves.cpu-and-shader-tuples",
+      "passed": true
+    },
+    {
+      "name": "waves.height-and-normal.0",
+      "passed": true
+    },
+    {
+      "name": "waves.height-and-normal.1",
+      "passed": true
+    },
+    {
+      "name": "waves.height-and-normal.2",
+      "passed": true
+    },
+    {
+      "name": "waves.height-and-normal.3",
+      "passed": true
+    },
+    {
+      "name": "waves.height-and-normal.4",
+      "passed": true
+    },
+    {
+      "name": "waves.height-and-normal.5",
+      "passed": true
+    },
+    {
+      "name": "waves.height-and-normal.6",
+      "passed": true
+    },
+    {
+      "name": "scenes.identity",
+      "passed": true
+    },
+    {
+      "name": "scenes.coast.contract-and-application",
+      "passed": true
+    },
+    {
+      "name": "scenes.beach_boat.contract-and-application",
+      "passed": true
+    },
+    {
+      "name": "scenes.offshore.contract-and-application",
+      "passed": true
+    },
+    {
+      "name": "boundary.input",
+      "passed": true
+    },
+    {
+      "name": "boundary.bounds-readback",
+      "passed": true
+    },
+    {
+      "name": "boundary.margin-0.probe-0",
+      "passed": true
+    },
+    {
+      "name": "boundary.margin-0.probe-1",
+      "passed": true
+    },
+    {
+      "name": "boundary.margin-0.probe-2",
+      "passed": true
+    },
+    {
+      "name": "boundary.margin-0.probe-3",
+      "passed": true
+    },
+    {
+      "name": "boundary.margin-0.probe-4",
+      "passed": true
+    },
+    {
+      "name": "boundary.margin-0.probe-5",
+      "passed": true
+    },
+    {
+      "name": "boundary.margin-0.probe-6",
+      "passed": true
+    },
+    {
+      "name": "boundary.margin-0.probe-7",
+      "passed": true
+    },
+    {
+      "name": "boundary.margin-0.probe-8",
+      "passed": true
+    },
+    {
+      "name": "boundary.margin-0.probe-9",
+      "passed": true
+    },
+    {
+      "name": "boundary.margin-0.probe-10",
+      "passed": true
+    },
+    {
+      "name": "boundary.margin-0.probe-11",
+      "passed": true
+    },
+    {
+      "name": "boundary.margin-0.probe-12",
+      "passed": true
+    },
+    {
+      "name": "boundary.margin-0.probe-13",
+      "passed": true
+    },
+    {
+      "name": "boundary.margin-0.probe-14",
+      "passed": true
+    },
+    {
+      "name": "boundary.margin-0.probe-15",
+      "passed": true
+    },
+    {
+      "name": "boundary.margin-0.probe-16",
+      "passed": true
+    },
+    {
+      "name": "boundary.margin-1.probe-0",
+      "passed": true
+    },
+    {
+      "name": "boundary.margin-1.probe-1",
+      "passed": true
+    },
+    {
+      "name": "boundary.margin-1.probe-2",
+      "passed": true
+    },
+    {
+      "name": "boundary.margin-1.probe-3",
+      "passed": true
+    },
+    {
+      "name": "boundary.margin-1.probe-4",
+      "passed": true
+    },
+    {
+      "name": "boundary.margin-1.probe-5",
+      "passed": true
+    },
+    {
+      "name": "boundary.margin-1.probe-6",
+      "passed": true
+    },
+    {
+      "name": "boundary.margin-1.probe-7",
+      "passed": true
+    },
+    {
+      "name": "boundary.margin-1.probe-8",
+      "passed": true
+    },
+    {
+      "name": "boundary.margin-1.probe-9",
+      "passed": true
+    },
+    {
+      "name": "boundary.margin-1.probe-10",
+      "passed": true
+    },
+    {
+      "name": "boundary.margin-1.probe-11",
+      "passed": true
+    },
+    {
+      "name": "boundary.margin-1.probe-12",
+      "passed": true
+    },
+    {
+      "name": "boundary.margin-1.probe-13",
+      "passed": true
+    },
+    {
+      "name": "boundary.margin-1.probe-14",
+      "passed": true
+    },
+    {
+      "name": "boundary.margin-1.probe-15",
+      "passed": true
+    },
+    {
+      "name": "boundary.margin-1.probe-16",
+      "passed": true
+    },
+    {
+      "name": "boundary.margin-2.probe-0",
+      "passed": true
+    },
+    {
+      "name": "boundary.margin-2.probe-1",
+      "passed": true
+    },
+    {
+      "name": "boundary.margin-2.probe-2",
+      "passed": true
+    },
+    {
+      "name": "boundary.margin-2.probe-3",
+      "passed": true
+    },
+    {
+      "name": "boundary.margin-2.probe-4",
+      "passed": true
+    },
+    {
+      "name": "boundary.margin-2.probe-5",
+      "passed": true
+    },
+    {
+      "name": "boundary.margin-2.probe-6",
+      "passed": true
+    },
+    {
+      "name": "boundary.margin-2.probe-7",
+      "passed": true
+    },
+    {
+      "name": "boundary.margin-2.probe-8",
+      "passed": true
+    },
+    {
+      "name": "boundary.margin-2.probe-9",
+      "passed": true
+    },
+    {
+      "name": "boundary.margin-2.probe-10",
+      "passed": true
+    },
+    {
+      "name": "boundary.margin-2.probe-11",
+      "passed": true
+    },
+    {
+      "name": "boundary.margin-2.probe-12",
+      "passed": true
+    },
+    {
+      "name": "boundary.margin-2.probe-13",
+      "passed": true
+    },
+    {
+      "name": "boundary.margin-2.probe-14",
+      "passed": true
+    },
+    {
+      "name": "boundary.margin-2.probe-15",
+      "passed": true
+    },
+    {
+      "name": "boundary.margin-2.probe-16",
+      "passed": true
+    },
+    {
+      "name": "boundary.boat-default-margin",
+      "passed": true
+    }
+  ],
+  "errors": []
+}

@@ -169,7 +169,9 @@ export class CoastBoundary {
         maxZ: positionalMaxZ,
       }
       : (bounds || {});
-    const polygon = normalizePolygon(getPolygonOption(options));
+    // Spec box có thể kèm polygon để trao đổi; không bỏ qua kiểu đã khai báo.
+    const explicitBox = options.type === "box" || options.shape === "box";
+    const polygon = explicitBox ? [] : normalizePolygon(getPolygonOption(options));
     const derivedBounds = polygon.length ? polygonBounds(polygon) : DEFAULT_BOUNDS;
     const sourceMinX = finiteNumber(options.minX, derivedBounds.minX);
     const sourceMaxX = finiteNumber(options.maxX, derivedBounds.maxX);

@@ -1,6 +1,6 @@
 # ANANTA Current Handoff
 
-> Active continuation 2026-10-20: R0 DONE; W1/W2 fresh verification in progress.
+> Active continuation 2026-10-20: R0 and W1/W2 DONE bounded; W3 next.
 > Work only on main; incremental phase commit/push authorized by current user.
 > P2 bounded historical visual pass is not art acceptance; P4A/P4B PARTIAL until
 > a fresh runtime log. Primary FPS target is 60; no current FPS claim.
@@ -1240,3 +1240,41 @@ Do not expand the map before hero art acceptance or claim 60 FPS before F1.
 
 Current execution contract: `Tools/Continuation_20261020/CONTRACT.md`.
 R0 commit/push receipt will be captured by Git and the next phase handoff entry.
+
+## W1/W2 — Fresh prototype acceptance, 2026-10-20
+
+R0 delivery: commit `2a481d89b4222cafa965821d7c3ec41180fc1f71` on main,
+push successful, git ls-remote matched. Existing AGENTS/art/F1/W3/audit dirt
+was preserved outside the commit. No Unreal worktree changes.
+
+New fixes: ScenePresets beach_boat target X now equals the pinned spec (-42).
+CoastBoundary honors explicit box even with interchange polygon present, and
+main forwards type/boatMargin. A new independent regression checker originally
+failed eight corner-margin cases; after correction all 68 pass, including
+finite-difference normals, camera parity and edge/corner margins. A negative
+camera case is rejected. Syntax, build and canonical spec validator exit 0.
+
+Fresh browser HTTP URL `http://127.0.0.1:4178/?run=20261020-W2` completed exactly
+three automatic 10-second scenes. Avg/p95/max ms: coast 6.06/7.30/135.50 with
+one startup outlier; beach_boat 6.08/6.90/15.80; offshore 6.06/6.20/7.20.
+No console warnings/errors. Manual orbit drag, free/orbit toggle, scene keys,
+boundary/foam off/on were observed working. Draw calls changed 7 -> 5 when
+both overlays were off; geometry count stayed seven. Fresh coast/orbit PNGs
+show continuous water/foam in the reviewed views. Manual checks are separate
+from the automatic performance samples; no long soak or GPU benchmark run.
+
+Evidence: `Tools/Continuation_20261020/W2_math.json`, `W2_browser.json`,
+`W2_coast.png`, `W2_orbit.png`. Browser numbers do not imply Unreal 60 FPS.
+The wave-spec hash and four exact tuples are unchanged. W1/W2 gate now permits
+W3 native port work; it does not accept W3 or full-map AAA/native gameplay.
+
+R0 validation/diff check exit 0. Full git lfs fsck exit 1 with 88 pre-existing
+unexpectedGitObject records under Assets/CoastalUpgrade. Full list preserved
+in R0_gates.json; no LFS object rewritten or deleted.
+
+Next: consume water_contract.py to create an owned MF_AnantaWater/material
+graph using world centimetres -> metres, exact wave tuples and analytic normals.
+Read back all four outputs; boundary collision stays separate; capture the
+same three spec cameras before applying beyond the bounded water slice.
+V1 hero art, native A1/A2, S1 streaming, G1 actors/persistence and F1 remain
+pending; do not claim them from source or historical fixture receipts.

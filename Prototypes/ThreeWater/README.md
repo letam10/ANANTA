@@ -19,6 +19,21 @@ Three.js/Vite. Validator contract chạy từ repository root:
 python Tools/QA/ValidateThreeWaterSpec.py
 ```
 
+Kiểm tra contract không cần browser:
+
+```powershell
+npm run test:contract
+```
+
+Bộ kiểm tra so đạo hàm số với normal giải tích tại nhiều tọa độ/thời điểm,
+đối chiếu cả ba camera với spec và kiểm margin camera/thuyền ở cạnh/góc.
+Ca âm cố tình đổi target camera phải bị phát hiện. `boundary.type=box` được
+ưu tiên ngay cả khi JSON kèm polygon để trao đổi với Unreal.
+
+Receipt mới ngày 20/10/2026: `Tools/Continuation_20261020/W2_browser.json` tại
+repository root; ảnh coast/orbit đi kèm. Đây là browser prototype evidence,
+không chứng minh Unreal runtime/FPS.
+
 ## Điều khiển và W2 quick QA
 
 - Orbit bằng kéo chuột; nhấn `C` để chuyển free camera.

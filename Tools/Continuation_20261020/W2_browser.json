@@ -1,0 +1,45 @@
+{
+  "schema": "ananta.water.browser-smoke.v1",
+  "date": "2026-10-20",
+  "url": "http://127.0.0.1:4178/?run=20261020-W2",
+  "status": "PASS_BOUNDED_PROTOTYPE",
+  "waveSpecSha256": "f1023df3c0ca24d3f5afb8a18bb25d85b01c9cc32b3973c9c5923384f718621f",
+  "sourceFixes": [
+    "beach_boat target X corrected from -34 to source spec -42",
+    "explicit box boundary takes precedence over interchange polygon",
+    "main forwards type and boatMargin from spec"
+  ],
+  "cpuContractChecks": 68,
+  "negativeCameraDetected": true,
+  "consoleWarnings": [],
+  "consoleErrors": [],
+  "scenes": [
+    {"id": "coast", "durationSeconds": 10, "averageMs": 6.06, "p95Ms": 7.30, "maxMs": 135.50, "outliers": 1},
+    {"id": "beach_boat", "durationSeconds": 10, "averageMs": 6.08, "p95Ms": 6.90, "maxMs": 15.80, "outliers": 0},
+    {"id": "offshore", "durationSeconds": 10, "averageMs": 6.06, "p95Ms": 6.20, "maxMs": 7.20, "outliers": 0}
+  ],
+  "observationSource": "Fresh visible browser overlay read through accessibility state; no inferred GPU timings",
+  "checks": {
+    "automaticThreeSceneCompletion": true,
+    "fourWaves": true,
+    "visibleNearAndFarWater": true,
+    "foamVisible": true,
+    "boundaryVisible": true,
+    "orbitDragChangesView": true,
+    "freeCameraToggle": true,
+    "foamBoundaryToggle": true,
+    "drawCallsChange7To5WithBothOff": true,
+    "geometryCountRemains7": true,
+    "twoTimeVisualReview": true,
+    "noVisibleWaterSeamInReviewedViews": true
+  },
+  "images": ["W2_coast.png", "W2_orbit.png"],
+  "limits": [
+    "Startup outlier 135.50 ms is retained, not filtered into a maximum-frame-time PASS",
+    "Manual input checks occur after the bounded three-scene run and are not additional performance samples",
+    "The boat remains a visual fixture",
+    "No Unreal asset was modified during W1/W2",
+    "Browser observations do not establish Unreal FPS or full-map art acceptance"
+  ],
+  "fpsClaim": false
+}

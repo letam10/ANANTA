@@ -14,7 +14,7 @@ export const SCENE_PRESETS = Object.freeze({
   beach_boat: createPreset({
     id: "beach_boat",
     cameraPosition: Object.freeze([-100, 36, 100]),
-    target: Object.freeze([-34, 0, -8]),
+    target: Object.freeze([-42, 0, -8]),
     description: "Beach-side view framed on the QA boat inside the water boundary.",
     expectedScale: 100,
   }),
