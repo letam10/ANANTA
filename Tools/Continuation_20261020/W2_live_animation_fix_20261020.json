@@ -1,0 +1,16 @@
+{
+  "phase": "W2 live animation follow-up",
+  "date": "2026-10-20",
+  "symptom": "Water appeared frozen after the three automatic 10 second QA scenes completed.",
+  "rootCause": "advanceSceneIfReady set the global state.paused flag after the final scene.",
+  "fix": "Final quick QA now disables only autoAdvance, keeps state.paused false, and leaves water.update, foam.update and boat bobbing active.",
+  "validation": {
+    "nodeCheck": "PASS",
+    "contractChecks": 69,
+    "contract": "PASS",
+    "viteBuild": "PASS",
+    "fpsClaim": false,
+    "headedBrowser": "UNVERIFIED_BROWSER_DISABLED"
+  },
+  "acceptanceBoundary": "This proves the simulation is not intentionally paused after quick QA; it does not replace headed visual or F1 frame-time evidence."
+}

@@ -1349,6 +1349,12 @@ from Vite returned 200 for the page, entry module and wave spec. Browser
 screenshot and console smoke are UNVERIFIED because browser automation is
 disabled in this Work environment; no headed visual or 60 FPS claim is made.
 
+Follow-up fix: the completed three-scene quick QA previously set the global
+simulation to paused, which made the water appear frozen after 30 seconds. The
+fix leaves `elapsed`, `water.update` and boat bobbing live after QA completes;
+only automatic scene advance stops. The status now reports `water animation
+live`, so the prototype remains an animated demo after its reports are ready.
+
 The Unreal port remains gated on the pinned contract and a later same-camera
 material readback. Do not add the visual steepness defaults to the Unreal
 parameter list without an explicit contract revision and a new hash.

@@ -252,8 +252,8 @@ async function bootstrap(spec) {
     if (!next) {
       state.autoAdvance = false;
       state.quickQaComplete = true;
-      state.paused = true;
-      setStatus("W2 quick QA complete · coast/beach_boat/offshore reports ready");
+      state.paused = false;
+      setStatus("W2 quick QA complete · water animation live · reports ready");
       return;
     }
     applyScene(next.id);
