@@ -1,0 +1,717 @@
+{
+  "schema": "ananta.c1.lfs-normalization.v1",
+  "utc": "2026-10-20T08:17:04.080178+00:00",
+  "baseline_head": "ae7abaeda5935670a5fd45fda04471001342ba9b",
+  "scope": "88 previously committed non-pointer blobs recorded by R0 fsck",
+  "files": [
+    {
+      "path": "Assets/CoastalUpgrade/AirportCart.fbx",
+      "bytes": 28012,
+      "sha256_before": "9c2e4f6a3c655a8bf76c4acc8a1599c39c5b973149b4b02956f428450f484b64",
+      "original_git_blob": "935ae3f0b9fdf597f16dc6d707e8c4b642ad7049",
+      "sha256_after": "9c2e4f6a3c655a8bf76c4acc8a1599c39c5b973149b4b02956f428450f484b64",
+      "canonical_pointer": true
+    },
+    {
+      "path": "Assets/CoastalUpgrade/Ambulance.fbx",
+      "bytes": 63020,
+      "sha256_before": "bd3a4b80ee463414d53f0d2ef3259cf48801fbcd61d10b5e40d0dde162a6cce0",
+      "original_git_blob": "7246cc6e54e3822fcea3ee87d0f265124ea283c3",
+      "sha256_after": "bd3a4b80ee463414d53f0d2ef3259cf48801fbcd61d10b5e40d0dde162a6cce0",
+      "canonical_pointer": true
+    },
+    {
+      "path": "Assets/CoastalUpgrade/ArcadeCabinet.fbx",
+      "bytes": 25388,
+      "sha256_before": "2fab4218f5ee0115a21f30d7b79e411837bbb2d4db6a916e83b612b99fc6d826",
+      "original_git_blob": "fa3b04340101e5d3a2f572e41c219112179cb8a7",
+      "sha256_after": "2fab4218f5ee0115a21f30d7b79e411837bbb2d4db6a916e83b612b99fc6d826",
+      "canonical_pointer": true
+    },
+    {
+      "path": "Assets/CoastalUpgrade/BarGlassRack.fbx",
+      "bytes": 34620,
+      "sha256_before": "8e253fe62acffc1c147bb62a644c4359439cb1f9b61248ce7539e2dee0cdcb55",
+      "original_git_blob": "fb8ce4da42f256844ad7664274ed4cfb0d951779",
+      "sha256_after": "8e253fe62acffc1c147bb62a644c4359439cb1f9b61248ce7539e2dee0cdcb55",
+      "canonical_pointer": true
+    },
+    {
+      "path": "Assets/CoastalUpgrade/BathroomBin.fbx",
+      "bytes": 22428,
+      "sha256_before": "11a6b9590b4f46a59d994d7d4a119bf25afeb3a98d2da970661bd034c91f7ccf",
+      "original_git_blob": "2f520d9ecbeb6ce6c5d2de8057a4a4a77dd58a0f",
+      "sha256_after": "11a6b9590b4f46a59d994d7d4a119bf25afeb3a98d2da970661bd034c91f7ccf",
+      "canonical_pointer": true
+    },
+    {
+      "path": "Assets/CoastalUpgrade/BathroomTowel.fbx",
+      "bytes": 24540,
+      "sha256_before": "74b1ef718491ce18f988706c59977dac61083c343eaeab7c9b6b4ad21e62cddd",
+      "original_git_blob": "8367f3f347c0c5d13482924b60906a93c458f29a",
+      "sha256_after": "74b1ef718491ce18f988706c59977dac61083c343eaeab7c9b6b4ad21e62cddd",
+      "canonical_pointer": true
+    },
+    {
+      "path": "Assets/CoastalUpgrade/Bed.fbx",
+      "bytes": 28476,
+      "sha256_before": "c8cc53878dd9d5ace184d6869500ad09d961c89dea77714c70eb064f8c4669b5",
+      "original_git_blob": "1ac60cb0a221427a5379e067b80f2293c8e6a155",
+      "sha256_after": "c8cc53878dd9d5ace184d6869500ad09d961c89dea77714c70eb064f8c4669b5",
+      "canonical_pointer": true
+    },
+    {
+      "path": "Assets/CoastalUpgrade/BedroomClock.fbx",
+      "bytes": 23612,
+      "sha256_before": "d553468b40335482fcedbe858077a861e30986fc91cf5bd1f83c26777e783182",
+      "original_git_blob": "037c7b9a05f1c3009816d8160dd7b89f68141534",
+      "sha256_after": "d553468b40335482fcedbe858077a861e30986fc91cf5bd1f83c26777e783182",
+      "canonical_pointer": true
+    },
+    {
+      "path": "Assets/CoastalUpgrade/Book.fbx",
+      "bytes": 18108,
+      "sha256_before": "5add1205d8669d9971a726e023ba68c97febdb28c8ebdd190079490ed0231c5e",
+      "original_git_blob": "27a2deb6c753ba7fa7889264084b543a2c1fe90d",
+      "sha256_after": "5add1205d8669d9971a726e023ba68c97febdb28c8ebdd190079490ed0231c5e",
+      "canonical_pointer": true
+    },
+    {
+      "path": "Assets/CoastalUpgrade/Bookshelf.fbx",
+      "bytes": 65708,
+      "sha256_before": "0e835d3b8e27738bf20e909e2be966f3a4b21a06d37f34111afe74e46197e711",
+      "original_git_blob": "e870e1c79c400b1190a2243da65f6c4669ce2465",
+      "sha256_after": "0e835d3b8e27738bf20e909e2be966f3a4b21a06d37f34111afe74e46197e711",
+      "canonical_pointer": true
+    },
+    {
+      "path": "Assets/CoastalUpgrade/BottleTray.fbx",
+      "bytes": 26460,
+      "sha256_before": "abed4a947e692b40564bd93c257531fc8e6f9e04046373de8d1f17bd03161ca2",
+      "original_git_blob": "18ae81297a1eaaf39f8f3effbff2d7f0602cd0a6",
+      "sha256_after": "abed4a947e692b40564bd93c257531fc8e6f9e04046373de8d1f17bd03161ca2",
+      "canonical_pointer": true
+    },
+    {
+      "path": "Assets/CoastalUpgrade/Chair.fbx",
+      "bytes": 24172,
+      "sha256_before": "25ba70a67670d3bb255566d5d9bb9b4ad3bd05810592bd85d708d2d8ad02ffec",
+      "original_git_blob": "efdca8452c65490d9724d1cb9325b9de4f04d1b9",
+      "sha256_after": "25ba70a67670d3bb255566d5d9bb9b4ad3bd05810592bd85d708d2d8ad02ffec",
+      "canonical_pointer": true
+    },
+    {
+      "path": "Assets/CoastalUpgrade/ChoppingBoard.fbx",
+      "bytes": 22332,
+      "sha256_before": "5184666e8ad6ccbb7aae95d5543eb26de797c4e3b939931ec88d1ad06e709a65",
+      "original_git_blob": "72eaaff5f5da22c2967275d26ca17fef9c0bfd33",
+      "sha256_after": "5184666e8ad6ccbb7aae95d5543eb26de797c4e3b939931ec88d1ad06e709a65",
+      "canonical_pointer": true
+    },
+    {
+      "path": "Assets/CoastalUpgrade/Citizen.fbx",
+      "bytes": 53900,
+      "sha256_before": "1515460670cf8f56c9b0f6ce55b49ac81bae93c3567d45afe73e7b728213940e",
+      "original_git_blob": "5f1cf9fa3cbde92ecb4dcdcdca679868f8fc9cb6",
+      "sha256_after": "1515460670cf8f56c9b0f6ce55b49ac81bae93c3567d45afe73e7b728213940e",
+      "canonical_pointer": true
+    },
+    {
+      "path": "Assets/CoastalUpgrade/CivilAirplane.fbx",
+      "bytes": 227836,
+      "sha256_before": "7ffd42fd194cfc9fd926d46abbc2b72ede00f4e2356fe4a4aac5ce69b538908a",
+      "original_git_blob": "b9be8b0f8004836cad13609f8c30e14eff0795e3",
+      "sha256_after": "7ffd42fd194cfc9fd926d46abbc2b72ede00f4e2356fe4a4aac5ce69b538908a",
+      "canonical_pointer": true
+    },
+    {
+      "path": "Assets/CoastalUpgrade/CoastalModels.blend",
+      "bytes": 6695261,
+      "sha256_before": "fb889dfe33035663c7f5c3caf1d6cfad0af059191605fbcba9b7e3adcbf79c0f",
+      "original_git_blob": "b52b46a090d1cc34ac9e934b339f5a1268b91a6f",
+      "sha256_after": "fb889dfe33035663c7f5c3caf1d6cfad0af059191605fbcba9b7e3adcbf79c0f",
+      "canonical_pointer": true
+    },
+    {
+      "path": "Assets/CoastalUpgrade/CoastalPicture.fbx",
+      "bytes": 22236,
+      "sha256_before": "04b281bb1d81cf1d2648044c70ea0d36924025f4fac2f21985a3a42030a12a88",
+      "original_git_blob": "b7a3036d763f1930f99a2d76ae62b28fc3c17850",
+      "sha256_after": "04b281bb1d81cf1d2648044c70ea0d36924025f4fac2f21985a3a42030a12a88",
+      "canonical_pointer": true
+    },
+    {
+      "path": "Assets/CoastalUpgrade/CookingPan.fbx",
+      "bytes": 22620,
+      "sha256_before": "83abb316fa559ebc6f4f71c3e11db7059d94f50488fe78d713ec2e045a56b448",
+      "original_git_blob": "ad9b180308ca605e98e111b6a32e8d4782d235bc",
+      "sha256_after": "83abb316fa559ebc6f4f71c3e11db7059d94f50488fe78d713ec2e045a56b448",
+      "canonical_pointer": true
+    },
+    {
+      "path": "Assets/CoastalUpgrade/CookingPot.fbx",
+      "bytes": 23836,
+      "sha256_before": "ba4ea02972107781191c4f453df863812c2db1640950a330c980b40d8a42a68c",
+      "original_git_blob": "b015472795c4870564e59abd7b521c13c088b883",
+      "sha256_after": "ba4ea02972107781191c4f453df863812c2db1640950a330c980b40d8a42a68c",
+      "canonical_pointer": true
+    },
+    {
+      "path": "Assets/CoastalUpgrade/Cutlery.fbx",
+      "bytes": 27980,
+      "sha256_before": "4f93c5fdcca27a5c74387496f69e96eec34b4a053adcb5abf14ffde2a3ae020f",
+      "original_git_blob": "cd3d91caa221b4e131ab0e3c4d23847b3061c608",
+      "sha256_after": "4f93c5fdcca27a5c74387496f69e96eec34b4a053adcb5abf14ffde2a3ae020f",
+      "canonical_pointer": true
+    },
+    {
+      "path": "Assets/CoastalUpgrade/DinnerPlate.fbx",
+      "bytes": 20924,
+      "sha256_before": "cced7ff4781acdbbae3da185c2465dacc126743fae34b983e7e0631b652419ac",
+      "original_git_blob": "551ef9ea1b19546dd3187daff01eeb7aad4014c6",
+      "sha256_after": "cced7ff4781acdbbae3da185c2465dacc126743fae34b983e7e0631b652419ac",
+      "canonical_pointer": true
+    },
+    {
+      "path": "Assets/CoastalUpgrade/Door.fbx",
+      "bytes": 18988,
+      "sha256_before": "93e403dde8c3890fd42337cd2f8ad20aea7a9976304f5b5905d59dc76c543703",
+      "original_git_blob": "5b69311a7080032c6416c29c13195fb5c10589e1",
+      "sha256_after": "93e403dde8c3890fd42337cd2f8ad20aea7a9976304f5b5905d59dc76c543703",
+      "canonical_pointer": true
+    },
+    {
+      "path": "Assets/CoastalUpgrade/FactoryBarrel.fbx",
+      "bytes": 19324,
+      "sha256_before": "a7be7e8154660f9abd8dd74dd3d9b8972e83c31579b12633a1194056fa154f87",
+      "original_git_blob": "806b007e30162b1212f02247d8f08ac1f17443ef",
+      "sha256_after": "a7be7e8154660f9abd8dd74dd3d9b8972e83c31579b12633a1194056fa154f87",
+      "canonical_pointer": true
+    },
+    {
+      "path": "Assets/CoastalUpgrade/FactoryControl.fbx",
+      "bytes": 23148,
+      "sha256_before": "c31b19ff6c1f45adb911b2c86fc290fde7c7cdc9ef3456835185cdac86b2e324",
+      "original_git_blob": "6ebbe794928ae745e209e2ca8fc802048e5c236b",
+      "sha256_after": "c31b19ff6c1f45adb911b2c86fc290fde7c7cdc9ef3456835185cdac86b2e324",
+      "canonical_pointer": true
+    },
+    {
+      "path": "Assets/CoastalUpgrade/FactoryConveyor.fbx",
+      "bytes": 26380,
+      "sha256_before": "bb524e92f028a1ff2da98ef4ad8e323464fd20a439a02f6be8ea5d299f3d28e5",
+      "original_git_blob": "d6dfdbbe0fd0fd8d14e49102572b0acc207ea4af",
+      "sha256_after": "bb524e92f028a1ff2da98ef4ad8e323464fd20a439a02f6be8ea5d299f3d28e5",
+      "canonical_pointer": true
+    },
+    {
+      "path": "Assets/CoastalUpgrade/FactoryCrate.fbx",
+      "bytes": 24044,
+      "sha256_before": "d4abde6e2db7a254a724dbab5ef680d2386a81a0bac3f082a1980f62670fca7d",
+      "original_git_blob": "cdddc70a32745dd3abdb94fcec0c0a7a5fd3003c",
+      "sha256_after": "d4abde6e2db7a254a724dbab5ef680d2386a81a0bac3f082a1980f62670fca7d",
+      "canonical_pointer": true
+    },
+    {
+      "path": "Assets/CoastalUpgrade/FerrisWheel.fbx",
+      "bytes": 105116,
+      "sha256_before": "8169841e8974f1084b8216e3dc40c77f4aa0cb37b154daed3d9f3c8ea2fb1491",
+      "original_git_blob": "50f8bb9e4a4f3044bddfb2db6160a8939db3daa0",
+      "sha256_after": "8169841e8974f1084b8216e3dc40c77f4aa0cb37b154daed3d9f3c8ea2fb1491",
+      "canonical_pointer": true
+    },
+    {
+      "path": "Assets/CoastalUpgrade/FireEngine.fbx",
+      "bytes": 70780,
+      "sha256_before": "ca5790b1ecb215cee2c28dd38df243e1c04fd6572403a0501c6a58df6d2ecd90",
+      "original_git_blob": "672d30b4ca977ab642e3d49c4c48dbe304348ba9",
+      "sha256_after": "ca5790b1ecb215cee2c28dd38df243e1c04fd6572403a0501c6a58df6d2ecd90",
+      "canonical_pointer": true
+    },
+    {
+      "path": "Assets/CoastalUpgrade/FireHydrant.fbx",
+      "bytes": 22908,
+      "sha256_before": "f2df15673ea245429360ecfe6a5db23e3f764b4bf728f6396adf41d2476f882e",
+      "original_git_blob": "54f5ee8d2a2f293ade175cb5ef41e93f6d6c92aa",
+      "sha256_after": "f2df15673ea245429360ecfe6a5db23e3f764b4bf728f6396adf41d2476f882e",
+      "canonical_pointer": true
+    },
+    {
+      "path": "Assets/CoastalUpgrade/FloorLamp.fbx",
+      "bytes": 22204,
+      "sha256_before": "2ceb39b0d334b4aae7712b429205367b672352eb0b888e66a1d8c3c081b607cc",
+      "original_git_blob": "51f912bdb8e5f0ee1f310de14d0a31198368c32a",
+      "sha256_after": "2ceb39b0d334b4aae7712b429205367b672352eb0b888e66a1d8c3c081b607cc",
+      "canonical_pointer": true
+    },
+    {
+      "path": "Assets/CoastalUpgrade/Fridge.fbx",
+      "bytes": 21996,
+      "sha256_before": "e75b0155dc57fac36f2d7847365aa92c8135f420866e08ffd6cffd4c75efe262",
+      "original_git_blob": "0bea4303e8bf871aa365ceb13325b9a69786d26b",
+      "sha256_after": "e75b0155dc57fac36f2d7847365aa92c8135f420866e08ffd6cffd4c75efe262",
+      "canonical_pointer": true
+    },
+    {
+      "path": "Assets/CoastalUpgrade/Helicopter.fbx",
+      "bytes": 52652,
+      "sha256_before": "a6ed485377b49956eaca0f7ae5a27ad7b6534c863c8cec41ee1b168fecddc10f",
+      "original_git_blob": "7315129d6776248d8bb7fe7306b486a39a0f2d33",
+      "sha256_after": "a6ed485377b49956eaca0f7ae5a27ad7b6534c863c8cec41ee1b168fecddc10f",
+      "canonical_pointer": true
+    },
+    {
+      "path": "Assets/CoastalUpgrade/Kettle.fbx",
+      "bytes": 27452,
+      "sha256_before": "1c611b245cdd46c996f2bb8aab9f4d57f0af9415fc628f91ca5fbf7e033146db",
+      "original_git_blob": "6792662f4453975b3e4c1589a57c5ff1b4b33a7f",
+      "sha256_after": "1c611b245cdd46c996f2bb8aab9f4d57f0af9415fc628f91ca5fbf7e033146db",
+      "canonical_pointer": true
+    },
+    {
+      "path": "Assets/CoastalUpgrade/KitchenCounter.fbx",
+      "bytes": 32156,
+      "sha256_before": "12c862e896d217aba1a6a94e2644170f2d461e0fe48494c6b104d10d7c37369f",
+      "original_git_blob": "4188894fefb27799fbdd8a5e3676ed547d99c0de",
+      "sha256_after": "12c862e896d217aba1a6a94e2644170f2d461e0fe48494c6b104d10d7c37369f",
+      "canonical_pointer": true
+    },
+    {
+      "path": "Assets/CoastalUpgrade/KitchenKnifeBlock.fbx",
+      "bytes": 29868,
+      "sha256_before": "cbba6c6e0c5b32ceb25a8745818fa2ed56f9bc1b06a3801983e31de3fa44c1c7",
+      "original_git_blob": "6a1f0cf2f165063fb2e8bc579510734cf116aeef",
+      "sha256_after": "cbba6c6e0c5b32ceb25a8745818fa2ed56f9bc1b06a3801983e31de3fa44c1c7",
+      "canonical_pointer": true
+    },
+    {
+      "path": "Assets/CoastalUpgrade/Laptop.fbx",
+      "bytes": 44492,
+      "sha256_before": "c4458344ffafce19c9f717b37573c28e1b282bd7ee55250da6c705436a69a2bd",
+      "original_git_blob": "1bfd2ce19b45309c7a79bbd77dad9a710aee7b03",
+      "sha256_after": "c4458344ffafce19c9f717b37573c28e1b282bd7ee55250da6c705436a69a2bd",
+      "canonical_pointer": true
+    },
+    {
+      "path": "Assets/CoastalUpgrade/Lifebuoy.fbx",
+      "bytes": 23996,
+      "sha256_before": "a178fea701abcb8dee9e96d9b9af37a46d5b08cf4e44350a47289e9f7b7eddda",
+      "original_git_blob": "d46f1ad0c4ae34cd579e32f8d5fee0c36b227975",
+      "sha256_after": "a178fea701abcb8dee9e96d9b9af37a46d5b08cf4e44350a47289e9f7b7eddda",
+      "canonical_pointer": true
+    },
+    {
+      "path": "Assets/CoastalUpgrade/Lipstick.fbx",
+      "bytes": 17324,
+      "sha256_before": "9a154810e193d9213cc17339889a4d9a8dbc4c1421ded2aa16e98e507189dc62",
+      "original_git_blob": "832c7214ba2371c9f725114811c8e70354528480",
+      "sha256_after": "9a154810e193d9213cc17339889a4d9a8dbc4c1421ded2aa16e98e507189dc62",
+      "canonical_pointer": true
+    },
+    {
+      "path": "Assets/CoastalUpgrade/MakeupKit.fbx",
+      "bytes": 28444,
+      "sha256_before": "9422d67efa5f05be2fbfa8c739aacd034091d981c00aad2062211f7b3df34bd5",
+      "original_git_blob": "9ac9322f495c0840f1c5a00c786f298ea585632a",
+      "sha256_after": "9422d67efa5f05be2fbfa8c739aacd034091d981c00aad2062211f7b3df34bd5",
+      "canonical_pointer": true
+    },
+    {
+      "path": "Assets/CoastalUpgrade/Monument.fbx",
+      "bytes": 40364,
+      "sha256_before": "bfdf1d83096856e8c792b70b20d3ed9dec3349e86a3418ce57ee72418760d358",
+      "original_git_blob": "9d5c48fa22bbacd2f6795bbf699e55d34b230cf0",
+      "sha256_after": "bfdf1d83096856e8c792b70b20d3ed9dec3349e86a3418ce57ee72418760d358",
+      "canonical_pointer": true
+    },
+    {
+      "path": "Assets/CoastalUpgrade/Mug.fbx",
+      "bytes": 25052,
+      "sha256_before": "f0316870466b999e882d1ec360f79ae7e8cecd4767e8311e3d8cb1bd8fcf538e",
+      "original_git_blob": "f026521941a8583e873dfb6001b508b66d5b46a1",
+      "sha256_after": "f0316870466b999e882d1ec360f79ae7e8cecd4767e8311e3d8cb1bd8fcf538e",
+      "canonical_pointer": true
+    },
+    {
+      "path": "Assets/CoastalUpgrade/OceanFoam.fbx",
+      "bytes": 51564,
+      "sha256_before": "b326e957af9b3b57c1ce0709f8faeb09e7ede32d3ea8057d490d6a507878ca3f",
+      "original_git_blob": "e47c6ebeb421c54edb7cf5c14a592b23c6cea38b",
+      "sha256_after": "b326e957af9b3b57c1ce0709f8faeb09e7ede32d3ea8057d490d6a507878ca3f",
+      "canonical_pointer": true
+    },
+    {
+      "path": "Assets/CoastalUpgrade/OperaShells.fbx",
+      "bytes": 96332,
+      "sha256_before": "cd56811e6a23832ec9f5348666991ba10dfe17e29397455b66b44461ef538565",
+      "original_git_blob": "37202d28bb4b0529e6b35454df62cedf761f5573",
+      "sha256_after": "cd56811e6a23832ec9f5348666991ba10dfe17e29397455b66b44461ef538565",
+      "canonical_pointer": true
+    },
+    {
+      "path": "Assets/CoastalUpgrade/ParkBench.fbx",
+      "bytes": 30028,
+      "sha256_before": "176ab78228079525d1038247a62a29d5ec2f80d04167dc0657bc08d53e5ec9b1",
+      "original_git_blob": "4bbd78b79622f07e1a0dc797be761fb0721cdbee",
+      "sha256_after": "176ab78228079525d1038247a62a29d5ec2f80d04167dc0657bc08d53e5ec9b1",
+      "canonical_pointer": true
+    },
+    {
+      "path": "Assets/CoastalUpgrade/ParkTree.fbx",
+      "bytes": 41452,
+      "sha256_before": "ad55e16e928ef8a17818d822aeaff47382fe5a03e9590c817e14fa76c28fd1f1",
+      "original_git_blob": "0c72560f96167b390fb534db809e6ac041303539",
+      "sha256_after": "ad55e16e928ef8a17818d822aeaff47382fe5a03e9590c817e14fa76c28fd1f1",
+      "canonical_pointer": true
+    },
+    {
+      "path": "Assets/CoastalUpgrade/ParkingMeter.fbx",
+      "bytes": 31804,
+      "sha256_before": "199e81c7e5ca15d5f8112c0c5e2c7db606d682214884e5e78af1df01417a1a33",
+      "original_git_blob": "960b4d8df5f6df2e32cc581350f319b7bd2124ec",
+      "sha256_after": "199e81c7e5ca15d5f8112c0c5e2c7db606d682214884e5e78af1df01417a1a33",
+      "canonical_pointer": true
+    },
+    {
+      "path": "Assets/CoastalUpgrade/Perfume.fbx",
+      "bytes": 20188,
+      "sha256_before": "0299df74b2e329c0f6dd674f9d19844d6fc20315d4a22557dcc599efd6fa5c11",
+      "original_git_blob": "c018b0b8022e35ceda9f4bcc12ba75705f1a2b97",
+      "sha256_after": "0299df74b2e329c0f6dd674f9d19844d6fc20315d4a22557dcc599efd6fa5c11",
+      "canonical_pointer": true
+    },
+    {
+      "path": "Assets/CoastalUpgrade/PoliceCar.fbx",
+      "bytes": 52204,
+      "sha256_before": "41c481691b67b3c83e5d51d55156e6d867c3d7ff40d2c70261ddbc87bc617a3b",
+      "original_git_blob": "909db096893576a074d7fd3dbd2e2c2572a93870",
+      "sha256_after": "41c481691b67b3c83e5d51d55156e6d867c3d7ff40d2c70261ddbc87bc617a3b",
+      "canonical_pointer": true
+    },
+    {
+      "path": "Assets/CoastalUpgrade/PotPlant.fbx",
+      "bytes": 64044,
+      "sha256_before": "79cd55f28e880a7b27f4a4c6606b4e067849415acf87da47bcc9b72db9f41965",
+      "original_git_blob": "53bfdd433e1edccb323794c8398f6eb11a09dd56",
+      "sha256_after": "79cd55f28e880a7b27f4a4c6606b4e067849415acf87da47bcc9b72db9f41965",
+      "canonical_pointer": true
+    },
+    {
+      "path": "Assets/CoastalUpgrade/Railing.fbx",
+      "bytes": 20140,
+      "sha256_before": "fd21b15a8e4faf1c6ba7dd07eed183a0844e14afcad93f9e7586f690d089ceae",
+      "original_git_blob": "1534880420335fc6c94076476fa5ce8d5241c65e",
+      "sha256_after": "fd21b15a8e4faf1c6ba7dd07eed183a0844e14afcad93f9e7586f690d089ceae",
+      "canonical_pointer": true
+    },
+    {
+      "path": "Assets/CoastalUpgrade/Rowboat.fbx",
+      "bytes": 32316,
+      "sha256_before": "f63103a1670ea64f2bf5905679f39742c49deefa53796f9e02280b7d60c49419",
+      "original_git_blob": "94b3fde4424574645606bd51b249a6d4197aeedf",
+      "sha256_after": "f63103a1670ea64f2bf5905679f39742c49deefa53796f9e02280b7d60c49419",
+      "canonical_pointer": true
+    },
+    {
+      "path": "Assets/CoastalUpgrade/SaucePan.fbx",
+      "bytes": 23212,
+      "sha256_before": "0ddc45d7f2bd577f9c3f8ba65502f74eb1be98ffce5f2adf9869b7e76a2a1f29",
+      "original_git_blob": "5d8020f7b5b76d7743ffd38c36ab241b1764aa73",
+      "sha256_after": "0ddc45d7f2bd577f9c3f8ba65502f74eb1be98ffce5f2adf9869b7e76a2a1f29",
+      "canonical_pointer": true
+    },
+    {
+      "path": "Assets/CoastalUpgrade/ShowerTray.fbx",
+      "bytes": 31260,
+      "sha256_before": "d88dca3767922bd34b6d25702210fdc9b98373276f28645f5beda5c6ce56eef3",
+      "original_git_blob": "0e434ab9ead7fc8ccd5abed00560226fb7815537",
+      "sha256_after": "d88dca3767922bd34b6d25702210fdc9b98373276f28645f5beda5c6ce56eef3",
+      "canonical_pointer": true
+    },
+    {
+      "path": "Assets/CoastalUpgrade/SideTable.fbx",
+      "bytes": 25084,
+      "sha256_before": "a720037612c486c303eeb12b9dc301556438202263e140c038e78ff89f36e18c",
+      "original_git_blob": "66bec9386f87611d59471ea1990f96baf9d843a1",
+      "sha256_after": "a720037612c486c303eeb12b9dc301556438202263e140c038e78ff89f36e18c",
+      "canonical_pointer": true
+    },
+    {
+      "path": "Assets/CoastalUpgrade/SoapDispenser.fbx",
+      "bytes": 20940,
+      "sha256_before": "75fd74d41c5dbb00bbc8abf48973d5007e7a5d00b92afcc62e3f00d3f263cf3a",
+      "original_git_blob": "9d1e58833282644bd50507f79c7af678d757fdc1",
+      "sha256_after": "75fd74d41c5dbb00bbc8abf48973d5007e7a5d00b92afcc62e3f00d3f263cf3a",
+      "canonical_pointer": true
+    },
+    {
+      "path": "Assets/CoastalUpgrade/Sofa.fbx",
+      "bytes": 29964,
+      "sha256_before": "6ce07ef01adb9ab4c600e46898faece6c57f9db9c0d6d1aeb0cae11f238dd5f7",
+      "original_git_blob": "e615d66b5faa0614a078ab3219cf128f6e53ac47",
+      "sha256_after": "6ce07ef01adb9ab4c600e46898faece6c57f9db9c0d6d1aeb0cae11f238dd5f7",
+      "canonical_pointer": true
+    },
+    {
+      "path": "Assets/CoastalUpgrade/SofaCushion.fbx",
+      "bytes": 51468,
+      "sha256_before": "5fd184fb45c81b9bc761e6fee6aafb73032f9b705778fb858ec6b5cacfd1fe7b",
+      "original_git_blob": "819f35eb9004a96aaea087b55d4e321015da4113",
+      "sha256_after": "5fd184fb45c81b9bc761e6fee6aafb73032f9b705778fb858ec6b5cacfd1fe7b",
+      "canonical_pointer": true
+    },
+    {
+      "path": "Assets/CoastalUpgrade/Stove.fbx",
+      "bytes": 23660,
+      "sha256_before": "402f6d469b5ef45e9fe7ff70d393c9d7a0cd8eb4c0ed65b84e8f1503381743d0",
+      "original_git_blob": "bd9f85b12e44bbd7e5e8a349a1e5c862713d71bb",
+      "sha256_after": "402f6d469b5ef45e9fe7ff70d393c9d7a0cd8eb4c0ed65b84e8f1503381743d0",
+      "canonical_pointer": true
+    },
+    {
+      "path": "Assets/CoastalUpgrade/StreetBin.fbx",
+      "bytes": 17756,
+      "sha256_before": "ecf337df66a1a89fa055c14641e64758ea5fdfaf93b95d461d38e90a46be7f56",
+      "original_git_blob": "4867412a2d5b8557a6f8cb2227aeea732a46662d",
+      "sha256_after": "ecf337df66a1a89fa055c14641e64758ea5fdfaf93b95d461d38e90a46be7f56",
+      "canonical_pointer": true
+    },
+    {
+      "path": "Assets/CoastalUpgrade/StreetLamp.fbx",
+      "bytes": 20348,
+      "sha256_before": "a030c1f40520d0df0097dc3b4b4b3adaedc4edd24b15ed07e6cc218975737056",
+      "original_git_blob": "344b321b595324862049d1868b6821e529c5c3c9",
+      "sha256_after": "a030c1f40520d0df0097dc3b4b4b3adaedc4edd24b15ed07e6cc218975737056",
+      "canonical_pointer": true
+    },
+    {
+      "path": "Assets/CoastalUpgrade/StreetSign.fbx",
+      "bytes": 18988,
+      "sha256_before": "06901ec9e4e978232cbff596d4e289387c8315a503825beb0c574259f998490c",
+      "original_git_blob": "4cfb07c542875213b96681423e3b2b1b1c11d212",
+      "sha256_after": "06901ec9e4e978232cbff596d4e289387c8315a503825beb0c574259f998490c",
+      "canonical_pointer": true
+    },
+    {
+      "path": "Assets/CoastalUpgrade/TVConsole.fbx",
+      "bytes": 32844,
+      "sha256_before": "c586280683af7acca39900a1aa05c1e8148bd863f770d818d0790c744178bff5",
+      "original_git_blob": "d616560d47b62bed48a1d0f49203eb3ee62e50f9",
+      "sha256_after": "c586280683af7acca39900a1aa05c1e8148bd863f770d818d0790c744178bff5",
+      "canonical_pointer": true
+    },
+    {
+      "path": "Assets/CoastalUpgrade/Table.fbx",
+      "bytes": 24876,
+      "sha256_before": "cd59fbbd94becc53a77eae46a8beef0c05262188f3f54696b7076319ea8b86d2",
+      "original_git_blob": "373de8332c1e649b33ebd766dbfce7bffc413ea3",
+      "sha256_after": "cd59fbbd94becc53a77eae46a8beef0c05262188f3f54696b7076319ea8b86d2",
+      "canonical_pointer": true
+    },
+    {
+      "path": "Assets/CoastalUpgrade/TeddyToy.fbx",
+      "bytes": 84428,
+      "sha256_before": "05802c57bc93d0338b1c7688c6e415f107b5083c68ec1e2ab66c8d28aa7fe753",
+      "original_git_blob": "c1a9e0127f0f9039828ff9fbe283a50fbdf9f29f",
+      "sha256_after": "05802c57bc93d0338b1c7688c6e415f107b5083c68ec1e2ab66c8d28aa7fe753",
+      "canonical_pointer": true
+    },
+    {
+      "path": "Assets/CoastalUpgrade/Textures/Asphalt_Color.png",
+      "bytes": 1396338,
+      "sha256_before": "16418d13f26ca147ecf52604e905af5fe70d1658291212638502623bcf4fd185",
+      "original_git_blob": "cef47ec0294ce65d4c5cbc3dedc79e95e59fbbd8",
+      "sha256_after": "16418d13f26ca147ecf52604e905af5fe70d1658291212638502623bcf4fd185",
+      "canonical_pointer": true
+    },
+    {
+      "path": "Assets/CoastalUpgrade/Textures/Asphalt_Normal.png",
+      "bytes": 1788869,
+      "sha256_before": "028773b54981a75b7c7ada946f0558f0b0f52e3005a696ca4f263f7603e92042",
+      "original_git_blob": "a24d756b475b06c23689932e43af9cbde638c24f",
+      "sha256_after": "028773b54981a75b7c7ada946f0558f0b0f52e3005a696ca4f263f7603e92042",
+      "canonical_pointer": true
+    },
+    {
+      "path": "Assets/CoastalUpgrade/Textures/Asphalt_Rough.png",
+      "bytes": 776688,
+      "sha256_before": "4d3bf63a94aa80046aefb9d8bd5b847b58848a7266cd890dcef49cda3a893bf0",
+      "original_git_blob": "1715160dc8aff19762cd352f3d08a2abb822ecc9",
+      "sha256_after": "4d3bf63a94aa80046aefb9d8bd5b847b58848a7266cd890dcef49cda3a893bf0",
+      "canonical_pointer": true
+    },
+    {
+      "path": "Assets/CoastalUpgrade/Textures/Brick_Color.png",
+      "bytes": 923181,
+      "sha256_before": "acccfb2d46cdefa651c2b7bf04bc41da6f9c028216e9c7a1698ba07c08f85a10",
+      "original_git_blob": "38bd7a108224a3af85525f69f59b895f66d2718b",
+      "sha256_after": "acccfb2d46cdefa651c2b7bf04bc41da6f9c028216e9c7a1698ba07c08f85a10",
+      "canonical_pointer": true
+    },
+    {
+      "path": "Assets/CoastalUpgrade/Textures/Brick_Normal.png",
+      "bytes": 1638218,
+      "sha256_before": "71773b41387c8de547dae18278e4350d4074b73acbaaae1f4ed2cae9c6b87200",
+      "original_git_blob": "98913ef32a6e1ce1076e6c40b4eba7489c5c1150",
+      "sha256_after": "71773b41387c8de547dae18278e4350d4074b73acbaaae1f4ed2cae9c6b87200",
+      "canonical_pointer": true
+    },
+    {
+      "path": "Assets/CoastalUpgrade/Textures/Brick_Rough.png",
+      "bytes": 776688,
+      "sha256_before": "4d3bf63a94aa80046aefb9d8bd5b847b58848a7266cd890dcef49cda3a893bf0",
+      "original_git_blob": "1715160dc8aff19762cd352f3d08a2abb822ecc9",
+      "sha256_after": "4d3bf63a94aa80046aefb9d8bd5b847b58848a7266cd890dcef49cda3a893bf0",
+      "canonical_pointer": true
+    },
+    {
+      "path": "Assets/CoastalUpgrade/Textures/Concrete_Color.png",
+      "bytes": 974435,
+      "sha256_before": "fa1352e9ffaae127a49883f7815f3f4692ae09f9e20cd3fe9668a0eed0634030",
+      "original_git_blob": "3e10e2e0a1a3817fd073f5d107dcf8f8361f39a6",
+      "sha256_after": "fa1352e9ffaae127a49883f7815f3f4692ae09f9e20cd3fe9668a0eed0634030",
+      "canonical_pointer": true
+    },
+    {
+      "path": "Assets/CoastalUpgrade/Textures/Concrete_Normal.png",
+      "bytes": 1476849,
+      "sha256_before": "7403eef0aa6272415b2144318ebdee20e1af30e2940ebf6b9568ba5b1ceb4a48",
+      "original_git_blob": "9bfd96e514be91c898fe5da350149ae9e630f1a0",
+      "sha256_after": "7403eef0aa6272415b2144318ebdee20e1af30e2940ebf6b9568ba5b1ceb4a48",
+      "canonical_pointer": true
+    },
+    {
+      "path": "Assets/CoastalUpgrade/Textures/Concrete_Rough.png",
+      "bytes": 776688,
+      "sha256_before": "4d3bf63a94aa80046aefb9d8bd5b847b58848a7266cd890dcef49cda3a893bf0",
+      "original_git_blob": "1715160dc8aff19762cd352f3d08a2abb822ecc9",
+      "sha256_after": "4d3bf63a94aa80046aefb9d8bd5b847b58848a7266cd890dcef49cda3a893bf0",
+      "canonical_pointer": true
+    },
+    {
+      "path": "Assets/CoastalUpgrade/Textures/Sand_Color.png",
+      "bytes": 965230,
+      "sha256_before": "a05ca92929f55cd07dab715e06aa746691d399f7f9b2930c780418930f488261",
+      "original_git_blob": "23c234ef1d8cb11b8c6cdb3498654d186f314ac4",
+      "sha256_after": "a05ca92929f55cd07dab715e06aa746691d399f7f9b2930c780418930f488261",
+      "canonical_pointer": true
+    },
+    {
+      "path": "Assets/CoastalUpgrade/Textures/Sand_Normal.png",
+      "bytes": 1476890,
+      "sha256_before": "2543347c7834caa708500042b8de46a81ba89b985f01cf396dad22c4b8541ee3",
+      "original_git_blob": "b76abd5bb6c7fea646f59c5064043a4a0a02b7b3",
+      "sha256_after": "2543347c7834caa708500042b8de46a81ba89b985f01cf396dad22c4b8541ee3",
+      "canonical_pointer": true
+    },
+    {
+      "path": "Assets/CoastalUpgrade/Textures/Sand_Rough.png",
+      "bytes": 776688,
+      "sha256_before": "4d3bf63a94aa80046aefb9d8bd5b847b58848a7266cd890dcef49cda3a893bf0",
+      "original_git_blob": "1715160dc8aff19762cd352f3d08a2abb822ecc9",
+      "sha256_after": "4d3bf63a94aa80046aefb9d8bd5b847b58848a7266cd890dcef49cda3a893bf0",
+      "canonical_pointer": true
+    },
+    {
+      "path": "Assets/CoastalUpgrade/Textures/Tile_Color.png",
+      "bytes": 963266,
+      "sha256_before": "aa066258f91e0ee483e33693bcd91f4b511a1882396ff7be97edd79c1e2dbaac",
+      "original_git_blob": "205f1e231a9174c5f3ddbe373a1d3bd0f8b94cf7",
+      "sha256_after": "aa066258f91e0ee483e33693bcd91f4b511a1882396ff7be97edd79c1e2dbaac",
+      "canonical_pointer": true
+    },
+    {
+      "path": "Assets/CoastalUpgrade/Textures/Tile_Normal.png",
+      "bytes": 1491113,
+      "sha256_before": "c9ef55b9945b74d356fa1b58937ed96f52df6ae3759f07bcd8d3ce8520ba05ec",
+      "original_git_blob": "d35d14bee5b3c81b2d10c1408489d96c72adcf7c",
+      "sha256_after": "c9ef55b9945b74d356fa1b58937ed96f52df6ae3759f07bcd8d3ce8520ba05ec",
+      "canonical_pointer": true
+    },
+    {
+      "path": "Assets/CoastalUpgrade/Textures/Tile_Rough.png",
+      "bytes": 776688,
+      "sha256_before": "4d3bf63a94aa80046aefb9d8bd5b847b58848a7266cd890dcef49cda3a893bf0",
+      "original_git_blob": "1715160dc8aff19762cd352f3d08a2abb822ecc9",
+      "sha256_after": "4d3bf63a94aa80046aefb9d8bd5b847b58848a7266cd890dcef49cda3a893bf0",
+      "canonical_pointer": true
+    },
+    {
+      "path": "Assets/CoastalUpgrade/Toilet.fbx",
+      "bytes": 25916,
+      "sha256_before": "67b00aac22af49f500f87e141839069b27fc0cb71e9dbc8b29c0069a193d623f",
+      "original_git_blob": "f346dc82e87b6424e59385376c01832f74291793",
+      "sha256_after": "67b00aac22af49f500f87e141839069b27fc0cb71e9dbc8b29c0069a193d623f",
+      "canonical_pointer": true
+    },
+    {
+      "path": "Assets/CoastalUpgrade/TowelStack.fbx",
+      "bytes": 27708,
+      "sha256_before": "66e19df8ad86d4c95a84e7920c5ea95f750cf461c9cc7baffdca072a3389691c",
+      "original_git_blob": "ac5158ac41359b91f591d2a8d2497238d153be86",
+      "sha256_after": "66e19df8ad86d4c95a84e7920c5ea95f750cf461c9cc7baffdca072a3389691c",
+      "canonical_pointer": true
+    },
+    {
+      "path": "Assets/CoastalUpgrade/ToyBlocks.fbx",
+      "bytes": 23084,
+      "sha256_before": "5d7cfddf47377a22bc7d448e6366971e95e78255c69f8f226e4836380c8dd339",
+      "original_git_blob": "a5fd7f7a567fa724705bdf0ca31fbf25436facb1",
+      "sha256_after": "5d7cfddf47377a22bc7d448e6366971e95e78255c69f8f226e4836380c8dd339",
+      "canonical_pointer": true
+    },
+    {
+      "path": "Assets/CoastalUpgrade/ToyDoll.fbx",
+      "bytes": 77036,
+      "sha256_before": "d42f33804ffa6b6f2ff02ea19401c88d2b768193ab1838f445040e962f83c630",
+      "original_git_blob": "70488821cdbe577aa716368447b6a25edd6ef324",
+      "sha256_after": "d42f33804ffa6b6f2ff02ea19401c88d2b768193ab1838f445040e962f83c630",
+      "canonical_pointer": true
+    },
+    {
+      "path": "Assets/CoastalUpgrade/TrafficCone.fbx",
+      "bytes": 25804,
+      "sha256_before": "a053166a41c71244bb320bf837455a6dbadff0025c86022320b4ae179f004e50",
+      "original_git_blob": "3aa610f3c275e5668d0abf31aff77ccf6db9d70a",
+      "sha256_after": "a053166a41c71244bb320bf837455a6dbadff0025c86022320b4ae179f004e50",
+      "canonical_pointer": true
+    },
+    {
+      "path": "Assets/CoastalUpgrade/TrafficLight.fbx",
+      "bytes": 28588,
+      "sha256_before": "b8e4bc0f6a9d8c645d2532d2d0cdc0fc619ec007adc310bc06a8fb4b1371c0d0",
+      "original_git_blob": "0d5a5b5039e1c0656acc828e466a9440458fce1f",
+      "sha256_after": "b8e4bc0f6a9d8c645d2532d2d0cdc0fc619ec007adc310bc06a8fb4b1371c0d0",
+      "canonical_pointer": true
+    },
+    {
+      "path": "Assets/CoastalUpgrade/Train.fbx",
+      "bytes": 65868,
+      "sha256_before": "5753ab3f25560333eef059a2587f614f55e18f39894600e946444227644dcf46",
+      "original_git_blob": "f1d925bddcafcba928d91f574a82b27e8480aa9a",
+      "sha256_after": "5753ab3f25560333eef059a2587f614f55e18f39894600e946444227644dcf46",
+      "canonical_pointer": true
+    },
+    {
+      "path": "Assets/CoastalUpgrade/WallMirror.fbx",
+      "bytes": 19932,
+      "sha256_before": "ac78ed67ade38c0dfe921a5dced955f9400e3b312659049c8596275a2e9265c9",
+      "original_git_blob": "1b4d226341ca678ce788a12a8343fabad119fbfe",
+      "sha256_after": "ac78ed67ade38c0dfe921a5dced955f9400e3b312659049c8596275a2e9265c9",
+      "canonical_pointer": true
+    },
+    {
+      "path": "Assets/CoastalUpgrade/Washbasin.fbx",
+      "bytes": 29004,
+      "sha256_before": "45dd2ee33b4cb1761d2519af5e542c63a845777c87a6cfa26e1c98b2955ee972",
+      "original_git_blob": "2ae70c55633ec805322312b6bce5c7044bd1af55",
+      "sha256_after": "45dd2ee33b4cb1761d2519af5e542c63a845777c87a6cfa26e1c98b2955ee972",
+      "canonical_pointer": true
+    }
+  ],
+  "bytes": 26323826,
+  "worktree_bytes_unchanged": true,
+  "index_changes_only": true,
+  "history_rewritten": false,
+  "full_fsck_after_commit": "pending"
+}
