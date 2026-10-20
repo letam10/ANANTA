@@ -1,0 +1,355 @@
+{
+  "schema": "ananta.w3.coastal-water-audit.v1",
+  "map": "/Game/ANANTA/Maps/ANANTA_CoastalCity",
+  "readOnly": true,
+  "savedMap": false,
+  "totalActors": 1290,
+  "candidateCount": 11,
+  "candidateMaterials": [
+    "/Game/ANANTA/CoastalUpgrade/M_CoastalSurface.M_CoastalSurface",
+    "/Game/ANANTA/CoastalUpgrade/Materials/M_Ocean.M_Ocean"
+  ],
+  "candidates": [
+    {
+      "label": "Coast_Batch_269",
+      "name": "CoastalBatch_269",
+      "class": "/Script/ANANTA.CoastalBatch",
+      "locationCm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "boundsOriginCm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "boundsExtentCm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "components": [
+        {
+          "component": "Instances",
+          "mesh": "/Engine/BasicShapes/Plane.Plane",
+          "materials": [
+            "/Game/ANANTA/CoastalUpgrade/Materials/M_Ocean.M_Ocean"
+          ],
+          "collisionProfile": "Custom",
+          "collisionEnabled": "<CollisionEnabled.NO_COLLISION: 0>"
+        }
+      ]
+    },
+    {
+      "label": "Coast_Batch_270",
+      "name": "CoastalBatch_270",
+      "class": "/Script/ANANTA.CoastalBatch",
+      "locationCm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "boundsOriginCm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "boundsExtentCm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "components": [
+        {
+          "component": "Instances",
+          "mesh": "/Game/ANANTA/CoastalUpgrade/Models/OceanFoam.OceanFoam",
+          "materials": [
+            "/Game/ANANTA/CoastalUpgrade/M_CoastalSurface.M_CoastalSurface"
+          ],
+          "collisionProfile": "Custom",
+          "collisionEnabled": "<CollisionEnabled.NO_COLLISION: 0>"
+        }
+      ]
+    },
+    {
+      "label": "Coast_Batch_271",
+      "name": "CoastalBatch_271",
+      "class": "/Script/ANANTA.CoastalBatch",
+      "locationCm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "boundsOriginCm": [
+        20998.75,
+        -15000.0,
+        14.600000381469727
+      ],
+      "boundsExtentCm": [
+        58.75,
+        11.0,
+        2.6000003814697266
+      ],
+      "components": [
+        {
+          "component": "Instances",
+          "mesh": "/Game/ANANTA/CoastalUpgrade/Models/OceanFoam.OceanFoam",
+          "materials": [
+            "/Game/ANANTA/CoastalUpgrade/M_CoastalSurface.M_CoastalSurface"
+          ],
+          "collisionProfile": "Custom",
+          "collisionEnabled": "<CollisionEnabled.NO_COLLISION: 0>"
+        }
+      ]
+    },
+    {
+      "label": "Coast_Batch_272",
+      "name": "CoastalBatch_272",
+      "class": "/Script/ANANTA.CoastalBatch",
+      "locationCm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "boundsOriginCm": [
+        20998.75,
+        -10000.0,
+        14.600000381469727
+      ],
+      "boundsExtentCm": [
+        58.75,
+        11.0,
+        2.6000003814697266
+      ],
+      "components": [
+        {
+          "component": "Instances",
+          "mesh": "/Game/ANANTA/CoastalUpgrade/Models/OceanFoam.OceanFoam",
+          "materials": [
+            "/Game/ANANTA/CoastalUpgrade/M_CoastalSurface.M_CoastalSurface"
+          ],
+          "collisionProfile": "Custom",
+          "collisionEnabled": "<CollisionEnabled.NO_COLLISION: 0>"
+        }
+      ]
+    },
+    {
+      "label": "Coast_Batch_273",
+      "name": "CoastalBatch_273",
+      "class": "/Script/ANANTA.CoastalBatch",
+      "locationCm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "boundsOriginCm": [
+        20998.75,
+        -5000.0,
+        14.600000381469727
+      ],
+      "boundsExtentCm": [
+        58.75,
+        11.0,
+        2.6000003814697266
+      ],
+      "components": [
+        {
+          "component": "Instances",
+          "mesh": "/Game/ANANTA/CoastalUpgrade/Models/OceanFoam.OceanFoam",
+          "materials": [
+            "/Game/ANANTA/CoastalUpgrade/M_CoastalSurface.M_CoastalSurface"
+          ],
+          "collisionProfile": "Custom",
+          "collisionEnabled": "<CollisionEnabled.NO_COLLISION: 0>"
+        }
+      ]
+    },
+    {
+      "label": "Coast_Batch_274",
+      "name": "CoastalBatch_274",
+      "class": "/Script/ANANTA.CoastalBatch",
+      "locationCm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "boundsOriginCm": [
+        20998.75,
+        2499.999997615814,
+        14.600000381469727
+      ],
+      "boundsExtentCm": [
+        58.75,
+        2511.000002384186,
+        2.6000003814697266
+      ],
+      "components": [
+        {
+          "component": "Instances",
+          "mesh": "/Game/ANANTA/CoastalUpgrade/Models/OceanFoam.OceanFoam",
+          "materials": [
+            "/Game/ANANTA/CoastalUpgrade/M_CoastalSurface.M_CoastalSurface"
+          ],
+          "collisionProfile": "Custom",
+          "collisionEnabled": "<CollisionEnabled.NO_COLLISION: 0>"
+        }
+      ]
+    },
+    {
+      "label": "Coast_Batch_275",
+      "name": "CoastalBatch_275",
+      "class": "/Script/ANANTA.CoastalBatch",
+      "locationCm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "boundsOriginCm": [
+        20998.75,
+        10000.0,
+        14.600000381469727
+      ],
+      "boundsExtentCm": [
+        58.75,
+        11.0,
+        2.6000003814697266
+      ],
+      "components": [
+        {
+          "component": "Instances",
+          "mesh": "/Game/ANANTA/CoastalUpgrade/Models/OceanFoam.OceanFoam",
+          "materials": [
+            "/Game/ANANTA/CoastalUpgrade/M_CoastalSurface.M_CoastalSurface"
+          ],
+          "collisionProfile": "Custom",
+          "collisionEnabled": "<CollisionEnabled.NO_COLLISION: 0>"
+        }
+      ]
+    },
+    {
+      "label": "Coast_Batch_276",
+      "name": "CoastalBatch_276",
+      "class": "/Script/ANANTA.CoastalBatch",
+      "locationCm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "boundsOriginCm": [
+        20998.75,
+        15000.0,
+        14.600000381469727
+      ],
+      "boundsExtentCm": [
+        58.75,
+        11.0,
+        2.6000003814697266
+      ],
+      "components": [
+        {
+          "component": "Instances",
+          "mesh": "/Game/ANANTA/CoastalUpgrade/Models/OceanFoam.OceanFoam",
+          "materials": [
+            "/Game/ANANTA/CoastalUpgrade/M_CoastalSurface.M_CoastalSurface"
+          ],
+          "collisionProfile": "Custom",
+          "collisionEnabled": "<CollisionEnabled.NO_COLLISION: 0>"
+        }
+      ]
+    },
+    {
+      "label": "Coast_Batch_465",
+      "name": "CoastalBatch_465",
+      "class": "/Script/ANANTA.CoastalBatch",
+      "locationCm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "boundsOriginCm": [
+        4600.0,
+        -7700.0,
+        2517.0
+      ],
+      "boundsExtentCm": [
+        350.0,
+        230.0,
+        0.0
+      ],
+      "components": [
+        {
+          "component": "Instances",
+          "mesh": "/Engine/BasicShapes/Plane.Plane",
+          "materials": [
+            "/Game/ANANTA/CoastalUpgrade/Materials/M_Ocean.M_Ocean"
+          ],
+          "collisionProfile": "Custom",
+          "collisionEnabled": "<CollisionEnabled.NO_COLLISION: 0>"
+        }
+      ]
+    },
+    {
+      "label": "Coast_Batch_716",
+      "name": "CoastalBatch_716",
+      "class": "/Script/ANANTA.CoastalBatch",
+      "locationCm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "boundsOriginCm": [
+        11000.0,
+        5100.0,
+        1877.0
+      ],
+      "boundsExtentCm": [
+        350.0,
+        230.0,
+        0.0
+      ],
+      "components": [
+        {
+          "component": "Instances",
+          "mesh": "/Engine/BasicShapes/Plane.Plane",
+          "materials": [
+            "/Game/ANANTA/CoastalUpgrade/Materials/M_Ocean.M_Ocean"
+          ],
+          "collisionProfile": "Custom",
+          "collisionEnabled": "<CollisionEnabled.NO_COLLISION: 0>"
+        }
+      ]
+    },
+    {
+      "label": "Coast_Batch_808",
+      "name": "CoastalBatch_808",
+      "class": "/Script/ANANTA.CoastalBatch",
+      "locationCm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "boundsOriginCm": [
+        4600.0,
+        11500.0,
+        2837.0
+      ],
+      "boundsExtentCm": [
+        350.0,
+        230.0,
+        0.0
+      ],
+      "components": [
+        {
+          "component": "Instances",
+          "mesh": "/Engine/BasicShapes/Plane.Plane",
+          "materials": [
+            "/Game/ANANTA/CoastalUpgrade/Materials/M_Ocean.M_Ocean"
+          ],
+          "collisionProfile": "Custom",
+          "collisionEnabled": "<CollisionEnabled.NO_COLLISION: 0>"
+        }
+      ]
+    }
+  ]
+}
