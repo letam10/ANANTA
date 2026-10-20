@@ -7,11 +7,13 @@
 #include "HAL/FileManager.h"
 #include "HAL/IConsoleManager.h"
 #include "Misc/CommandLine.h"
+#include "Misc/CoreDelegates.h"
 #include "Misc/FileHelper.h"
 #include "Misc/Parse.h"
 #include "Misc/Paths.h"
 #include "RenderTimer.h"
 #include "Settings/ANANTAGraphicsSettings.h"
+#include "GameFramework/PlayerController.h"
 
 bool UCityGraphicsObservation::ShouldCreateSubsystem(UObject* Outer) const
 {
@@ -19,9 +21,17 @@ bool UCityGraphicsObservation::ShouldCreateSubsystem(UObject* Outer) const
     return false;
 #else
     const auto* World = Cast<UWorld>(Outer);
-    return World && World->IsGameWorld() && FParse::Param(FCommandLine::Get(), TEXT("CityObserveGraphics"))
-        && FParse::Param(FCommandLine::Get(), TEXT("CityQASlot"));
+    const FString CommandLine = FCommandLine::Get();
+    // CityObserveGraphics là cờ opt-in đầy đủ; slot chỉ phân loại receipt.
+    return World && World->IsGameWorld() && FParse::Param(*CommandLine, TEXT("CityObserveGraphics"));
 #endif
+}
+
+void UCityGraphicsObservation::Initialize(FSubsystemCollectionBase& Collection)
+{
+    Super::Initialize(Collection);
+    EnginePreExitHandle = FCoreDelegates::OnEnginePreExit.AddUObject(
+        this, &UCityGraphicsObservation::HandleEnginePreExit);
 }
 
 TStatId UCityGraphicsObservation::GetStatId() const
@@ -31,8 +41,10 @@ TStatId UCityGraphicsObservation::GetStatId() const
 
 void UCityGraphicsObservation::Tick(float DeltaTime)
 {
-    const auto* PC = Cast<AANANTACityController>(GetWorld()->GetFirstPlayerController());
-    if (!PC || !PC->CanCaptureProgress() || !PC->GetPawn() || PC->IsPaused())
+    const auto* PC = GetWorld()->GetFirstPlayerController();
+    const auto* CityController = Cast<AANANTACityController>(PC);
+    if (!PC || !PC->GetPawn() || PC->IsPaused()
+        || (CityController && !CityController->CanCaptureProgress()))
     {
         LastTime = 0;
         return;
@@ -54,6 +66,10 @@ void UCityGraphicsObservation::Tick(float DeltaTime)
             FPlatformTime::ToMilliseconds(RHIGetGPUFrameCycles()), Location.X, Location.Y));
     }
     LastTime = Now;
+    if (Rows.Num() > 1 && Rows.Num() % 120 == 0)
+    {
+        WriteRows();
+    }
     if (!bProfileRequested && Now - FirstTime > 20
         && FParse::Param(FCommandLine::Get(), TEXT("CityProfileRender")))
     {
@@ -70,6 +86,10 @@ void UCityGraphicsObservation::RecordConfiguration()
     IFileManager::Get().MakeDirectory(*Directory, true);
     TArray<FString> Lines;
     Lines.Add(TEXT("Ordinary service gameplay observation. No benchmark. CPU/GPU counters can lag a frame."));
+    const FString CommandLine = FCommandLine::Get();
+    Lines.Add(FString::Printf(TEXT("observation_slot=%s"),
+        FParse::Param(*CommandLine, TEXT("CoastalQASlot")) ? TEXT("coastal") : TEXT("city")));
+    Lines.Add(FString::Printf(TEXT("map=%s"), *GetWorld()->GetMapName()));
     static const TCHAR* Names[] = {
         TEXT("sg.ViewDistanceQuality"), TEXT("sg.AntiAliasingQuality"), TEXT("sg.ShadowQuality"),
         TEXT("sg.GlobalIlluminationQuality"), TEXT("sg.ReflectionQuality"), TEXT("sg.PostProcessQuality"),
@@ -99,13 +119,42 @@ void UCityGraphicsObservation::RecordConfiguration()
     FFileHelper::SaveStringArrayToFile(Lines, *(Directory / TEXT("RenderConfig.txt")));
 }
 
+void UCityGraphicsObservation::WriteRows() const
+{
+    if (Rows.Num() <= 1)
+    {
+        return;
+    }
+    const FString Path = FPaths::ProjectSavedDir() / TEXT("QA/CityMaxGraphics/FrameTimes.csv");
+    FFileHelper::SaveStringArrayToFile(Rows, *Path);
+}
+
 void UCityGraphicsObservation::Deinitialize()
 {
-    const FString Path = FPaths::ProjectSavedDir() / TEXT("QA/CityMaxGraphics/FrameTimes.csv");
+    if (EnginePreExitHandle.IsValid())
+    {
+        FCoreDelegates::OnEnginePreExit.Remove(EnginePreExitHandle);
+        EnginePreExitHandle.Reset();
+    }
+    Flush();
+    Super::Deinitialize();
+}
+
+void UCityGraphicsObservation::HandleEnginePreExit()
+{
+    Flush();
+}
+
+void UCityGraphicsObservation::Flush()
+{
+    if (bFlushed)
+    {
+        return;
+    }
+    bFlushed = true;
     if (Rows.Num() > 1)
     {
-        FFileHelper::SaveStringArrayToFile(Rows, *Path);
+        WriteRows();
         UE_LOG(LogTemp, Display, TEXT("CITY_GRAPHICS_OBSERVATION_WRITTEN samples=%d"), Rows.Num() - 1);
     }
-    Super::Deinitialize();
 }
