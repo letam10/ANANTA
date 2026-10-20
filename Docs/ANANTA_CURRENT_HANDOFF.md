@@ -1419,3 +1419,33 @@ parity, or prove runtime boundary traversal. Because the audit uses NullRHI, it
 also carries no performance or FPS claim. The next integration must use an
 explicit allowlist and a fresh non-NullRHI runtime capture; existing Coastal
 materials and map packages must not be overwritten blindly.
+
+## W3 Coastal runtime material integration — 2026-10-20
+
+`UCoastalW3WaterIntegration` is an opt-in world subsystem enabled by
+`-CoastalW3Water` only on `ANANTA_CoastalCity`. It loads the existing
+`/Game/ANANTA/WaterW3_20261020/M_WaveSpec_Opaque` asset and applies it only to
+the four actor names confirmed by the read-only audit:
+`CoastalBatch_269`, `CoastalBatch_465`, `CoastalBatch_716` and
+`CoastalBatch_808`. Before assignment it checks each component's mesh path is
+`/Engine/BasicShapes/Plane`; it retries streamed actors for ten seconds and
+logs incomplete or mismatched targets. No map or existing Coastal material is
+saved or overwritten.
+
+Build receipt: `Build-ANANTA.ps1 -MaxParallelActions 2` exited 0 after UHT,
+compile and link. Fresh runtime receipt:
+`Saved/QA/F1/20261020_155627541_057ea996/metadata.json` and its captured CSV.
+The run used DX12 High, 1280x720, internal scale 1, non-NullRHI
+`UnrealEditor-Cmd.exe`; it passed with 1,559 CPU/render/GPU rows, VRAM 7,956 MB,
+zero console errors, and `COASTAL_W3_WATER_APPLIED actors=4 components=4`
+followed by `COASTAL_QA_COMPLETE failures=0 views=5`. Wall/render/GPU p95 is
+11.165/7.219/4.419 ms; maxima 640.257/3456.764/29.323 ms are retained.
+
+Classification: **DONE** for opt-in runtime material assignment and live
+allowlist confirmation; **PARTIAL** for W3 because the default Coastal startup
+does not yet enable the flag, foam is still static dressing, and no same-camera
+Three.js/Coastal image pair was captured in this tranche. **UNVERIFIED** remain
+default startup behavior, native boundary traversal with the integrated
+material, human headed visual review and final 60 FPS acceptance. The
+`UnrealEditor-Cmd.exe` receipt is runtime counter evidence and is not a saved-map
+or final visual acceptance claim.

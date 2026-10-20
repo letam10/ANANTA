@@ -930,3 +930,35 @@ material instance, apply it only after an allowlisted actor/material target is
 confirmed, then read back the changed actor, render the same three cameras and
 run a non-NullRHI runtime smoke. Do not overwrite the existing Coastal material
 or map blindly and do not promote the isolated W3 gate to city acceptance.
+
+## W3 — Opt-in Coastal runtime material integration (2026-10-20)
+
+`UCoastalW3WaterIntegration` is an opt-in `UTickableWorldSubsystem` enabled only
+by `-CoastalW3Water` on `ANANTA_CoastalCity`. It loads the already-read-back
+`/Game/ANANTA/WaterW3_20261020/M_WaveSpec_Opaque` material and applies it only to
+the four audited plane actors `CoastalBatch_269`, `CoastalBatch_465`,
+`CoastalBatch_716` and `CoastalBatch_808`. It verifies the mesh is
+`/Engine/BasicShapes/Plane` before assignment, retries streaming actors for ten
+seconds, and logs missing/mismatched targets. The map package and existing
+materials are not saved or overwritten.
+
+The source build succeeded with `Build-ANANTA.ps1 -MaxParallelActions 2`.
+Fresh non-NullRHI DX12 Coastal runtime run
+`20261020_155627541_057ea996` passed with 1,559 CPU/render/GPU rows, VRAM
+7,956 MB, no console errors, `COASTAL_W3_WATER_APPLIED actors=4 components=4`,
+and `COASTAL_QA_COMPLETE failures=0 views=5`. Its wall/render/GPU p95 values are
+11.165/7.219/4.419 ms; maxima are retained as 640.257/3456.764/29.323 ms.
+
+**DONE:** the exact W3 material now has an opt-in runtime path in Coastal and
+the four allowlisted plane actors were confirmed to receive it in a live DX12
+run. Assignment is runtime-only and does not claim saved-map integration.
+
+**PARTIAL:** visible animated water is now wired to the Coastal runtime when the
+flag is supplied, but the default game path is unchanged, foam remains static
+dressing, and no same-camera Three.js/Coastal image comparison was captured in
+this tranche.
+
+**UNVERIFIED:** default Coastal startup without `-CoastalW3Water`, native
+boundary traversal with the integrated material, human headed visual review,
+and final 60 FPS acceptance. The runtime observer is `UnrealEditor-Cmd.exe`
+evidence and retains large startup/streaming maxima.
