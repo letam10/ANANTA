@@ -50,6 +50,27 @@ nhỏ. Camera và boat được clamp theo margin riêng. Foam là một mặt p
 fragment shader tính khoảng cách tới cạnh boundary; không rebuild CPU mesh trong
 animation loop.
 
+## Visual refinement theo tài liệu kỹ thuật
+
+Sau khi đối chiếu chương GPU Gems về mô phỏng nước theo mô hình vật lý và nguồn
+`Water2` của Three.js, prototype dùng một phần nhẹ của cùng hướng thiết kế:
+
+- Bốn wave nền vẫn giữ nguyên direction, wavelength, amplitude, speed và phase
+  trong `wave-spec.json` để contract W3 không đổi.
+- Vertex shader thêm Gerstner lateral displacement với steepness cố định theo
+  thứ tự wave. Crest được làm rõ bằng cùng trường phase, không tạo một trường
+  normal độc lập ở CPU.
+- Fragment shader thêm hai lớp detail slope, Fresnel view-angle, specular nhỏ,
+  màu shallow/deep và foam crest/shore. Mặt nước vẫn opaque và chỉ dùng một
+  `PlaneGeometry` cố định.
+- Không đưa reflection/refraction render targets hoặc flow-map pipeline của
+  `Water2` vào low preset; đó là nhánh chất lượng cao cần gate riêng vì tăng
+  pass và chi phí render.
+
+Đây là visual refinement của W2, không phải claim Unreal parity hoặc 60 FPS.
+`sampleHeightAndNormal` vẫn được giữ cho contract math/W3; `sampleGerstnerPositionAndNormal`
+chỉ dùng cho boat fixture để kiểm tra chuyển vị ngang và hướng mặt nước.
+
 ## Contract kỹ thuật
 
 - Three.js ES modules dùng Y-up; mặt phẳng nước nằm trên XZ và dùng một

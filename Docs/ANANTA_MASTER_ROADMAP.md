@@ -828,3 +828,26 @@ trước native interaction/performance gate.
 - R0 foundation validation and diff check exit 0. Full LFS fsck exits 1 with 88
   pre-existing unexpectedGitObject pointer records under Assets/CoastalUpgrade;
   no object rewritten/deleted. Receipt `Tools/Continuation_20261020/R0_gates.json`.
+
+## W2 visual water refinement — 2026-10-20
+
+- Online technical comparison used primary references: GPU Gems describes a
+  four-wave geometric base plus detail normal waves and explains that Gerstner
+  lateral displacement sharpens crests; the Three.js `Water2` source shows the
+  higher-cost reflection/refraction/flow-map path. The prototype adopts only
+  the bounded low-cost subset.
+- `Prototypes/ThreeWater` now keeps one fixed 160x160 plane and adds analytic
+  Gerstner lateral displacement, tangent-derived normals, procedural detail
+  slope, Fresnel/specular response, deep/shallow color, crest foam and shore
+  foam. CPU geometry is not rebuilt per frame.
+- The original four wave tuples and W3 hash remain unchanged. The new visual
+  steepness defaults are code-owned and documented in the prototype README;
+  they are not silently added to the Unreal parameter contract.
+- Boat QA now samples from a fixed base position and applies the displaced
+  result through the boundary clamp, so lateral Gerstner motion cannot compound
+  into position drift. A new contract check covers finite Gerstner position,
+  lateral displacement and unit normal.
+- Fresh checks: `npm run check`, `npm run test:contract` (69 checks), `npm run
+  build`, and HTTP delivery from Vite all pass. Browser screenshot/console smoke
+  is UNVERIFIED in this environment because Work browser automation is disabled;
+  this receipt does not claim headed visual quality or 60 FPS.

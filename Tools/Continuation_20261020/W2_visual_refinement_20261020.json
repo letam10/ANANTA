@@ -1,0 +1,54 @@
+{
+  "phase": "W2 visual water refinement",
+  "date": "2026-10-20",
+  "scope": "Three.js prototype only",
+  "research": [
+    {
+      "source": "GPU Gems Chapter 1 Effective Water Simulation from Physical Models",
+      "url": "https://developer.nvidia.com/gpugems/gpugems/part-i-natural-effects/chapter-1-effective-water-simulation-physical-models",
+      "adopted": "four-wave geometric base, analytic derivative normals, Gerstner lateral displacement"
+    },
+    {
+      "source": "Three.js Water2 source",
+      "url": "https://app.unpkg.com/three@0.179.1/files/examples/jsm/objects/Water2.js",
+      "adopted": "comparison only; reflection/refraction/flow-map path excluded from low preset"
+    },
+    {
+      "source": "MDN WebGL best practices",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/WebGL_best_practices",
+      "adopted": "fixed geometry and bounded draw cost"
+    }
+  ],
+  "implementation": {
+    "fixedPlane": true,
+    "planeSegments": 160,
+    "waveCount": 4,
+    "cpuMeshRebuild": false,
+    "gerstnerLateralDisplacement": true,
+    "analyticTangentNormal": true,
+    "detailSlopeLayers": 2,
+    "fresnel": true,
+    "crestFoam": true,
+    "shoreFoam": true,
+    "boatUsesStableBasePoint": true,
+    "w3WaveSpecHashUnchanged": true,
+    "unrealChanged": false
+  },
+  "validation": {
+    "nodeCheck": "PASS",
+    "contractChecks": 69,
+    "contract": "PASS",
+    "viteBuild": "PASS",
+    "httpPage": 200,
+    "httpEntryModule": 200,
+    "httpWaveSpec": 200,
+    "headedBrowserScreenshot": "UNVERIFIED_BROWSER_DISABLED",
+    "headedConsole": "UNVERIFIED_BROWSER_DISABLED",
+    "fpsClaim": false
+  },
+  "limitations": [
+    "No browser screenshot or headed console evidence was collected because Work browser automation is disabled.",
+    "No Unreal material graph readback was attempted in this phase.",
+    "No 60 FPS claim is made; F1 still requires fresh headed frame-time evidence."
+  ]
+}

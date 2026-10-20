@@ -1327,3 +1327,28 @@ Read back all four outputs; boundary collision stays separate; capture the
 same three spec cameras before applying beyond the bounded water slice.
 V1 hero art, native A1/A2, S1 streaming, G1 actors/persistence and F1 remain
 pending; do not claim them from source or historical fixture receipts.
+
+## W2 visual refinement continuation — 2026-10-20
+
+The next water pass follows the primary GPU Gems comparison: a small geometric
+wave field establishes readable shape, while detail normals and view-angle
+response carry the fine surface impression. Three.js `Water2` was reviewed as a
+reference for reflection/refraction and flow-map quality, but its extra render
+targets are outside the low preset budget.
+
+The prototype now uses four analytic Gerstner-like waves on the existing fixed
+plane. Lateral crest displacement, tangent-derived normals, two procedural
+detail slopes, Fresnel, a restrained specular term, deep/shallow color, crest
+foam and shoreline foam are all shader-side. The original W3 wave tuples,
+phase formula, units, axes and SHA-256 remain unchanged. The boat fixture uses
+a stable base point and the same displaced sample each frame, then clamps the
+result to the boat boundary margin.
+
+Fresh source/contract/build checks pass with 69 contract checks. HTTP delivery
+from Vite returned 200 for the page, entry module and wave spec. Browser
+screenshot and console smoke are UNVERIFIED because browser automation is
+disabled in this Work environment; no headed visual or 60 FPS claim is made.
+
+The Unreal port remains gated on the pinned contract and a later same-camera
+material readback. Do not add the visual steepness defaults to the Unreal
+parameter list without an explicit contract revision and a new hash.

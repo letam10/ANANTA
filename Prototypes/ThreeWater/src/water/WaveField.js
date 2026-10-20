@@ -5,6 +5,9 @@ const DEFAULT_WAVELENGTH = 12;
 const DEFAULT_AMPLITUDE = 0;
 const DEFAULT_SPEED = 0;
 const DEFAULT_PHASE_OFFSET = 0;
+const DEFAULT_STEEPNESS = 0.22;
+
+export const GEOMETRIC_STEEPNESS = Object.freeze([0.38, 0.31, 0.22, 0.14]);
 
 export const LOW_WAVE_PRESET = Object.freeze([
     Object.freeze({
@@ -52,7 +55,7 @@ function normalizeDirection(direction) {
     return [directionX / magnitude, directionZ / magnitude];
 }
 
-function sanitizeWave(wave) {
+function sanitizeWave(wave, index = 0) {
     const source = wave && typeof wave === "object" ? wave : {};
     const sourceDirection = Array.isArray(source.direction)
         ? source.direction
@@ -63,19 +66,27 @@ function sanitizeWave(wave) {
     const amplitude = finiteOr(source.amplitude, DEFAULT_AMPLITUDE);
     const speed = finiteOr(source.speed, DEFAULT_SPEED);
     const phaseOffset = finiteOr(source.phaseOffset, DEFAULT_PHASE_OFFSET);
+    const steepness = Math.max(
+        0,
+        Math.min(
+            0.95,
+            finiteOr(source.steepness, GEOMETRIC_STEEPNESS[index] ?? DEFAULT_STEEPNESS),
+        ),
+    );
 
     return {
         direction,
         wavelength,
         amplitude,
         speed,
-        phaseOffset
+        phaseOffset,
+        steepness,
     };
 }
 
 function sanitizeWaves(waves) {
     const source = Array.isArray(waves) ? waves : LOW_WAVE_PRESET;
-    return source.map(sanitizeWave);
+    return source.map((wave, index) => sanitizeWave(wave, index));
 }
 
 function copyWaves(waves) {
@@ -84,7 +95,8 @@ function copyWaves(waves) {
         wavelength: wave.wavelength,
         amplitude: wave.amplitude,
         speed: wave.speed,
-        phaseOffset: wave.phaseOffset
+        phaseOffset: wave.phaseOffset,
+        steepness: wave.steepness,
     }));
 }
 
@@ -143,6 +155,74 @@ export class WaveField {
                 y: 1 / safeNormalLength,
                 z: -derivativeZ / safeNormalLength
             }
+        };
+    }
+
+    sampleGerstnerPositionAndNormal(horizontalX, horizontalZ, timeSeconds) {
+        const x = finiteOr(horizontalX, 0);
+        const z = finiteOr(horizontalZ, 0);
+        const time = finiteOr(timeSeconds, 0);
+        let positionX = x;
+        let positionZ = z;
+        let height = 0;
+        let tangentX = { x: 1, y: 0, z: 0 };
+        let tangentZ = { x: 0, y: 0, z: 1 };
+        const waveCount = Math.max(this._waves.length, 1);
+
+        for (const wave of this._waves) {
+            const directionX = wave.direction[0];
+            const directionZ = wave.direction[1];
+            const amplitude = wave.amplitude;
+            const wavelength = Math.max(wave.wavelength, MIN_WAVELENGTH);
+            const frequency = TAU / wavelength;
+            const phase = TAU * (
+                (directionX * x + directionZ * z) / wavelength
+                - wave.speed * time / wavelength
+            ) + wave.phaseOffset;
+            const sine = Math.sin(phase);
+            const cosine = Math.cos(phase);
+            const q = wave.steepness / Math.max(
+                frequency * Math.max(Math.abs(amplitude), MIN_WAVELENGTH) * waveCount,
+                MIN_WAVELENGTH,
+            );
+            const lateral = q * amplitude * cosine;
+            const slope = amplitude * frequency * cosine;
+            const crest = q * amplitude * frequency * sine;
+
+            positionX += directionX * lateral;
+            positionZ += directionZ * lateral;
+            height += amplitude * sine;
+            tangentX = {
+                x: tangentX.x - directionX * directionX * crest,
+                y: tangentX.y + directionX * slope,
+                z: tangentX.z - directionX * directionZ * crest,
+            };
+            tangentZ = {
+                x: tangentZ.x - directionX * directionZ * crest,
+                y: tangentZ.y + directionZ * slope,
+                z: tangentZ.z - directionZ * directionZ * crest,
+            };
+        }
+
+        const normalX = tangentZ.y * tangentX.z - tangentZ.z * tangentX.y;
+        const normalY = tangentZ.z * tangentX.x - tangentZ.x * tangentX.z;
+        const normalZ = tangentZ.x * tangentX.y - tangentZ.y * tangentX.x;
+        const normalLength = Math.hypot(normalX, normalY, normalZ);
+        const safeLength = Number.isFinite(normalLength) && normalLength > 0
+            ? normalLength
+            : 1;
+
+        return {
+            position: {
+                x: finiteOr(positionX, x),
+                y: finiteOr(height, 0),
+                z: finiteOr(positionZ, z),
+            },
+            normal: {
+                x: normalX / safeLength,
+                y: normalY / safeLength,
+                z: normalZ / safeLength,
+            },
         };
     }
 

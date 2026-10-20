@@ -140,6 +140,17 @@ export function runWaterContractChecks(spec) {
                     NORMAL_TOLERANCE, "unit normal length");
             });
         });
+        check("waves.gerstner-visual-position-and-normal", () => {
+            const sample = waveField.sampleGerstnerPositionAndNormal(19.25, -37.5, 0.75);
+            [sample.position.x, sample.position.y, sample.position.z,
+                sample.normal.x, sample.normal.y, sample.normal.z].forEach((value) => {
+                assert(Number.isFinite(value), `Gerstner sample is non-finite: ${value}`);
+            });
+            near(Math.hypot(sample.normal.x, sample.normal.y, sample.normal.z), 1,
+                NORMAL_TOLERANCE, "Gerstner normal length");
+            assert(sample.position.x !== 19.25 || sample.position.z !== -37.5,
+                "Gerstner sample did not provide lateral displacement");
+        });
     }
 
     check("scenes.identity", () => {

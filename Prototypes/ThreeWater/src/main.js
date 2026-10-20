@@ -171,6 +171,7 @@ async function bootstrap(spec) {
   scene.add(ground);
 
   const boat = createBoat(scene);
+  const boatBasePosition = new THREE.Vector3(boat.position.x, 0, boat.position.z);
   const overlay = new PerformanceOverlay();
   const keys = new Set();
   const freeForward = new THREE.Vector3();
@@ -281,15 +282,24 @@ async function bootstrap(spec) {
   }
 
   function updateBoat() {
-    const point = boundary.clamp(
-      boat.position.x,
-      boat.position.z,
+    const basePoint = boundary.clamp(
+      boatBasePosition.x,
+      boatBasePosition.z,
       finiteNumber(boundarySpec.boatMargin, 8),
     );
-    boat.position.x = point.x;
-    boat.position.z = point.z;
-    const sample = waveField.sampleHeightAndNormal(boat.position.x, boat.position.z, elapsed);
-    boat.position.y = sample.height + 1.15;
+    const sample = waveField.sampleGerstnerPositionAndNormal(
+      basePoint.x,
+      basePoint.z,
+      elapsed,
+    );
+    const displacedPoint = boundary.clamp(
+      sample.position.x,
+      sample.position.z,
+      finiteNumber(boundarySpec.boatMargin, 8),
+    );
+    boat.position.x = displacedPoint.x;
+    boat.position.z = displacedPoint.z;
+    boat.position.y = sample.position.y + 1.15;
     const normal = new THREE.Vector3(sample.normal.x, sample.normal.y, sample.normal.z);
     boat.quaternion.setFromUnitVectors(up, normal);
   }
