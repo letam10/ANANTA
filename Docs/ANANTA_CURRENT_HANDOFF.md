@@ -1,9 +1,58 @@
 # ANANTA Current Handoff
 
-> Active continuation 2026-10-20: R0 and W1/W2 DONE bounded; W3 next.
+> Active continuation 2026-10-20: R0, W1/W2 and isolated W3 contract DONE bounded.
+> W3 uses a new comparison map only; City/Coastal integration and hero art pending.
 > Work only on main; incremental phase commit/push authorized by current user.
 > P2 bounded historical visual pass is not art acceptance; P4A/P4B PARTIAL until
 > a fresh runtime log. Primary FPS target is 60; no current FPS claim.
+
+## Current continuation receipt — 2026-10-20
+
+- R0 pushed `2a481d89b4222cafa965821d7c3ec41180fc1f71`; W1/W2 pushed
+  `4aa126b30646c2bf51329abf80ae664906a2f17e`; main remote hashes verified after
+  each push. Continue only on main and stage exact phase allowlists.
+- W1/W2 fresh gate: 68/68 CPU contract checks; syntax/build/spec validator pass;
+  clean browser console; orbit/free/foam/boundary controls; three 10-second
+  reports. Startup outlier recorded, not hidden. Browser timings are not city FPS.
+- W3 new owned assets: `/Game/ANANTA/WaterW3_20261020/MF_WaveSpec`,
+  `M_WaveSpec_Opaque`, `W3_Comparison`. Function has 13 nodes, actual
+  BaseColor/Normal/Roughness/Emissive readback, exact source wave tuples and
+  HLSL code hashes. Wave inputs are generated literals from the pinned JSON;
+  normal world-space, opaque, no WPO/physics/buoyancy.
+- Native collision rays hit all four separate BlockAll walls at x=+/-70000 and
+  y=+/-40000 cm. These rays are not boat/camera gameplay traversal acceptance.
+- Three/UE coast, beach_boat and offshore images use matching mapped transforms,
+  1422x800, Three vertical FOV48 and UE horizontal FOV76.7157600295933. Wave-band
+  directions are comparable; lighting/color/time differ. Native captured editor
+  images are offscreen evidence and never F1 FPS proof.
+- Fresh evidence: `Tools/Continuation_20261020/W3_native_readback.json`,
+  `W3_review.json`, six W3 images. Earlier failed shader/callback iterations are
+  diagnostic only. A skipped expression during bulk deletion caused duplicate
+  TimeSeconds inputs; snapshot-list deletion plus exact 13-node assertion fixes it.
+- Read-only audit reports: A1_hero_audit.md, S1_source_audit.md,
+  G1_source_audit.md in the same continuation folder. Root reviewed them.
+  Existing untracked A1-A6/F1/W3 work has not been adopted or staged.
+- A1 warning: historical untracked shading output assigns Concrete_AO to Normal;
+  fix only in an owned adaptation before any use. Native hero import, full eight
+  directions after shading and five placement views from map bounds remain open.
+- G1 gaps include availability bypass, no train E/ride path, no flight altitude,
+  no visible rowing stroke, NPC sinusoidal motion instead of real schedule, and
+  missing native Coastal persistence hooks. Direct API QA is not full interaction.
+- S1: City WP/HLOD history differs from Coastal. Fresh native identity/cell,
+  Data Layers/PCG and short normal-input route remain open. Do not run the old
+  300-second journey or full HLOD rebuild simply to refresh a receipt.
+- Foundation/spec/diff checks pass. Full LFS check found 88 pre-existing
+  unexpectedGitObject entries under Assets/CoastalUpgrade; R0_gates.json stores
+  them. Do not hide this red repository gate or rewrite unrelated file contents.
+
+Next bounded implementation prompt: preserve all initial unrelated dirty/untracked
+work; select a new isolated street/civic hero source package, correct semantic
+texture selection/reuse, resolve provenance and source hashes, then fresh shading
+8-view + native import/5-placement review. Keep each venue explicitly interactive,
+enterable dressing or shell-only. Refresh native P4 runtime separately, then fix
+one confirmed gameplay tranche at a time. Do not expand map or claim 60 FPS until
+its hero and headed F1 gates are actually met. All historical receipts below keep
+their original scope and are not fresh evidence for this continuation.
 
 Ngày cập nhật: 2026-10-15
 Phase ID: P2 — Material graph và hero slice

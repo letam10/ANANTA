@@ -1,6 +1,39 @@
 # ANANTA Art and Water Contract
 
-Version: V1 + W2/W3, 2026-10-16
+Version: V1 + W2/W3, 2026-10-20
+
+## Current receipt — 2026-10-20
+
+- W1/W2 fresh bounded browser gate: 68/68 contract checks, check/build/spec
+  validator PASS, three 10-second reports, orbit/free/foam/boundary controls,
+  zero warning/error console entries. Browser timing is not Unreal FPS evidence.
+- W3 isolated contract map `/Game/ANANTA/WaterW3_20261020/W3_Comparison` now has
+  `MF_WaveSpec` (13 nodes) and opaque `M_WaveSpec_Opaque`, with actual readback of
+  BaseColor/Normal/Roughness/Emissive and exact four hashed wave tuples. Function
+  inputs are WorldPositionCm/TimeSeconds; wave values are generated literals from
+  the pinned JSON, not an editable runtime Wave[] array.
+- Convert world position as `UEcm = 100 * (Three.X, Three.Z, Three.Y)`; HLSL
+  uses `P.xy/100`. Normal is world-space; tangent_space_normal is false. Collision
+  is four separate BlockAll actors. Native rays hit x=+/-70000 and y=+/-40000 cm.
+- Three/Unreal coast, beach_boat and offshore images use matching transforms,
+  1422x800 and vertical FOV 48 degrees. UE horizontal FOV is
+  `2*atan(tan(48/2)*1422/800) = 76.7157600295933` degrees. Reference camera
+  actors use 16:9 and corresponding horizontal FOV 76.72447378326581 degrees.
+- Evidence: `Tools/Continuation_20261020/W3_native_readback.json`, `W3_review.json`
+  and six W3_Three/W3_UE images. This is an isolated normal-only shader port:
+  no WPO, physics or buoyancy. Lighting/time/color differ between renderers;
+  wave-band direction is comparable, not pixel-identical or AAA art acceptance.
+- Existing City/Coastal maps and materials remain unchanged. Boundary rays do
+  not replace gameplay boat/camera traversal. Native city integration, hero art,
+  normal-input streaming and headed 60 FPS remain unverified.
+- V1 rules below remain fixed. A1/A2 source audit found missing native hero
+  import/review and a historical AO-as-Normal assignment in pre-existing untracked
+  A1 output. Do not adopt that output or expand the map before a corrected hero
+  package has material/channel readback, fresh eight-direction shading review
+  and five-angle placement review from actual transformed bounds.
+
+The dated W1-W3 receipts below are historical context; this current receipt and
+its linked evidence take precedence for the 2026-10-20 isolated W3 scope.
 
 ## Hình ảnh thành phố
 

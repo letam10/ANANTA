@@ -1,0 +1,258 @@
+{
+  "schema": "ananta.w3.native-readback.v1",
+  "utc": "2026-10-20T07:53:54.271599+00:00",
+  "spec_hash": "f1023df3c0ca24d3f5afb8a18bb25d85b01c9cc32b3973c9c5923384f718621f",
+  "scope": "/Game/ANANTA/WaterW3_20261020",
+  "evidence": "editor authoring/readback; not runtime or performance",
+  "fpsClaim": false,
+  "errors": [],
+  "material": {
+    "path": "/Game/ANANTA/WaterW3_20261020/M_WaveSpec_Opaque.M_WaveSpec_Opaque",
+    "function": "/Game/ANANTA/WaterW3_20261020/MF_WaveSpec.MF_WaveSpec",
+    "opaque": true,
+    "world_space_normal": true,
+    "function_expression_count": 13,
+    "connections": {
+      "BaseColor": {
+        "node": "/Game/ANANTA/WaterW3_20261020/M_WaveSpec_Opaque.M_WaveSpec_Opaque:MaterialExpressionMaterialFunctionCall_4",
+        "output": "BaseColor"
+      },
+      "Normal": {
+        "node": "/Game/ANANTA/WaterW3_20261020/M_WaveSpec_Opaque.M_WaveSpec_Opaque:MaterialExpressionMaterialFunctionCall_4",
+        "output": "Normal"
+      },
+      "Roughness": {
+        "node": "/Game/ANANTA/WaterW3_20261020/M_WaveSpec_Opaque.M_WaveSpec_Opaque:MaterialExpressionMaterialFunctionCall_4",
+        "output": "Roughness"
+      },
+      "Emissive": {
+        "node": "/Game/ANANTA/WaterW3_20261020/M_WaveSpec_Opaque.M_WaveSpec_Opaque:MaterialExpressionMaterialFunctionCall_4",
+        "output": "Emissive"
+      }
+    },
+    "normal_code_sha256": "005c45510dbfcf190b0e1082e5b75b659103a78f6c49ba43f80be099917bbcd7",
+    "foam_code_sha256": "8538e4bb0a8649de6c0dfd602db472ec99f95aa4d94916deb2971f8b999e4a1d",
+    "waves": [
+      {
+        "direction": [
+          1,
+          0.25
+        ],
+        "wavelength": 28,
+        "amplitude": 0.2,
+        "speed": 1.6,
+        "phase": 0
+      },
+      {
+        "direction": [
+          -0.7,
+          1
+        ],
+        "wavelength": 45,
+        "amplitude": 0.12,
+        "speed": 1.1,
+        "phase": 1.4
+      },
+      {
+        "direction": [
+          0.35,
+          0.94
+        ],
+        "wavelength": 72,
+        "amplitude": 0.06,
+        "speed": 0.75,
+        "phase": 2.2
+      },
+      {
+        "direction": [
+          -1,
+          -0.2
+        ],
+        "wavelength": 120,
+        "amplitude": 0.03,
+        "speed": 0.45,
+        "phase": 3.1
+      }
+    ],
+    "displacement": false,
+    "note": "Opaque normal-only W3 port; no WPO, physics or buoyancy."
+  },
+  "boundary": [
+    {
+      "name": "West",
+      "origin_cm": [
+        -70500.0,
+        0.0,
+        0.0
+      ],
+      "extent_cm": [
+        500.0,
+        41000.0,
+        5000.0
+      ],
+      "collision_profile": "BlockAll",
+      "hidden_in_game": true
+    },
+    {
+      "name": "East",
+      "origin_cm": [
+        70500.0,
+        0.0,
+        0.0
+      ],
+      "extent_cm": [
+        500.0,
+        41000.0,
+        5000.0
+      ],
+      "collision_profile": "BlockAll",
+      "hidden_in_game": true
+    },
+    {
+      "name": "South",
+      "origin_cm": [
+        0.0,
+        -40500.0,
+        0.0
+      ],
+      "extent_cm": [
+        71000.0,
+        500.0,
+        5000.0
+      ],
+      "collision_profile": "BlockAll",
+      "hidden_in_game": true
+    },
+    {
+      "name": "North",
+      "origin_cm": [
+        0.0,
+        40500.0,
+        0.0
+      ],
+      "extent_cm": [
+        71000.0,
+        500.0,
+        5000.0
+      ],
+      "collision_profile": "BlockAll",
+      "hidden_in_game": true
+    }
+  ],
+  "cameras": [
+    {
+      "id": "coast",
+      "position_cm": [
+        56000,
+        30000,
+        7000
+      ],
+      "target_cm": [
+        64000,
+        12000,
+        0
+      ],
+      "vertical_fov_degrees": 48.0,
+      "fov_degrees": 76.72447378326581,
+      "aspect_ratio": 1.7777777777777777,
+      "readback_position_cm": [
+        56000.0,
+        30000.0,
+        7000.0
+      ],
+      "readback_fov": 76.72447204589844,
+      "readback_rotation": "<Struct 'Rotator' (0x000001CC31852540) {pitch: -19.563746, yaw: -66.037511, roll: -0.000000}>"
+    },
+    {
+      "id": "beach_boat",
+      "position_cm": [
+        -10000,
+        10000,
+        3600
+      ],
+      "target_cm": [
+        -4200,
+        -800,
+        0
+      ],
+      "vertical_fov_degrees": 48.0,
+      "fov_degrees": 76.72447378326581,
+      "aspect_ratio": 1.7777777777777777,
+      "readback_position_cm": [
+        -10000.0,
+        10000.0,
+        3600.0
+      ],
+      "readback_fov": 76.72447204589844,
+      "readback_rotation": "<Struct 'Rotator' (0x000001CC31852770) {pitch: -16.365657, yaw: -61.762554, roll: -0.000000}>"
+    },
+    {
+      "id": "offshore",
+      "position_cm": [
+        32000,
+        -28000,
+        18000
+      ],
+      "target_cm": [
+        0,
+        0,
+        0
+      ],
+      "vertical_fov_degrees": 48.0,
+      "fov_degrees": 76.72447378326581,
+      "aspect_ratio": 1.7777777777777777,
+      "readback_position_cm": [
+        32000.0,
+        -28000.0,
+        18000.0
+      ],
+      "readback_fov": 76.72447204589844,
+      "readback_rotation": "<Struct 'Rotator' (0x000001CC31852B80) {pitch: -22.944126, yaw: 138.814075, roll: 0.000000}>"
+    }
+  ],
+  "boundary_traces": [
+    {
+      "edge": "West",
+      "blocked": true,
+      "impact_cm": [
+        -70000.0,
+        0.0,
+        200.0
+      ],
+      "actor": "W3_Boundary_West"
+    },
+    {
+      "edge": "East",
+      "blocked": true,
+      "impact_cm": [
+        70000.0,
+        0.0,
+        200.0
+      ],
+      "actor": "W3_Boundary_East"
+    },
+    {
+      "edge": "South",
+      "blocked": true,
+      "impact_cm": [
+        0.0,
+        -40000.0,
+        200.0
+      ],
+      "actor": "W3_Boundary_South"
+    },
+    {
+      "edge": "North",
+      "blocked": true,
+      "impact_cm": [
+        0.0,
+        40000.0,
+        200.0
+      ],
+      "actor": "W3_Boundary_North"
+    }
+  ],
+  "map": "/Game/ANANTA/WaterW3_20261020/W3_Comparison",
+  "boundary_query_passed": true,
+  "authoring_readback_passed": true
+}

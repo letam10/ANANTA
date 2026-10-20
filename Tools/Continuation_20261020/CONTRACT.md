@@ -21,6 +21,16 @@ Roadmap/handoff contain pre-existing uncommitted historical W3/A1–A5 notes; pr
 
 Parent owns all main.js/package.json/README/docs/integration/Unreal scripts and Git mutation. Agents only edit assigned files, node --check JS (Python agent may use ast.parse without importing target), then return. No servers, browsers, Unreal/Blender, other agents, send_message/followup_task/list_agents, Git stage/commit/push. Root waits with wait_agent timeout_ms>=120000 and performs runtime QA. Every file edit through one exec/apply_patch call for one file.
 
+## Read-only follow-on audit ownership
+
+Shared runtime contracts and phase ordering above remain fixed. No agents may change Source, Config, Content, existing tools or assets. Root owns native execution and integration.
+
+- STREAMING_AUDIT owns only Tools/Continuation_20261020/S1_source_audit.md. Read City and Coastal source/tool/map metadata separately; list World Partition/OFPA, HLOD identity, Data Layers, PCG seeds, loading range and route evidence with exact paths. Source evidence is not fresh cell/runtime evidence.
+- HERO_AUDIT owns only Tools/Continuation_20261020/A1_hero_audit.md. Read existing art manifests/review tools and V1 contract; identify hero street/civic assets, provenance/licence, pivots/bounds/LOD/collision/texture hashes, shading and 8/5-view evidence. Do not adopt or change pre-existing untracked A1-A6 work. Report exact gaps before map expansion.
+- GAMEPLAY_AUDIT owns only Tools/Continuation_20261020/G1_source_audit.md. Read native Coastal interaction/transit and P4C actor integration paths plus existing QA. Distinguish real input, direct API fixture, source capability and missing implementation. List narrow next fixes and runtime acceptance for NPC schedule, flight, rowing, signals, boarding, bounds and persistence. Do not edit code or run any engine/test.
+
+These agents may only read files, write their single assigned Markdown report and return. No browser, server, engine, Blender, subagents, Git mutations or cross-agent messaging. Root waits >=120000 ms. Camera comparison uses vertical Three FOV 48 degrees; UE horizontal FOV is 2*atan(tan(48/2)*aspect). Native saved reference cameras use 16:9; actual 1422x800 comparison captures use horizontal FOV 76.7157600295933 degrees. Position conversion is 100*(X,Z,Y).
+
 ## Delivery gates
 
 R0: ownership manifest + current dated roadmap/handoff W1 prompt, no Unreal changed. W1/W2: npm check/build, canonical spec validator, meaningful CPU contract checks, fresh HTTP/browser smoke t0/t1, orbit/free and controls, all 3 bounded scenes and zero console errors. W3: exact function graph/readback and separate boundary + same-camera images; no prior partial report promoted to PASS. Build/source/import/runtime/performance remain separate. C1 runs Validate-ANANTA.ps1, git diff --check, git lfs fsck; stage exact allowlists and verify remote hash after every push.

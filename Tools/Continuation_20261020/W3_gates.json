@@ -1,0 +1,149 @@
+{
+  "schema": "ananta.w3.gates.v1",
+  "utc": "2026-10-20T08:10:42.013366+00:00",
+  "passed": true,
+  "checks": [
+    {
+      "name": "native_authoring_readback",
+      "passed": true
+    },
+    {
+      "name": "exact_wave_tuples",
+      "passed": true
+    },
+    {
+      "name": "exact_13_nodes",
+      "passed": true
+    },
+    {
+      "name": "opaque_world_normal",
+      "passed": true
+    },
+    {
+      "name": "normal_native_code_hash",
+      "passed": true
+    },
+    {
+      "name": "foam_native_code_hash",
+      "passed": true
+    },
+    {
+      "name": "output_BaseColor",
+      "passed": true
+    },
+    {
+      "name": "output_Normal",
+      "passed": true
+    },
+    {
+      "name": "output_Roughness",
+      "passed": true
+    },
+    {
+      "name": "output_Emissive",
+      "passed": true
+    },
+    {
+      "name": "four_boundary_rays",
+      "passed": true
+    },
+    {
+      "name": "ray_West",
+      "passed": true
+    },
+    {
+      "name": "ray_East",
+      "passed": true
+    },
+    {
+      "name": "ray_South",
+      "passed": true
+    },
+    {
+      "name": "ray_North",
+      "passed": true
+    },
+    {
+      "name": "three_distinct_captures",
+      "passed": true
+    },
+    {
+      "name": "coast_position",
+      "passed": true
+    },
+    {
+      "name": "coast_forward",
+      "passed": true
+    },
+    {
+      "name": "coast_vertical_fov48",
+      "passed": true
+    },
+    {
+      "name": "coast_Three_image",
+      "passed": true
+    },
+    {
+      "name": "coast_UE_image",
+      "passed": true
+    },
+    {
+      "name": "beach_boat_position",
+      "passed": true
+    },
+    {
+      "name": "beach_boat_forward",
+      "passed": true
+    },
+    {
+      "name": "beach_boat_vertical_fov48",
+      "passed": true
+    },
+    {
+      "name": "beach_boat_Three_image",
+      "passed": true
+    },
+    {
+      "name": "beach_boat_UE_image",
+      "passed": true
+    },
+    {
+      "name": "offshore_position",
+      "passed": true
+    },
+    {
+      "name": "offshore_forward",
+      "passed": true
+    },
+    {
+      "name": "offshore_vertical_fov48",
+      "passed": true
+    },
+    {
+      "name": "offshore_Three_image",
+      "passed": true
+    },
+    {
+      "name": "offshore_UE_image",
+      "passed": true
+    },
+    {
+      "name": "source_config_185_unchanged",
+      "passed": true
+    },
+    {
+      "name": "protected_agents_unchanged",
+      "passed": true
+    },
+    {
+      "name": "no_fps_claim",
+      "passed": true
+    }
+  ],
+  "package_hashes": {
+    "Content\\ANANTA\\WaterW3_20261020\\MF_WaveSpec.uasset": "a28511621d6eea1bc033f1700f97ebd85fc7f17fcb23f3dcb9342554b7ed0afe",
+    "Content\\ANANTA\\WaterW3_20261020\\M_WaveSpec_Opaque.uasset": "79be11a457a8261efaba177fe6e420c5c3c8fff118bea8dcb93b573af502869f",
+    "Content\\ANANTA\\WaterW3_20261020\\W3_Comparison.umap": "a691d8a133a1a9e92a5eb9de14637b895529773a73a4efdcaad8f3f2416311cc"
+  },
+  "scope": "isolated W3 contract only; no hero/runtime/FPS acceptance"
+}

@@ -97,6 +97,24 @@
     ],
     "readbackRequired": true
   },
+  "nativeImplementation": {
+    "revision": "20261020",
+    "scope": "isolated_comparison_map",
+    "functionPath": "/Game/ANANTA/WaterW3_20261020/MF_WaveSpec",
+    "materialPath": "/Game/ANANTA/WaterW3_20261020/M_WaveSpec_Opaque",
+    "mapPath": "/Game/ANANTA/WaterW3_20261020/W3_Comparison",
+    "inputs": ["WorldPositionCm", "TimeSeconds"],
+    "waveBinding": "four compile-time tuples generated from the pinned sourceWaveSpec SHA256; no editable Wave[] runtime pin",
+    "worldPositionUnit": "centimeters",
+    "worldPositionToMeters": "P.xy / 100.0",
+    "normalSpace": "world; tangent_space_normal=false",
+    "readback": "Tools/Continuation_20261020/W3_native_readback.json",
+    "comparisonReview": "Tools/Continuation_20261020/W3_review.json",
+    "cityMapsModified": false,
+    "displacement": false,
+    "physics": false,
+    "fpsClaim": false
+  },
   "surface": {
     "blendMode": "opaque",
     "normalMode": "dynamic",

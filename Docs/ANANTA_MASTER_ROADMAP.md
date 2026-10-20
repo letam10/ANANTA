@@ -1,16 +1,36 @@
 # ANANTA Master Roadmap
 
-> Current continuation 2026-10-20: R0 and W1/W2 bounded prototype gates complete;
-> W3 native function/readback and same-camera gates are next.
+> Current continuation 2026-10-20: R0, W1/W2 and isolated W3 contract gates complete.
+> W3 is a separate comparison map; City/Coastal integration and hero art are unverified.
 > Main only, incremental phase commits/pushes authorized. P2 is a historical bounded
 > visual pass, not AAA art acceptance. P4A/P4B remain PARTIAL until fresh runtime.
 > Primary acceptance target is 60 FPS (16.667 ms); legacy 90 FPS UI/config notes
 > do not replace it. Source/build/NullRHI never imply headed FPS acceptance.
 
-Ngày cập nhật: 2026-10-15
+Ngày cập nhật: 2026-10-20 (các receipt 2026-10-15 bên dưới là lịch sử)
 Checkout: `D:\GAME\ANANTA`
 Engine: Unreal Engine 5.8.3
-Nhánh làm việc: `codex/coastal-interiors-20261014`
+Nhánh làm việc hiện tại: `main`
+
+## Current phase gates — 2026-10-20
+
+| Phase | Current evidence | Status / next gate |
+| --- | --- | --- |
+| R0 | Ownership manifest; Source/Config baseline; current main/remote; old P4 diff classified | DONE bounded; AGENTS and unrelated untracked work protected |
+| W1/W2 | 68 contract checks; check/build/spec; three 10-second browser reports; controls and clean console | PASS bounded prototype; not Unreal FPS |
+| W3 | New MF_WaveSpec/M_WaveSpec_Opaque and W3_Comparison; actual four outputs, exact tuples, four native collision rays, three matching-camera image pairs | PASS isolated contract; no city integration, WPO, physics, buoyancy or art acceptance |
+| V1 | Palette/material/scale/lighting/hero rules locked in Art and Water Contract | CONTRACT DONE; hero visual package pending |
+| A1/A2 | Fresh source audit of original kit and historical untracked tranches | PARTIAL; historical AO-as-Normal assignment, incomplete provenance and native hero import/review must be resolved before expansion |
+| S1 | Separate City/Coastal source audit; City has WP/OFPA/HLOD history; Coastal evidence differs | PARTIAL; fresh native identity/cells/Data Layers/PCG/normal-input route required |
+| G1/P4A/P4B | Native input/API/fixture distinctions audited | PARTIAL; flight altitude, train E/ride, rowing animation, availability and actor persistence remain gaps; fresh runtime still required |
+| F1 | Target 60 FPS / 16.667 ms | UNVERIFIED; no headed city CPU/GPU/VRAM/stat evidence in this continuation |
+| C1 | Foundation/spec/diff checks pass; full repository LFS audit found 88 pre-existing unexpectedGitObject entries | PARTIAL; source/import/runtime/performance closure remains separate |
+
+Evidence lives in `Tools/Continuation_20261020/`: W2_browser.json, W2_math.json,
+W3_native_readback.json, W3_review.json, the six W3 images and A1_hero_audit.md,
+S1_source_audit.md, G1_source_audit.md. W3 uses a new Content folder only.
+The historical P2 pass below is a bounded material/visual result, not final art
+quality. Keep the 60 FPS primary target; old 90 FPS notes do not replace it.
 
 Tài liệu này là roadmap duy nhất của chương trình ANANTA. Trạng thái từng chat,
 lệnh và evidence mới nằm trong [ANANTA_CURRENT_HANDOFF.md](ANANTA_CURRENT_HANDOFF.md).

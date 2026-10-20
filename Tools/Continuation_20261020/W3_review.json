@@ -1,0 +1,192 @@
+{
+  "schema": "ananta.w3.review.v1",
+  "utc": "2026-10-20T08:02:23.762Z",
+  "status": "PASS_ISOLATED_CONTRACT",
+  "specHash": "f1023df3c0ca24d3f5afb8a18bb25d85b01c9cc32b3973c9c5923384f718621f",
+  "scope": "/Game/ANANTA/WaterW3_20261020",
+  "renderedEditor": true,
+  "offscreen": true,
+  "fpsClaim": false,
+  "cityMapsModified": false,
+  "shader": "opaque; four-wave analytic world-space normal; cheap distance foam; zero emissive; no WPO",
+  "collision": "four separate BlockAll actors; native visibility rays hit exact +/-700m and +/-400m edges",
+  "comparison": {
+    "threeVerticalFov": 48,
+    "ueHorizontalFov": 76.7157600295933,
+    "width": 1422,
+    "height": 800,
+    "axes": "UEcm=100*(Three.X,Three.Z,Three.Y)",
+    "sameCamera": true,
+    "waveDirectionReview": "equivalent orientation of wave bands under axis mapping; not pixel/color identity",
+    "synchronizedTime": false
+  },
+  "captures": [
+    {
+      "id": "coast",
+      "success": true,
+      "path": "D:/GAME/ANANTA/Tools/Continuation_20261020/W3_UE_coast.png",
+      "width": 1422,
+      "height": 800,
+      "sizeBytes": 1173227,
+      "captureMetadata": {
+        "worldPath": "/Game/ANANTA/WaterW3_20261020/W3_Comparison.W3_Comparison",
+        "world": "editor",
+        "projection": "perspective",
+        "location": {
+          "x": 56000,
+          "y": 30000,
+          "z": 7000
+        },
+        "rotation": {
+          "pitch": -19.563745999999977,
+          "yaw": -66.03751099999995,
+          "roll": -1.6877096245458928e-15
+        },
+        "forward": {
+          "x": 0.382691898544407,
+          "y": -0.861056770695512,
+          "z": -0.33485541421319925
+        },
+        "right": {
+          "x": 0.9138115484400552,
+          "y": 0.4061384664589013,
+          "z": 2.7755575615628914e-17
+        },
+        "up": {
+          "x": 0.13599766441400885,
+          "y": -0.30599474456569986,
+          "z": 0.9422695217251308
+        },
+        "fovDegrees": 76.71575927734375,
+        "width": 1422,
+        "height": 800,
+        "worldTimeSeconds": 254.74248740449548,
+        "fullyLoadTextures": true
+      },
+      "captureActorRemoved": true,
+      "overwrote": true,
+      "changed": true,
+      "rollbackPossible": false,
+      "rollbackNote": "No bridge call deletes a file from disk, and this capture replaced a file that was already at that path. Neither the new file nor the one it overwrote can be restored. Capture to a fresh path when a flow may need to roll back."
+    },
+    {
+      "id": "beach_boat",
+      "success": true,
+      "path": "D:/GAME/ANANTA/Tools/Continuation_20261020/W3_UE_beach_boat.png",
+      "width": 1422,
+      "height": 800,
+      "sizeBytes": 1173227,
+      "captureMetadata": {
+        "worldPath": "/Game/ANANTA/WaterW3_20261020/W3_Comparison.W3_Comparison",
+        "world": "editor",
+        "projection": "perspective",
+        "location": {
+          "x": -10000,
+          "y": 10000,
+          "z": 3600
+        },
+        "rotation": {
+          "pitch": -16.365656999999995,
+          "yaw": -61.762553999999994,
+          "roll": 0
+        },
+        "forward": {
+          "x": 0.45395699039194093,
+          "y": -0.8452992071420464,
+          "z": -0.2817663948722741
+        },
+        "right": {
+          "x": 0.8809944254852549,
+          "y": 0.47312664505807034,
+          "z": 0
+        },
+        "up": {
+          "x": 0.13331118909602646,
+          "y": -0.2482346231715507,
+          "z": 0.9594830372240468
+        },
+        "fovDegrees": 76.71575927734375,
+        "width": 1422,
+        "height": 800,
+        "worldTimeSeconds": 255.06493551284075,
+        "fullyLoadTextures": true
+      },
+      "captureActorRemoved": true,
+      "overwrote": true,
+      "changed": true,
+      "rollbackPossible": false,
+      "rollbackNote": "No bridge call deletes a file from disk, and this capture replaced a file that was already at that path. Neither the new file nor the one it overwrote can be restored. Capture to a fresh path when a flow may need to roll back."
+    },
+    {
+      "id": "offshore",
+      "success": true,
+      "path": "D:/GAME/ANANTA/Tools/Continuation_20261020/W3_UE_offshore.png",
+      "width": 1422,
+      "height": 800,
+      "sizeBytes": 1173227,
+      "captureMetadata": {
+        "worldPath": "/Game/ANANTA/WaterW3_20261020/W3_Comparison.W3_Comparison",
+        "world": "editor",
+        "projection": "perspective",
+        "location": {
+          "x": 32000,
+          "y": -28000,
+          "z": 18000
+        },
+        "rotation": {
+          "pitch": -22.944125999999986,
+          "yaw": 138.814075,
+          "roll": 0
+        },
+        "forward": {
+          "x": -0.6930369306243354,
+          "y": 0.6064073107572984,
+          "z": -0.38983328007098295
+        },
+        "right": {
+          "x": -0.6585046056919318,
+          "y": -0.7525766966113907,
+          "z": 0
+        },
+        "up": {
+          "x": -0.29337944214500344,
+          "y": 0.25670701037873506,
+          "z": 0.9208854509378995
+        },
+        "fovDegrees": 76.71575927734375,
+        "width": 1422,
+        "height": 800,
+        "worldTimeSeconds": 255.31291711702943,
+        "fullyLoadTextures": true
+      },
+      "captureActorRemoved": true,
+      "overwrote": true,
+      "changed": true,
+      "rollbackPossible": false,
+      "rollbackNote": "No bridge call deletes a file from disk, and this capture replaced a file that was already at that path. Neither the new file nor the one it overwrote can be restored. Capture to a fresh path when a flow may need to roll back."
+    }
+  ],
+  "threeImages": [
+    "W3_Three_coast.jpg",
+    "W3_Three_beach_boat.jpg",
+    "W3_Three_offshore.jpg"
+  ],
+  "limits": [
+    "Isolated comparison map only; existing City and Coastal materials/maps unchanged",
+    "Native rays verify boundary collision geometry, not a normal-input boat/camera traversal",
+    "Lighting, tone mapping and phase time differ between engines; no AAA art acceptance",
+    "Normal-only Unreal port has no vertex displacement, physical buoyancy or water physics",
+    "Earlier callback captures and failed shader iterations are diagnostic only; final captures use capture_scene_png",
+    "No headed city CPU/GPU/VRAM sample; F1 remains unverified"
+  ],
+  "gates": {
+    "materialFunctionReadback": true,
+    "exactWaveTupleMapping": true,
+    "cheapFoam": true,
+    "boundaryNativeRays": true,
+    "sameCameraImages": true,
+    "cityIntegration": false,
+    "heroArt": false,
+    "fps60": false
+  }
+}
