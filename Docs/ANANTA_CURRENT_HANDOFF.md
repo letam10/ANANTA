@@ -1358,3 +1358,39 @@ live`, so the prototype remains an animated demo after its reports are ready.
 The Unreal port remains gated on the pinned contract and a later same-camera
 material readback. Do not add the visual steepness defaults to the Unreal
 parameter list without an explicit contract revision and a new hash.
+
+## F1 fresh three-scene observer receipt — 2026-10-20
+
+Commit `43584e3bd91a20efb9396ca41db9d07f7502b83e` is on `main` and matches
+`origin/main`. It makes `CityObserveGraphics` sufficient to create the observer,
+records map and QA slot in `RenderConfig.txt`, snapshots `FrameTimes.csv` every
+120 samples, and still flushes on engine pre-exit/deinitialization. The patch
+was built with `Build-ANANTA.ps1 -MaxParallelActions 2` and the build exited 0.
+
+Fresh `HeadedF1Probe.ps1` runs used DX12, High scalability, 1280x720,
+internal scale 1 and non-NullRHI `UnrealEditor-Cmd.exe`:
+
+| Scene | Run | Rows | CPU p95/max | Render p95/max | GPU p95/max | VRAM | Console errors |
+| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| `downtown_traffic` | `20261020_151359733_39278ff0` | 857 | 16.848 / 1431.773 ms | 10.670 / 1391.167 ms | 7.253 / 33.514 ms | 7956 MB | 0 |
+| `interior_alley` | `20261020_151654176_781259c1` | 2583 | 16.562 / 187.198 ms | 10.879 / 194.941 ms | 6.823 / 30.923 ms | 7956 MB | 0 |
+| `coast_streaming` | `20261020_150739259_07110863` | 1319 | 12.953 / 630.261 ms | 8.450 / 2980.685 ms | 5.041 / 35.982 ms | 7956 MB | 0 |
+
+Each metadata file is runner `PASS` with fresh CPU/render/GPU samples,
+WorldPartition and ContentStreaming markers, and a completed scene/QA path.
+The authoritative artifacts are the matching `metadata.json` and
+`captured_FrameTimes.csv` under `Saved/QA/F1/<runId>/`. The actual executable is
+`UnrealEditor-Cmd.exe`; therefore this receipt proves a live DX12 runtime
+observation and GPU counters, while human headed visual review and numeric stat
+panel readback remain separate gates.
+
+F1 classification is **PARTIAL**. GPU p95 is under the 16.667 ms reference in
+all three scenes, but downtown wall p95 is 16.848 ms and large startup or
+streaming maxima remain. No final 60 FPS claim is made. Numeric readback for
+`stat unit`, `stat gpu`, `stat sceneRendering`, `stat initviews` and `stat levels`,
+fixed camera parity, and a true headed visual review remain open.
+
+The full objective is still open for W3 city material integration and same-camera
+comparison, V1/A1/A2 native hero gates, S1 runtime streaming identity/cell
+readback, G1 Coastal actor schedules/aircraft/rowing/rail/persistence, F1
+optimization, and C1's pre-existing LFS `unexpectedGitObject` errors.

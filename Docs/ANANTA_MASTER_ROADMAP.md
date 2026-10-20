@@ -851,3 +851,50 @@ trước native interaction/performance gate.
   build`, and HTTP delivery from Vite all pass. Browser screenshot/console smoke
   is UNVERIFIED in this environment because Work browser automation is disabled;
   this receipt does not claim headed visual quality or 60 FPS.
+
+## F1 — Fresh three-scene runtime observer continuation (2026-10-20)
+
+This continuation records new evidence after the city graphics observer was
+made opt-in by `CityObserveGraphics` and able to snapshot rows every 120
+samples before process exit. The source/build change is commit
+`43584e3bd91a20efb9396ca41db9d07f7502b83e`, pushed to `origin/main`; unrelated
+dirty files and prior evidence remain untouched.
+
+### Fresh runtime evidence
+
+| Scene | Run | Executable and mode | Rows | CPU p95/max ms | Render p95/max ms | GPU p95/max ms | VRAM | Console errors |
+| --- | --- | --- | ---: | ---: | ---: | ---: | ---: | --- |
+| `downtown_traffic` | `20261020_151359733_39278ff0` | DX12 High, `UnrealEditor-Cmd.exe`, 1280x720, scale 1 | 857 | 16.848 / 1431.773 | 10.670 / 1391.167 | 7.253 / 33.514 | 7956 MB | 0 |
+| `interior_alley` | `20261020_151654176_781259c1` | DX12 High, `UnrealEditor-Cmd.exe`, 1280x720, scale 1 | 2583 | 16.562 / 187.198 | 10.879 / 194.941 | 6.823 / 30.923 | 7956 MB | 0 |
+| `coast_streaming` | `20261020_150739259_07110863` | DX12 High, `UnrealEditor-Cmd.exe`, 1280x720, scale 1 | 1319 | 12.953 / 630.261 | 8.450 / 2980.685 | 5.041 / 35.982 | 7956 MB | 0 |
+
+The three runner metadata files are `PASS` with fresh CPU/render/GPU rows,
+non-NullRHI DX12 rendering, required scene selectors, WorldPartition and
+ContentStreaming markers, and no console errors. The captured CSVs are stored
+under each run directory in `Saved/QA/F1/`. The runner's `headed` metadata is
+retained, but the actual executable is `UnrealEditor-Cmd.exe`; this evidence
+proves runtime rendering and counters, not a human visual headed review.
+
+### Classification
+
+**DONE:** fresh runtime samples for all three required scene labels; resolution,
+internal scale, renderer, scalability, CPU/render/GPU rows, VRAM and console
+error fields are recorded; observer output is durable before early CoastalQA
+exit; commit and remote verification are complete.
+
+**PARTIAL:** GPU p95 is below the 16.667 ms reference in all three scenes, and
+interior/coast wall p95 is below the reference. Downtown wall p95 is
+16.848 ms, slightly above budget. Large startup/streaming maxima remain in all
+three CSVs, so this is a measurement receipt and optimization baseline rather
+than a 60 FPS acceptance.
+
+**UNVERIFIED:** numeric panel readback for `stat unit`, `stat gpu`,
+`stat sceneRendering`, `stat initviews` and `stat levels`; fixed camera parity
+between scenes; human visual headed review; and a final 60 FPS claim after
+optimization. `UnrealEditor-Cmd.exe` runtime evidence must not be relabeled as
+full headed visual acceptance.
+
+**BLOCKED:** C1 still has the pre-existing `git lfs fsck` failure with
+`unexpectedGitObject` entries under `Assets/CoastalUpgrade`; the full objective
+also remains open for W3 city integration, V1/A1/A2 native hero gates, S1
+streaming readback and G1 native gameplay/persistence.
